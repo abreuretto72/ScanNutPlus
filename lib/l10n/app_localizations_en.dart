@@ -1,0 +1,483 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for English (`en`).
+class AppLocalizationsEn extends AppLocalizations {
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
+
+  @override
+  String get app_title => 'ScanNut Plus';
+
+  @override
+  String get login_title => 'Login';
+
+  @override
+  String get login_title_plus => 'ScanNutPlus';
+
+  @override
+  String get login_subtitle => 'Access your digital wellness universe';
+
+  @override
+  String get login_email_label => 'Email';
+
+  @override
+  String get login_email_hint => 'E-mail';
+
+  @override
+  String get login_password_label => 'Password';
+
+  @override
+  String get login_password_hint => 'Password';
+
+  @override
+  String get login_confirm_password_hint => 'Confirm Password';
+
+  @override
+  String get login_button_enter => 'Log In';
+
+  @override
+  String get login_button_biometrics => 'Log In with Biometrics';
+
+  @override
+  String get login_keep_me => 'Keep me logged in';
+
+  @override
+  String get login_no_account => 'Don\'t have an account?';
+
+  @override
+  String get login_sign_up => 'Sign Up';
+
+  @override
+  String get biometric_success => 'Biometrics verified successfully';
+
+  @override
+  String get login_error_credentials => 'Invalid credentials';
+
+  @override
+  String get error_password_short => 'Password must be at least 8 characters';
+
+  @override
+  String get error_password_weak => 'Needs uppercase, number, and special char';
+
+  @override
+  String get error_password_mismatch => 'Passwords do not match';
+
+  @override
+  String get pwd_help_title => 'Password Rules';
+
+  @override
+  String get pwd_rule_length => 'Minimum of 8 characters';
+
+  @override
+  String get pwd_rule_uppercase => 'At least one uppercase letter';
+
+  @override
+  String get pwd_rule_number => 'At least one number';
+
+  @override
+  String get pwd_rule_special => 'At least one special character';
+
+  @override
+  String get biometric_error => 'Biometric authentication failed';
+
+  @override
+  String get biometric_reason => 'Scan to authenticate';
+
+  @override
+  String get biometric_tooltip => 'Biometrics';
+
+  @override
+  String get common_copyright => 'ScanNut © 2026 Multiverso Digital';
+
+  @override
+  String get tabFood => 'Food';
+
+  @override
+  String get tabPlants => 'Plants';
+
+  @override
+  String get tabPets => 'Pets';
+
+  @override
+  String get splashPoweredBy => 'Powered by AI Vision';
+
+  @override
+  String get home_title => 'Home';
+
+  @override
+  String get home_welcome => 'Welcome Home';
+
+  @override
+  String get onboarding_title => 'Welcome to ScanNut';
+
+  @override
+  String get onboarding_welcome =>
+      'Your AI companion for food, plants, and pets.';
+
+  @override
+  String get onboarding_button_start => 'Get Started';
+
+  @override
+  String get debug_nav_login_forced => 'NAVIGATE_TO_LOGIN_DEBUG';
+
+  @override
+  String get debug_nav_onboarding => 'NAVIGATE_TO_ONBOARDING';
+
+  @override
+  String get debug_nav_login_no_session => 'NAVIGATE_TO_LOGIN_NO_SESSION';
+
+  @override
+  String get debug_nav_home_bio_success => 'NAVIGATE_TO_HOME_BIO_SUCCESS';
+
+  @override
+  String get debug_nav_login_bio_fail => 'NAVIGATE_TO_LOGIN_BIO_FAIL';
+
+  @override
+  String get debug_nav_home_session_active => 'NAVIGATE_TO_HOME_SESSION_ACTIVE';
+
+  @override
+  String get auth_required_fallback => 'Authentication Required';
+
+  @override
+  String get login_success => 'Login successful';
+
+  @override
+  String get signup_success => 'Registration successful';
+
+  @override
+  String home_welcome_user(Object name) {
+    return 'Hello, $name';
+  }
+
+  @override
+  String get tab_food => 'Food';
+
+  @override
+  String get tab_plant => 'Plants';
+
+  @override
+  String get tab_pet => 'Pets';
+
+  @override
+  String get common_logout => 'Logout';
+
+  @override
+  String get logout_success => 'Logged out successfully';
+
+  @override
+  String get food_scan_title => 'Food Scanner';
+
+  @override
+  String get food_analyzing => 'Analyzing nutritional content...';
+
+  @override
+  String get food_analysis_success => 'Analysis Complete';
+
+  @override
+  String get food_calories => 'Calories';
+
+  @override
+  String get food_protein => 'Protein';
+
+  @override
+  String get food_carbs => 'Carbs';
+
+  @override
+  String get food_fat => 'Fat';
+
+  @override
+  String get food_btn_scan => 'Scan Food';
+
+  @override
+  String get food_btn_gallery => 'Gallery';
+
+  @override
+  String get food_empty_history => 'No food scans yet.';
+
+  @override
+  String get domain_pets_navigation => 'Pets Navigation';
+
+  @override
+  String get pets_navigation_subtitle => 'Pet Directions Assistant';
+
+  @override
+  String get menu_profile => 'Profile';
+
+  @override
+  String get menu_settings => 'Settings';
+
+  @override
+  String get menu_help => 'Help';
+
+  @override
+  String get stub_map_module => 'Map Module Coming Soon';
+
+  @override
+  String get user_demo_name => 'User Demo';
+
+  @override
+  String get user_default_name => 'User';
+
+  @override
+  String get food_mock_grilled_chicken => 'Grilled Chicken Salad';
+
+  @override
+  String get food_key_calories => 'calories';
+
+  @override
+  String get food_key_protein => 'protein';
+
+  @override
+  String get food_key_carbs => 'carbs';
+
+  @override
+  String get food_key_fat => 'fat';
+
+  @override
+  String get food_key_name => 'name';
+
+  @override
+  String get test_food => 'Test: Food';
+
+  @override
+  String get test_plants => 'Test: Plants';
+
+  @override
+  String get test_pets => 'Test: Pets';
+
+  @override
+  String get test_navigation => 'Test: Navigation';
+
+  @override
+  String get debug_gallery_title => 'Color Gallery';
+
+  @override
+  String get auth_biometric_reason => 'Scan to verify your identity';
+
+  @override
+  String get app_name_plus => 'ScanNut+';
+
+  @override
+  String get pdf_copyright => '© 2026 Multiverso Digital';
+
+  @override
+  String get pdf_page => 'Page';
+
+  @override
+  String get dev_name => 'Multiverso Digital';
+
+  @override
+  String get dev_email => 'contato@multiversodigital.com.br';
+
+  @override
+  String get about_title => 'About';
+
+  @override
+  String get version_label => 'Version';
+
+  @override
+  String get contact_label => 'Contact';
+
+  @override
+  String get copyright_label => '© 2026 Multiverso Digital';
+
+  @override
+  String get profile_title => 'Profile';
+
+  @override
+  String get profile_email_label => 'Email';
+
+  @override
+  String get profile_biometric_enable => 'Enable Biometric Auth';
+
+  @override
+  String get common_confirm_exit => 'Do you really want to exit?';
+
+  @override
+  String get profile_change_password => 'Change Password';
+
+  @override
+  String get password_current => 'Current Password';
+
+  @override
+  String get password_new => 'New Password';
+
+  @override
+  String get password_confirm => 'Confirm Password';
+
+  @override
+  String get password_save => 'Save New Password';
+
+  @override
+  String get password_match_error => 'Passwords do not match';
+
+  @override
+  String get password_success => 'Password changed successfully';
+
+  @override
+  String get default_user_name => 'User';
+
+  @override
+  String get pet_capture_title => 'Pet Capture';
+
+  @override
+  String get action_take_photo => 'Take Photo';
+
+  @override
+  String get action_upload_gallery => 'Upload from Gallery';
+
+  @override
+  String get species_label => 'Species';
+
+  @override
+  String get species_dog => 'Dog';
+
+  @override
+  String get species_cat => 'Cat';
+
+  @override
+  String get image_type_label => 'Image Type';
+
+  @override
+  String get type_pet => 'Pet';
+
+  @override
+  String get type_label => 'Label';
+
+  @override
+  String get pet_saved_success => 'Pet saved successfully';
+
+  @override
+  String get label_analysis_pending => 'Label analysis coming soon';
+
+  @override
+  String get action_retake => 'Retake';
+
+  @override
+  String get label_name => 'Name';
+
+  @override
+  String get label_email => 'Email';
+
+  @override
+  String get hint_user_name => 'Enter your name';
+
+  @override
+  String get section_account_data => 'Account Data';
+
+  @override
+  String get help_title => 'Help & Support';
+
+  @override
+  String get help_how_to_use => 'How to Use';
+
+  @override
+  String get help_pet_scan_tip =>
+      'Scan your pet or food labels for nutritional analysis.';
+
+  @override
+  String get help_privacy_policy => 'Privacy Policy';
+
+  @override
+  String get help_contact_support => 'Contact Support';
+
+  @override
+  String get help_dev_info => 'Developed by Multiverso Digital';
+
+  @override
+  String get help_privacy_content =>
+      'Your data is processed locally whenever possible. We respect your privacy.';
+
+  @override
+  String get help_email_subject => 'ScanNut+ Support';
+
+  @override
+  String get help_story_title => 'Our Story';
+
+  @override
+  String get help_origin_story =>
+      'The name of this app is a tribute to my pet, Nut. My idea was to create a tool for complete management of his life, from routine organization to the creation of healthy menus. In daily life, ScanNut helps me record every occurrence. For stool, urine, and blood tests, I use AI to get initial insights through image analysis — a technological support I always share with the vet. Additionally, I included a plant guide to identify toxic species and ensure his safety. Thinking about my own health, I added the Food Scan to monitor calories, vitamins, and generate meal plans with shopping lists. I feel that, now, the app is complete for both of us.';
+
+  @override
+  String get help_analysis_guide_title => 'AI Analysis Guide';
+
+  @override
+  String get help_disclaimer =>
+      'This analysis is visual only and does not replace a veterinary evaluation.';
+
+  @override
+  String get help_section_pet_title => 'General Pet Analysis';
+
+  @override
+  String get help_section_pet_desc =>
+      'Analyzes species, size estimate, body posture (pain/comfort signs), and environment safety.';
+
+  @override
+  String get help_section_wound_title => 'Wounds & Injuries';
+
+  @override
+  String get help_section_wound_desc =>
+      'Evaluates size, visual aspect (pus/blood presence), redness, and signs of inflammation.';
+
+  @override
+  String get help_section_stool_title => 'Stool Analysis';
+
+  @override
+  String get help_section_stool_desc =>
+      'Checks consistency (Bristol scale), color changes, and visible presence of mucus or worms.';
+
+  @override
+  String get help_section_mouth_title => 'Dental & Mouth';
+
+  @override
+  String get help_section_mouth_desc =>
+      'Inspects gum color (pale/red), tartar buildup, and broken teeth indicators.';
+
+  @override
+  String get help_section_eyes_title => 'Eyes Health';
+
+  @override
+  String get help_section_eyes_desc =>
+      'Detects secretion, redness, cloudiness (opacity), and potential irritation signs.';
+
+  @override
+  String get help_section_skin_title => 'Skin & Coat';
+
+  @override
+  String get help_section_skin_desc =>
+      'Identifies hair loss patches, redness, flakes, and unusual spots or lumps.';
+
+  @override
+  String get help_can_do => 'What AI can detect';
+
+  @override
+  String get help_cannot_do => 'Limit: Needs Vet confirmation';
+
+  @override
+  String get pet_capture_instructions =>
+      'The AI analyzes images of the pet, wounds, stool, mouth, eyes, and skin. One at a time.';
+
+  @override
+  String get help_domain_pet_title => 'Pet Domain';
+
+  @override
+  String get help_domain_pet_desc =>
+      'Complete management for Dogs and Cats: AI for visual analysis, health routines, and toxic plant safety guide.';
+
+  @override
+  String get help_domain_food_title => 'Food Domain';
+
+  @override
+  String get help_domain_food_desc =>
+      'Your health management: Food scanning, nutrient counting, and healthy meal plan creation.';
+
+  @override
+  String get help_domain_plant_title => 'Plant Domain';
+
+  @override
+  String get help_domain_plant_desc =>
+      'Plant Guide: Identify species in your garden or home and know instantly if they are toxic to your pet, based on real botanical data.';
+}

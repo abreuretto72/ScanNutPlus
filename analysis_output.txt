@@ -1,0 +1,20 @@
+Analyzing ScanNutPlus...                                        
+
+  error - The name 'PetPrompts' is already defined - lib\features\pet\data\pet_constants.dart:57:7 - duplicate_definition
+   info - Parameter 'key' could be a super parameter - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:7:9 - use_super_parameters
+  error - The getter 'visualSummaryStart' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:13:58 - undefined_getter
+  error - The getter 'visualSummaryEnd' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:14:56 - undefined_getter
+  error - The argument type 'double' can't be assigned to the parameter type 'int'.  - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:20:49 - argument_type_not_assignable
+  error - The getter 'visualSummaryStart' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:20:75 - undefined_getter
+  error - The getter 'urgencyData' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:30:43 - undefined_getter
+  error - The getter 'parseGreen' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:34:48 - undefined_getter
+  error - The getter 'parseVerde' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:34:98 - undefined_getter
+  error - The getter 'parseYellow' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:36:55 - undefined_getter
+  error - The getter 'parseAmarelo' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:36:106 - undefined_getter
+  error - The getter 'parseRed' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:38:55 - undefined_getter
+  error - The getter 'parseVermelho' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:38:103 - undefined_getter
+  error - The getter 'systemData' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:41:50 - undefined_getter
+  error - The getter 'summaryData' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:43:50 - undefined_getter
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\pet\presentation\widgets\pet_visual_summary_card.dart:57:28 - deprecated_member_use
+warning - Unused import: 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart' - lib\features\pet\services\pet_base_ai_service.dart:9:8 - unused_import
+

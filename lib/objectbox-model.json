@@ -1,0 +1,140 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8969489880642630653",
+      "lastPropertyId": "5:468359755930285326",
+      "name": "UserEntity",
+      "properties": [
+        {
+          "id": "1:3756887049867524224",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1095928158348022768",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:6861776087152607584",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "4:1103686336142285649",
+          "name": "isActive",
+          "type": 1
+        },
+        {
+          "id": "5:468359755930285326",
+          "name": "photoPath",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:7190639932575767621",
+      "lastPropertyId": "8:6543491016059924",
+      "name": "FoodLogEntity",
+      "properties": [
+        {
+          "id": "1:8168052279142380922",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6785722462571130404",
+          "name": "foodName",
+          "type": 9
+        },
+        {
+          "id": "3:704541705861918533",
+          "name": "calories",
+          "type": 8
+        },
+        {
+          "id": "4:3438631998267807140",
+          "name": "protein",
+          "type": 8
+        },
+        {
+          "id": "5:5713020604719377356",
+          "name": "carbs",
+          "type": 8
+        },
+        {
+          "id": "6:6430850188894604022",
+          "name": "fat",
+          "type": 8
+        },
+        {
+          "id": "7:1410380697912162436",
+          "name": "imagePath",
+          "type": 9
+        },
+        {
+          "id": "8:6543491016059924",
+          "name": "timestamp",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:783428171470640664",
+      "lastPropertyId": "6:6047037066559026534",
+      "name": "PetEntity",
+      "properties": [
+        {
+          "id": "1:8038105039076692754",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4292303367666524408",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:3154268870460813651",
+          "name": "species",
+          "type": 9
+        },
+        {
+          "id": "4:7954506711847462263",
+          "name": "imagePath",
+          "type": 9
+        },
+        {
+          "id": "5:629167436274531319",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "6:6047037066559026534",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:783428171470640664",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
