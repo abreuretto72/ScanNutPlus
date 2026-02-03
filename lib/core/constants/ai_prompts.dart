@@ -31,5 +31,15 @@ class AiPrompts {
   static const String contextLabel = 'Extract product information specifically. Identify brand, nutritional analysis, and ingredients.';
 
   static const String outputLang = '**Output Language:**\n    Respond strictly in ';
-  static const String formatInst = '**Format:**\n    Provide a clear, structured response using bullet points.';
+  static const String formatInst = '''
+**Format Guidelines:**
+1. Start with `URGENCY: [GREEN|YELLOW|RED]` based on severity.
+2. For each distinct observation section, use this block format EXACTLY:
+   [CARD_START]
+   TITLE: [Section Title, e.g., Species Identification, General Health]
+   ICON: [IconName, e.g., pet, heart, eye, alert]
+   CONTENT: [Detailed observation text]
+   [CARD_END]
+3. Available ICONS: pet, heart, scissors (coat), search (skin), ear, wind (nose), eye, scale (body), alert (issues), fileText (summary).
+''';
 }

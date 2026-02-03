@@ -99,21 +99,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
         nextScreen = const HomeView();
         decisionLog = local.debug_nav_home_bio_success;
         
-        // Green Success Feedback (SnackBar)
-        ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(
-            content: Text(
-              local.biometric_success,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            backgroundColor: Colors.green.shade900,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            margin: const EdgeInsets.all(16),
-            duration: const Duration(seconds: 2),
-          ),
-        );
+        // Protocolo Master 2026: Silent Login (No SnackBar)
       } else {
         // Fallback or Cancel
         nextScreen = const LoginPage();

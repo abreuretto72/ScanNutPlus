@@ -79,6 +79,33 @@ class PetConstants {
   
   static const String valTrue = 'true';
   static const String valFalse = 'false';
+  static const String keyCoat = 'coat';
+  static const String keySearch = 'search';
+  static const String keySkin = 'skin';
+  static const String keyEar = 'ear';
+  static const String keyWind = 'wind';
+  static const String keyNose = 'nose';
+  static const String keyEye = 'eye';
+  static const String keyEyes = 'eyes';
+  static const String keyScale = 'scale';
+  static const String keyBody = 'body';
+  static const String keyAlert = 'alert';
+  static const String keyIssues = 'issues';
+  static const String keyFileText = 'filetext';
+  static const String keySummary = 'summary';
+  static const String keyCritical = 'critical';
+  static const String keyImmediateAttention = 'immediate attention';
+  static const String keyMonitor = 'monitor';
+  
+  static const String regexCardStart = r'\[CARD_START\](.*?)\[CARD_END\]';
+  static const String regexTitle = r'TITLE: (.*?)\n';
+  static const String regexContent = r'CONTENT: (.*?)$';
+  static const String regexIcon = r'ICON: (.*?)\n';
+  static const String keyAnalyse = 'Analysis';
+  static const String keyInfo = 'info';
+  static const String keyAnalysisSummary = 'Analysis Summary';
+  static const String keyHeart = 'heart';
+  static const String keyScissors = 'scissors';
 }
 
 class PetPrompts {

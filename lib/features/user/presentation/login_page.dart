@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
       if (!mounted) return;
 
       if (didAuthenticate) {
-        _performSuccessTransition(AppLocalizations.of(context)!.biometric_success);
+        _performSuccessTransition();
       } else {
         _showFeedback(
           isError: true,
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
     if (email.isNotEmpty && password.isNotEmpty) {
        // Decoupled from local auth. Standard password login success.
        simpleAuthService.quickLogin(email, password).then((_) {
-          _performSuccessTransition(l10n.login_success);
+          _performSuccessTransition();
        });
     } else {
        _showFeedback(
@@ -113,33 +113,26 @@ class _LoginPageState extends State<LoginPage> {
   void _handleSignUp() {
     // Simulated Sign Up success logic
      final l10n = AppLocalizations.of(context)!;
-     _performSuccessTransition(l10n.signup_success);
+     _performSuccessTransition();
   }
 
-  void _performSuccessTransition(String successMessage) {
+  void _performSuccessTransition() {
     if (!mounted) return;
     
-    // 1. Fluxo de Sucesso: Feedback Verde (SnackBar)
-    _showFeedback(
-       isError: false,
-       message: successMessage,
-    );
+    // Protocolo Master 2026: Silent Login
+    // Explicitly hide any existing snackbars to prevent "Biometrics verified successfully" or similar from lingering.
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-    // 1. Fluxo de Sucesso: Delay 800ms (Protocolo Master)
-    Future.delayed(const Duration(milliseconds: 800), () {
-      if (mounted) {
-        // 3. Ergonomia: Transição Suave (Fade 400ms)
-        Navigator.of(context).pushReplacement(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => const HomeView(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-            transitionDuration: const Duration(milliseconds: 400),
-          ),
-        );
-      }
-    });
+    // No success SnackBar. Immediate navigation.
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => const HomeView(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        transitionDuration: const Duration(milliseconds: 300), // Faster transition
+      ),
+    );
   }
 
   void _showFeedback({required bool isError, required String message}) {
@@ -166,8 +159,11 @@ class _LoginPageState extends State<LoginPage> {
       duration: isError ? const Duration(seconds: 3) : const Duration(milliseconds: 1500),
     );
 
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    // Only show SnackBar if it is an error (Protocolo Master 2026)
+    if (isError) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   // void _updateFeedback... removed

@@ -127,7 +127,11 @@ class PetAiService extends PetBaseAiService {
       final contextInstruction = _getContextInstruction(type);
       final String analysisType = _mapTypeToAnalysis(type);
       
-      if (kDebugMode) debugPrint('[PET_STEP_7]: Sending request to BaseAIService...');
+      if (kDebugMode) {
+         debugPrint('[SCAN_NUT_LOG] Iniciando chamada LLM/RAG...');
+         debugPrint('[SCAN_NUT_LOG] Nome do Pet: $petName | UUID: $petUuid');
+         debugPrint('[SCAN_NUT_LOG] Contexto: ${type.name} | Lang: $languageCode');
+      }
 
       // Call with explicit timeout 60s
       final result = await analyzePetImageBase(
@@ -139,6 +143,7 @@ class PetAiService extends PetBaseAiService {
         petUuid: petUuid, 
         analysisType: analysisType, 
       ).timeout(const Duration(seconds: 60), onTimeout: () {
+         if (kDebugMode) debugPrint('[SCAN_NUT_ERROR] Timeout na resposta da IA.');
          throw TimeoutException(AppKeys.petErrorTimeout); 
       });
 
@@ -148,7 +153,10 @@ class PetAiService extends PetBaseAiService {
       if (kDebugMode) {
         final durationSec = (stopwatch.elapsedMilliseconds / 1000).toStringAsFixed(2);
         debugPrint('${AppKeys.logColorPurple}${AppKeys.logPrefixPetTrace}: Success in ${durationSec}s${AppKeys.logColorReset}');
-        debugPrint('${AppKeys.logColorBlue}${AppKeys.logPrefixPetResponse}: $result${AppKeys.logColorReset}');
+        
+        // Log truncated response for sanity check
+        final safeLog = result.length > 100 ? '${result.substring(0, 100)}...' : result;
+        debugPrint('[SCAN_NUT_LOG] Resposta recebida da LLM: $safeLog');
       }
 
       return (result, stopwatch.elapsed, petName);
@@ -158,7 +166,12 @@ class PetAiService extends PetBaseAiService {
       dev.Timeline.finishSync();
       
       if (kDebugMode) {
-        debugPrint('${AppKeys.logColorRed}${AppKeys.logPrefixPetError}: Type: ${e.runtimeType} | Message: $e | Stack: $stackTrace${AppKeys.logColorReset}');
+        debugPrint('${AppKeys.logColorRed}[SCAN_NUT_ERROR] Falha na análise: $e${AppKeys.logColorReset}');
+        debugPrint('${AppKeys.logColorRed}[SCAN_NUT_ERROR] Stacktrace: $stackTrace${AppKeys.logColorReset}');
+        
+        if (e is SocketException) {
+           debugPrint('[SCAN_NUT_ERROR] Falha na comunicação com o backend (sem internet?)');
+        }
       }
       rethrow;
     }

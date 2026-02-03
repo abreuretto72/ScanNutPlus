@@ -1,0 +1,6 @@
+{
+    "dart.previewFlutterUiGuides": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.formatOnSave": true,
+    "flutterStylizer.groupAndSort": true
+}

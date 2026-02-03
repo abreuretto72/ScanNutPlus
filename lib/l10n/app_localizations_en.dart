@@ -9,13 +9,13 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get app_title => 'ScanNut Plus';
+  String get app_title => 'ScanNut+';
 
   @override
   String get login_title => 'Login';
 
   @override
-  String get login_title_plus => 'ScanNutPlus';
+  String get login_title_plus => 'ScanNut+';
 
   @override
   String get login_subtitle => 'Access your digital wellness universe';
@@ -90,7 +90,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biometric_tooltip => 'Biometrics';
 
   @override
-  String get common_copyright => 'ScanNut © 2026 Multiverso Digital';
+  String get common_copyright => 'ScanNut+ © 2026 Multiverso Digital';
 
   @override
   String get tabFood => 'Food';
@@ -111,7 +111,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home_welcome => 'Welcome Home';
 
   @override
-  String get onboarding_title => 'Welcome to ScanNut';
+  String get onboarding_title => 'Welcome to ScanNut+';
 
   @override
   String get onboarding_welcome =>
@@ -261,7 +261,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get app_name_plus => 'ScanNut+';
 
   @override
-  String get pdf_copyright => '© 2026 Multiverso Digital';
+  String get pdf_copyright => '© 2026 ScanNut+ Multiverso Digital';
 
   @override
   String get pdf_page => 'Page';
@@ -480,4 +480,98 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get help_domain_plant_desc =>
       'Plant Guide: Identify species in your garden or home and know instantly if they are toxic to your pet, based on real botanical data.';
+
+  @override
+  String get pet_capture_info_title => 'ScanNut+ AI Capabilities';
+
+  @override
+  String get pet_capture_capability_labels =>
+      'Food Label & Ingredient Analysis';
+
+  @override
+  String get pet_capture_capability_exams => 'Clinical Reports & Lab Exams';
+
+  @override
+  String get pet_capture_capability_biometrics =>
+      'Posture & Biometric Monitoring';
+
+  @override
+  String get pet_capture_capability_visual => 'Visual Health Inspection';
+
+  @override
+  String get pet_input_name_hint => 'What is the pet\'s name?';
+
+  @override
+  String get pet_result_status_stable => 'Status: Stable';
+
+  @override
+  String get pet_result_summary_title => 'Analysis Summary';
+
+  @override
+  String get pet_result_visual_empty => 'No visual anomalies detected';
+
+  @override
+  String pet_analysis_error_generic(Object error) {
+    return 'Analysis Error: $error';
+  }
+
+  @override
+  String get pet_urgency_red => 'urgency: red';
+
+  @override
+  String get pet_urgency_immediate => 'immediate attention';
+
+  @override
+  String get pet_urgency_critical => 'critical';
+
+  @override
+  String get pet_urgency_yellow => 'urgency: yellow';
+
+  @override
+  String get pet_urgency_monitor => 'monitor';
+
+  @override
+  String get pet_status_critical => 'Status: Critical Attention';
+
+  @override
+  String get pet_status_monitor => 'Status: Monitor';
+
+  @override
+  String get pet_mock_visual_confirm => 'Visual analysis confirms structure...';
+
+  @override
+  String get pet_label_pet => 'Pet';
+
+  @override
+  String get pet_section_species => 'Species Identification';
+
+  @override
+  String get pet_section_health => 'General Health & Behavior';
+
+  @override
+  String get pet_section_coat => 'General Coat Condition';
+
+  @override
+  String get pet_section_skin => 'Skin Appearance';
+
+  @override
+  String get pet_section_ears => 'Ear Health';
+
+  @override
+  String get pet_section_nose => 'Nose';
+
+  @override
+  String get pet_section_eyes => 'Eyes';
+
+  @override
+  String get pet_section_body => 'Body Conditions';
+
+  @override
+  String get pet_section_issues => 'Potential Issues';
+
+  @override
+  String get pet_status_healthy => 'HEALTHY STATUS';
+
+  @override
+  String get pet_status_attention => 'ATTENTION REQUIRED';
 }

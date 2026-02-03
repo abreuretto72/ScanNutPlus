@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @app_title.
   ///
   /// In en, this message translates to:
-  /// **'ScanNut Plus'**
+  /// **'ScanNut+'**
   String get app_title;
 
   /// No description provided for @login_title.
@@ -113,7 +113,7 @@ abstract class AppLocalizations {
   /// No description provided for @login_title_plus.
   ///
   /// In en, this message translates to:
-  /// **'ScanNutPlus'**
+  /// **'ScanNut+'**
   String get login_title_plus;
 
   /// No description provided for @login_subtitle.
@@ -263,7 +263,7 @@ abstract class AppLocalizations {
   /// No description provided for @common_copyright.
   ///
   /// In en, this message translates to:
-  /// **'ScanNut © 2026 Multiverso Digital'**
+  /// **'ScanNut+ © 2026 Multiverso Digital'**
   String get common_copyright;
 
   /// No description provided for @tabFood.
@@ -305,7 +305,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboarding_title.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to ScanNut'**
+  /// **'Welcome to ScanNut+'**
   String get onboarding_title;
 
   /// No description provided for @onboarding_welcome.
@@ -599,7 +599,7 @@ abstract class AppLocalizations {
   /// No description provided for @pdf_copyright.
   ///
   /// In en, this message translates to:
-  /// **'© 2026 Multiverso Digital'**
+  /// **'© 2026 ScanNut+ Multiverso Digital'**
   String get pdf_copyright;
 
   /// No description provided for @pdf_page.
@@ -1009,6 +1009,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Plant Guide: Identify species in your garden or home and know instantly if they are toxic to your pet, based on real botanical data.'**
   String get help_domain_plant_desc;
+
+  /// No description provided for @pet_capture_info_title.
+  ///
+  /// In en, this message translates to:
+  /// **'ScanNut+ AI Capabilities'**
+  String get pet_capture_info_title;
+
+  /// No description provided for @pet_capture_capability_labels.
+  ///
+  /// In en, this message translates to:
+  /// **'Food Label & Ingredient Analysis'**
+  String get pet_capture_capability_labels;
+
+  /// No description provided for @pet_capture_capability_exams.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinical Reports & Lab Exams'**
+  String get pet_capture_capability_exams;
+
+  /// No description provided for @pet_capture_capability_biometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Posture & Biometric Monitoring'**
+  String get pet_capture_capability_biometrics;
+
+  /// No description provided for @pet_capture_capability_visual.
+  ///
+  /// In en, this message translates to:
+  /// **'Visual Health Inspection'**
+  String get pet_capture_capability_visual;
+
+  /// No description provided for @pet_input_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'What is the pet\'s name?'**
+  String get pet_input_name_hint;
+
+  /// No description provided for @pet_result_status_stable.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: Stable'**
+  String get pet_result_status_stable;
+
+  /// No description provided for @pet_result_summary_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis Summary'**
+  String get pet_result_summary_title;
+
+  /// No description provided for @pet_result_visual_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No visual anomalies detected'**
+  String get pet_result_visual_empty;
+
+  /// No description provided for @pet_analysis_error_generic.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis Error: {error}'**
+  String pet_analysis_error_generic(Object error);
+
+  /// No description provided for @pet_urgency_red.
+  ///
+  /// In en, this message translates to:
+  /// **'urgency: red'**
+  String get pet_urgency_red;
+
+  /// No description provided for @pet_urgency_immediate.
+  ///
+  /// In en, this message translates to:
+  /// **'immediate attention'**
+  String get pet_urgency_immediate;
+
+  /// No description provided for @pet_urgency_critical.
+  ///
+  /// In en, this message translates to:
+  /// **'critical'**
+  String get pet_urgency_critical;
+
+  /// No description provided for @pet_urgency_yellow.
+  ///
+  /// In en, this message translates to:
+  /// **'urgency: yellow'**
+  String get pet_urgency_yellow;
+
+  /// No description provided for @pet_urgency_monitor.
+  ///
+  /// In en, this message translates to:
+  /// **'monitor'**
+  String get pet_urgency_monitor;
+
+  /// No description provided for @pet_status_critical.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: Critical Attention'**
+  String get pet_status_critical;
+
+  /// No description provided for @pet_status_monitor.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: Monitor'**
+  String get pet_status_monitor;
+
+  /// No description provided for @pet_mock_visual_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Visual analysis confirms structure...'**
+  String get pet_mock_visual_confirm;
+
+  /// No description provided for @pet_label_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet'**
+  String get pet_label_pet;
+
+  /// No description provided for @pet_section_species.
+  ///
+  /// In en, this message translates to:
+  /// **'Species Identification'**
+  String get pet_section_species;
+
+  /// No description provided for @pet_section_health.
+  ///
+  /// In en, this message translates to:
+  /// **'General Health & Behavior'**
+  String get pet_section_health;
+
+  /// No description provided for @pet_section_coat.
+  ///
+  /// In en, this message translates to:
+  /// **'General Coat Condition'**
+  String get pet_section_coat;
+
+  /// No description provided for @pet_section_skin.
+  ///
+  /// In en, this message translates to:
+  /// **'Skin Appearance'**
+  String get pet_section_skin;
+
+  /// No description provided for @pet_section_ears.
+  ///
+  /// In en, this message translates to:
+  /// **'Ear Health'**
+  String get pet_section_ears;
+
+  /// No description provided for @pet_section_nose.
+  ///
+  /// In en, this message translates to:
+  /// **'Nose'**
+  String get pet_section_nose;
+
+  /// No description provided for @pet_section_eyes.
+  ///
+  /// In en, this message translates to:
+  /// **'Eyes'**
+  String get pet_section_eyes;
+
+  /// No description provided for @pet_section_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Conditions'**
+  String get pet_section_body;
+
+  /// No description provided for @pet_section_issues.
+  ///
+  /// In en, this message translates to:
+  /// **'Potential Issues'**
+  String get pet_section_issues;
+
+  /// No description provided for @pet_status_healthy.
+  ///
+  /// In en, this message translates to:
+  /// **'HEALTHY STATUS'**
+  String get pet_status_healthy;
+
+  /// No description provided for @pet_status_attention.
+  ///
+  /// In en, this message translates to:
+  /// **'ATTENTION REQUIRED'**
+  String get pet_status_attention;
 }
 
 class _AppLocalizationsDelegate

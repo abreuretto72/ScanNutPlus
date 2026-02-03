@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
+import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart'; // Added back
 import 'package:scannutplus/features/pet/data/models/pet_entity.dart';
 import 'package:scannutplus/features/pet/data/pet_service.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
@@ -11,12 +12,9 @@ import 'package:scannutplus/features/pet/services/pet_ai_service.dart';
 import 'package:scannutplus/features/pet/services/pet_pdf_service.dart';
 import 'package:printing/printing.dart';
 import 'package:scannutplus/features/pet/presentation/pet_analysis_result_view.dart';
-import 'package:scannutplus/features/pet/services/pet_voice_parser_service.dart';
-import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
+
 import 'package:scannutplus/features/pet/data/pet_rag_service.dart'; // For saving identity
 import 'package:scannutplus/features/pet/data/pet_repository.dart';
-import 'package:speech_to_text/speech_to_text.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class PetCaptureView extends StatefulWidget {
   const PetCaptureView({super.key});
@@ -28,8 +26,7 @@ class PetCaptureView extends StatefulWidget {
 class _PetCaptureViewState extends State<PetCaptureView> {
   String? _imagePath;
   String _selectedSpecies = PetConstants.speciesDog;
-  bool _isLabel = false; 
-  final SpeechToText _speechToText = SpeechToText();
+  bool _isLabel = false;
 
   final ImagePicker _picker = ImagePicker();
 
@@ -64,12 +61,12 @@ class _PetCaptureViewState extends State<PetCaptureView> {
       // For now, hardcode 'pt' or get from User settings. 
       // Ideally get from Localizations.localeOf(context).languageCode
       final lang = Localizations.localeOf(context).languageCode;
-      final type = _isLabel ? PetImageType.label : PetImageType.general;
+      // AI Auto-Inference: Default to general, let AI classify internal context
+      const type = PetImageType.general;
       
       if (kDebugMode) {
+         debugPrint('[SCAN_NUT_LOG] Imagem carregada: $_imagePath');
          print('[PET_STEP_1]: Analyze button pressed. Starting flow.');
-         print('[PET_STEP_2]: Validating image path: $_imagePath');
-         print('[PET_STEP_3]: Calling petAiService...');
       }
 
       try {
@@ -94,29 +91,28 @@ class _PetCaptureViewState extends State<PetCaptureView> {
           ),
         );
       } on PetIdentityException catch (_) {
-         // --- VOICE FLOW (AUTOMATED STT) ---
-         // 1. Start Listening Automatically
-         final voiceInput = await _startListening();
+         if (kDebugMode) debugPrint('[SCAN_NUT_LOG] Identidade não confirmada. Solicitando nome...');
          
-         if (voiceInput != null && voiceInput.isNotEmpty) {
-            // 2. Parse
-            final data = petVoiceParserService.parse(voiceInput);
-            final name = data[PetConstants.fieldName] ?? PetConstants.defaultPetName;
-            final isNeutered = data[PetConstants.fieldIsNeutered] == PetConstants.valTrue;
+         // --- SIMPLIFIED FLOW (Protocolo ScanNut+) ---
+         // 1. Request Name Directly
+         final nameInput = await _requestNameInput();
+         
+         if (nameInput != null && nameInput.isNotEmpty) {
+            final name = nameInput;
+            if (kDebugMode) debugPrint('[SCAN_NUT_LOG] Nome capturado: $name');
             
-            // 3. Save Identity for RAG
+            // 3. Save Identity for RAG (Name only, leave others for later)
+            if (kDebugMode) debugPrint('[SCAN_NUT_LOG] Salvando identidade no RAG...');
             final bytes = await File(_imagePath!).readAsBytes();
             final uuid = DateTime.now().millisecondsSinceEpoch.toString(); 
             
             final ragService = PetRagService(PetRepository());
-            await ragService.saveVisualIdentity(uuid, name, bytes, isNeutered: isNeutered); 
+            await ragService.saveVisualIdentity(uuid, name, bytes, isNeutered: false); // Default false, simplified
             
             if (!mounted) return;
-            ScaffoldMessenger.of(context).showSnackBar(
-               SnackBar(content: Text(PetLocalizations.of(context)!.pet_rag_new_identity(name))),
-            );
-
+            
             // 4. Retry Analysis with Metadata
+            if (kDebugMode) debugPrint('[SCAN_NUT_LOG] Reiniciando análise com metadados...');
             final (result, duration, _) = await petAiService.analyzePetImage(
                _imagePath!, 
                lang, 
@@ -137,111 +133,119 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                     setState(() => _imagePath = null);
                   },
                   onShare: () => _handleShare(result),
-                  petDetails: data, // Pass parsed data map directly
+                  petDetails: { PetConstants.fieldName: name }, // Just name
                 ),
               ),
             );
          } else {
-           // User cancelled voice or no input
+           // User cancelled
+           if (kDebugMode) debugPrint('[SCAN_NUT_LOG] Usuário cancelou a identificação.');
            setState(() => _isAnalyzing = false);
          }
-      } catch (e) {
-         debugPrint(e.toString());
+      } catch (e, stack) {
+         if (kDebugMode) {
+            debugPrint('[SCAN_NUT_ERROR] Erro na View: $e');
+            debugPrint('[SCAN_NUT_ERROR] Stack: $stack');
+         }
+         
          setState(() => _isAnalyzing = false);
+         
+         if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(AppLocalizations.of(context)!.pet_analysis_error_generic(e.toString())), 
+                backgroundColor: Colors.redAccent,
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+         }
       }
     } finally {
        if (mounted) setState(() => _isAnalyzing = false);
     }
   }
 
-  Future<String?> _startListening() async {
-    // 1. Permission
-    var status = await Permission.microphone.status;
-    if (!status.isGranted) {
-      status = await Permission.microphone.request();
-      if (!status.isGranted) return null;
-    }
+  Future<String?> _requestNameInput() async {
+    String name = '';
+    final l10n = AppLocalizations.of(context)!;
+    TextEditingController controller = TextEditingController();
 
-    // 2. Init
-    bool available = await _speechToText.initialize();
-    if (!available) return null;
-
-    if (!mounted) return null;
-    
-    // 3. Show UI (Dialog with Listening State)
-    String recognizedText = '';
-    
     return await showDialog<String>(
       context: context,
-      barrierDismissible: false,
-      builder: (ctx) {
+      barrierDismissible: false, // Force input or cancel explicitly
+      builder: (context) {
         return StatefulBuilder(
           builder: (context, setDialogState) {
-            
-            // Auto start logic inside dialog
-            if (!_speechToText.isListening && recognizedText.isEmpty) {
-               _speechToText.listen(
-                 onResult: (result) {
-                    setDialogState(() {
-                      recognizedText = result.recognizedWords;
-                    });
-                 },
-                 localeId: Localizations.localeOf(context).toString(),
-                 cancelOnError: true,
-               );
-            }
-
             return AlertDialog(
               backgroundColor: const Color(0xFF121A2B),
-              title: Row(children: [
-                 const Icon(LucideIcons.mic, color: Color(0xFF10AC84)), // Green for listening
-                 const SizedBox(width: 8),
-                 Text(PetLocalizations.of(ctx)!.pet_voice_who_is_this, style: const TextStyle(color: Colors.white))
-              ]),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                   Text(PetLocalizations.of(ctx)!.pet_voice_instruction, style: const TextStyle(color: Colors.white70)),
+                   // ScanNut+ Pet Branding
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       const Icon(LucideIcons.sparkles, color: Color(0xFFFFD1DC), size: 20),
+                       const SizedBox(width: 8),
+                       Text(
+                         l10n.pet_capture_info_title, 
+                         style: const TextStyle(
+                           color: Colors.white,
+                           fontWeight: FontWeight.bold,
+                           fontSize: 16,
+                         ),
+                       ),
+                     ],
+                   ),
                    const SizedBox(height: 24),
                    
-                   // Dynamic Wave/Text
+                   // Minimalist Name Input (Keyboard Only)
                    Container(
-                     padding: const EdgeInsets.all(16),
-                     decoration: BoxDecoration(
-                       color: const Color(0xFF1F3A5F),
-                       borderRadius: BorderRadius.circular(12),
-                       border: Border.all(color: _speechToText.isListening ? const Color(0xFF10AC84) : Colors.transparent),
-                     ),
-                     child: Text(
-                       recognizedText.isEmpty ? PetLocalizations.of(ctx)!.pet_voice_hint : recognizedText,
-                       style: TextStyle(
-                         color: recognizedText.isEmpty ? Colors.white30 : Colors.white,
-                         fontStyle: recognizedText.isEmpty ? FontStyle.italic : FontStyle.normal,
-                       ),
-                       textAlign: TextAlign.center,
-                     ),
-                   ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: const Color(0xFF10AC84).withValues(alpha: 0.4)), // Illuminated Emerald
+                      color: const Color(0xFF1F3A5F).withValues(alpha: 0.3),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.pets, color: Color(0xFF10AC84)), // Left Icon
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: TextField(
+                            controller: controller,
+                            autofocus: true, // Keyboard opens immediately
+                            style: const TextStyle(color: Colors.white),
+                            cursorColor: const Color(0xFF10AC84),
+                            decoration: InputDecoration(
+                              hintText: l10n.pet_input_name_hint,
+                              hintStyle: const TextStyle(color: Colors.white24),
+                              border: InputBorder.none,
+                            ),
+                            onChanged: (val) {
+                               setDialogState(() {
+                                 name = val;
+                               });
+                            },
+                            onSubmitted: (val) {
+                                if (val.isNotEmpty) Navigator.pop(context, val);
+                            },
+                          ),
+                        ),
+                        // Action Icon (Check) inside the field for continuum
+                        if (name.isNotEmpty)
+                           IconButton(
+                             icon: const Icon(Icons.check_circle, color: Color(0xFF10AC84)),
+                             onPressed: () => Navigator.pop(context, name),
+                           )
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              actions: [
-                TextButton(
-                   onPressed: () {
-                     _speechToText.stop();
-                     Navigator.pop(ctx, null);
-                   },
-                   child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel, style: const TextStyle(color: Colors.white54)),
-                ),
-                ElevatedButton(
-                   onPressed: () {
-                     _speechToText.stop();
-                     Navigator.pop(ctx, recognizedText);
-                   },
-                   style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF10AC84)),
-                   child: Text(PetLocalizations.of(ctx)!.pet_voice_action),
-                ),
-              ],
             );
-          },
+          }
         );
       },
     );
@@ -342,35 +346,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                   children: [
                     // AI Instructions Panel
                     if (_imagePath == null) ...[
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        margin: const EdgeInsets.only(bottom: 24),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF121A2B), // Dark Navy Card
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: const Color(0xFF1F3A5F), width: 2), // Navy Accent
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                             const Icon(LucideIcons.info, color: Color(0xFFEAF0FF), size: 24),
-                             const SizedBox(width: 12),
-                             Expanded(
-                               child: Text(
-                                 l10n.pet_capture_instructions,
-                                 style: theme.textTheme.bodyMedium?.copyWith(
-                                   color: const Color(0xFFEAF0FF),
-                                   height: 1.4,
-                                   shadows: const [
-                                      Shadow(color: Colors.black, offset: Offset(2.0, 2.0), blurRadius: 4.0),
-                                      Shadow(color: Colors.black, offset: Offset(-0.5, -0.5), blurRadius: 1.0),
-                                   ],
-                                 ),
-                               ),
-                             ),
-                          ],
-                        ),
-                      ),
+                      _buildCapabilitiesCard(context),
 
                       _buildCaptureButton(
                         context,
@@ -435,45 +411,8 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                         ],
                       ),
                       
-                      const SizedBox(height: 32),
-                      
-                      // Type Switch (Pet vs Label)
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: theme.cardColor,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: cardBorderColor),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  l10n.image_type_label,
-                                  style: theme.textTheme.bodyMedium?.copyWith(
-                                    color: theme.disabledColor
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  _isLabel ? l10n.type_label : l10n.type_pet,
-                                  style: theme.textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: theme.colorScheme.onSurface,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Switch(
-                              value: _isLabel,
-                              onChanged: _onTypeChanged,
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Type Switch removed - AI auto-inference
+
                       
                       const SizedBox(height: 24),
                       
@@ -560,29 +499,37 @@ class _PetCaptureViewState extends State<PetCaptureView> {
     required VoidCallback onTap,
     required ThemeData theme,
   }) {
+    // ScanNut+ Pet Style: Illuminated Borders & Left Icon
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 160,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20), // Height controlled by padding
         decoration: BoxDecoration(
-          color: const Color(0xFF121A2B), // Dark Navy Card
+          color: const Color(0xFF121A2B).withValues(alpha: 0.6), // Dark Navy semi-transparent
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFF22304A), width: 2),
+          border: Border.all(
+             color: const Color(0xFF1F3A5F).withValues(alpha: 0.6), // Illuminated Border
+             width: 1.5
+          ),
+          boxShadow: [
+             BoxShadow(
+               color: const Color(0xFF1F3A5F).withValues(alpha: 0.2), // Subtle Navy Glow
+               blurRadius: 12,
+               offset: const Offset(0, 4),
+             ),
+          ],
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
+          mainAxisSize: MainAxisSize.min, // Hug content
+          mainAxisAlignment: MainAxisAlignment.center, // Center the block
           children: [
-            Icon(icon, size: 48, color: const Color(0xFF1F3A5F)), // Navy Accent
-            const SizedBox(height: 16),
+            Icon(icon, size: 28, color: const Color(0xFFFFD1DC)), // Pet Pink Accent Icon (Left)
+            const SizedBox(width: 12), // Standard spacing
             Text(
               label,
               style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurface,
+                color: Colors.white, // High contrast
                 fontWeight: FontWeight.bold,
-                shadows: const [
-                   Shadow(color: Colors.black, offset: Offset(2.0, 2.0), blurRadius: 4.0),
-                   Shadow(color: Colors.black, offset: Offset(-0.5, -0.5), blurRadius: 1.0),
-                ],
               ),
             ),
           ],
@@ -625,5 +572,72 @@ class _PetCaptureViewState extends State<PetCaptureView> {
         ),
       ),
     );
+  }
+
+  Widget _buildCapabilitiesCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: const Color(0xFF121A2B).withValues(alpha: 0.8),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: const Color(0xFF1F3A5F).withValues(alpha: 0.6), // Illuminated
+          width: 1.5,
+        ),
+        boxShadow: [
+           BoxShadow(
+             color: const Color(0xFF1F3A5F).withValues(alpha: 0.15),
+             blurRadius: 10,
+             offset: const Offset(0, 4),
+           ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+               const Icon(LucideIcons.sparkles, color: Color(0xFFFFD1DC), size: 20), // Pet Pink
+               const SizedBox(width: 8),
+               Text(
+                 l10n.pet_capture_info_title,
+                 style: theme.textTheme.titleMedium?.copyWith(
+                   color: Colors.white,
+                   fontWeight: FontWeight.bold,
+                 ),
+               ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          _buildInfoRow(LucideIcons.scanLine, l10n.pet_capture_capability_visual),
+          const SizedBox(height: 12),
+          _buildInfoRow(LucideIcons.fileText, l10n.pet_capture_capability_exams),
+          const SizedBox(height: 12),
+          _buildInfoRow(LucideIcons.tag, l10n.pet_capture_capability_labels),
+          const SizedBox(height: 12),
+          _buildInfoRow(LucideIcons.activity, l10n.pet_capture_capability_biometrics),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(IconData icon, String text) {
+     return Row(
+       mainAxisSize: MainAxisSize.min,
+       children: [
+         Icon(icon, size: 18, color: const Color(0xFF10AC84)), // Plant Green accents for capabilities
+         const SizedBox(width: 12),
+         Expanded(
+           child: Text(
+             text,
+             style: const TextStyle(color: Color(0xFFEAF0FF), fontSize: 13),
+           ),
+         ),
+       ],
+     );
   }
 }

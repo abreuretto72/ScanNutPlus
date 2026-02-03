@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart'; // Add this line
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
+import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/core/constants/app_keys.dart';
-import 'package:scannutplus/features/pet/presentation/widgets/pet_visual_dashboard.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 
 class PetAnalysisResultView extends StatelessWidget {
@@ -13,6 +13,7 @@ class PetAnalysisResultView extends StatelessWidget {
   final Duration? executionTime; // Added for telemetry
   final VoidCallback onRetake;
   final VoidCallback onShare;
+  final Map<String, String>? petDetails;
 
   const PetAnalysisResultView({
     super.key,
@@ -24,26 +25,13 @@ class PetAnalysisResultView extends StatelessWidget {
     this.petDetails,
   });
 
-  final Map<String, String>? petDetails;
-
   @override
   Widget build(BuildContext context) {
     final l10n = PetLocalizations.of(context)!;
-    
-    // Split result to find sources if possible
-    String observations = analysisResult;
-    String? sources;
-    
-    final lower = analysisResult.toLowerCase();
-    
-    for (final kw in AppKeys.sourceKeywords) {
-      final idx = lower.lastIndexOf(kw);
-      if (idx != -1 && idx > analysisResult.length * 0.5) { // Must be in second half
-        observations = analysisResult.substring(0, idx).trim();
-        sources = analysisResult.substring(idx).trim();
-        break;
-      }
-    }
+    final appL10n = AppLocalizations.of(context)!;
+
+    // Use local variables for access inside methods if needed, or pass contexts
+
 
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E17), // Deep Dark Background
@@ -52,255 +40,70 @@ class PetAnalysisResultView extends StatelessWidget {
         backgroundColor: const Color(0xFF1F3A5F),
         elevation: 0,
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(LucideIcons.arrowLeft),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
-      body: SingleChildScrollView(
+      body: SingleChildScrollView( // Ergonomia SM A256E
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 120),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Image Header
-            Container(
-              margin: const EdgeInsets.all(16),
-              height: 300,
+             Container(
+              margin: const EdgeInsets.only(bottom: 24),
+              height: 220, 
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFF1F3A5F), width: 3),
+                border: Border.all(color: const Color(0xFF1F3A5F), width: 2),
                 image: DecorationImage(
                   image: FileImage(File(imagePath)),
                   fit: BoxFit.cover,
                 ),
               ),
-            ),
-
-            // Analysis Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
                 children: [
-                  // CARD 1: Visual Dashboard
-                  PetVisualDashboard(
-                    analysisText: analysisResult,
-                    petName: petDetails?[PetConstants.fieldName],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // CARD 2: Pet Details
-                  if (petDetails != null)
-                    Card(
-                      elevation: 2,
-                      color: const Color(0xFF121A2B),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      margin: const EdgeInsets.only(bottom: 16),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                                children: [
-                                   const Icon(LucideIcons.dog, color: Color(0xFFEAF0FF)),
-                                   const SizedBox(width: 8),
-                                   Text(
-                                     petDetails![PetConstants.fieldName] ?? PetConstants.defaultPetName,
-                                     style: const TextStyle(color: Color(0xFFEAF0FF), fontSize: 18, fontWeight: FontWeight.bold),
-                                   ),
-                                   const Spacer(),
-                                   if (petDetails![PetConstants.fieldIsNeutered] == PetConstants.valTrue)
-                                      Container(
-                                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                         decoration: BoxDecoration(color: const Color(0xFF10AC84), borderRadius: BorderRadius.circular(8)),
-                                         child: Text(PetConstants.parseNeutered.toUpperCase(), style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
-                                      ),
-                                ],
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                _buildDetailItem(LucideIcons.scale, petDetails![PetConstants.parseWeight] ?? '-'),
-                                _buildDetailItem(LucideIcons.calendar, petDetails![PetConstants.parseAge] ?? '-'),
-                                _buildDetailItem(LucideIcons.dna, petDetails![PetConstants.parseSex] ?? '-'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                  // CARD 3: Analysis
-                  Card(
-                    elevation: 2,
-                    color: const Color(0xFF121A2B),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: Padding(
-                       padding: const EdgeInsets.all(16),
-                       child: Column(
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children: [
-                           Text(
-                             l10n.pet_section_observations,
-                             style: const TextStyle(
-                               color: Colors.white,
-                               fontSize: 18,
-                               fontWeight: FontWeight.bold,
-                             ),
-                           ),
-                           const SizedBox(height: 12),
-                           Text(
-                             observations,
-                             style: const TextStyle(
-                               color: Color(0xFFEAF0FF),
-                               fontSize: 16,
-                               height: 1.5,
-                             ),
-                           ),
-                         ],
-                       ),
-                    ),
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: _buildStatusHeader(analysisResult, appL10n),
                   ),
                 ],
               ),
             ),
+            
+            // Gerador de Cards Estruturados (Strictly localized)
+            
+            // Gerador de Cards Dinâmico (Protocolo 2026: Flexible AI Response)
+            ..._parseDynamicCards(analysisResult).map((block) => _buildDynamicCard(block)),
 
 
-
-            // Debug Performance Badge
-            if (kDebugMode && executionTime != null)
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.white24),
-                    ),
-                    child: Text(
-                      '⏱️ ${executionTime!.inMilliseconds}ms',
-                      style: const TextStyle(color: Colors.white70, fontSize: 10, fontFamily: AppKeys.fontMonospace),
-                    ),
-                  ),
-                ),
-              ),
-
-            // CARD 4: Sources
-            if (sources != null) ...[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Card(
-                   elevation: 2,
-                   color: const Color(0xFF0F1623),
-                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Color(0xFF10AC84), width: 1)),
-                   margin: const EdgeInsets.only(bottom: 16),
-                   child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(children: [
-                             const Icon(LucideIcons.bookOpen, color: Color(0xFF10AC84), size: 24),
-                             const SizedBox(width: 8),
-                             Text(
-                               l10n.pet_section_sources,
-                               style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-                             ),
-                          ]),
-                          const SizedBox(height: 12),
-                          Text(
-                            sources,
-                            style: const TextStyle(
-                              color: Color(0xFFA9B4CC),
-                              fontSize: 14,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
-                      ),
-                   ),
-                ),
-              ),
-            ],
-
-            // Disclaimer
+             // Actions
             Padding(
-              padding: const EdgeInsets.all(24),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color(0x26FF5252), // Low opacity red
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color(0xFFFF5252).withValues(alpha: 0.5)),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(LucideIcons.alertTriangle, color: Color(0xFFFF5252), size: 20),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        l10n.pet_disclaimer,
-                        style: const TextStyle(
-                          color: Color(0xFFFF5252),
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Actions
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+              padding: const EdgeInsets.only(top: 24),
               child: Row(
                 children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: onRetake,
-                      icon: const Icon(LucideIcons.camera, size: 20),
-                      label: Text(l10n.pet_action_new_analysis),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF1F3A5F),
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        elevation: 4,
-                      ),
+                   Expanded(
+                    child: _buildActionButton(
+                      context,
+                      label: l10n.pet_action_new_analysis,
+                      icon: LucideIcons.camera,
+                      color: const Color(0xFF1F3A5F),
+                      onTap: onRetake,
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: onShare,
-                      icon: const Icon(LucideIcons.share2, size: 20),
-                      label: Text(l10n.pet_action_share),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF10AC84), // Share usually positive/active
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        elevation: 4,
-                      ),
+                   ),
+                   const SizedBox(width: 16),
+                   Expanded(
+                    child: _buildActionButton(
+                      context,
+                      label: l10n.pet_action_share,
+                      icon: LucideIcons.share2,
+                      color: const Color(0xFF10AC84),
+                      onTap: onShare,
                     ),
-                  ),
+                   ),
                 ],
-              ),
-            ),
-
-            // Footer
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 24),
-                child: Text(
-                  l10n.pet_footer_text,
-                  style: const TextStyle(
-                    color: Color(0xFF53647C),
-                    fontSize: 12,
-                  ),
-                ),
               ),
             ),
           ],
@@ -309,13 +112,161 @@ class PetAnalysisResultView extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailItem(IconData icon, String text) {
-    return Row(
-      children: [
-        Icon(icon, size: 16, color: Colors.white70),
-        const SizedBox(width: 4),
-        Text(text, style: const TextStyle(color: Colors.white, fontSize: 14)),
-      ],
+  // Lógica para limpar tags [VISUAL_SUMMARY], Line 1, etc.
+  List<_AnalysisBlock> _parseDynamicCards(String rawResponse) {
+    List<_AnalysisBlock> blocks = [];
+    
+    // Regex para capturar tudo entre [CARD_START] e [CARD_END]
+    final blockRegex = RegExp(PetConstants.regexCardStart, dotAll: true);
+    final matches = blockRegex.allMatches(rawResponse);
+
+    for (var match in matches) {
+      final body = match.group(1) ?? '';
+      
+      final title = RegExp(PetConstants.regexTitle).firstMatch(body)?.group(1) ?? PetConstants.keyAnalyse;
+      final content = RegExp(PetConstants.regexContent, dotAll: true).firstMatch(body)?.group(1) ?? '';
+      final iconName = RegExp(PetConstants.regexIcon).firstMatch(body)?.group(1) ?? PetConstants.keyInfo;
+
+      blocks.add(_AnalysisBlock(
+        title: title.trim(),
+        content: content.trim(),
+        icon: _getIconData(iconName.trim()),
+      ));
+    }
+    
+    // Fallback: If no blocks found (legacy or error), try old heuristic or create generic block
+    if (blocks.isEmpty && rawResponse.isNotEmpty) {
+       // Clean up raw response for generic card
+       String clean = rawResponse
+         .replaceAll(RegExp(r'\[SYSTEM\]|\[URGENCY\]|\[SUMMARY\]'), '')
+         .trim();
+       blocks.add(_AnalysisBlock(
+         title: PetConstants.keyAnalysisSummary, 
+         content: clean, 
+         icon: LucideIcons.fileText
+       ));
+    }
+
+    return blocks;
+  }
+
+  // Mapeia o nome enviado pela IA para o IconData do Flutter
+  IconData _getIconData(String name) {
+    switch (name.toLowerCase()) {
+      case PetConstants.typePet: return LucideIcons.dog; // Using Lucide
+      case PetConstants.keyHeart: return LucideIcons.heart;
+      case PetConstants.keyScissors: case PetConstants.keyCoat: return LucideIcons.scissors;
+      case PetConstants.keySearch: case PetConstants.keySkin: return LucideIcons.search;
+      case PetConstants.keyEar: return LucideIcons.ear;
+      case PetConstants.keyWind: case PetConstants.keyNose: return LucideIcons.wind;
+      case PetConstants.keyEye: case PetConstants.keyEyes: return LucideIcons.eye;
+      case PetConstants.keyScale: case PetConstants.keyBody: return LucideIcons.scale;
+      case PetConstants.keyAlert: case PetConstants.keyIssues: return LucideIcons.alertTriangle;
+      case PetConstants.keyFileText: case PetConstants.keySummary: return LucideIcons.fileText;
+      default: return LucideIcons.info;
+    }
+  }
+
+  Widget _buildDynamicCard(_AnalysisBlock block) {
+    bool isAlert = block.icon == LucideIcons.alertTriangle;
+    final accentColor = isAlert ? const Color(0xFFFF5252) : const Color(0xFF10AC84);
+    
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: accentColor.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: accentColor.withValues(alpha: isAlert ? 0.6 : 0.3), width: 1.5),
+        boxShadow: [
+           BoxShadow(
+             color: accentColor.withValues(alpha: 0.05),
+             blurRadius: 10,
+             offset: const Offset(0, 4),
+           ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(block.icon, color: accentColor, size: 22),
+              const SizedBox(width: 12),
+              Expanded(child: Text(block.title, style: TextStyle(color: accentColor, fontWeight: FontWeight.bold, fontSize: 16))),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            block.content, 
+            style: const TextStyle(
+              color: Color(0xFFEAF0FF), 
+              fontSize: 14, 
+              height: 1.5
+            )
+          ),
+        ],
+      ),
     );
   }
+
+  Widget _buildStatusHeader(String text, AppLocalizations appL10n) {
+    // Heuristic: Check for Red flag / Critical keywords
+    bool isCrit = text.toLowerCase().contains(PetConstants.keyCritical) || text.toLowerCase().contains(PetConstants.keyImmediateAttention) || text.toLowerCase().contains('urgency: red');
+    bool isWarn = text.toLowerCase().contains(PetConstants.keyMonitor) || text.toLowerCase().contains('urgency: yellow');
+    
+    Color color = const Color(0xFF10AC84); // Green default
+    String label = appL10n.pet_status_healthy;
+
+    if (isCrit) {
+       color = const Color(0xFFFF5252);
+       label = appL10n.pet_status_critical;
+    } else if (isWarn) {
+       color = const Color(0xFFFFD700);
+       label = appL10n.pet_status_attention;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.9),
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [BoxShadow(color: color.withValues(alpha: 0.4), blurRadius: 8)],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+           Icon(isCrit ? LucideIcons.alertOctagon : (isWarn ? LucideIcons.alertTriangle : LucideIcons.checkCircle), color: Colors.white, size: 16),
+           const SizedBox(width: 8),
+           Text(
+            label,
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButton(BuildContext context, {required String label, required IconData icon, required Color color, required VoidCallback onTap}) {
+    return ElevatedButton.icon(
+      onPressed: onTap,
+      icon: Icon(icon, size: 20),
+      label: Text(label),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+    );
+  }
+}
+
+class _AnalysisBlock {
+  final String title;
+  final String content;
+  final IconData icon;
+
+  _AnalysisBlock({required this.title, required this.content, required this.icon});
 }
