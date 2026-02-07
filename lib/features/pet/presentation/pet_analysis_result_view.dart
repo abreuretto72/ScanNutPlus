@@ -78,6 +78,9 @@ class PetAnalysisResultView extends StatelessWidget {
             // Gerador de Cards Dinâmico (Protocolo 2026: Flexible AI Response)
             ..._parseDynamicCards(analysisResult).map((block) => _buildDynamicCard(block)),
 
+            // References Section (Protocol V6)
+            _buildSourcesCard(context, _extractSources(analysisResult)),
+
 
              // Actions
             Padding(
@@ -205,6 +208,75 @@ class PetAnalysisResultView extends StatelessWidget {
               height: 1.5
             )
           ),
+        ],
+      ),
+    );
+  }
+
+  // --- Source Extraction Logic (Mirroring Service V6) ---
+  List<String> _extractSources(String text) {
+      List<String> extractedSources = [];
+      // RegExp que aceita Sources, References ou Referências
+      final RegExp sourceRegex = RegExp(r'(Sources|References|Referências|Fontes):?', caseSensitive: false);
+
+      if (text.contains(sourceRegex)) {
+        final parts = text.split(sourceRegex);
+        if (parts.length > 1) {
+          String block = parts.last;
+          if (block.contains(PetConstants.tagEndSources)) {
+            block = block.split(PetConstants.tagEndSources)[0];
+          }
+           block = block.split('*Note:')[0];
+          
+          extractedSources = block
+              .split('\n')
+              .map((s) => s.replaceAll(RegExp(r'[\[\]\*#]'), '').trim()) 
+              .where((s) => s.length > 10) 
+              .toList();
+        }
+      }
+      return extractedSources;
+  }
+
+  Widget _buildSourcesCard(BuildContext context, List<String> sources) {
+    if (sources.isEmpty) return const SizedBox.shrink();
+
+    final l10n = PetLocalizations.of(context)!;
+    
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF121A2B), // Darker contrast
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFF1F3A5F), width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+           Row(
+             children: [
+               const Icon(LucideIcons.bookOpen, color: Color(0xFF90CAF9), size: 20),
+               const SizedBox(width: 12),
+               Text(
+                 'References & Protocol', // Or l10n.pet_section_sources if available
+                 style: const TextStyle(color: Color(0xFF90CAF9), fontWeight: FontWeight.bold, fontSize: 16)
+               ),
+             ],
+           ),
+           const SizedBox(height: 12),
+           ...sources.map((src) => Padding(
+             padding: const EdgeInsets.only(bottom: 8.0),
+             child: Row(
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 const Text("• ", style: TextStyle(color: Colors.white54)),
+                 Expanded(
+                   child: Text(src, style: const TextStyle(color: Colors.white70, fontSize: 13, fontStyle: FontStyle.italic)),
+                 ),
+               ],
+             ),
+           )),
         ],
       ),
     );

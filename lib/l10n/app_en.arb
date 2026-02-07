@@ -181,5 +181,29 @@
   "pet_section_body": "Body Conditions",
   "pet_section_issues": "Potential Issues",
   "pet_status_healthy": "HEALTHY STATUS",
-  "pet_status_attention": "ATTENTION REQUIRED"
+  "pet_status_attention": "ATTENTION REQUIRED",
+  "key_green": "Monitor",
+  "key_yellow": "Attention",
+  "key_red": "Critical",
+  "value_unknown": "Unknown",
+  "error_database_load": "Error loading database: {error}",
+  "@error_database_load": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "pet_section_mouth": "Mouth",
+  "pet_section_posture": "Posture",
+  "pet_section_exams": "Exams",
+  "category_feces": "Feces",
+  "category_food_label": "Label",
+  "pet_type_general": "General",
+  "category_wound": "Wound",
+  "pet_dialog_new_title": "New Profile",
+  "category_clinical": "Clinical",
+  "category_lab": "Lab",
+  "pet_section_general": "General Analysis",
+  "pet_section_biometrics": "Biometrics",
+  "pet_section_weight": "Weight",
+  "pet_ui_my_pets": "My Pets"
 }

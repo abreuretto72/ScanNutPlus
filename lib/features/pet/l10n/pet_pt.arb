@@ -25,5 +25,42 @@
   "pet_voice_retry": "Tentar Novamente",
   "pet_rag_new_identity": "Identidade salva: {name}",
   "pet_analysis_for": "Análise: {name}",
-  "pet_voice_who_is_this": "Quem é este pet?"
+  "pet_voice_who_is_this": "Quem é este pet?",
+  "key_green": "Monitorar",
+  "key_yellow": "Atenção",
+  "key_red": "Crítico",
+  "value_unknown": "Desconhecido",
+  "error_database_load": "Erro ao carregar banco de dados: {error}",
+  "@error_database_load": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "pet_section_body": "Corpo",
+  "pet_section_skin": "Pele",
+  "pet_section_eyes": "Olhos",
+  "pet_section_mouth": "Boca",
+  "pet_section_posture": "Postura",
+  "pet_section_exams": "Exames",
+  "category_feces": "Fezes",
+  "category_food_label": "Rótulo",
+  "pet_type_general": "Geral",
+  "category_wound": "Ferida",
+  "pet_dialog_new_title": "Novo Perfil",
+  "species_dog": "Cão",
+  "species_cat": "Gato",
+  "user_demo_name": "Usuário Demo",
+  "user_default_name": "Usuário",
+  "category_clinical": "Clínico",
+  "category_lab": "Laboratório",
+  "pet_section_general": "Análise Geral",
+  "pet_section_visual": "Inspeção Visual",
+  "pet_section_species": "Espécie",
+  "pet_section_coat": "Pelagem",
+  "pet_section_ears": "Orelhas",
+  "pet_section_nose": "Nariz",
+  "pet_section_biometrics": "Biometria",
+  "pet_section_weight": "Peso",
+  "pet_section_issues": "Problemas",
+  "pet_ui_my_pets": "Meus Pets"
 }

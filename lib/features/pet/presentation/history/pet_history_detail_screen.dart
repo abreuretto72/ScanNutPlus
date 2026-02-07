@@ -1,0 +1,200 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
+import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
+
+class PetHistoryDetailScreen extends StatelessWidget {
+  final PetHistoryEntry entry;
+
+  const PetHistoryDetailScreen({super.key, required this.entry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF0A0E17),
+      appBar: _buildAppBar(context),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildImageHeader(context),
+            // Reconstruct Cards
+            ...entry.analysisCards.map((cardData) => _buildDynamicCard(cardData)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
+    final l10n = PetLocalizations.of(context)!;
+    return AppBar(
+      title: Text(l10n.pet_result_title, style: const TextStyle(fontWeight: FontWeight.bold)),
+      backgroundColor: const Color(0xFF1F3A5F),
+      elevation: 0,
+      centerTitle: true,
+      leading: IconButton(
+        icon: const Icon(LucideIcons.arrowLeft),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+    );
+  }
+
+  Widget _buildImageHeader(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24),
+      height: 220,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFF1F3A5F), width: 2),
+        image: DecorationImage(
+          image: FileImage(File(entry.imagePath)),
+          fit: BoxFit.cover,
+          onError: (exception, stackTrace) => const Icon(LucideIcons.imageOff),
+        ),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            top: 12,
+            right: 12,
+            child: _buildStatusBadge(entry.category),
+          ),
+          Positioned(
+            bottom: 12,
+            left: 12,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                _formatDate(entry.timestamp),
+                style: const TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusBadge(String type) {
+    // Simplified status badge based on type or derived logic
+    Color color = const Color(0xFF10AC84);
+    IconData icon = LucideIcons.checkCircle;
+    String text = type.toUpperCase();
+
+    if (type == PetConstants.keyCritical) {
+      color = const Color(0xFFFF5252);
+      icon = LucideIcons.alertOctagon;
+    } else if (type == PetConstants.keyMonitor) {
+      color = const Color(0xFFFFD700);
+      icon = LucideIcons.alertTriangle;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.9),
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [BoxShadow(color: color.withValues(alpha: 0.4), blurRadius: 8)],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: Colors.white, size: 16),
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDynamicCard(Map<String, dynamic> cardData) {
+    final title = cardData[PetConstants.keyTitle] ?? '';
+    final content = cardData[PetConstants.keyContent] ?? '';
+    final iconKey = cardData[PetConstants.keyIcon] ?? '';
+    final icon = _getIconData(iconKey);
+
+    // Style logic matching ResultView
+    final isAlert = icon == LucideIcons.alertTriangle;
+    final isSource = icon == LucideIcons.bookOpen;
+    
+    final accentColor = isAlert 
+        ? const Color(0xFFFF5252) 
+        : (isSource ? Colors.white70 : const Color(0xFF10AC84));
+    
+    final bgColor = isSource 
+        ? Colors.white.withValues(alpha: 0.05) 
+        : accentColor.withValues(alpha: 0.05);
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+            color: isSource ? Colors.white24 : accentColor.withValues(alpha: isAlert ? 0.6 : 0.3), 
+            width: 1.5
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: accentColor, size: 22),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  title, 
+                  style: TextStyle(color: accentColor, fontWeight: FontWeight.bold, fontSize: 16)
+                )
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            content,
+            style: TextStyle(
+                color: isSource ? Colors.white38 : const Color(0xFFEAF0FF), 
+                fontSize: isSource ? 12 : 14, 
+                height: 1.5,
+                fontStyle: isSource ? FontStyle.italic : FontStyle.normal
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  IconData _getIconData(String name) {
+    switch (name.toLowerCase()) {
+      case PetConstants.typePet: return LucideIcons.dog;
+      case PetConstants.keyHeart: return LucideIcons.heart;
+      case PetConstants.keyCoat: return LucideIcons.scissors;
+      case PetConstants.keySkin: return LucideIcons.search;
+      case PetConstants.keyEar: return LucideIcons.ear;
+      case PetConstants.keyWind: case PetConstants.keyNose: return LucideIcons.wind;
+      case PetConstants.keyEye: case PetConstants.keyEyes: return LucideIcons.eye;
+      case PetConstants.keyScale: case PetConstants.keyBody: return LucideIcons.scale;
+      case PetConstants.keyAlert: case PetConstants.keyIssues: return LucideIcons.alertTriangle;
+      case PetConstants.keyFileText: case PetConstants.keySummary: return LucideIcons.fileText;
+      case PetConstants.iconMenuBook: case PetConstants.iconBook: return LucideIcons.bookOpen;
+      default: return LucideIcons.info;
+    }
+  }
+
+  String _formatDate(DateTime date) {
+    return '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
+  }
+}

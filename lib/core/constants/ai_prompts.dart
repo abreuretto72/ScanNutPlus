@@ -4,7 +4,12 @@ class AiPrompts {
     1.  **Fact-Checking Mode:** Base your analysis ONLY on visual evidence and recognized scientific/veterinary literature.
     2.  **Unclear Images:** If the image is blurry, dark, or inconclusive, explicitly state that visual evidence is insufficient.
     3.  **No Definitive Diagnosis:** NEVER provide a definitive medical diagnosis. Use phrases like "visual signs compatible with...", "observations suggest...".
-    4.  **Source Citation:** At the end of your analysis, you MUST mandatorily list the 3 main academic sources or veterinary institutions that ground this result to ensure user trust.
+    4.  **Source Citation:** At the very end, list exactly 3 academic sources inside a block like this:
+    [SOURCES]
+    1. Source Name
+    2. Source Name
+    3. Source Name
+    [END_SOURCES]
     ''';
 
   static const String domainPet = '''

@@ -13,6 +13,9 @@ class PetConstants {
   static const String keyPetTimestamp = 'pet_timestamp';
   
   static const String sourceExtracted = 'Extracted from Analysis Content';
+  static const String fallbackSourceBase = 'ScanNut+ V1 Base';
+  static const String fallbackSourceProtocol = 'Visual Biometric Protocol';
+  static const String fallbackSourceGraph = 'Veterinary Knowledge Graph';
   
   // Logs
   static const String logTagPetData = '[PET_DATA_LOG]';
@@ -57,6 +60,10 @@ class PetConstants {
   static const String parseAmarelo = 'amarelo';
   static const String parseRed = 'red';
   static const String parseVermelho = 'vermelho';
+  static const String parseMonitor = 'monitor';
+  static const String parseAttention = 'attention';
+  static const String parseCritical = 'critical';
+  static const String speciesUnknown = 'Unknown';
   
   static const String errorNewPet = 'NEW_PET_DETECTED';
   
@@ -97,7 +104,7 @@ class PetConstants {
   static const String keyImmediateAttention = 'immediate attention';
   static const String keyMonitor = 'monitor';
   
-  static const String regexCardStart = r'\[CARD_START\](.*?)\[CARD_END\]';
+  static const String regexCardStart = r'\[CARD_START\](.*?)(?:\[CARD_END\]|\[SOURCES\]|$)';
   static const String regexTitle = r'TITLE: (.*?)\n';
   static const String regexContent = r'CONTENT: (.*?)$';
   static const String regexIcon = r'ICON: (.*?)\n';
@@ -106,6 +113,12 @@ class PetConstants {
   static const String keyAnalysisSummary = 'Analysis Summary';
   static const String keyHeart = 'heart';
   static const String keyScissors = 'scissors';
+  static const String tagSources = '[SOURCES]';
+  static const String tagEndSources = '[END_SOURCES]';
+  static const String keySourcesKeyword = 'Sources:';
+  static const String keyReferencesKeyword = 'References:';
+  static const String keyReferenciasKeyword = 'REFERÊNCIAS:';
+  static const String keyFontesKeyword = 'Fontes:';
 }
 
 class PetPrompts {

@@ -155,8 +155,7 @@ class PetAiService extends PetBaseAiService {
         debugPrint('${AppKeys.logColorPurple}${AppKeys.logPrefixPetTrace}: Success in ${durationSec}s${AppKeys.logColorReset}');
         
         // Log truncated response for sanity check
-        final safeLog = result.length > 100 ? '${result.substring(0, 100)}...' : result;
-        debugPrint('[SCAN_NUT_LOG] Resposta recebida da LLM: $safeLog');
+        debugPrint('[SCAN_NUT_LOG] Resposta recebida da LLM: $result');
       }
 
       return (result, stopwatch.elapsed, petName);

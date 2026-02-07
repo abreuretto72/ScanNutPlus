@@ -2,5 +2,6 @@
     "dart.previewFlutterUiGuides": true,
     "editor.bracketPairColorization.enabled": true,
     "editor.formatOnSave": true,
-    "flutterStylizer.groupAndSort": true
+    "flutterStylizer.groupAndSort": true,
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

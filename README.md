@@ -27,6 +27,7 @@ Desenvolvido sob o **Protocolo Master 2026**, o app segue padrões rigorosos de 
     *   **Fezes:** Escala de Bristol e saúde digestiva.
     *   **Olhos/Boca:** Detecção de sinais clínicos visíveis.
 *   **Dossiê Veterinário 360:** PDF gerado automaticamente com todo o histórico clínico.
+*   **Fontes Científicas (RAG):** Citação automática de referências (Merck, AAHA) via Regex robusto.
 *   **Comando de Voz:** "Quem é este pet?" - Cadastro automático via voz.
 
 ### 🌿 Módulo Plant (Botânica)

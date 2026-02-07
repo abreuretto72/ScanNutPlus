@@ -562,10 +562,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_section_nose => 'Nose';
 
   @override
-  String get pet_section_eyes => 'Eyes';
+  String get pet_section_eyes => 'Olhos';
 
   @override
-  String get pet_section_body => 'Body Conditions';
+  String get pet_section_body => 'Corpo';
 
   @override
   String get pet_section_issues => 'Potential Issues';
@@ -575,4 +575,63 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_status_attention => 'ATTENTION REQUIRED';
+
+  @override
+  String get key_green => 'Monitorar';
+
+  @override
+  String get key_yellow => 'Atenção';
+
+  @override
+  String get key_red => 'Crítico';
+
+  @override
+  String get value_unknown => 'Desconhecido';
+
+  @override
+  String error_database_load(String error) {
+    return 'Erro ao carregar banco de dados: $error';
+  }
+
+  @override
+  String get pet_section_mouth => 'Boca';
+
+  @override
+  String get pet_section_posture => 'Postura';
+
+  @override
+  String get pet_section_exams => 'Exames';
+
+  @override
+  String get category_feces => 'Fezes';
+
+  @override
+  String get category_food_label => 'Rótulo';
+
+  @override
+  String get pet_type_general => 'Geral';
+
+  @override
+  String get category_wound => 'Ferida';
+
+  @override
+  String get pet_dialog_new_title => 'Novo Perfil';
+
+  @override
+  String get category_clinical => 'Clínico';
+
+  @override
+  String get category_lab => 'Laboratório';
+
+  @override
+  String get pet_section_general => 'Análise Geral';
+
+  @override
+  String get pet_section_biometrics => 'Biometria';
+
+  @override
+  String get pet_section_weight => 'Peso';
+
+  @override
+  String get pet_ui_my_pets => 'Meus Pets';
 }

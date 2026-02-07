@@ -574,4 +574,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pet_status_attention => 'ATTENTION REQUIRED';
+
+  @override
+  String get key_green => 'Monitor';
+
+  @override
+  String get key_yellow => 'Attention';
+
+  @override
+  String get key_red => 'Critical';
+
+  @override
+  String get value_unknown => 'Unknown';
+
+  @override
+  String error_database_load(String error) {
+    return 'Error loading database: $error';
+  }
+
+  @override
+  String get pet_section_mouth => 'Mouth';
+
+  @override
+  String get pet_section_posture => 'Posture';
+
+  @override
+  String get pet_section_exams => 'Exams';
+
+  @override
+  String get category_feces => 'Feces';
+
+  @override
+  String get category_food_label => 'Label';
+
+  @override
+  String get pet_type_general => 'General';
+
+  @override
+  String get category_wound => 'Wound';
+
+  @override
+  String get pet_dialog_new_title => 'New Profile';
+
+  @override
+  String get category_clinical => 'Clinical';
+
+  @override
+  String get category_lab => 'Lab';
+
+  @override
+  String get pet_section_general => 'General Analysis';
+
+  @override
+  String get pet_section_biometrics => 'Biometrics';
+
+  @override
+  String get pet_section_weight => 'Weight';
+
+  @override
+  String get pet_ui_my_pets => 'My Pets';
 }

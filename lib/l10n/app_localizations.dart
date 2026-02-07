@@ -1189,6 +1189,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'ATTENTION REQUIRED'**
   String get pet_status_attention;
+
+  /// No description provided for @key_green.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor'**
+  String get key_green;
+
+  /// No description provided for @key_yellow.
+  ///
+  /// In en, this message translates to:
+  /// **'Attention'**
+  String get key_yellow;
+
+  /// No description provided for @key_red.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get key_red;
+
+  /// No description provided for @value_unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get value_unknown;
+
+  /// No description provided for @error_database_load.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading database: {error}'**
+  String error_database_load(String error);
+
+  /// No description provided for @pet_section_mouth.
+  ///
+  /// In en, this message translates to:
+  /// **'Mouth'**
+  String get pet_section_mouth;
+
+  /// No description provided for @pet_section_posture.
+  ///
+  /// In en, this message translates to:
+  /// **'Posture'**
+  String get pet_section_posture;
+
+  /// No description provided for @pet_section_exams.
+  ///
+  /// In en, this message translates to:
+  /// **'Exams'**
+  String get pet_section_exams;
+
+  /// No description provided for @category_feces.
+  ///
+  /// In en, this message translates to:
+  /// **'Feces'**
+  String get category_feces;
+
+  /// No description provided for @category_food_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get category_food_label;
+
+  /// No description provided for @pet_type_general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get pet_type_general;
+
+  /// No description provided for @category_wound.
+  ///
+  /// In en, this message translates to:
+  /// **'Wound'**
+  String get category_wound;
+
+  /// No description provided for @pet_dialog_new_title.
+  ///
+  /// In en, this message translates to:
+  /// **'New Profile'**
+  String get pet_dialog_new_title;
+
+  /// No description provided for @category_clinical.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinical'**
+  String get category_clinical;
+
+  /// No description provided for @category_lab.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab'**
+  String get category_lab;
+
+  /// No description provided for @pet_section_general.
+  ///
+  /// In en, this message translates to:
+  /// **'General Analysis'**
+  String get pet_section_general;
+
+  /// No description provided for @pet_section_biometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometrics'**
+  String get pet_section_biometrics;
+
+  /// No description provided for @pet_section_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get pet_section_weight;
+
+  /// No description provided for @pet_ui_my_pets.
+  ///
+  /// In en, this message translates to:
+  /// **'My Pets'**
+  String get pet_ui_my_pets;
 }
 
 class _AppLocalizationsDelegate

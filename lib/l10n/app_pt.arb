@@ -167,5 +167,34 @@
   "pet_status_critical": "Status: Critical Attention",
   "pet_status_monitor": "Status: Monitor",
   "pet_mock_visual_confirm": "Visual analysis confirms structure...",
-  "pet_label_pet": "Pet"
+  "pet_label_pet": "Pet",
+  "key_green": "Monitorar",
+  "key_yellow": "Atenção",
+  "key_red": "Crítico",
+  "value_unknown": "Desconhecido",
+  "error_database_load": "Erro ao carregar banco de dados: {error}",
+  "@error_database_load": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "pet_section_body": "Corpo",
+  "pet_section_eyes": "Olhos",
+  "pet_section_mouth": "Boca",
+  "pet_section_posture": "Postura",
+  "pet_section_exams": "Exames",
+  "category_feces": "Fezes",
+  "category_food_label": "Rótulo",
+  "pet_type_general": "Geral",
+  "category_wound": "Ferida",
+  "pet_dialog_new_title": "Novo Perfil",
+  "user_demo_name": "Usuário Demo",
+  "user_default_name": "Usuário",
+  "category_clinical": "Clínico",
+  "category_lab": "Laboratório",
+  "pet_section_general": "Análise Geral",
+  "pet_section_visual": "Inspeção Visual",
+  "pet_section_biometrics": "Biometria",
+  "pet_section_weight": "Peso",
+  "pet_ui_my_pets": "Meus Pets"
 }

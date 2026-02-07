@@ -47,15 +47,30 @@ The app parses the `URGENCY:` tag to determine the status header's color and tex
 *   **YELLOW**: "Status: Monitor" / "Attention Required"
 *   **RED**: "Status: Critical Attention" / "Immediate Attention"
 
+## Source Extraction Protocol (V7 - 2026 update)
+
+### Scientific Sourcing
+To ensure verifiability (Pilar 0), the AI must now cite 3 scientific sources at the end of the analysis.
+*   **Prompt Constraint**: Enforced via `PetPrompts` with a mandatory `[CARD]` structure.
+*   **Token Limit**: Increased to `2500` to prevent truncation of sources.
+
+### Robust Regex Extraction
+The system employs a "Checkmate" regex extraction logic to handle variations in AI output:
+```dart
+final RegExp sourceRegex = RegExp(r'(Sources|References|Referências|Fontes):?', caseSensitive: false);
+```
+This logic is implemented in both `PetBaseAiService` (for data persistence) and `PetAnalysisResultView` (for immediate UI rendering), ensuring redundancy and reliability.
+
 ## Technical Implementation
 
 ### Key Files
-*   `lib/features/pet/presentation/pet_analysis_result_view.dart`: Contains the `_parseDynamicCards` logic and UI rendering.
-*   `lib/features/pet/data/pet_constants.dart`: Stores all regex patterns and keys to avoid hardcoded strings (Pilar 0 Compliance).
-*   `lib/core/constants/ai_prompts.dart`: Defines the Prompt Engineering required to produce the compatible output.
+*   `lib/features/pet/presentation/pet_analysis_result_view.dart`: Contains `_parseDynamicCards` and `_extractSources` logic.
+*   `lib/features/pet/data/pet_constants.dart`: Stores regex patterns and keys.
+*   `lib/core/constants/ai_prompts.dart`: Defines the Prompt Engineering.
 
 ### Fallback Mechanism
-If the AI fails to produce the structured block format, the parser detects the absence of `[CARD_START]` tags and falls back to a "Compatibility Mode", displaying the raw cleaned text in a single "Analysis Summary" card.
+If the AI fails to produce the structured block format, the parser falls back to "Compatibility Mode".
+If fewer than 3 sources are extracted, the system automatically injects a standard protocol fallback (e.g., Merck Manual, AAHA) to guarantee UI consistency.
 
 ## Pillar 0 Compliance
 All UI strings, keys, and regex patterns are strictly decoupled.
