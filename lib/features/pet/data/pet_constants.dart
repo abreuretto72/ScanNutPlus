@@ -38,6 +38,7 @@ class PetConstants {
   static const String argSource = 'source';
   static const String argPetDetails = 'petDetails'; // Added for Dashboard -> Result flow
   static const String argResult = 'analysisResult'; // Added for Dashboard -> Result flow
+  static const String argIsAddingNewPet = 'is_adding_new_pet'; // Added for Explicit State Control
 
   // --- CHAVES DE PARSING E UI ---
   static const String keyTitle = 'title';

@@ -32,6 +32,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
   String? _existingUuid;
   String? _existingName;
   String? _existingBreed; // New
+  bool _isAddingNewPet = false; // [STATE] Controls UI for New Pet vs Existing
   PetImageType? _forcedType;
 
   final ImagePicker _picker = ImagePicker();
@@ -52,6 +53,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
       _existingName = args[PetConstants.argName];
       _existingBreed = args[PetConstants.argBreed]; // New
       _forcedType = args[PetConstants.argType] as PetImageType?;
+      _isAddingNewPet = args[PetConstants.argIsAddingNewPet] ?? false; // Extract State Flag
       final source = args[PetConstants.argSource] as String?;
       
       // Auto-open camera/gallery if requested
@@ -225,12 +227,11 @@ class _PetCaptureViewState extends State<PetCaptureView> {
              PetConstants.argImagePath: _imagePath!,
              PetConstants.argResult: cleanResult,
              PetConstants.argBreed: finalBreed, // Explicitly passing breed to Result View
-             PetConstants.argPetDetails: {
-                PetConstants.fieldName: foundName.isNotEmpty ? foundName : nameToUse,
-                PetConstants.fieldBreed: finalBreed,
-             }
-          },
-        );
+           },
+        ).then((_) {
+           // [STATE RESET] Force reset to 'Existing Pet' mode after return
+           if (mounted) setState(() => _isAddingNewPet = false);
+        });
       } on PetIdentityException catch (_) {
          if (kDebugMode) debugPrint('[SCAN_NUT_LOG] Identidade não confirmada. Solicitando nome...');
          
@@ -443,6 +444,9 @@ class _PetCaptureViewState extends State<PetCaptureView> {
     // final theme = Theme.of(context); // Unused
     final l10n = AppLocalizations.of(context)!;
     
+    // [DEBUG] Trace Removed - Logic Blindada
+    // final bool isExistingPet = !_isAddingNewPet;
+
     // Custom Navy Colors for this domain - UPDATED to AppColors.petBackgroundDark for consistency
 
 
@@ -531,37 +535,41 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                       const SizedBox(height: 24),
 
                       // Species Selector
-                      Text(
-                        l10n.species_label,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                      // Species Selector (Conditionally hidden for Existing Pets)
+                      // Species Selector (Visible ONLY for New Pet Flow)
+                      if (_isAddingNewPet) ...[
+                        Text(
+                          l10n.species_label,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildSpeciesChip(
-                              context,
-                              label: l10n.species_dog,
-                              selected: _selectedSpecies == PetConstants.speciesDog,
-                              onTap: () => _onSpeciesChanged(PetConstants.speciesDog),
-                              color: AppColors.petPrimary, // Select = Pink
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildSpeciesChip(
+                                context,
+                                label: l10n.species_dog,
+                                selected: _selectedSpecies == PetConstants.speciesDog,
+                                onTap: () => _onSpeciesChanged(PetConstants.speciesDog),
+                                color: AppColors.petPrimary, // Select = Pink
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: _buildSpeciesChip(
-                              context,
-                              label: l10n.species_cat,
-                              selected: _selectedSpecies == PetConstants.speciesCat,
-                              onTap: () => _onSpeciesChanged(PetConstants.speciesCat),
-                              color: AppColors.petPrimary,
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: _buildSpeciesChip(
+                                context,
+                                label: l10n.species_cat,
+                                selected: _selectedSpecies == PetConstants.speciesCat,
+                                onTap: () => _onSpeciesChanged(PetConstants.speciesCat),
+                                color: AppColors.petPrimary,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                      ],
                       
                       // Type Switch removed - AI auto-inference
 
@@ -617,7 +625,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                             ),
                           ),
                         )
-                      else
+                      else if (_isAddingNewPet)
                         Center(
                            child: TextButton.icon(
                              onPressed: () {
@@ -642,10 +650,11 @@ class _PetCaptureViewState extends State<PetCaptureView> {
             Padding(
                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                child: ElevatedButton.icon(
-                  // [STEP 4: MANDATORY SPECIES SELECTION]
-                  // Enable 'New Analysis' only if species is selected.
-                  // Visual Feedback: Button is disabled (null onPressed) if species is null.
-                  onPressed: (_selectedSpecies == null || _isAnalyzing) ? null : _processAnalysis,
+                  // [STEP 4: MANDATORY SPECIES SELECTION OR EXISTING PET]
+                  // Enable 'New Analysis' if (State is NOT Adding New Pet OR Species Selected) AND Not Analyzing.
+                  onPressed: ((!_isAddingNewPet || _selectedSpecies != null) && !_isAnalyzing)
+                      ? _processAnalysis 
+                      : null,
                   icon: const Icon(Icons.qr_code_scanner, color: AppColors.petText), // Alert Icon Black
                   label: Text(
                       AppLocalizations.of(context)!.pet_action_new_analysis,

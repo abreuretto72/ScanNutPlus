@@ -126,6 +126,7 @@ class _MyPetsViewState extends State<MyPetsView> {
                 PetConstants.argUuid: newUuid,
                 PetConstants.argType: PetImageType.newProfile,
                 PetConstants.argName: petName, // Passed from Step 0
+                PetConstants.argIsAddingNewPet: true, // Explicit State: New Pet Mode
               },
             ).then((_) => setState(() {})); // Reload list on return
           }
