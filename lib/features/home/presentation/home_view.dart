@@ -140,9 +140,7 @@ class _HomeViewState extends State<HomeView> {
                 accentColor: domainColors.petAccent,
                 icon: LucideIcons.dog,
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const PetCaptureView()),
-                  );
+                  Navigator.of(context).pushNamed('/my_pets');
                 },
               ),
               const SizedBox(height: 16),

@@ -1,0 +1,79 @@
+Resolving dependencies...
+Downloading packages...
+  _fe_analyzer_shared 91.0.0 (94.0.0 available)
+  analyzer 8.4.1 (10.0.2 available)
+  app_links 6.4.1 (7.0.0 available)
+  build_runner 2.10.5 (2.11.0 available)
+  characters 1.4.0 (1.4.1 available)
+  dart_style 3.1.3 (3.1.5 available)
+  flutter_riverpod 3.2.0 (3.2.1 available)
+  google_fonts 8.0.0 (8.0.1 available)
+  hooks 1.0.0 (1.0.1 available)
+  image 4.5.4 (4.7.2 available)
+  js 0.6.7 (0.7.2 available)
+  local_auth 2.3.0 (3.0.0 available)
+  local_auth_android 1.0.56 (2.0.4 available)
+  local_auth_darwin 1.6.1 (2.0.1 available)
+  local_auth_windows 1.0.11 (2.0.1 available)
+  matcher 0.12.17 (0.12.18 available)
+  material_color_utilities 0.11.1 (0.13.0 available)
+  meta 1.17.0 (1.18.1 available)
+  objective_c 9.2.5 (9.3.0 available)
+  permission_handler 11.4.0 (12.0.1 available)
+  permission_handler_android 12.1.0 (13.0.1 available)
+  riverpod 3.2.0 (3.2.1 available)
+  source_span 1.10.1 (1.10.2 available)
+  test 1.26.3 (1.29.0 available)
+  test_api 0.7.7 (0.7.9 available)
+  test_core 0.6.12 (0.6.15 available)
+Got dependencies!
+26 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Analyzing pet...                                                
+
+   info - The import of 'package:hive/hive.dart' is unnecessary because all of the used elements are also provided by the import of 'package:hive_flutter/hive_flutter.dart' - lib\features\pet\data\datasources\pet_history_source.dart:3:8 - unnecessary_import
+warning - Dead code - lib\features\pet\data\datasources\pet_history_source.dart:136:45 - dead_code
+warning - The left operand can't be null, so the right operand is never executed - lib\features\pet\data\datasources\pet_history_source.dart:136:48 - dead_null_aware_expression
+warning - The operand can't be 'null', so the condition is always 'false' - lib\features\pet\data\datasources\pet_history_source.dart:174:25 - unnecessary_null_comparison
+warning - Dead code - lib\features\pet\data\datasources\pet_history_source.dart:174:34 - dead_code
+warning - The '!' will have no effect because the receiver can't be null - lib\features\pet\data\datasources\pet_history_source.dart:179:26 - unnecessary_non_null_assertion
+warning - Unused import: 'dart:convert' - lib\features\pet\data\models\pet_history_entry.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/material.dart' - lib\features\pet\data\pet_constants.dart:1:8 - unused_import
+warning - The operand can't be 'null', so the condition is always 'false' - lib\features\pet\data\pet_history_repository.dart:44:33 - unnecessary_null_comparison
+   info - The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/foundation.dart' - lib\features\pet\data\pet_rag_service.dart:4:8 - unnecessary_import
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:30:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:30:40 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:31:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:31:40 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:39:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:48:46 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:49:41 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:50:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:51:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:51:49 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:52:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:52:49 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:55:19 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:80:19 - unnecessary_this
+warning - Unused import: 'package:scannutplus/features/pet/data/pet_history_repository.dart' - lib\features\pet\presentation\history\pet_history_list_view.dart:11:8 - unused_import
+warning - The operand can't be 'null', so the condition is always 'true' - lib\features\pet\presentation\history\pet_history_list_view.dart:79:75 - unnecessary_null_comparison
+   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_list_view.dart:131:43 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_list_view.dart:131:47 - unnecessary_underscores
+warning - Unused import: 'package:scannutplus/features/pet/presentation/history/pet_history_list_view.dart' - lib\features\pet\presentation\history\pet_history_screen.dart:6:8 - unused_import
+   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_screen.dart:73:122 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_screen.dart:73:125 - unnecessary_underscores
+warning - The value of the field '_fullHistory' isn't used - lib\features\pet\presentation\history\pet_profile_screen.dart:22:25 - unused_field
+warning - The '!' will have no effect because the receiver can't be null - lib\features\pet\presentation\history\pet_profile_screen.dart:32:74 - unnecessary_non_null_assertion
+  error - The getter 'pet_label_status' isn't defined for the type 'AppLocalizations' - lib\features\pet\presentation\history\pet_profile_screen.dart:140:51 - undefined_getter
+  error - Undefined name 'PetLocalizations' - lib\features\pet\presentation\history\pet_profile_screen.dart:192:42 - undefined_identifier
+  error - The getter 'categoryLab' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\history\pet_profile_screen.dart:308:37 - undefined_getter
+warning - Unused import: 'package:scannutplus/core/constants/app_keys.dart' - lib\features\pet\presentation\my_pets_view.dart:3:8 - unused_import
+warning - Unused import: 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart' - lib\features\pet\presentation\my_pets_view.dart:6:8 - unused_import
+   info - The import of 'package:flutter/foundation.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\pet\presentation\pet_analysis_result_view.dart:2:8 - unnecessary_import
+warning - Unused import: 'package:scannutplus/core/constants/app_keys.dart' - lib\features\pet\presentation\pet_analysis_result_view.dart:7:8 - unused_import
+warning - The value of the local variable 'l10n' isn't used - lib\features\pet\presentation\pet_analysis_result_view.dart:30:11 - unused_local_variable
+  error - The getter 'typeLabel' isn't defined for the type 'PetConstants' - lib\features\pet\presentation\pet_capture_view.dart:333:37 - undefined_getter
+warning - The declaration '_onTypeChanged' isn't referenced - lib\features\pet\presentation\pet_capture_view.dart:348:8 - unused_element
+warning - Unused import: 'package:scannutplus/features/pet/data/pet_constants.dart' - lib\features\pet\presentation\pet_management_screen.dart:2:8 - unused_import
+warning - This default clause is covered by the previous cases - lib\features\pet\services\pet_ai_service.dart:209:7 - unreachable_switch_default
+

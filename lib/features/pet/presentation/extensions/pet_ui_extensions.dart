@@ -7,18 +7,18 @@ extension PetImageTypeExt on PetImageType {
   String toDisplayString(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     switch (this) {
-      case PetImageType.profile: return l10n.pet_section_body;
-      case PetImageType.skin: return l10n.pet_section_skin;
-      case PetImageType.eyes: return l10n.pet_section_eyes;
-      case PetImageType.mouth: return l10n.pet_section_mouth;
+      case PetImageType.profile: return l10n.pet_type_general; // Contextually similar to general or needs specific 'Profile' key if meant for UI tab
+      case PetImageType.skin: return l10n.pet_type_skin;
+      case PetImageType.eyes: return l10n.pet_type_eyes;
+      case PetImageType.mouth: return l10n.pet_type_mouth;
       case PetImageType.posture: return l10n.pet_section_posture;
-      case PetImageType.lab: return l10n.pet_section_exams; // Mapped to exams based on context
+      case PetImageType.lab: return l10n.pet_type_lab; 
       case PetImageType.stool: return l10n.category_feces;
-      case PetImageType.safety: return l10n.pet_section_safety;
+      case PetImageType.safety: return l10n.pet_type_safety;
       case PetImageType.label: return l10n.category_food_label;
       case PetImageType.general: return l10n.pet_type_general;
       case PetImageType.wound: return l10n.category_wound;
-      case PetImageType.newProfile: return l10n.pet_dialog_new_title;
+      case PetImageType.newProfile: return l10n.pet_type_new_profile;
     }
   }
 }
@@ -27,15 +27,16 @@ extension PetSpeciesExt on String {
   /// Mapeia a string de espécie vinda do banco/IA para tradução
   String toSpeciesDisplay(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    if (this.toLowerCase() == 'dog' || this.toLowerCase() == 'cão') return l10n.species_dog;
-    if (this.toLowerCase() == 'cat' || this.toLowerCase() == 'gato') return l10n.species_cat;
+    if (toLowerCase() == 'dog' || toLowerCase() == 'cão') return l10n.species_dog;
+    if (toLowerCase() == 'cat' || toLowerCase() == 'gato') return l10n.species_cat;
     return l10n.value_unknown;
   }
 }
 extension UserDisplayExt on String {
   String toUserDisplay(BuildContext context) {
-    if (this == 'User Demo') return AppLocalizations.of(context)!.user_demo_name;
-    if (this.isEmpty) return AppLocalizations.of(context)!.user_default_name;
+    final l10n = AppLocalizations.of(context)!;
+    if (this == 'User Demo') return l10n.user_demo_name;
+    if (isEmpty) return l10n.user_default_name;
     return this;
   }
 }
@@ -43,30 +44,30 @@ extension UserDisplayExt on String {
 extension CategoryStringExt on String {
   String toCategoryDisplay(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    // Map known technical keys (from PetConstants) to L10n
-    if (this == PetConstants.typeClinical || this.toLowerCase().contains('clinical')) return l10n.category_clinical;
-    if (this == PetConstants.typeLab || this.toLowerCase().contains('lab')) return l10n.category_lab;
-    if (this.toLowerCase().contains('wound')) return l10n.category_wound;
-    if (this.toLowerCase().contains('feces') || this.toLowerCase().contains('stool')) return l10n.category_feces;
-    if (this.toLowerCase().contains('label') || this.toLowerCase().contains('nutrition')) return l10n.category_food_label;
+    // Map known technical keys (from PetConstants) to L10n or Fallbacks
+    if (this == PetConstants.typeClinical || toLowerCase().contains('clinical')) return l10n.category_clinical;
+    if (this == PetConstants.typeLab || toLowerCase().contains('lab')) return l10n.pet_type_lab;
+    if (toLowerCase().contains('wound')) return l10n.category_wound;
+    if (toLowerCase().contains('feces') || toLowerCase().contains('stool')) return l10n.category_feces;
+    if (toLowerCase().contains('label') || toLowerCase().contains('nutrition')) return l10n.category_food_label;
     
     // New Mappings from Novas Chaves (AI Titles)
-    final lower = this.toLowerCase();
-    if (lower.contains('general pet analysis')) return l10n.pet_section_general;
-    if (lower.contains('visual health') || lower.contains('inspection')) return l10n.pet_section_visual;
-    if (lower.contains('species')) return l10n.pet_section_species;
+    final lower = toLowerCase();
+    if (lower.contains('general')) return l10n.pet_type_general;
+    if (lower.contains('visual') || lower.contains('inspection')) return l10n.pet_section_visual;
+    if (lower.contains('species')) return l10n.species_label;
     if (lower.contains('coat')) return l10n.pet_section_coat;
-    if (lower.contains('skin')) return l10n.pet_section_skin;
+    if (lower.contains('skin')) return l10n.pet_type_skin;
     if (lower.contains('ear')) return l10n.pet_section_ears;
     if (lower.contains('nose')) return l10n.pet_section_nose;
-    if (lower.contains('eye')) return l10n.pet_section_eyes;
+    if (lower.contains('eye')) return l10n.pet_type_eyes;
     if (lower.contains('body') || lower.contains('posture')) return l10n.pet_section_posture;
     if (lower.contains('issue') || lower.contains('potential')) return l10n.pet_section_issues;
-    if (lower.contains('mouth') || lower.contains('teeth')) return l10n.pet_section_mouth;
+    if (lower.contains('mouth') || lower.contains('teeth')) return l10n.pet_type_mouth;
     if (lower.contains('biometric')) return l10n.pet_section_biometrics;
     if (lower.contains('weight')) return l10n.pet_section_weight;
 
-    return this; // Fallback to original string if no translation found
+    return this; 
   }
 }
 
@@ -75,18 +76,17 @@ extension PetUrgencyStringExt on String {
     final l10n = AppLocalizations.of(context)!;
     // Normalize string to match keys or values
     // Expecting: 'Green', 'Yellow', 'Red' or 'Monitor', 'Attention', 'Critical'
-    // Or keys: 'key_green', 'key_yellow', 'key_red'
     
-    final lower = this.toLowerCase();
+    final lower = toLowerCase();
     
-    if (lower.contains(PetConstants.parseGreen) || lower.contains(PetConstants.parseMonitor) || this == PetConstants.keyMonitor || this == PetConstants.parseMonitor) {
-      return l10n.key_green; // "Monitorar"
+    if (lower.contains(PetConstants.parseGreen) || lower.contains(PetConstants.parseMonitor) || this == PetConstants.keyMonitor || this == PetConstants.valMonitor) {
+      return l10n.key_green; 
     }
-    if (lower.contains(PetConstants.parseYellow) || lower.contains(PetConstants.parseAttention) || this == PetConstants.keyImmediateAttention || this == PetConstants.parseAttention) {
-      return l10n.key_yellow; // "Atenção"
+    if (lower.contains(PetConstants.parseYellow) || lower.contains(PetConstants.parseAttention) || this == PetConstants.keyImmediateAttention || this == PetConstants.valAttention) {
+      return l10n.key_yellow; 
     }
-    if (lower.contains(PetConstants.parseRed) || lower.contains(PetConstants.parseCritical) || this == PetConstants.keyCritical || this == PetConstants.parseCritical) {
-      return l10n.key_red; // "Crítico"
+    if (lower.contains(PetConstants.parseRed) || lower.contains(PetConstants.parseCritical) || this == PetConstants.keyCritical || this == PetConstants.valCritical) {
+      return l10n.key_red; 
     }
     
     return this;

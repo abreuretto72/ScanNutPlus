@@ -1,17 +1,12 @@
-import 'dart:io';
+import 'package:scannutplus/core/theme/app_colors.dart'; // Import AppColors
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:lucide_icons/lucide_icons.dart';
-import 'package:scannutplus/l10n/app_localizations.dart'; // Core L10n
-import 'package:scannutplus/features/pet/data/models/pet_profile.dart';
+// import 'package:lucide_icons/lucide_icons.dart'; // Removed
+
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
-import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
-import 'package:scannutplus/features/pet/presentation/pet_capture_view.dart';
-import 'package:scannutplus/features/pet/presentation/pet_management_screen.dart'; 
-// Note: We might need to refactor PetProfileScreen to accept PetProfile instead of HistoryEntry, 
-// or create a dummy entry. For now, I'll assume we navigate to a detail view.
-// The user said: "3. Tela de Gerenciamento do Pet (Ao clicar no Card)" -> uses PetProfile logic.
-// So I might need to update PetProfileScreen too.
+import 'package:scannutplus/features/pet/data/pet_repository.dart';
+ // Or AppLocalizations if central
+import 'package:scannutplus/l10n/app_localizations.dart';
+import 'dart:io';
 
 class MyPetsView extends StatefulWidget {
   const MyPetsView({super.key});
@@ -21,148 +16,410 @@ class MyPetsView extends StatefulWidget {
 }
 
 class _MyPetsViewState extends State<MyPetsView> {
-  // final ImagePicker _picker = ImagePicker(); // Unused
+  final PetRepository _repository = PetRepository();
+  
+  // NOVA IDENTIDADE VISUAL via AppColors (Pilar 0)
+  // Rosa Pastel (#FFD1DC) com Contraste Preto
+
+  // Helper for Brazilian Date Format (dd/MM/yyyy HH:mm)
+  String _formatDate(String? isoString) {
+    if (isoString == null) return '';
+    try {
+      final date = DateTime.parse(isoString).toLocal();
+      final day = date.day.toString().padLeft(2, '0');
+      final month = date.month.toString().padLeft(2, '0');
+      final year = date.year;
+      final hour = date.hour.toString().padLeft(2, '0');
+      final minute = date.minute.toString().padLeft(2, '0');
+      return '$day/$month/$year $hour:$minute';
+    } catch (e) {
+      return '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Ensure box is open (should be done in main/init, but safe check)
-    // We assume openPetBoxes() was called.
-    
-    final l10n = PetLocalizations.of(context)!;
-    
+    // Assuming AppLocalizations has the keys we just added
+    final appL10n = AppLocalizations.of(context)!;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF0A0E17),
+      backgroundColor: AppColors.petBackgroundDark,
       appBar: AppBar(
-        title: Text(l10n.pet_screen_title_my_pets, style: const TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF1F3A5F),
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: ValueListenableBuilder(
-        valueListenable: Hive.box<PetProfile>(PetConstants.boxPetProfiles).listenable(),
-        builder: (context, Box<PetProfile> box, _) {
-          if (box.isEmpty) return _buildEmptyState(l10n);
-          
-          return SingleChildScrollView(
-             // Ergonomia SM A256E
-            padding: const EdgeInsets.only(bottom: 160, left: 16, right: 16, top: 16),
-            child: Column(
-              children: box.values.map((pet) => _buildPetCard(pet, l10n)).toList(),
-            ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFFF9800), 
-        onPressed: () => _startNewPetFlow(context),
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-    );
-  }
-
-  Widget _buildEmptyState(PetLocalizations l10n) {
-    return Center(
-       child: Column(
-         mainAxisAlignment: MainAxisAlignment.center,
-         children: [
-            const Icon(LucideIcons.dog, size: 64, color: Colors.white24),
-            const SizedBox(height: 16),
-            Text(
-              l10n.pet_history_empty, // "Nenhum histórico" -> "Nenhum pet" (close enough or need new key)
-              style: const TextStyle(color: Colors.white54, fontSize: 16),
-            ),
-         ],
-       ),
-    );
-  }
-
-  Widget _buildPetCard(PetProfile pet, PetLocalizations l10n) {
-    return Card(
-      color: const Color(0xFF152033),
-      margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(12),
-        leading: CircleAvatar(
-          radius: 30,
-          backgroundImage: FileImage(File(pet.profileImagePath)),
-          backgroundColor: Colors.grey,
-        ),
         title: Text(
-          pet.name, 
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)
+          appL10n.pet_my_pets_title, 
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)
         ),
-        subtitle: Text(
-          "${_getLocalizedBreed(context, pet.breed)} • ${pet.age}",
-          style: const TextStyle(color: Colors.white70)
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      // ERGONOMIA SM A256E: Uso obrigatório de SingleChildScrollView
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            FutureBuilder<List<Map<String, dynamic>>>(
+              future: _repository.getAllRegisteredPets(), // Método blindado no repository
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator(color: AppColors.petPrimary));
+                }
+
+                final pets = snapshot.data ?? [];
+
+                if (pets.isEmpty) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 100),
+                      child: Column(
+                        children: [
+                           Icon(Icons.pets, size: 64, color: Colors.white24),
+                           const SizedBox(height: 16),
+                           Text(
+                             appL10n.pet_no_pets_registered, 
+                             style: const TextStyle(color: Colors.white54, fontSize: 16)
+                           ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true, // Necessário dentro de SingleChildScrollView
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: pets.length,
+                  itemBuilder: (context, index) {
+                    final pet = pets[index];
+                    return _buildPetCard(pet);
+                  },
+                );
+              },
+            ),
+            // Espaçador para o conteúdo não invadir o rodapé
+            const SizedBox(height: 80),
+          ],
         ),
-        trailing: IconButton(
-          icon: const Icon(Icons.delete_sweep, color: Colors.redAccent),
-          onPressed: () => _confirmDelete(pet, l10n),
-        ),
-        onTap: () => _navigateToPetDetails(pet),
+      ),
+      // Botão Flutuante (FAB) - Rosa Pastel com Ícone Preto e Borda
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.petPrimary, 
+        foregroundColor: AppColors.petText,
+        shape: CircleBorder(side: BorderSide(color: AppColors.petText, width: 1.0)), // Contrast Border
+        elevation: 6,
+        onPressed: () async {
+          // STEP 0: Request Name BEFORE Camera (Protocol 2026)
+          final String? petName = await _showNameInputDialog(context);
+          
+          if (petName != null && petName.isNotEmpty) {
+             // Generates UUID here to bind identity immediately
+             final newUuid = 'pet_${DateTime.now().millisecondsSinceEpoch}';
+             
+             if (!context.mounted) return;
+
+             Navigator.pushNamed(
+              context, 
+              '/pet_capture', 
+              arguments: {
+                PetConstants.argUuid: newUuid,
+                PetConstants.argType: PetImageType.newProfile,
+                PetConstants.argName: petName, // Passed from Step 0
+              },
+            ).then((_) => setState(() {})); // Reload list on return
+          }
+        },
+        child: const Icon(Icons.add, size: 32),
       ),
     );
   }
 
-  Future<void> _startNewPetFlow(BuildContext context) async {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const PetCaptureView(initialMode: PetImageType.newProfile),
-        ),
-      );
-  }
+  Future<String?> _showNameInputDialog(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    TextEditingController controller = TextEditingController();
 
-
-  void _confirmDelete(PetProfile pet, PetLocalizations l10n) {
-     showDialog(
-       context: context,
-       builder: (ctx) => AlertDialog(
-          backgroundColor: const Color(0xFF1F3A5F),
-          title: Text(l10n.pet_delete_title, style: const TextStyle(color: Colors.white)),
-          content: Text(
-            l10n.pet_delete_confirm_msg(pet.name), 
-            style: const TextStyle(color: Colors.white70)
+    return await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true, // Allow full keyboard interaction
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return SingleChildScrollView( // Ergonomia SM A256E: Avoid Overflow
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              decoration: const BoxDecoration(
+                color: AppColors.petBackgroundDark, // Dark Theme Modal
+                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                border: Border(top: BorderSide(color: AppColors.petPrimary, width: 2)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Header
+                  Row(
+                    children: [
+                      const Icon(Icons.pets, color: AppColors.petPrimary),
+                      const SizedBox(width: 12),
+                      Text(
+                        l10n.pet_dialog_new_title, // "Novo Perfil"
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  
+                  // Input
+                  Text(
+                    l10n.pet_input_name_hint, // "Qual o nome do pet?"
+                    style: TextStyle(color: Colors.white.withValues(alpha: 0.7)),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: controller,
+                    autofocus: true,
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                    cursorColor: AppColors.petPrimary,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(
+                       filled: true,
+                       fillColor: Colors.white.withValues(alpha: 0.1),
+                       border: OutlineInputBorder(
+                         borderRadius: BorderRadius.circular(12),
+                         borderSide: BorderSide.none,
+                       ),
+                       focusedBorder: OutlineInputBorder(
+                         borderRadius: BorderRadius.circular(12),
+                         borderSide: const BorderSide(color: AppColors.petPrimary),
+                       ),
+                    ),
+                    onChanged: (val) {
+                       // Optional: If we wanted to validate live
+                    },
+                    onSubmitted: (val) {
+                      if (val.trim().isNotEmpty) Navigator.pop(context, val.trim());
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  
+                  // Action Button - Rosa Pastel (Go) com Borda Preta
+                  ElevatedButton(
+                    onPressed: () {
+                      final text = controller.text.trim();
+                      if (text.isNotEmpty) {
+                         Navigator.pop(context, text);
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.petPrimary, // #FFD1DC
+                      foregroundColor: AppColors.petText,    // Black
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        side: const BorderSide(color: AppColors.petText, width: 1.0), // Black Border
+                      ),
+                      elevation: 0,
+                    ),
+                    child: Text(
+                      l10n.btn_go, // "Ir" / "Go"
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  // Safe Area for Keyboard
+                  const SizedBox(height: 12),
+                ],
+              ),
+            ),
           ),
-          actions: [
-             TextButton(
-               onPressed: () => Navigator.pop(ctx),
-               child: Text(l10n.action_cancel, style: const TextStyle(color: Colors.white54)),
-             ),
-             TextButton(
-               onPressed: () {
-                  pet.delete(); 
-                  try {
-                    final f = File(pet.profileImagePath);
-                    if (f.existsSync()) f.deleteSync();
-                  } catch (e) {
-                    debugPrint('${PetConstants.logTagPetData}$e');
-                  }
-                  Navigator.pop(ctx);
-               },
-               child: Text(l10n.action_delete, style: const TextStyle(color: Colors.redAccent)),
-             )
-          ],
-       )
-     );
+        );
+      },
+    );
   }
 
-  void _navigateToPetDetails(PetProfile pet) {
-     Navigator.push(
-       context,
-       MaterialPageRoute(builder: (_) => PetManagementScreen(pet: pet)),
-     );
-  }
+  Widget _buildPetCard(Map<String, dynamic> pet) {
+    final appL10n = AppLocalizations.of(context)!;
+    
+    // Extração segura de dados usando constantes (Pilar 0)
+    final String name = pet[PetConstants.fieldName] ?? appL10n.pet_unknown;
+    final String breedRaw = pet[PetConstants.fieldBreed] ?? '';
+    
+    // Lógica de Fallback para Raça (Prompt: Fix "Mudo")
+    final bool isBreedUnknown = breedRaw.isEmpty || 
+                                breedRaw == PetConstants.valueUnknown || 
+                                breedRaw == PetConstants.legacyUnknownBreed ||
+                                breedRaw == PetConstants.legacyUnknownBreed;
+                                
+    // Exibe "Raça não informada" se desconhecido, senão exibe a raça (ex: "Chihuahua")
+    // Ensure first letter is capitalized for aesthetics
+    String finalBreed = breedRaw;
+    if (!isBreedUnknown && finalBreed.isNotEmpty) {
+       finalBreed = finalBreed[0].toUpperCase() + finalBreed.substring(1);
+    }
+    
+    final String displayBreed = isBreedUnknown ? appL10n.pet_breed_unknown : finalBreed;
+    
+    final String imagePath = pet[PetConstants.fieldImagePath] ?? '';
+    final String uuid = pet[PetConstants.fieldUuid] ?? '';
 
-  String _getLocalizedBreed(BuildContext context, String breed) {
-    if (breed.contains(PetConstants.valDog)) return AppLocalizations.of(context)!.species_dog;
-    if (breed.contains(PetConstants.valCat)) return AppLocalizations.of(context)!.species_cat;
-    return breed;
+    return Card(
+      color: AppColors.petPrimary, // Rosa Pastel (#FFD1DC)
+      elevation: 4,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: const BorderSide(color: AppColors.petText, width: 1.0), // Black Border Contrast
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          // Navegação para o Dashboard com argumentos blindados
+          Navigator.pushNamed(
+            context, 
+            '/pet_dashboard', 
+            arguments: {
+              PetConstants.argUuid: uuid,
+              PetConstants.argName: name,
+              PetConstants.argBreed: displayBreed, 
+              PetConstants.argImagePath: imagePath,
+            },
+          ).then((_) => setState(() {})); // Reload list (in case of updates)
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              // IMAGEM DO PET: Circular com border preto fino
+              Hero(
+                tag: 'pet_image_$uuid',
+                child: Container(
+                  width: 65,
+                  height: 65,
+                  decoration: BoxDecoration(
+                    color: Colors.white, 
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.petText, width: 1.5), // Black Border
+                    image: imagePath.isNotEmpty 
+                      ? DecorationImage(
+                          image: FileImage(File(imagePath)),
+                          fit: BoxFit.cover,
+                        ) 
+                      : null,
+                  ),
+                  child: imagePath.isEmpty 
+                    ? const Icon(Icons.pets, size: 32, color: Colors.black54) 
+                    : null,
+                ),
+              ),
+              const SizedBox(width: 16),
+              // INFORMAÇÕES: Nome e Raça (PRETO)
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800, // Extra Bold
+                        color: AppColors.petText, // Black
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    // Raça com estilo condicional (Preto ou Cinza Escuro)
+                    Text(
+                      displayBreed,
+                      style: TextStyle(
+                        fontSize: 14,
+                        // Se desconhecido: Cinza Escuro Itálico. Se conhecido: Preto Normal.
+                        color: isBreedUnknown ? Colors.black54 : AppColors.petText.withValues(alpha: 0.8),
+                        fontStyle: isBreedUnknown ? FontStyle.italic : FontStyle.normal,
+                        fontWeight: isBreedUnknown ? FontWeight.normal : FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 4), // Spacing
+                    // Creation Timestamp (Pilar 0: Localized & Formatted)
+                    if (pet[PetConstants.fieldCreatedAt] != null) ...[
+                      Text(
+                        '${appL10n.pet_created_at_label} ${_formatDate(pet[PetConstants.fieldCreatedAt])}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black87, // High contrast on Pink
+                          fontWeight: FontWeight.w400,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              // BOTÃO DE EXCLUSÃO (Preto/Vermelho)
+              IconButton(
+                icon: const Icon(Icons.delete_outline, color: AppColors.petText), // Alert Icon Black
+                tooltip: appL10n.pet_delete_title,
+                onPressed: () {
+                  // Diálogo de Confirmação (Mantém estilo Dark para contraste de alerta)
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext dialogContext) {
+                      return AlertDialog(
+                        backgroundColor: AppColors.petBackgroundDark,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: const BorderSide(color: AppColors.petPrimary, width: 1), // Pink Border
+                        ),
+                        title: Text(
+                          appL10n.pet_delete_title, 
+                          style: const TextStyle(color: Colors.white)
+                        ),
+                        content: Text(
+                          appL10n.pet_delete_content,
+                          style: const TextStyle(color: Colors.white70)
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(dialogContext).pop(),
+                            child: Text(
+                              appL10n.pet_delete_cancel, 
+                              style: const TextStyle(color: Colors.white54)
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              Navigator.of(dialogContext).pop(); 
+                              await _repository.deleteFullPetData(uuid);
+                              if (!mounted) return;
+                              setState(() {});
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(appL10n.pet_delete_success),
+                                  backgroundColor: const Color(0xFF10AC84),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              appL10n.pet_delete_confirm, 
+                              style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
-
-
-
-

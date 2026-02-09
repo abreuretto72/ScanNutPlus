@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
-import 'package:scannutplus/features/pet/data/model/pet_history_entry.dart';
-import 'package:scannutplus/features/pet/presentation/history/pet_history_list_view.dart';
+import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
+
 import 'package:scannutplus/l10n/app_localizations.dart';
-import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
+// import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart'; // Removed
 import 'package:scannutplus/features/pet/presentation/history/pet_profile_screen.dart';
 import 'package:scannutplus/features/pet/presentation/pet_capture_view.dart';
 import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
@@ -70,20 +70,25 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: ListTile(
                         leading: pet.imagePath.isNotEmpty 
-                            ? Image.file(File(pet.imagePath), width: 50, height: 50, fit: BoxFit.cover, errorBuilder: (_,__,___) => const Icon(LucideIcons.dog, color: Colors.white54)) 
-                            : const Icon(LucideIcons.dog, color: Colors.white54),
+                            ? Image.file(File(pet.imagePath), width: 50, height: 50, fit: BoxFit.cover, errorBuilder: (_,__,___) => const Icon(Icons.pets, color: Colors.white54)) 
+                            : const Icon(Icons.pets, color: Colors.white54),
                         title: Text(pet.petName, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                            '${pet.category.toCategoryDisplay(context)} • ${pet.timestamp.toString().substring(0, 16)}',
                            style: const TextStyle(color: Colors.white70),
                         ),
                         trailing: IconButton(
-                           icon: const Icon(LucideIcons.trash2, color: Colors.redAccent),
+                           icon: const Icon(Icons.delete, color: Colors.redAccent),
                            onPressed: () => pet.delete(), // Quick delete
                         ),
-                        onTap: () {
+                       onTap: () {
                            Navigator.of(context).push(
-                             MaterialPageRoute(builder: (_) => PetProfileScreen(latestEntry: pet)),
+                             MaterialPageRoute(
+                               builder: (_) => PetProfileScreen(
+                                 uuid: pet.petUuid,
+                                 name: pet.petName,
+                               ),
+                             ),
                            );
                         },
                       ),
@@ -95,11 +100,16 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
           ),
           floatingActionButton: FloatingActionButton(
             backgroundColor: const Color(0xFF1F3A5F),
-            child: const Icon(LucideIcons.plus, color: Colors.white),
+            child: const Icon(Icons.add, color: Colors.white),
             onPressed: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (_) => const PetCaptureView(initialMode: PetImageType.newProfile)
+                        builder: (_) => const PetCaptureView(),
+                        settings: const RouteSettings(
+                           arguments: {
+                              PetConstants.argType: PetImageType.newProfile
+                           }
+                        )
                     )
                 );
             },

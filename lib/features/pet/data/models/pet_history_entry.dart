@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:hive/hive.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 part 'pet_history_entry.g.dart';

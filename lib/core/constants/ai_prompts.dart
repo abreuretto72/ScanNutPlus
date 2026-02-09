@@ -34,6 +34,7 @@ class AiPrompts {
   static const String contextEyes = 'Focus on the eyes. Look for discharge, cloudiness (cataracts/sclerosis), redness, or irritation.';
   static const String contextSkin = 'Focus on the skin/coat. Look for alopecia, mats, rashes, fleas/ticks, or hotspots.';
   static const String contextLabel = 'Extract product information specifically. Identify brand, nutritional analysis, and ingredients.';
+  static const String contextPosture = 'Focus on Body Condition Score (BCS 1-9). Evaluate silhouette, visible ribs/spine, waistline, and signs of obesity or emaciation.';
 
   static const String outputLang = '**Output Language:**\n    Respond strictly in ';
   static const String formatInst = '''

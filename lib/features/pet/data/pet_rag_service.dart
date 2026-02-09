@@ -1,7 +1,6 @@
 import 'pet_repository.dart';
 import 'pet_constants.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:typed_data';
 
 class PetRagService {
   final PetRepository _repository;
@@ -28,6 +27,7 @@ class PetRagService {
       petName: petName,
       analysisResult: fullAnalysis,
       sources: sources,
+      imagePath: '', // Protocol 2026: Default empty for RAG-only saves
     );
   }
 

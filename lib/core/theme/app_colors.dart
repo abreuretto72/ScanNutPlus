@@ -11,4 +11,9 @@ class AppColors {
   // Text
   static const Color textWhite = Colors.white;
   static const Color textGrey = Colors.grey;
+
+  // Pet Domain (Rosa Pastel Identity)
+  static const Color petPrimary = Color(0xFFFFD1DC);
+  static const Color petText = Colors.black;
+  static const Color petBackgroundDark = Color(0xFF0A0E17);
 }

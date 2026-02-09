@@ -122,7 +122,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(3, 783428171470640664),
     name: 'PetEntity',
-    lastPropertyId: const obx_int.IdUid(6, 6047037066559026534),
+    lastPropertyId: const obx_int.IdUid(8, 5713754980626256512),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -159,6 +159,19 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(6, 6047037066559026534),
         name: 'createdAt',
         type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 322402669160939439),
+        name: 'uuid',
+        type: 9,
+        flags: 2080,
+        indexId: const obx_int.IdUid(1, 8879275025653982067),
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 5713754980626256512),
+        name: 'breed',
+        type: 9,
         flags: 0,
       ),
     ],
@@ -211,7 +224,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
     generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
     entities: _entities,
     lastEntityId: const obx_int.IdUid(3, 783428171470640664),
-    lastIndexId: const obx_int.IdUid(0, 0),
+    lastIndexId: const obx_int.IdUid(1, 8879275025653982067),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
@@ -378,13 +391,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final typeOffset = object.type == null
             ? null
             : fbb.writeString(object.type!);
-        fbb.startTable(7);
+        final uuidOffset = fbb.writeString(object.uuid);
+        final breedOffset = object.breed == null
+            ? null
+            : fbb.writeString(object.breed!);
+        fbb.startTable(9);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, nameOffset);
         fbb.addOffset(2, speciesOffset);
         fbb.addOffset(3, imagePathOffset);
         fbb.addOffset(4, typeOffset);
         fbb.addInt64(5, object.createdAt.millisecondsSinceEpoch);
+        fbb.addOffset(6, uuidOffset);
+        fbb.addOffset(7, breedOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -397,9 +416,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
           4,
           0,
         );
+        final uuidParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 16, '');
         final nameParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 6);
+        final breedParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 18);
         final speciesParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 8, '');
@@ -414,7 +439,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         );
         final object = PetEntity(
           id: idParam,
+          uuid: uuidParam,
           name: nameParam,
+          breed: breedParam,
           species: speciesParam,
           imagePath: imagePathParam,
           type: typeParam,
@@ -530,5 +557,15 @@ class PetEntity_ {
   /// See [PetEntity.createdAt].
   static final createdAt = obx.QueryDateProperty<PetEntity>(
     _entities[2].properties[5],
+  );
+
+  /// See [PetEntity.uuid].
+  static final uuid = obx.QueryStringProperty<PetEntity>(
+    _entities[2].properties[6],
+  );
+
+  /// See [PetEntity.breed].
+  static final breed = obx.QueryStringProperty<PetEntity>(
+    _entities[2].properties[7],
   );
 }

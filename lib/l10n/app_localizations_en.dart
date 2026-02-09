@@ -555,6 +555,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_section_skin => 'Skin Appearance';
 
   @override
+  String get pet_action_share => 'Share';
+
+  @override
+  String get source_merck => 'Merck Veterinary Manual (MSD Digital 2026)';
+
+  @override
+  String get source_scannut => 'ScanNut+ Biometry & Phenotyping Protocol';
+
+  @override
+  String get source_aaha => 'AAHA/WSAVA Physical Exam Guidelines';
+
+  @override
   String get pet_section_ears => 'Ear Health';
 
   @override
@@ -633,4 +645,245 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pet_ui_my_pets => 'My Pets';
+
+  @override
+  String get pet_my_pets_title => 'My Pets';
+
+  @override
+  String get pet_no_pets_registered => 'No pets registered yet.';
+
+  @override
+  String get pet_dashboard_title => 'Pet Dashboard';
+
+  @override
+  String get pet_action_biometrics => 'Biometrics';
+
+  @override
+  String get pet_action_history => 'Medical History';
+
+  @override
+  String get pet_type_label => 'Label';
+
+  @override
+  String get pet_type_wound => 'Wound';
+
+  @override
+  String get pet_type_stool => 'Stool';
+
+  @override
+  String get pet_type_mouth => 'Mouth/Teeth';
+
+  @override
+  String get pet_type_eyes => 'Eyes';
+
+  @override
+  String get pet_type_skin => 'Skin/Coat';
+
+  @override
+  String get pet_type_lab => 'Lab Exam';
+
+  @override
+  String get pet_select_context => 'Select analysis type:';
+
+  @override
+  String get pet_unknown => 'Unknown';
+
+  @override
+  String pet_analyzing_x(String name) {
+    return 'Analyzing: $name';
+  }
+
+  @override
+  String pet_id_format(String id) {
+    return 'ID: $id...';
+  }
+
+  @override
+  String get pet_section_visual => 'Visual Inspection';
+
+  @override
+  String get pet_type_safety => 'Safety';
+
+  @override
+  String get pet_type_new_profile => 'New Profile';
+
+  @override
+  String get pet_waze_title => 'Pet Waze';
+
+  @override
+  String get pet_waze_desc => 'Community alerts near you';
+
+  @override
+  String get pet_partners_title => 'Partners';
+
+  @override
+  String get pet_partners_desc => 'Discounts and services';
+
+  @override
+  String get pet_tab_history => 'History';
+
+  @override
+  String get pet_history_empty => 'No history available';
+
+  @override
+  String get pet_analysis_result_title => 'Analysis Result';
+
+  @override
+  String get pet_status_healthy_simple => 'Healthy';
+
+  @override
+  String get pet_status_critical_simple => 'Critical';
+
+  @override
+  String get pet_status_attention_simple => 'Attention';
+
+  @override
+  String get pet_section_sources => 'References & Protocol';
+
+  @override
+  String get pet_action_new_analysis => 'New Analysis';
+
+  @override
+  String get source_scannut_db => 'ScanNut+ Database';
+
+  @override
+  String get pet_unknown_name => 'Unknown Name';
+
+  @override
+  String get pet_footer_brand => 'ScanNut+ Pet Intelligence';
+
+  @override
+  String get pet_label_status => 'Status';
+
+  @override
+  String get pet_history_title => 'Analysis History';
+
+  @override
+  String get pet_breed_unknown => 'Breed not informed';
+
+  @override
+  String get pet_delete_title => 'Delete Pet';
+
+  @override
+  String get pet_delete_content =>
+      'Are you sure you want to delete this pet and all its history?';
+
+  @override
+  String get pet_delete_confirm => 'Delete';
+
+  @override
+  String get pet_delete_cancel => 'Cancel';
+
+  @override
+  String get pet_delete_success => 'Pet deleted successfully';
+
+  @override
+  String get pet_recent_analyses => 'Recent Analyses';
+
+  @override
+  String get pet_no_history => 'No recent analyses.';
+
+  @override
+  String get pet_new_pet => 'New Pet';
+
+  @override
+  String get val_unknown_date => 'Unknown Date';
+
+  @override
+  String get report_generated_on => 'Generated on';
+
+  @override
+  String get pet_analysis_skin => 'Skin & Coat';
+
+  @override
+  String get pet_analysis_mouth => 'Oral Health';
+
+  @override
+  String get pet_analysis_stool => 'Stool Screening';
+
+  @override
+  String get pet_analysis_lab => 'Lab Report Reading';
+
+  @override
+  String get pet_analysis_label => 'Nutrition & Labels';
+
+  @override
+  String get pet_analysis_posture => 'Body Condition';
+
+  @override
+  String get ai_feedback_no_oral_layout =>
+      'No oral structures visible for analysis.';
+
+  @override
+  String get ai_feedback_no_derm_abnormalities =>
+      'No dermatological abnormalities detected based on visual evidence.';
+
+  @override
+  String get ai_feedback_invalid_gastro =>
+      'INVALID_CONTEXT: Image does not appear to be gastrointestinal output.';
+
+  @override
+  String get ai_feedback_invalid_lab =>
+      'INVALID_CONTEXT: Image is not a lab report.';
+
+  @override
+  String get ai_feedback_lab_disclaimer =>
+      'Interpretation is based on visible text. Verify with original document.';
+
+  @override
+  String get ai_feedback_eyes_not_visible => 'Eyes not fully visible.';
+
+  @override
+  String get ai_feedback_inconclusive_angle => 'Inconclusive visual angle.';
+
+  @override
+  String get pet_module_dentistry => 'Oral Health (Teeth & Gums)';
+
+  @override
+  String get pet_module_dermatology => 'Skin, Coat & Wounds';
+
+  @override
+  String get pet_module_gastro => 'Stool & Digestion Analysis';
+
+  @override
+  String get pet_module_lab => 'Lab Report Reading';
+
+  @override
+  String get pet_module_nutrition => 'Nutrition & Label Analysis';
+
+  @override
+  String get pet_module_ophthalmology => 'Eyes & Ears Analysis';
+
+  @override
+  String get pet_module_physique => 'Body Condition & Weight';
+
+  @override
+  String get btn_scan_image => 'Scan Image';
+
+  @override
+  String get generic_analyzing => 'Analyzing image...';
+
+  @override
+  String get pet_error_image_not_found => 'Error: Original image not found.';
+
+  @override
+  String get btn_go => 'Go';
+
+  @override
+  String get pet_created_at_label => 'Created at:';
+
+  @override
+  String get pet_initial_assessment => 'Initial Assessment';
+
+  @override
+  String get pet_hint_select_type => '<Select type>';
+
+  @override
+  String get pet_label_info => 'Info';
+
+  @override
+  String get pet_type_profile => 'Profile Analysis';
+
+  @override
+  String get pet_type_posture => 'Posture Analysis';
 }

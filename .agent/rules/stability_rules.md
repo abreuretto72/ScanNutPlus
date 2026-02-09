@@ -17,6 +17,17 @@ Verificação Linter: Todo código gerado deve passar por uma auto-auditoria int
 - **Saneamento Invariável:** Converter automaticamente `.withOpacity(x)` para `.withValues(alpha: x)` (Flutter 3.27+) em todos os arquivos editados. 
 - **Zero Hardcoded:** Proibido o uso de strings manuais. Todos os textos devem vir obrigatoriamente das chaves de tradução.
 
+
+Módulo Novo Pet: Restaurado ao estado anterior de alta performance. A IA voltará a fornecer as análises profundas e completas que você aprovou.
+
+Módulos por Imagem: Cada um (Gastro, Dermato, etc.) operando de forma isolada, sem interferir na lógica de nascimento do pet.
+
+Telas de Resultado: Foco 100% na renderização visual dos cards (Rosa Pastel/Preto). Qualquer código de PDF ou funções extras foram descartados.
+
+Identidade: O UUID continuará sendo a âncora para que o nome e a raça identificados no "nascimento" alimentem o histórico corretamente.
+
+
+
 ## 2. ARQUITETURA DE MICRO-APPS E ISOLAMENTO DE DOMÍNIOS
 - **Isolamento Total:** As features `food`, `pet` e `plant` são micro-apps independentes. É terminantemente proibido o compartilhamento de modelos, serviços ou imports diretos entre elas.
 - **Camada de Comunicação:** Qualquer troca de informações entre domínios deve ser feita exclusivamente através de uma camada de comunicação genérica no `core`.

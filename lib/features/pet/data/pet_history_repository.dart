@@ -41,7 +41,7 @@ class PetHistoryRepository {
   Future<List<PetHistoryEntry>> getEnvironmentalHistory() async {
     final box = await _dataSource.getBox();
     return box.values
-        .where((e) => e.petUuid == null || e.petUuid == PetConstants.tagEnvironment)
+        .where((e) => e.petUuid == PetConstants.tagEnvironment)
         .toList()
       ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
   }

@@ -5,7 +5,11 @@ class PetEntity {
   @Id()
   int id = 0;
 
+  @Unique()
+  String uuid;
+
   String? name;
+  String? breed;
   String species;
   String imagePath;
   String? type;
@@ -15,7 +19,9 @@ class PetEntity {
 
   PetEntity({
     this.id = 0,
+    required this.uuid,
     this.name,
+    this.breed,
     required this.species,
     required this.imagePath,
     this.type,

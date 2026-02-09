@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+// import 'package:lucide_icons/lucide_icons.dart'; // Removed
 import 'package:intl/intl.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
 import 'package:scannutplus/features/pet/data/models/pet_profile.dart'; // Import Profile
 import 'package:scannutplus/features/pet/data/pet_constants.dart';       // Import Constants
-import 'package:scannutplus/features/pet/data/pet_history_repository.dart';
+
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/presentation/history/pet_history_detail_screen.dart';
 import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
@@ -76,7 +76,7 @@ class PetHistoryListView extends StatelessWidget {
         final profileBox = Hive.box<PetProfile>(PetConstants.boxPetProfiles);
         // Try to find profile by UUID
         // If UUID is Environment tag, we might not have a profile, or use Name
-        if (entry.petUuid != PetConstants.tagEnvironment && entry.petUuid != null) {
+        if (entry.petUuid != PetConstants.tagEnvironment) {
              final profile = profileBox.values.firstWhere(
                  (p) => p.uuid == entry.petUuid, 
                  orElse: () => PetProfile(uuid: '', name: '', profileImagePath: '', species: PetConstants.speciesUnknown) // Dummy
@@ -128,9 +128,9 @@ class PetHistoryListView extends StatelessWidget {
                     ? Image.file(
                         File(entry.imagePath),
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const Icon(LucideIcons.image, color: Colors.black54),
+                        errorBuilder: (_, __, ___) => const Icon(Icons.image, color: Colors.black54),
                       )
-                    : const Icon(LucideIcons.dog, color: Colors.black54),
+                    : const Icon(Icons.pets, color: Colors.black54),
               ),
             ),
             const SizedBox(width: 16),
@@ -152,14 +152,14 @@ class PetHistoryListView extends StatelessWidget {
                   // Species & Date
                   Row(
                     children: [
-                      Icon(LucideIcons.dog, size: 12, color: Colors.black54), // Species Icon
+                      Icon(Icons.pets, size: 12, color: Colors.black54), // Species Icon
                       const SizedBox(width: 4),
                       Text(
                         speciesDisplay,
                         style: const TextStyle(color: Colors.black87, fontSize: 13, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(width: 10),
-                      Icon(LucideIcons.clock, size: 12, color: Colors.black54),
+                      Icon(Icons.access_time, size: 12, color: Colors.black54),
                       const SizedBox(width: 4),
                       Text(
                         dateStr,
@@ -190,7 +190,7 @@ class PetHistoryListView extends StatelessWidget {
               ),
             ),
             
-            const Icon(LucideIcons.chevronRight, color: Colors.black26),
+            const Icon(Icons.chevron_right, color: Colors.black26),
           ],
         ),
       ),

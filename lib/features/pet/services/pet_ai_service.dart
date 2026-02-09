@@ -6,29 +6,36 @@ import 'package:flutter/foundation.dart';
 import 'package:scannutplus/core/constants/app_keys.dart';
 import 'package:scannutplus/core/constants/ai_prompts.dart';
 import 'package:scannutplus/features/pet/services/pet_base_ai_service.dart';
-import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:scannutplus/features/pet/data/pet_constants.dart'; // PetPrompts here
 import 'package:scannutplus/core/services/env_service.dart'; // Added for EnvService
 import 'package:scannutplus/features/pet/data/pet_rag_service.dart'; // Added
 import 'package:scannutplus/features/pet/data/pet_repository.dart'; // Added
+import 'package:scannutplus/features/pet/modules/dermatology/pet_dermatology_service.dart'; // Micro-App Architecture
+import 'package:scannutplus/features/pet/modules/dentistry/pet_dentistry_service.dart'; // Micro-App Architecture
+import 'package:scannutplus/features/pet/modules/gastro/pet_gastro_service.dart'; // Micro-App Architecture
+import 'package:scannutplus/features/pet/modules/lab/pet_lab_service.dart'; // Micro-App Architecture
+import 'package:scannutplus/features/pet/modules/nutrition/pet_nutrition_service.dart'; // Micro-App Architecture
+import 'package:scannutplus/features/pet/modules/physique/pet_physique_service.dart'; // Micro-App Architecture
+import 'package:scannutplus/features/pet/modules/ophthalmology/pet_ophthalmology_service.dart'; // Micro-App Architecture
 
 class PetIdentityException implements Exception {
   final String message;
   PetIdentityException(this.message);
 }
 
-enum PetImageType {
-  general,
-  wound,
-  stool,
-  mouth,
-  eyes,
-  skin,
-  label,
-  lab, // Added
-}
+// PetImageType is now in pet_constants.dart
 
 class PetAiService extends PetBaseAiService {
   
+  // Micro-App Services
+  final _dermatologyService = PetDermatologyService();
+  final _dentistryService = PetDentistryService();
+  final _gastroService = PetGastroService();
+  final _labService = PetLabService();
+  final _nutritionService = PetNutritionService();
+  final _physiqueService = PetPhysiqueService();
+  final _ophthalmologyService = PetOphthalmologyService();
+
   /// Wrapper with Telemetry and Logging
   Future<(String, Duration, String)> analyzePetImage(
     String imagePath, 
@@ -39,6 +46,50 @@ class PetAiService extends PetBaseAiService {
       String petUuid = PetConstants.defaultPetUuid, // Should be provided by caller
     }
   ) async {
+    // --- MICRO-APP ORCHESTRATION (Protocol 2026) ---
+    // Dermatology (Skin/Wound)
+    if (type == PetImageType.skin || type == PetImageType.wound) {
+       if (kDebugMode) debugPrint('[ORCHESTRATOR]: Delegating to DermatologyModule...');
+       return _dermatologyService.analyzeDermatology(imagePath, languageCode, petName: petName, petUuid: petUuid);
+    }
+
+    // Dentistry (Mouth)
+    if (type == PetImageType.mouth) {
+       if (kDebugMode) debugPrint('[ORCHESTRATOR]: Delegating to DentistryModule...');
+       return _dentistryService.analyzeDentistry(imagePath, languageCode, petName: petName, petUuid: petUuid);
+    }
+
+    // Gastro (Stool)
+    if (type == PetImageType.stool) {
+       if (kDebugMode) debugPrint('[ORCHESTRATOR]: Delegating to GastroModule...');
+       return _gastroService.analyzeGastro(imagePath, languageCode, petName: petName, petUuid: petUuid);
+    }
+
+    // Lab (OCR/Reports)
+    if (type == PetImageType.lab) {
+       if (kDebugMode) debugPrint('[ORCHESTRATOR]: Delegating to LabModule...');
+       return _labService.analyzeLab(imagePath, languageCode, petName: petName, petUuid: petUuid);
+    }
+
+    // Nutrition (Label)
+    if (type == PetImageType.label) {
+       if (kDebugMode) debugPrint('[ORCHESTRATOR]: Delegating to NutritionModule...');
+       return _nutritionService.analyzeNutrition(imagePath, languageCode, petName: petName, petUuid: petUuid);
+    }
+
+    // Physique (Posture)
+    if (type == PetImageType.posture) {
+       if (kDebugMode) debugPrint('[ORCHESTRATOR]: Delegating to PhysiqueModule...');
+       return _physiqueService.analyzePhysique(imagePath, languageCode, petName: petName, petUuid: petUuid);
+    }
+    
+    // Ophthalmology (Eyes) - Even if not in main dropdown yet, backend is ready
+    if (type == PetImageType.eyes) {
+       if (kDebugMode) debugPrint('[ORCHESTRATOR]: Delegating to OphthalmologyModule...');
+       return _ophthalmologyService.analyzeOphthalmology(imagePath, languageCode, petName: petName, petUuid: petUuid);
+    }
+    // -----------------------------------------------
+
     final stopwatch = Stopwatch()..start();
     String finalPath = imagePath;
     
@@ -142,7 +193,7 @@ class PetAiService extends PetBaseAiService {
         petName: petName,
         petUuid: petUuid, 
         analysisType: analysisType, 
-      ).timeout(const Duration(seconds: 60), onTimeout: () {
+      ).timeout(const Duration(seconds: 90), onTimeout: () {
          if (kDebugMode) debugPrint('[SCAN_NUT_ERROR] Timeout na resposta da IA.');
          throw TimeoutException(AppKeys.petErrorTimeout); 
       });
@@ -180,6 +231,13 @@ class PetAiService extends PetBaseAiService {
      switch(type) {
         case PetImageType.label: return PetConstants.typeNutrition;
         case PetImageType.lab: return PetConstants.typeLab;
+        case PetImageType.general: return PetConstants.typeClinical;
+        case PetImageType.wound: return PetConstants.typeClinical;
+        case PetImageType.stool: return PetConstants.typeClinical;
+        case PetImageType.mouth: return PetConstants.typeClinical;
+        case PetImageType.eyes: return PetConstants.typeClinical;
+        case PetImageType.skin: return PetConstants.typeClinical;
+        // Add remaining cases or default
         default: return PetConstants.typeClinical;
      }
   }
@@ -202,6 +260,13 @@ class PetAiService extends PetBaseAiService {
         return PetConstants.contextLab; // Should be tokenized if needed, but for now string
       case PetImageType.general:
         return '';
+      // Add missing cases to ensure exhaustiveness if linter complains
+      case PetImageType.profile:
+      case PetImageType.posture:
+        return AiPrompts.contextPosture; 
+      case PetImageType.safety:
+      case PetImageType.newProfile:
+        return ''; 
     }
   }
 }

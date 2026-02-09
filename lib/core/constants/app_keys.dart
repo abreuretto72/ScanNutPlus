@@ -43,6 +43,7 @@ class AppKeys {
   // Config Keys
   static const String configKeyActiveModel = 'active_model';
   static const String configKeyApiEndpoint = 'api_endpoint';
+  static const String envSiteUrl = 'env_site_url';
 
   // Preferences
   static const String onboardingCompleted = 'onboarding_completed';

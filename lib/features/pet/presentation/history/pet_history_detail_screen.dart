@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+// import 'package:lucide_icons/lucide_icons.dart'; // Removed
 import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
@@ -37,7 +37,7 @@ class PetHistoryDetailScreen extends StatelessWidget {
       elevation: 0,
       centerTitle: true,
       leading: IconButton(
-        icon: const Icon(LucideIcons.arrowLeft),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );
@@ -53,7 +53,7 @@ class PetHistoryDetailScreen extends StatelessWidget {
         image: DecorationImage(
           image: FileImage(File(entry.imagePath)),
           fit: BoxFit.cover,
-          onError: (exception, stackTrace) => const Icon(LucideIcons.imageOff),
+          onError: (exception, stackTrace) => const Icon(Icons.broken_image),
         ),
       ),
       child: Stack(
@@ -86,15 +86,15 @@ class PetHistoryDetailScreen extends StatelessWidget {
   Widget _buildStatusBadge(String type) {
     // Simplified status badge based on type or derived logic
     Color color = const Color(0xFF10AC84);
-    IconData icon = LucideIcons.checkCircle;
+    IconData icon = Icons.check_circle;
     String text = type.toUpperCase();
 
     if (type == PetConstants.keyCritical) {
       color = const Color(0xFFFF5252);
-      icon = LucideIcons.alertOctagon;
+      icon = Icons.report_problem;
     } else if (type == PetConstants.keyMonitor) {
       color = const Color(0xFFFFD700);
-      icon = LucideIcons.alertTriangle;
+      icon = Icons.warning;
     }
 
     return Container(
@@ -125,8 +125,8 @@ class PetHistoryDetailScreen extends StatelessWidget {
     final icon = _getIconData(iconKey);
 
     // Style logic matching ResultView
-    final isAlert = icon == LucideIcons.alertTriangle;
-    final isSource = icon == LucideIcons.bookOpen;
+    final isAlert = icon == Icons.warning;
+    final isSource = icon == Icons.menu_book;
     
     final accentColor = isAlert 
         ? const Color(0xFFFF5252) 
@@ -179,18 +179,18 @@ class PetHistoryDetailScreen extends StatelessWidget {
 
   IconData _getIconData(String name) {
     switch (name.toLowerCase()) {
-      case PetConstants.typePet: return LucideIcons.dog;
-      case PetConstants.keyHeart: return LucideIcons.heart;
-      case PetConstants.keyCoat: return LucideIcons.scissors;
-      case PetConstants.keySkin: return LucideIcons.search;
-      case PetConstants.keyEar: return LucideIcons.ear;
-      case PetConstants.keyWind: case PetConstants.keyNose: return LucideIcons.wind;
-      case PetConstants.keyEye: case PetConstants.keyEyes: return LucideIcons.eye;
-      case PetConstants.keyScale: case PetConstants.keyBody: return LucideIcons.scale;
-      case PetConstants.keyAlert: case PetConstants.keyIssues: return LucideIcons.alertTriangle;
-      case PetConstants.keyFileText: case PetConstants.keySummary: return LucideIcons.fileText;
-      case PetConstants.iconMenuBook: case PetConstants.iconBook: return LucideIcons.bookOpen;
-      default: return LucideIcons.info;
+      case PetConstants.typePet: return Icons.pets;
+      case PetConstants.keyHeart: return Icons.favorite;
+      case PetConstants.keyCoat: return Icons.content_cut;
+      case PetConstants.keySkin: return Icons.search;
+      case PetConstants.keyEar: return Icons.hearing;
+      case PetConstants.keyWind: case PetConstants.keyNose: return Icons.air;
+      case PetConstants.keyEye: case PetConstants.keyEyes: return Icons.visibility;
+      case PetConstants.keyScale: case PetConstants.keyBody: return Icons.monitor_weight;
+      case PetConstants.keyAlert: case PetConstants.keyIssues: return Icons.warning;
+      case PetConstants.keyFileText: case PetConstants.keySummary: return Icons.description;
+      case PetConstants.iconMenuBook: case PetConstants.iconBook: return Icons.menu_book;
+      default: return Icons.info;
     }
   }
 

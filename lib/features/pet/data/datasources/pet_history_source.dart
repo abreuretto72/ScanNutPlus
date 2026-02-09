@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart'; // Added
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
@@ -131,10 +131,10 @@ class PetHistorySource {
 
     final filtered = allEntries.where((entry) {
         // If searching by generic UUID, must match Name too
-        if ((uuid == PetConstants.tagEnvironment || uuid == PetConstants.tagEnvironment) && petName != null) {
-            final entryUuid = entry.petUuid ?? PetConstants.tagEnvironment;
+        if ((uuid == PetConstants.tagEnvironment) && petName != null) {
+            final entryUuid = entry.petUuid;
             // Check if entry is also generic
-            bool isEntryGeneric = (entryUuid == PetConstants.tagEnvironment || entryUuid == PetConstants.tagEnvironment);
+            bool isEntryGeneric = (entryUuid == PetConstants.tagEnvironment);
             
             if (isEntryGeneric) {
                 return entry.petName == petName;
@@ -170,12 +170,9 @@ class PetHistorySource {
     final Map<String, PetHistoryEntry> latestEntries = {};
     
     for (var entry in allEntries) {
-      if (entry.petUuid == null) continue; 
-      
-      // If UUID is still generic (legacy data), use Name as differentiator
-      final String key = (entry.petUuid == PetConstants.tagEnvironment || entry.petUuid == PetConstants.tagEnvironment) 
+      final String key = (entry.petUuid == PetConstants.tagEnvironment) 
           ? entry.petName 
-          : entry.petUuid!;
+          : entry.petUuid;
 
       if (!latestEntries.containsKey(key) || 
           entry.timestamp.isAfter(latestEntries[key]!.timestamp)) {

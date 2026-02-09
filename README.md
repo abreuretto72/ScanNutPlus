@@ -29,11 +29,49 @@ Desenvolvido sob o **Protocolo Master 2026**, o app segue padrões rigorosos de 
 *   **Dossiê Veterinário 360:** PDF gerado automaticamente com todo o histórico clínico.
 *   **Fontes Científicas (RAG):** Citação automática de referências (Merck, AAHA) via Regex robusto.
 *   **Comando de Voz:** "Quem é este pet?" - Cadastro automático via voz.
+*   **Protocolo de Entrega Total (Pilar 0):** Garantia de laudo completo (Urgência -> Resumo -> Cards -> Fontes -> Metadados) sem truncamento (4000 tokens).
+*   **Identidade Persistente:** Extração de raça via `[METADATA]` e sincronização automática com o perfil.
 
 ### 🌿 Módulo Plant (Botânica)
 *   **Identificação de Plantas:** Espécie, cuidados e toxicidade.
 *   **Diagnóstico de Doenças:** Análise visual de folhas e caules.
 *   **Guia de Cultivo:** Rega, luz e adubação ideais.
+
+
+1. Análise Clínica Visual (Dermatologia e Externos)
+Pele e Pelagem: Identificação de falhas no pelo (alopecia), vermelhidão (eritema), presença de parasitas (pulgas/carrapatos) e avaliação do brilho do pelo.
+
+Feridas e Lesões: Avaliação de cortes, inflamações e cicatrização.
+
+Olhos: Detecção de secreções excessivas, vermelhidão na esclera ou opacidade na córnea.
+
+Ouvidos: Identificação de acúmulo de cera escura (sugestivo de otite) ou inflamação no conduto auditivo.
+
+🦷 2. Saúde Bucal (Mouth)
+Tártaro e Placa: Avaliação do acúmulo de cálculo dentário.
+
+Gengivas: Identificação de gengivite (vermelhidão na linha do dente) ou retração gengival.
+
+Dentes Quebrados: Identificação visual de fraturas dentárias.
+
+💩 3. Triagem de Excrementos (Stool)
+Escore de Fezes: Avaliação da consistência (Escala de WCPN) – se estão muito secas, ideais ou diarreicas.
+
+Presença de Corpos Estranhos: Detecção visual de sangue, muco, vermes visíveis ou restos de objetos/alimentos não digeridos.
+
+🧪 4. Leitura de Exames Laboratoriais (Lab)
+OCR de Laudos: A IA faz o escaneamento de fotos de exames de sangue, urina ou fezes.
+
+Comparação de Referência: Ela cruza os resultados do pet com os valores de referência do laboratório, destacando o que está acima ou abaixo do esperado para facilitar a conversa com o veterinário.
+
+🥗 5. Nutricional e Rótulos (Label)
+Análise de Ração: Identificação da qualidade dos ingredientes em rótulos de rações ou petiscos.
+
+Alimentos Proibidos: Verificação se um alimento humano específico (ex: uma fruta ou vegetal) é seguro ou tóxico para a espécie (cão ou gato).
+
+📏 6. Condição Corporal (Posture/Body)
+Escore Corporal: Análise da silhueta (vista de cima e de lado) para determinar se o pet está no peso ideal, abaixo do peso ou com sobrepeso/obesidade.
+
 
 ---
 

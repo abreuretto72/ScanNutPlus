@@ -95,6 +95,12 @@ class AppTheme {
         margin: EdgeInsets.zero,
       ),
 
+      // Floating Action Button Theme (Global Circle)
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        shape: CircleBorder(),
+        elevation: 6,
+      ),
+
       // Text Theme
       textTheme: TextTheme(
         // Titles and Headlines (High Contrast + Shadow)

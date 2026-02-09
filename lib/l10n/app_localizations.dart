@@ -1148,6 +1148,30 @@ abstract class AppLocalizations {
   /// **'Skin Appearance'**
   String get pet_section_skin;
 
+  /// No description provided for @pet_action_share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get pet_action_share;
+
+  /// No description provided for @source_merck.
+  ///
+  /// In en, this message translates to:
+  /// **'Merck Veterinary Manual (MSD Digital 2026)'**
+  String get source_merck;
+
+  /// No description provided for @source_scannut.
+  ///
+  /// In en, this message translates to:
+  /// **'ScanNut+ Biometry & Phenotyping Protocol'**
+  String get source_scannut;
+
+  /// No description provided for @source_aaha.
+  ///
+  /// In en, this message translates to:
+  /// **'AAHA/WSAVA Physical Exam Guidelines'**
+  String get source_aaha;
+
   /// No description provided for @pet_section_ears.
   ///
   /// In en, this message translates to:
@@ -1303,6 +1327,468 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My Pets'**
   String get pet_ui_my_pets;
+
+  /// No description provided for @pet_my_pets_title.
+  ///
+  /// In en, this message translates to:
+  /// **'My Pets'**
+  String get pet_my_pets_title;
+
+  /// No description provided for @pet_no_pets_registered.
+  ///
+  /// In en, this message translates to:
+  /// **'No pets registered yet.'**
+  String get pet_no_pets_registered;
+
+  /// No description provided for @pet_dashboard_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Dashboard'**
+  String get pet_dashboard_title;
+
+  /// No description provided for @pet_action_biometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometrics'**
+  String get pet_action_biometrics;
+
+  /// No description provided for @pet_action_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical History'**
+  String get pet_action_history;
+
+  /// No description provided for @pet_type_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get pet_type_label;
+
+  /// No description provided for @pet_type_wound.
+  ///
+  /// In en, this message translates to:
+  /// **'Wound'**
+  String get pet_type_wound;
+
+  /// No description provided for @pet_type_stool.
+  ///
+  /// In en, this message translates to:
+  /// **'Stool'**
+  String get pet_type_stool;
+
+  /// No description provided for @pet_type_mouth.
+  ///
+  /// In en, this message translates to:
+  /// **'Mouth/Teeth'**
+  String get pet_type_mouth;
+
+  /// No description provided for @pet_type_eyes.
+  ///
+  /// In en, this message translates to:
+  /// **'Eyes'**
+  String get pet_type_eyes;
+
+  /// No description provided for @pet_type_skin.
+  ///
+  /// In en, this message translates to:
+  /// **'Skin/Coat'**
+  String get pet_type_skin;
+
+  /// No description provided for @pet_type_lab.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Exam'**
+  String get pet_type_lab;
+
+  /// No description provided for @pet_select_context.
+  ///
+  /// In en, this message translates to:
+  /// **'Select analysis type:'**
+  String get pet_select_context;
+
+  /// No description provided for @pet_unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get pet_unknown;
+
+  /// No description provided for @pet_analyzing_x.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing: {name}'**
+  String pet_analyzing_x(String name);
+
+  /// No description provided for @pet_id_format.
+  ///
+  /// In en, this message translates to:
+  /// **'ID: {id}...'**
+  String pet_id_format(String id);
+
+  /// No description provided for @pet_section_visual.
+  ///
+  /// In en, this message translates to:
+  /// **'Visual Inspection'**
+  String get pet_section_visual;
+
+  /// No description provided for @pet_type_safety.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety'**
+  String get pet_type_safety;
+
+  /// No description provided for @pet_type_new_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'New Profile'**
+  String get pet_type_new_profile;
+
+  /// No description provided for @pet_waze_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Waze'**
+  String get pet_waze_title;
+
+  /// No description provided for @pet_waze_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Community alerts near you'**
+  String get pet_waze_desc;
+
+  /// No description provided for @pet_partners_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Partners'**
+  String get pet_partners_title;
+
+  /// No description provided for @pet_partners_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Discounts and services'**
+  String get pet_partners_desc;
+
+  /// No description provided for @pet_tab_history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get pet_tab_history;
+
+  /// No description provided for @pet_history_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No history available'**
+  String get pet_history_empty;
+
+  /// No description provided for @pet_analysis_result_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis Result'**
+  String get pet_analysis_result_title;
+
+  /// No description provided for @pet_status_healthy_simple.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy'**
+  String get pet_status_healthy_simple;
+
+  /// No description provided for @pet_status_critical_simple.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get pet_status_critical_simple;
+
+  /// No description provided for @pet_status_attention_simple.
+  ///
+  /// In en, this message translates to:
+  /// **'Attention'**
+  String get pet_status_attention_simple;
+
+  /// No description provided for @pet_section_sources.
+  ///
+  /// In en, this message translates to:
+  /// **'References & Protocol'**
+  String get pet_section_sources;
+
+  /// No description provided for @pet_action_new_analysis.
+  ///
+  /// In en, this message translates to:
+  /// **'New Analysis'**
+  String get pet_action_new_analysis;
+
+  /// No description provided for @source_scannut_db.
+  ///
+  /// In en, this message translates to:
+  /// **'ScanNut+ Database'**
+  String get source_scannut_db;
+
+  /// No description provided for @pet_unknown_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Name'**
+  String get pet_unknown_name;
+
+  /// No description provided for @pet_footer_brand.
+  ///
+  /// In en, this message translates to:
+  /// **'ScanNut+ Pet Intelligence'**
+  String get pet_footer_brand;
+
+  /// No description provided for @pet_label_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get pet_label_status;
+
+  /// No description provided for @pet_history_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis History'**
+  String get pet_history_title;
+
+  /// No description provided for @pet_breed_unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Breed not informed'**
+  String get pet_breed_unknown;
+
+  /// No description provided for @pet_delete_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Pet'**
+  String get pet_delete_title;
+
+  /// No description provided for @pet_delete_content.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this pet and all its history?'**
+  String get pet_delete_content;
+
+  /// No description provided for @pet_delete_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get pet_delete_confirm;
+
+  /// No description provided for @pet_delete_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get pet_delete_cancel;
+
+  /// No description provided for @pet_delete_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet deleted successfully'**
+  String get pet_delete_success;
+
+  /// No description provided for @pet_recent_analyses.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Analyses'**
+  String get pet_recent_analyses;
+
+  /// No description provided for @pet_no_history.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent analyses.'**
+  String get pet_no_history;
+
+  /// No description provided for @pet_new_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'New Pet'**
+  String get pet_new_pet;
+
+  /// No description provided for @val_unknown_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Date'**
+  String get val_unknown_date;
+
+  /// No description provided for @report_generated_on.
+  ///
+  /// In en, this message translates to:
+  /// **'Generated on'**
+  String get report_generated_on;
+
+  /// No description provided for @pet_analysis_skin.
+  ///
+  /// In en, this message translates to:
+  /// **'Skin & Coat'**
+  String get pet_analysis_skin;
+
+  /// No description provided for @pet_analysis_mouth.
+  ///
+  /// In en, this message translates to:
+  /// **'Oral Health'**
+  String get pet_analysis_mouth;
+
+  /// No description provided for @pet_analysis_stool.
+  ///
+  /// In en, this message translates to:
+  /// **'Stool Screening'**
+  String get pet_analysis_stool;
+
+  /// No description provided for @pet_analysis_lab.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Report Reading'**
+  String get pet_analysis_lab;
+
+  /// No description provided for @pet_analysis_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition & Labels'**
+  String get pet_analysis_label;
+
+  /// No description provided for @pet_analysis_posture.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Condition'**
+  String get pet_analysis_posture;
+
+  /// No description provided for @ai_feedback_no_oral_layout.
+  ///
+  /// In en, this message translates to:
+  /// **'No oral structures visible for analysis.'**
+  String get ai_feedback_no_oral_layout;
+
+  /// No description provided for @ai_feedback_no_derm_abnormalities.
+  ///
+  /// In en, this message translates to:
+  /// **'No dermatological abnormalities detected based on visual evidence.'**
+  String get ai_feedback_no_derm_abnormalities;
+
+  /// No description provided for @ai_feedback_invalid_gastro.
+  ///
+  /// In en, this message translates to:
+  /// **'INVALID_CONTEXT: Image does not appear to be gastrointestinal output.'**
+  String get ai_feedback_invalid_gastro;
+
+  /// No description provided for @ai_feedback_invalid_lab.
+  ///
+  /// In en, this message translates to:
+  /// **'INVALID_CONTEXT: Image is not a lab report.'**
+  String get ai_feedback_invalid_lab;
+
+  /// No description provided for @ai_feedback_lab_disclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Interpretation is based on visible text. Verify with original document.'**
+  String get ai_feedback_lab_disclaimer;
+
+  /// No description provided for @ai_feedback_eyes_not_visible.
+  ///
+  /// In en, this message translates to:
+  /// **'Eyes not fully visible.'**
+  String get ai_feedback_eyes_not_visible;
+
+  /// No description provided for @ai_feedback_inconclusive_angle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inconclusive visual angle.'**
+  String get ai_feedback_inconclusive_angle;
+
+  /// No description provided for @pet_module_dentistry.
+  ///
+  /// In en, this message translates to:
+  /// **'Oral Health (Teeth & Gums)'**
+  String get pet_module_dentistry;
+
+  /// No description provided for @pet_module_dermatology.
+  ///
+  /// In en, this message translates to:
+  /// **'Skin, Coat & Wounds'**
+  String get pet_module_dermatology;
+
+  /// No description provided for @pet_module_gastro.
+  ///
+  /// In en, this message translates to:
+  /// **'Stool & Digestion Analysis'**
+  String get pet_module_gastro;
+
+  /// No description provided for @pet_module_lab.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Report Reading'**
+  String get pet_module_lab;
+
+  /// No description provided for @pet_module_nutrition.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition & Label Analysis'**
+  String get pet_module_nutrition;
+
+  /// No description provided for @pet_module_ophthalmology.
+  ///
+  /// In en, this message translates to:
+  /// **'Eyes & Ears Analysis'**
+  String get pet_module_ophthalmology;
+
+  /// No description provided for @pet_module_physique.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Condition & Weight'**
+  String get pet_module_physique;
+
+  /// No description provided for @btn_scan_image.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Image'**
+  String get btn_scan_image;
+
+  /// No description provided for @generic_analyzing.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing image...'**
+  String get generic_analyzing;
+
+  /// No description provided for @pet_error_image_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: Original image not found.'**
+  String get pet_error_image_not_found;
+
+  /// No description provided for @btn_go.
+  ///
+  /// In en, this message translates to:
+  /// **'Go'**
+  String get btn_go;
+
+  /// No description provided for @pet_created_at_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Created at:'**
+  String get pet_created_at_label;
+
+  /// No description provided for @pet_initial_assessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Initial Assessment'**
+  String get pet_initial_assessment;
+
+  /// No description provided for @pet_hint_select_type.
+  ///
+  /// In en, this message translates to:
+  /// **'<Select type>'**
+  String get pet_hint_select_type;
+
+  /// No description provided for @pet_label_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get pet_label_info;
+
+  /// No description provided for @pet_type_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Analysis'**
+  String get pet_type_profile;
+
+  /// No description provided for @pet_type_posture.
+  ///
+  /// In en, this message translates to:
+  /// **'Posture Analysis'**
+  String get pet_type_posture;
 }
 
 class _AppLocalizationsDelegate

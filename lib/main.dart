@@ -8,6 +8,11 @@ import 'package:scannutplus/core/theme/app_theme.dart';
 import 'package:scannutplus/core/data/objectbox_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
+import 'package:scannutplus/features/pet/presentation/my_pets_view.dart';
+import 'package:scannutplus/features/pet/presentation/pet_dashboard_view.dart';
+import 'package:scannutplus/features/pet/presentation/pet_capture_view.dart';
+import 'package:scannutplus/features/pet/presentation/pet_analysis_result_view.dart';
+import 'package:scannutplus/features/pet/data/pet_constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +41,19 @@ class ScanNutApp extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       theme: AppTheme.theme,
-      home: const SplashScreen(), 
+      routes: {
+        '/my_pets': (context) => const MyPetsView(),
+        '/pet_dashboard': (context) => const PetDashboardView(),
+        '/pet_capture': (context) => const PetCaptureView(),
+        '/pet_analysis_result': (context) => PetAnalysisResultView(
+          imagePath: (ModalRoute.of(context)!.settings.arguments as Map)[PetConstants.argImagePath],
+          analysisResult: (ModalRoute.of(context)!.settings.arguments as Map)[PetConstants.argResult],
+          onRetake: () => Navigator.pop(context),
+          onShare: () {}, // Handled internally or needs callback
+          petDetails: (ModalRoute.of(context)!.settings.arguments as Map)[PetConstants.argPetDetails] as Map<String, String>?,
+        ),
+      },
+      home: const SplashScreen(),
     );
   }
 }
