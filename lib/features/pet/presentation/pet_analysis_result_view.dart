@@ -82,8 +82,8 @@ class PetAnalysisResultView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Image Header
+            // Image Header
              Container(
-              margin: const EdgeInsets.only(bottom: 24),
               height: 220, 
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -100,14 +100,15 @@ class PetAnalysisResultView extends StatelessWidget {
                     right: 12,
                     child: _buildStatusHeader(analysisResult, appL10n),
                   ),
-                  // IDENTITY BADGE (Protocol 2026)
-                  Positioned(
-                    bottom: 12,
-                    left: 12,
-                    child: _buildIdentityBadge(context, displayPetName, displayBreed),
-                  ),
                 ],
               ),
+            ),
+            
+            // IDENTITY BADGE (Protocol 2026 - Layout Fix)
+            // Moved below image to prevent overflow and allow multi-line breed text
+            Padding(
+              padding: const EdgeInsets.only(top: 12, bottom: 24),
+              child: _buildIdentityBadge(context, displayPetName, displayBreed),
             ),
             
             // Gerador de Cards Estruturados (Strictly localized)
@@ -223,16 +224,6 @@ class PetAnalysisResultView extends StatelessWidget {
 
   Widget _buildDynamicCard(_AnalysisBlock block) {
     bool isAlert = block.icon == Icons.warning;
-    // Keep semantic accent color for Icon, but background/border tailored to Pet Theme
-    // Or stick to Pink for Icon too? 
-    // Prompt says "Eliminar qualquer cor residual".
-    // But warning needs to be yellow/red?
-    // Let's use Pet colors for container but keep semantic icon color if needed.
-    // Actually, forcing Pink on everything might hide "Danger".
-    // I'll keep semantic icon colors but change container style to be consistent.
-    // User said "Eliminar ... verde". 
-    // I should probably use Pink for "Healthy/Info" instead of Green.
-    // And Red for Alert.
     
     final cardColor = isAlert ? const Color(0xFFFF5252) : AppColors.petPrimary;
     
@@ -387,11 +378,13 @@ class PetAnalysisResultView extends StatelessWidget {
 
   Widget _buildIdentityBadge(BuildContext context, String name, String breed) {
     // Protocol 2026: Pastel Pink Background + Black Text
+    // REFACTORED: Layout Expanded for Multi-line Breed Text
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      width: double.infinity, // Occupy full width
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: AppColors.petPrimary, // Pastel Pink (#FFD1DC)
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(16), // Slightly less rounded for a "Block" feel
         border: Border.all(color: AppColors.petText, width: 1.5), // Black Border
         boxShadow: const [
            BoxShadow(
@@ -402,33 +395,39 @@ class PetAnalysisResultView extends StatelessWidget {
         ],
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(Icons.pets, color: AppColors.petText, size: 18), // Black Icon
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                name,
-                style: const TextStyle(
-                  color: AppColors.petText, // Black Text
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-              ),
-              // Use user's rule: Show breed from variable
-              if (breed.isNotEmpty)
+          const Icon(Icons.pets, color: AppColors.petText, size: 24), // Black Icon
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                  breed,
+                  name,
                   style: const TextStyle(
                     color: AppColors.petText, // Black Text
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
-            ],
+                // Use user's rule: Show breed from variable
+                if (breed.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Text(
+                      breed,
+                      maxLines: null, // Allow unlimited lines
+                      style: const TextStyle(
+                        color: AppColors.petText, // Black Text
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ],
       ),

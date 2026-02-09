@@ -31,6 +31,7 @@ Desenvolvido sob o **Protocolo Master 2026**, o app segue padrões rigorosos de 
 *   **Comando de Voz:** "Quem é este pet?" - Cadastro automático via voz.
 *   **Protocolo de Entrega Total (Pilar 0):** Garantia de laudo completo (Urgência -> Resumo -> Cards -> Fontes -> Metadados) sem truncamento (4000 tokens).
 *   **Identidade Persistente:** Extração de raça via `[METADATA]` e sincronização automática com o perfil.
+*   **Layout Blindado:** Badge de identidade responsivo (Multi-line) para raças com nomes extensos (UX Fix).
 
 ### 🌿 Módulo Plant (Botânica)
 *   **Identificação de Plantas:** Espécie, cuidados e toxicidade.
