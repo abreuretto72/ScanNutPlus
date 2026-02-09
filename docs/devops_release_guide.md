@@ -21,7 +21,7 @@ Adicione as seguintes variáveis:
 
 | Nome | Descrição | Como Gerar |
 |------|-----------|------------|
-| `ANDROID_KEYSTORE_BASE64` | O arquivo `.jks` codificado em Base64. | `openssl base64 < sua-chave.jks \| tr -d '\n' \| clip` |
+| `ANDROID_KEYSTORE_BASE64` | O arquivo `.jks` codificado em Base64. | **Windows (PowerShell):**<br>`[Convert]::ToBase64String([IO.File]::ReadAllBytes("sua-chave.jks")) \| Set-Clipboard`<br><br>**Linux/Mac:**<br>`openssl base64 -in sua-chave.jks \| tr -d '\n' \| pbcopy` |
 | `KEYSTORE_PASSWORD` | A senha do arquivo da Keystore. | Senha definida na criação. |
 | `KEY_ALIAS` | O alias da chave dentro da Keystore. | Alias definido na criação (ex: `key0`). |
 | `KEY_PASSWORD` | A senha individual da chave (alias). | Normalmente a mesma da Keystore. |
