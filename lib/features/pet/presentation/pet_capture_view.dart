@@ -25,7 +25,7 @@ class PetCaptureView extends StatefulWidget {
 
 class _PetCaptureViewState extends State<PetCaptureView> {
   String? _imagePath;
-  String _selectedSpecies = PetConstants.speciesDog;
+  String? _selectedSpecies; // Nullable for forced selection
   final bool _isLabel = false;
   
   // Arguments
@@ -36,6 +36,12 @@ class _PetCaptureViewState extends State<PetCaptureView> {
 
   final ImagePicker _picker = ImagePicker();
   String? _errorMessage; // State to track analysis errors for Retry UI
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedSpecies = null; // Explicit reset for Step 4
+  }
 
   @override
   void didChangeDependencies() {
@@ -54,6 +60,11 @@ class _PetCaptureViewState extends State<PetCaptureView> {
       } else if (source == PetConstants.valGallery && _imagePath == null) {
          WidgetsBinding.instance.addPostFrameCallback((_) => _pickImage(ImageSource.gallery));
       }
+
+      // Legacy Support: Pre-select Dog for existing pets to avoid blocking flow
+      // [STEP 4: MANDATORY SPECIES SELECTION CHECK]
+      // Enforce User Selection: Do NOT pre-select Dog. User must click.
+      // Legacy block removed to strictly enforce null state.
     }
   }
 
@@ -199,11 +210,10 @@ class _PetCaptureViewState extends State<PetCaptureView> {
         // 3. Navigate to Specialized Result View (Restructuring 2026)
         // 3. Navigate to Generic Result View (Protocol Card 2026)
         // Configuration for specialized views (Kept for arguments)
-        final commonArguments = {
-           PetConstants.argUuid: uuidToUse,
-           PetConstants.argName: foundName.isNotEmpty ? foundName : nameToUse,
-           PetConstants.argType: type,
-        };
+        // 3. Navigate to Specialized Result View (Restructuring 2026)
+        // 3. Navigate to Generic Result View (Protocol Card 2026)
+        // Configuration for specialized views (Kept for arguments)
+
 
         // 3. Navigate to Standardized Result View (Protocol 2026 - Golden Standard)
         Navigator.of(context).pushReplacementNamed(
@@ -401,12 +411,16 @@ class _PetCaptureViewState extends State<PetCaptureView> {
 
   Future<void> _autoSave() async {
     if (_imagePath == null) return;
+    if (_imagePath == null) return;
+    // [STEP 4: MANDATORY SPECIES SELECTION]
+    // Guard: Prevent auto-save until species (Dog/Cat) is explicitly selected.
+    if (_selectedSpecies == null) return; 
     
     // l10n usage removed
     
     final pet = PetEntity(
       uuid: const Uuid().v4(),
-      species: _selectedSpecies,
+      species: _selectedSpecies!,
       imagePath: _imagePath!,
       type: _isLabel ? AppLocalizations.of(context)!.pet_type_label : PetConstants.typePet,
     );
@@ -628,7 +642,10 @@ class _PetCaptureViewState extends State<PetCaptureView> {
             Padding(
                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                child: ElevatedButton.icon(
-                  onPressed: _processAnalysis,
+                  // [STEP 4: MANDATORY SPECIES SELECTION]
+                  // Enable 'New Analysis' only if species is selected.
+                  // Visual Feedback: Button is disabled (null onPressed) if species is null.
+                  onPressed: (_selectedSpecies == null || _isAnalyzing) ? null : _processAnalysis,
                   icon: const Icon(Icons.qr_code_scanner, color: AppColors.petText), // Alert Icon Black
                   label: Text(
                       AppLocalizations.of(context)!.pet_action_new_analysis,

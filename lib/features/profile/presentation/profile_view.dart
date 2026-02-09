@@ -41,6 +41,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   Future<void> _loadUserData() async {
     final user = await simpleAuthService.getCurrentUser();
+    final bioEnabled = await simpleAuthService.isBiometricEnabled;
     
     if (!mounted) return;
     setState(() {
@@ -52,6 +53,8 @@ class _ProfileViewState extends State<ProfileView> {
       // Email is read-only
       _userEmail = user?.email ?? "";
       _userPhotoPath = user?.photoPath;
+      
+      _biometricEnabled = bioEnabled; // Load from Service
     });
   }
 
@@ -251,10 +254,11 @@ class _ProfileViewState extends State<ProfileView> {
                       title: Text(l10n.profile_biometric_enable, style: theme.textTheme.bodyLarge),
                       value: _biometricEnabled,
 
-                      onChanged: (val) {
+                      onChanged: (val) async {
                          setState(() {
                            _biometricEnabled = val;
                          });
+                         await simpleAuthService.setBiometricEnabled(val); // Save to Service
                       },
                       secondary: Icon(LucideIcons.fingerprint, color: theme.primaryColorLight),
                     ),

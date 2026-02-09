@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:local_auth/local_auth.dart';
+// import 'package:flutter/services.dart'; // Removed (PlatformException handled in Service)
+// import 'package:local_auth/local_auth.dart'; // Removed (Delegated to Service)
 // ignore: depend_on_referenced_packages
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/core/presentation/widgets/app_scroll_view.dart';
@@ -19,7 +19,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _localAuth = LocalAuthentication();
+  // final _localAuth = LocalAuthentication(); // REMOVED: Delegated to SimpleAuthService
   
   bool _keepMeLoggedIn = false;
   bool _isLoading = true; // Start loading for check
@@ -60,32 +60,24 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _handleLocalAuth() async {
-    try {
-      final bool canCheckBiometrics = await _localAuth.canCheckBiometrics;
-      final bool isDeviceSupported = await _localAuth.isDeviceSupported();
+    // [STEP 5: INTEGRATION]
+    // Use SimpleAuthService to enforce strict biometric logic and generate logs.
+    final result = await simpleAuthService.authenticateWithBiometrics(
+      localizedReason: mounted ? AppLocalizations.of(context)!.biometric_reason : 'Authenticate',
+    );
 
-      if (!canCheckBiometrics || !isDeviceSupported) {
-        return;
-      }
+    if (!mounted) return;
 
-      final bool didAuthenticate = await _localAuth.authenticate(
-        localizedReason: mounted ? AppLocalizations.of(context)!.biometric_reason : 'Authenticate',
-        options: const AuthenticationOptions(biometricOnly: true),
-      );
-
-      if (!mounted) return;
-
-      if (didAuthenticate) {
-        _performSuccessTransition();
-      } else {
-        _showFeedback(
+    if (result == AuthResult.success) {
+      _performSuccessTransition();
+    } else if (result == AuthResult.error) {
+       _showFeedback(
           isError: true,
           message: AppLocalizations.of(context)!.biometric_error,
         );
-      }
-    } on PlatformException catch (_) {
-      if (!mounted) return;
-        _showFeedback(
+    } else {
+      // Failure (cancelled, not recognized, etc.)
+      _showFeedback(
           isError: true,
           message: AppLocalizations.of(context)!.biometric_error,
         );

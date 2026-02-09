@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:scannutplus/core/data/objectbox_manager.dart';
 import 'package:scannutplus/features/user/data/models/user_entity.dart';
 import 'package:scannutplus/objectbox.g.dart'; // generated
@@ -7,7 +8,17 @@ enum AuthResult { success, failure, error }
 
 class SimpleAuthService {
   static const String prefIsRegistered = 'is_user_registered';
+  static const String keyUseBiometrics = 'use_biometrics'; // Unified Key
   
+  // Singleton
+  static final SimpleAuthService _instance = SimpleAuthService._internal();
+
+  factory SimpleAuthService() {
+    return _instance;
+  }
+
+  SimpleAuthService._internal();
+
   Box<UserEntity>? _userBox;
 
   Future<void> _ensureDb() async {
@@ -18,8 +29,17 @@ class SimpleAuthService {
   }
 
   String? get loggedUserEmail => "user@example.com";
-  // Simulating biometrics for logic completeness
-  bool get isBiometricEnabled => true; 
+  // Changed to async to support SharedPreferences (Unified Key)
+  Future<bool> get isBiometricEnabled async {
+    final prefs = await SharedPreferences.getInstance();
+    final val = prefs.getBool(keyUseBiometrics) ?? false;
+    return val;
+  }
+
+  Future<void> setBiometricEnabled(bool enabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(keyUseBiometrics, enabled);
+  }
 
   Future<bool> checkPersistentSession() async {
     await _ensureDb();
@@ -28,9 +48,57 @@ class SimpleAuthService {
   }
 
   Future<AuthResult> authenticateWithBiometrics({required String localizedReason}) async {
-    // Mock success for easy testing
-    await Future.delayed(const Duration(milliseconds: 500));
-    return AuthResult.success;
+    // 1. Check User Preference (Strict)
+    if (!await isBiometricEnabled) {
+       return AuthResult.failure; 
+    }
+
+    final auth = LocalAuthentication();
+    
+    // 2. Hardware Availability Check (Prompt Strictness)
+    final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+    // final bool isDeviceSupported = await auth.isDeviceSupported(); // Unused in relaxed check
+
+    try {
+      await auth.getAvailableBiometrics();
+    } catch (e) {
+      // Log error internally if needed, or ignore for production
+    }
+
+    // Relaxed check: Allow proceeding if canCheckBiometrics is true, even if isDeviceSupported says false (common in emulators/some ROMs)
+    if (!canAuthenticateWithBiometrics) return AuthResult.failure;
+
+    try {
+      // 3. Authenticate (Real Hardware Trigger)
+      final bool didAuthenticate = await auth.authenticate(
+        localizedReason: localizedReason,
+        options: const AuthenticationOptions(
+          biometricOnly: false, // Changed to false to allow PIN/Pattern fallback
+          stickyAuth: true,
+        ),
+      );
+
+      if (didAuthenticate) {
+          // 4. Session Activation (Success Logic - Preserved for App Functionality)
+          await _ensureDb();
+          
+          UserEntity? user = _userBox!.query(UserEntity_.isActive.equals(true)).build().findFirst();
+          // Fallback if no active user found (e.g. forced logout)
+          user ??= _userBox!.query().build().findFirst();
+
+          if (user != null) {
+              user.isActive = true;
+              _userBox!.put(user);
+              return AuthResult.success;
+          } else {
+              return AuthResult.failure; 
+          }
+      } else {
+        return AuthResult.failure;
+      }
+    } catch (e) {
+      return AuthResult.error;
+    }
   }
 
   Future<bool> get hasRegisteredUsers async {
@@ -39,7 +107,7 @@ class SimpleAuthService {
   }
 
   static const String _dbDefaultUser = ""; // Internal DB Value
-  static const String _dbDemoUser = "User Demo"; // Internal DB Value
+
 
   Future<void> registerUser({required String email, required String password}) async {
     final prefs = await SharedPreferences.getInstance();

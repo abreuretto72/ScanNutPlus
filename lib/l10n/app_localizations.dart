@@ -1355,7 +1355,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_action_history.
   ///
   /// In en, this message translates to:
-  /// **'Medical History'**
+  /// **'Analysis history'**
   String get pet_action_history;
 
   /// No description provided for @pet_type_label.

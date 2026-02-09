@@ -659,7 +659,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_action_biometrics => 'Biometrics';
 
   @override
-  String get pet_action_history => 'Medical History';
+  String get pet_action_history => 'Analysis history';
 
   @override
   String get pet_type_label => 'Label';
