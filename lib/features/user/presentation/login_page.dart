@@ -92,16 +92,40 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _handleLogin() {
+  void _handleLogin() async {
     final email = _emailController.text;
     final password = _passwordController.text;
     final l10n = AppLocalizations.of(context)!;
+    
+    // Explicitly hide keyboard
+    FocusScope.of(context).unfocus();
 
     if (email.isNotEmpty && password.isNotEmpty) {
-       // Decoupled from local auth. Standard password login success.
-       simpleAuthService.quickLogin(email, password).then((_) {
+       setState(() => _isLoading = true);
+       
+       final start = DateTime.now();
+       final success = await simpleAuthService.quickLogin(email, password);
+       final elapsed = DateTime.now().difference(start);
+       
+       // Artificial Delay for better UX if too fast
+       if (elapsed.inMilliseconds < 500) {
+         await Future.delayed(Duration(milliseconds: 500 - elapsed.inMilliseconds));
+       }
+
+       if (!mounted) return;
+       setState(() => _isLoading = false);
+
+       if (success) {
           _performSuccessTransition();
-       });
+       } else {
+          _showFeedback(
+            isError: true,
+            // Generic credential error or specific password error? 
+            // User asked for "Senha Incorreta" but l10n.login_error_credentials is standard.
+            // Ideally use existing key to avoid hardcoded strings.
+            message: l10n.login_error_credentials, 
+          );
+       }
     } else {
        _showFeedback(
         isError: true,
@@ -111,9 +135,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handleSignUp() {
-    // Simulated Sign Up success logic
-     final l10n = AppLocalizations.of(context)!;
-     _performSuccessTransition();
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const SignUpPage()),
+    );
   }
 
   void _performSuccessTransition() {

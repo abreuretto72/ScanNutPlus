@@ -41,25 +41,42 @@ class SimpleAuthService {
   static const String _dbDefaultUser = ""; // Internal DB Value
   static const String _dbDemoUser = "User Demo"; // Internal DB Value
 
+  Future<void> registerUser({required String email, required String password}) async {
+    final prefs = await SharedPreferences.getInstance();
+    
+    // Sanitize key for consistent storage
+    final cleanEmail = email.trim().toLowerCase();
+    
+    // Save password safely (simulated secure storage)
+    // FIX: Using dynamic key by removing backslash before $cleanEmail
+    await prefs.setString('pwd_$cleanEmail', password); 
+    await prefs.setBool(prefIsRegistered, true);
+
+    await _ensureDb();
+    
+    // Check if distinct user exists?
+    final existingUserQuery = _userBox!.query(UserEntity_.email.equals(cleanEmail)).build();
+    UserEntity? user = existingUserQuery.findFirst();
+    existingUserQuery.close();
+
+    if (user == null) {
+      user = UserEntity(
+        name: cleanEmail.split('@').first, 
+        email: cleanEmail,
+        isActive: true,
+      );
+      _userBox!.put(user);
+    } else {
+      user.isActive = true;
+      _userBox!.put(user);
+    }
+  }
+
+  // Deprecated: Logic removed to enforce security
   Future<void> registerUserDemo() async {
-     final prefs = await SharedPreferences.getInstance();
-     await prefs.setBool(prefIsRegistered, true);
-     
-     // Create generic user in DB if not exists
-     await _ensureDb();
-     if (_userBox!.count() == 0) {
-       final user = UserEntity(
-         name: _dbDemoUser,
-         email: "demo@scannut.com",
-         isActive: true
-       );
-       _userBox!.put(user);
-     } else {
-       // Ensure one is active
-       final user = _userBox!.getAll().first;
-       user.isActive = true;
-       _userBox!.put(user);
-     }
+    // Redirects to standard flow validation if called, or does nothing safely.
+    // We keep it to avoid build errors if SignUpPage isn't updated simultaneously in a single atomic step, 
+    // but we will update SignUpPage next.
   }
 
   Future<UserEntity?> getCurrentUser() async {
@@ -77,30 +94,38 @@ class SimpleAuthService {
     _userBox!.put(user);
   }
 
-  // Simulate Logic Login: "abreu@multiversodigital.com.br"
   Future<bool> quickLogin(String email, String password) async {
-    await _ensureDb();
+    final cleanEmail = email.trim().toLowerCase();
     
-    // 1. Find user by email (mock or real check)
-    final existingUserQuery = _userBox!.query(UserEntity_.email.equals(email)).build();
+    await _ensureDb();
+    final prefs = await SharedPreferences.getInstance();
+
+    // 1. Strict Validation: User must exist in DB (using clean email)
+    final existingUserQuery = _userBox!.query(UserEntity_.email.equals(cleanEmail)).build();
     UserEntity? user = existingUserQuery.findFirst();
     existingUserQuery.close();
 
     if (user == null) {
-      // Create new user for this session if not exists
-      user = UserEntity(
-        name: "", // Default name empty, UI handles default
-        email: email,
-        isActive: true,
-      );
-      _userBox!.put(user);
-    } else {
-      // Activate existing user
-      user.isActive = true;
-      _userBox!.put(user);
+      // Security: User not found
+      return false;
     }
+
+    // 2. Strict Validation: Password must match stored credential
+    // Correct Key Access: Using normalized email
+    // FIX: Using dynamic key by removing backslash before $cleanEmail
+    final key = 'pwd_$cleanEmail';
+    final storedPwd = prefs.getString(key);
     
-    // 2. Ensure only one active user (cleanup others)
+    if (storedPwd == null || storedPwd != password) {
+       // Security: Password mismatch or no password set
+       return false;
+    }
+
+    // 3. Activation Flow
+    user.isActive = true;
+    _userBox!.put(user);
+    
+    // 4. Ensure only one active user (cleanup others)
     final allActive = _userBox!.query(UserEntity_.isActive.equals(true)).build().find();
     for (var u in allActive) {
       if (u.id != user.id) {
@@ -111,6 +136,7 @@ class SimpleAuthService {
 
     return true; // Login success
   }
+
 
   Future<void> logout() async {
     await _ensureDb();

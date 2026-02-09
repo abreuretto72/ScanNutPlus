@@ -44,7 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
     // Success Flow
     _showFeedback(isError: false, message: l10n.signup_success);
 
-    simpleAuthService.registerUserDemo().then((_) {
+    simpleAuthService.registerUser(email: _emailController.text, password: _passwordController.text).then((_) {
       if (!mounted) return;
       Future.delayed(const Duration(milliseconds: 1500), () {
         if (!mounted) return;
