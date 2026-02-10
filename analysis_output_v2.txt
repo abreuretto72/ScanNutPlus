@@ -1,0 +1,33 @@
+Analyzing ScanNutPlus...                                        
+
+warning - Unused import: 'package:scannutplus/features/pet/presentation/pet_capture_view.dart' - lib\features\home\presentation\home_view.dart:11:8 - unused_import
+  error - The argument type 'String' can't be assigned to the parameter type 'int'.  - lib\features\pet\data\datasources\pet_history_source.dart:54:13 - argument_type_not_assignable
+  error - The function 'PetHistoryEntryAdapter' isn't defined - lib\features\pet\data\pet_hive_setup.dart:8:26 - undefined_function
+   info - The import of 'package:objectbox/objectbox.dart' is unnecessary because all of the used elements are also provided by the import of 'package:scannutplus/objectbox.g.dart' - lib\features\pet\data\pet_repository.dart:1:8 - unnecessary_import
+   info - Don't invoke 'print' in production code - lib\features\pet\data\pet_repository.dart:62:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\data\pet_repository.dart:79:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\data\pet_repository.dart:80:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\data\pet_repository.dart:82:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\data\pet_repository.dart:96:14 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\data\pet_repository.dart:97:14 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\data\pet_repository.dart:99:14 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\data\pet_repository.dart:148:8 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\data\pet_repository.dart:169:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\data\pet_repository.dart:176:5 - avoid_print
+warning - Unused import: 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart' - lib\features\pet\presentation\history\pet_history_list_view.dart:16:8 - unused_import
+   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_list_view.dart:139:43 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_list_view.dart:139:47 - unnecessary_underscores
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\my_pets_view.dart:80:17 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\my_pets_view.dart:82:19 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\my_pets_view.dart:481:25 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\my_pets_view.dart:496:25 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_capture_view.dart:234:15 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_dashboard_view.dart:156:17 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:53:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:55:8 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:73:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:75:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:78:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:82:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\widgets\pet_card_actions\pet_analysis_button.dart:18:9 - avoid_print
+

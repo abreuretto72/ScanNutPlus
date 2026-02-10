@@ -87,66 +87,448 @@
       "relations": []
     },
     {
-      "id": "3:783428171470640664",
-      "lastPropertyId": "8:5713754980626256512",
-      "name": "PetEntity",
+      "id": "4:5240057698647776569",
+      "lastPropertyId": "7:6799721272674060739",
+      "name": "PetMetrics",
       "properties": [
         {
-          "id": "1:8038105039076692754",
+          "id": "1:2524813281240436593",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:4292303367666524408",
-          "name": "name",
+          "id": "2:46433736956751096",
+          "name": "weight",
+          "type": 8
+        },
+        {
+          "id": "3:998083780361995893",
+          "name": "size",
           "type": 9
         },
         {
-          "id": "3:3154268870460813651",
-          "name": "species",
-          "type": 9
+          "id": "4:5928204805255547014",
+          "name": "isNeutered",
+          "type": 1
         },
         {
-          "id": "4:7954506711847462263",
-          "name": "imagePath",
-          "type": 9
-        },
-        {
-          "id": "5:629167436274531319",
-          "name": "type",
-          "type": 9
-        },
-        {
-          "id": "6:6047037066559026534",
-          "name": "createdAt",
+          "id": "5:5356613817845427558",
+          "name": "timestamp",
           "type": 10
         },
         {
-          "id": "7:322402669160939439",
+          "id": "6:2285555602309646988",
+          "name": "petUuid",
+          "type": 9
+        },
+        {
+          "id": "7:6799721272674060739",
+          "name": "petId",
+          "indexId": "2:5847355982479568720",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "PetEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:1343406732095717703",
+      "lastPropertyId": "11:3936305065490517869",
+      "name": "PetEntity",
+      "properties": [
+        {
+          "id": "1:1422646480821316965",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1478989930366027022",
           "name": "uuid",
-          "indexId": "1:8879275025653982067",
+          "indexId": "3:3623154803441801846",
           "type": 9,
           "flags": 2080
         },
         {
-          "id": "8:5713754980626256512",
+          "id": "3:2646186727887625875",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:3247207764916831441",
           "name": "breed",
           "type": 9
+        },
+        {
+          "id": "5:7574877574784094965",
+          "name": "species",
+          "type": 9
+        },
+        {
+          "id": "6:4431539980425390173",
+          "name": "imagePath",
+          "type": 9
+        },
+        {
+          "id": "7:5967137234215779676",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "8:5416159019975359954",
+          "name": "birthDate",
+          "type": 10
+        },
+        {
+          "id": "9:6046574605563596997",
+          "name": "healthPlan",
+          "type": 9
+        },
+        {
+          "id": "10:1706535841073033915",
+          "name": "funeralPlan",
+          "type": 9
+        },
+        {
+          "id": "11:3936305065490517869",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:6603765512276553527",
+          "name": "metrics",
+          "targetId": "4:5240057698647776569"
+        }
+      ]
+    },
+    {
+      "id": "6:7687619418686670090",
+      "lastPropertyId": "24:8271940186970069415",
+      "name": "HealthPlanEntity",
+      "properties": [
+        {
+          "id": "1:3673676759929068504",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7511280279577544907",
+          "name": "petUuid",
+          "indexId": "4:1226819546064874175",
+          "type": 9,
+          "flags": 2048
+        },
+        {
+          "id": "3:1442859558296605492",
+          "name": "operatorName",
+          "type": 9
+        },
+        {
+          "id": "4:1594169503594601300",
+          "name": "planName",
+          "type": 9
+        },
+        {
+          "id": "5:8905089776156453786",
+          "name": "cardNumber",
+          "type": 9
+        },
+        {
+          "id": "6:1038405035665690414",
+          "name": "holderName",
+          "type": 9
+        },
+        {
+          "id": "7:2087785810995315349",
+          "name": "holderCpf",
+          "type": 9
+        },
+        {
+          "id": "8:8860971687911239742",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "9:5782836068331438183",
+          "name": "renewalDate",
+          "type": 10
+        },
+        {
+          "id": "10:4235993124968351638",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "11:4898501812409573537",
+          "name": "coveragesJson",
+          "type": 9
+        },
+        {
+          "id": "12:8577898100831318684",
+          "name": "gracePeriodDays",
+          "type": 6
+        },
+        {
+          "id": "13:7912469640843448639",
+          "name": "annualLimit",
+          "type": 8
+        },
+        {
+          "id": "14:222947471388634518",
+          "name": "copayPercent",
+          "type": 8
+        },
+        {
+          "id": "15:391156579541710715",
+          "name": "reimbursementPercent",
+          "type": 8
+        },
+        {
+          "id": "16:6252956083670219677",
+          "name": "deductible",
+          "type": 8
+        },
+        {
+          "id": "17:5363413216594979183",
+          "name": "mainClinicName",
+          "type": 9
+        },
+        {
+          "id": "18:6067324687719623438",
+          "name": "supportCity",
+          "type": 9
+        },
+        {
+          "id": "19:8237624207670838378",
+          "name": "supportPhone",
+          "type": 9
+        },
+        {
+          "id": "20:4761090403248100837",
+          "name": "supportWhatsapp",
+          "type": 9
+        },
+        {
+          "id": "21:4738284629257762479",
+          "name": "supportEmail",
+          "type": 9
+        },
+        {
+          "id": "22:5005347157835951004",
+          "name": "is24hService",
+          "type": 1
+        },
+        {
+          "id": "23:3901029973969773035",
+          "name": "policyPath",
+          "type": 9
+        },
+        {
+          "id": "24:8271940186970069415",
+          "name": "cardImagePath",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:311236929730405592",
+      "lastPropertyId": "17:1123552509680877962",
+      "name": "FuneralPlanEntity",
+      "properties": [
+        {
+          "id": "1:6035600632025649464",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3897338876117137",
+          "name": "petUuid",
+          "indexId": "5:7332613706855859339",
+          "type": 9,
+          "flags": 2048
+        },
+        {
+          "id": "3:3569823359904027700",
+          "name": "funeralCompany",
+          "type": 9
+        },
+        {
+          "id": "4:7646123593907604288",
+          "name": "planName",
+          "type": 9
+        },
+        {
+          "id": "5:4417974861506294699",
+          "name": "contractNumber",
+          "type": 9
+        },
+        {
+          "id": "6:7998833941193222952",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "7:4085461562234571247",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "8:447893710278960616",
+          "name": "includedServicesJson",
+          "type": 9
+        },
+        {
+          "id": "9:6988404607092847301",
+          "name": "gracePeriodDays",
+          "type": 6
+        },
+        {
+          "id": "10:7173040585454316951",
+          "name": "maxWeightKg",
+          "type": 8
+        },
+        {
+          "id": "11:4472379177614701308",
+          "name": "is24hService",
+          "type": 1
+        },
+        {
+          "id": "12:4572271663639138617",
+          "name": "phone24h",
+          "type": 9
+        },
+        {
+          "id": "13:2728623046749468880",
+          "name": "whatsApp",
+          "type": 9
+        },
+        {
+          "id": "14:338680036362787345",
+          "name": "planValue",
+          "type": 8
+        },
+        {
+          "id": "15:5290896244505221596",
+          "name": "extraFees",
+          "type": 8
+        },
+        {
+          "id": "16:1446683852022138380",
+          "name": "contractPath",
+          "type": 9
+        },
+        {
+          "id": "17:1123552509680877962",
+          "name": "certificatePath",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:8540376022321957282",
+      "lastPropertyId": "13:7302812156000947113",
+      "name": "PetHistoryEntry",
+      "properties": [
+        {
+          "id": "1:6525307646090179095",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7995696419448507253",
+          "name": "petUuid",
+          "indexId": "6:2846940055487712870",
+          "type": 9,
+          "flags": 2048
+        },
+        {
+          "id": "3:7663977512003522088",
+          "name": "rawJson",
+          "type": 9
+        },
+        {
+          "id": "4:26948484757083248",
+          "name": "timestamp",
+          "type": 10
+        },
+        {
+          "id": "5:8517427335418626028",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "6:7674497402248648247",
+          "name": "severityIndex",
+          "type": 6
+        },
+        {
+          "id": "7:8587887293442035142",
+          "name": "trendAnalysis",
+          "type": 9
+        },
+        {
+          "id": "8:81857043507496012",
+          "name": "tagsString",
+          "type": 9
+        },
+        {
+          "id": "9:1480142123339319912",
+          "name": "petName",
+          "type": 9
+        },
+        {
+          "id": "10:3736635130822176067",
+          "name": "imagePath",
+          "type": 9
+        },
+        {
+          "id": "11:5048727459926328832",
+          "name": "analysisCardsJson",
+          "type": 9
+        },
+        {
+          "id": "12:7849152435168699003",
+          "name": "tags",
+          "type": 30
+        },
+        {
+          "id": "13:7302812156000947113",
+          "name": "analysisCards",
+          "type": 13
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "3:783428171470640664",
-  "lastIndexId": "1:8879275025653982067",
-  "lastRelationId": "0:0",
+  "lastEntityId": "8:8540376022321957282",
+  "lastIndexId": "6:2846940055487712870",
+  "lastRelationId": "1:6603765512276553527",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    783428171470640664
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    8038105039076692754,
+    4292303367666524408,
+    3154268870460813651,
+    7954506711847462263,
+    629167436274531319,
+    6047037066559026534,
+    322402669160939439,
+    5713754980626256512
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

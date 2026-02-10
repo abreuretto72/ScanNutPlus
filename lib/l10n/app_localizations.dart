@@ -1789,6 +1789,516 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Posture Analysis'**
   String get pet_type_posture;
+
+  /// No description provided for @pet_profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Profile'**
+  String get pet_profile_title;
+
+  /// No description provided for @pet_management_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Management'**
+  String get pet_management_title;
+
+  /// No description provided for @pet_label_health_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Plan'**
+  String get pet_label_health_plan;
+
+  /// No description provided for @pet_label_funeral_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Funeral Plan'**
+  String get pet_label_funeral_plan;
+
+  /// No description provided for @pet_label_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get pet_label_weight;
+
+  /// No description provided for @pet_label_size.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get pet_label_size;
+
+  /// No description provided for @pet_label_neutered.
+  ///
+  /// In en, this message translates to:
+  /// **'Neutered Status'**
+  String get pet_label_neutered;
+
+  /// No description provided for @pet_label_birth_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get pet_label_birth_date;
+
+  /// No description provided for @pet_btn_add_metric.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Metric'**
+  String get pet_btn_add_metric;
+
+  /// No description provided for @pet_profile_save_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get pet_profile_save_success;
+
+  /// No description provided for @pet_action_save_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE PET PROFILE'**
+  String get pet_action_save_profile;
+
+  /// No description provided for @pet_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet not found'**
+  String get pet_not_found;
+
+  /// No description provided for @pet_plans_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get pet_plans_title;
+
+  /// No description provided for @pet_action_manage_health_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Health Plan'**
+  String get pet_action_manage_health_plan;
+
+  /// No description provided for @health_plan_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Plan Management'**
+  String get health_plan_title;
+
+  /// No description provided for @health_plan_section_identification.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Identification'**
+  String get health_plan_section_identification;
+
+  /// No description provided for @health_plan_section_coverages.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Coverages'**
+  String get health_plan_section_coverages;
+
+  /// No description provided for @health_plan_section_limits.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Limits & Rules'**
+  String get health_plan_section_limits;
+
+  /// No description provided for @health_plan_section_support.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Network & Support'**
+  String get health_plan_section_support;
+
+  /// No description provided for @health_plan_saved_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Plan Saved Successfully!'**
+  String get health_plan_saved_success;
+
+  /// No description provided for @health_plan_action_save.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE HEALTH PLAN'**
+  String get health_plan_action_save;
+
+  /// No description provided for @health_plan_label_operator.
+  ///
+  /// In en, this message translates to:
+  /// **'Operator Name'**
+  String get health_plan_label_operator;
+
+  /// No description provided for @health_plan_label_plan_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan Name'**
+  String get health_plan_label_plan_name;
+
+  /// No description provided for @health_plan_label_card_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Card Number'**
+  String get health_plan_label_card_number;
+
+  /// No description provided for @health_plan_label_holder_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Holder Name'**
+  String get health_plan_label_holder_name;
+
+  /// No description provided for @health_plan_label_grace_period.
+  ///
+  /// In en, this message translates to:
+  /// **'Grace (Days)'**
+  String get health_plan_label_grace_period;
+
+  /// No description provided for @health_plan_label_annual_limit.
+  ///
+  /// In en, this message translates to:
+  /// **'Annual Limit'**
+  String get health_plan_label_annual_limit;
+
+  /// No description provided for @health_plan_label_copay.
+  ///
+  /// In en, this message translates to:
+  /// **'Copay %'**
+  String get health_plan_label_copay;
+
+  /// No description provided for @health_plan_label_reimburse.
+  ///
+  /// In en, this message translates to:
+  /// **'Reimburse %'**
+  String get health_plan_label_reimburse;
+
+  /// No description provided for @health_plan_label_deductible.
+  ///
+  /// In en, this message translates to:
+  /// **'Deductible'**
+  String get health_plan_label_deductible;
+
+  /// No description provided for @health_plan_label_main_clinic.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Clinic'**
+  String get health_plan_label_main_clinic;
+
+  /// No description provided for @health_plan_label_city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get health_plan_label_city;
+
+  /// No description provided for @health_plan_label_24h.
+  ///
+  /// In en, this message translates to:
+  /// **'24h Service'**
+  String get health_plan_label_24h;
+
+  /// No description provided for @health_plan_label_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get health_plan_label_phone;
+
+  /// No description provided for @health_plan_label_whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get health_plan_label_whatsapp;
+
+  /// No description provided for @health_plan_label_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Support Email'**
+  String get health_plan_label_email;
+
+  /// No description provided for @health_cov_consultations.
+  ///
+  /// In en, this message translates to:
+  /// **'Consultations'**
+  String get health_cov_consultations;
+
+  /// No description provided for @health_cov_vaccines.
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccines'**
+  String get health_cov_vaccines;
+
+  /// No description provided for @health_cov_lab_exams.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Exams'**
+  String get health_cov_lab_exams;
+
+  /// No description provided for @health_cov_imaging.
+  ///
+  /// In en, this message translates to:
+  /// **'Imaging'**
+  String get health_cov_imaging;
+
+  /// No description provided for @health_cov_surgery.
+  ///
+  /// In en, this message translates to:
+  /// **'Surgery'**
+  String get health_cov_surgery;
+
+  /// No description provided for @health_cov_hospitalization.
+  ///
+  /// In en, this message translates to:
+  /// **'Hospitalization'**
+  String get health_cov_hospitalization;
+
+  /// No description provided for @health_cov_emergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get health_cov_emergency;
+
+  /// No description provided for @health_cov_pre_existing.
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-existing'**
+  String get health_cov_pre_existing;
+
+  /// No description provided for @health_cov_dentistry.
+  ///
+  /// In en, this message translates to:
+  /// **'Dentistry'**
+  String get health_cov_dentistry;
+
+  /// No description provided for @health_cov_physiotherapy.
+  ///
+  /// In en, this message translates to:
+  /// **'Physiotherapy'**
+  String get health_cov_physiotherapy;
+
+  /// No description provided for @pet_db_sync_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Database Sync Error - Please restart the app'**
+  String get pet_db_sync_error;
+
+  /// No description provided for @pet_action_manage_funeral_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Funeral Plan'**
+  String get pet_action_manage_funeral_plan;
+
+  /// No description provided for @funeral_plan_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Funeral Plan Management'**
+  String get funeral_plan_title;
+
+  /// No description provided for @funeral_section_identity.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Identity'**
+  String get funeral_section_identity;
+
+  /// No description provided for @funeral_section_services.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Included Services'**
+  String get funeral_section_services;
+
+  /// No description provided for @funeral_section_rules.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Rules'**
+  String get funeral_section_rules;
+
+  /// No description provided for @funeral_section_emergency.
+  ///
+  /// In en, this message translates to:
+  /// **'4. EMERGENCY'**
+  String get funeral_section_emergency;
+
+  /// No description provided for @funeral_label_company.
+  ///
+  /// In en, this message translates to:
+  /// **'Funeral Company'**
+  String get funeral_label_company;
+
+  /// No description provided for @funeral_label_plan_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan Name'**
+  String get funeral_label_plan_name;
+
+  /// No description provided for @funeral_label_contract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contract Number'**
+  String get funeral_label_contract;
+
+  /// No description provided for @funeral_label_start_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get funeral_label_start_date;
+
+  /// No description provided for @funeral_label_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get funeral_label_status;
+
+  /// No description provided for @funeral_label_grace_period.
+  ///
+  /// In en, this message translates to:
+  /// **'Grace (Days)'**
+  String get funeral_label_grace_period;
+
+  /// No description provided for @funeral_label_max_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Max Weight (kg)'**
+  String get funeral_label_max_weight;
+
+  /// No description provided for @funeral_label_24h.
+  ///
+  /// In en, this message translates to:
+  /// **'24h Service'**
+  String get funeral_label_24h;
+
+  /// No description provided for @funeral_label_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'24h Phone'**
+  String get funeral_label_phone;
+
+  /// No description provided for @funeral_label_whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get funeral_label_whatsapp;
+
+  /// No description provided for @funeral_label_value.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan Value'**
+  String get funeral_label_value;
+
+  /// No description provided for @funeral_label_extra_fees.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra Fees'**
+  String get funeral_label_extra_fees;
+
+  /// No description provided for @funeral_svc_removal.
+  ///
+  /// In en, this message translates to:
+  /// **'Removal 24h'**
+  String get funeral_svc_removal;
+
+  /// No description provided for @funeral_svc_viewing.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewing/Wake'**
+  String get funeral_svc_viewing;
+
+  /// No description provided for @funeral_svc_cremation_ind.
+  ///
+  /// In en, this message translates to:
+  /// **'Individual Cremation'**
+  String get funeral_svc_cremation_ind;
+
+  /// No description provided for @funeral_svc_cremation_col.
+  ///
+  /// In en, this message translates to:
+  /// **'Collective Cremation'**
+  String get funeral_svc_cremation_col;
+
+  /// No description provided for @funeral_svc_burial.
+  ///
+  /// In en, this message translates to:
+  /// **'Burial'**
+  String get funeral_svc_burial;
+
+  /// No description provided for @funeral_svc_urn.
+  ///
+  /// In en, this message translates to:
+  /// **'Urn'**
+  String get funeral_svc_urn;
+
+  /// No description provided for @funeral_svc_ashes.
+  ///
+  /// In en, this message translates to:
+  /// **'Ashes Delivery'**
+  String get funeral_svc_ashes;
+
+  /// No description provided for @funeral_svc_certificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate'**
+  String get funeral_svc_certificate;
+
+  /// No description provided for @funeral_action_call_emergency.
+  ///
+  /// In en, this message translates to:
+  /// **'CALL EMERGENCY NOW'**
+  String get funeral_action_call_emergency;
+
+  /// No description provided for @funeral_action_save.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE FUNERAL PLAN'**
+  String get funeral_action_save;
+
+  /// No description provided for @funeral_save_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Funeral Plan Saved Successfully!'**
+  String get funeral_save_success;
+
+  /// No description provided for @pet_action_analyses.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyses'**
+  String get pet_action_analyses;
+
+  /// No description provided for @pet_action_health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get pet_action_health;
+
+  /// No description provided for @pet_action_agenda.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda'**
+  String get pet_action_agenda;
+
+  /// No description provided for @pet_history_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis History'**
+  String get pet_history_button;
+
+  /// No description provided for @ai_assistant_title.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Assistant of {name}'**
+  String ai_assistant_title(String name);
+
+  /// No description provided for @ai_input_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about your pet...'**
+  String get ai_input_hint;
+
+  /// No description provided for @ai_listening.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening...'**
+  String get ai_listening;
+
+  /// No description provided for @ai_error_mic.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone permission required'**
+  String get ai_error_mic;
+
+  /// No description provided for @ai_thinking.
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking...'**
+  String get ai_thinking;
 }
 
 class _AppLocalizationsDelegate

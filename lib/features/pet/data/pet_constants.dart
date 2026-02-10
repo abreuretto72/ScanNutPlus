@@ -208,7 +208,9 @@ class PetConstants {
   static const String typeNutrition = 'nutrition'; // restored
   static const String typePet = 'pet'; // restored
   static const String speciesDog = 'dog';
+  static const String speciesDogPt = 'cão';
   static const String speciesCat = 'cat';
+  static const String speciesCatPt = 'gato';
   static const String speciesUnknown = 'Unknown';
   static const String typeNewProfile = 'newProfile'; // New Constant to fix Hardcoded String
   

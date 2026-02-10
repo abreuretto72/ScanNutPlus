@@ -2,8 +2,10 @@ import 'package:scannutplus/core/theme/app_colors.dart'; // AppColors
 import 'package:flutter/material.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
+import 'package:scannutplus/features/pet/presentation/history/pet_history_screen.dart';
 
-import 'package:scannutplus/features/pet/presentation/pet_history_timeline_view.dart';
+
+
 
 class PetDashboardView extends StatefulWidget {
   const PetDashboardView({super.key});
@@ -35,9 +37,28 @@ class _PetDashboardViewState extends State<PetDashboardView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // --- CARD 1: NEW ANALYSIS ---
+            _buildAnalysisCard(context, l10n, uuid, name, breed, imagePath),
+            
+
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAnalysisCard(BuildContext context, AppLocalizations l10n, String uuid, String name, String breed, String imagePath) {
+    return Card(
+      color: Colors.grey[900],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
             Text(l10n.pet_select_context, 
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             
             // --- SELETOR DE ESPECIALIDADES (Dropdown) ---
             Container(
@@ -83,7 +104,6 @@ class _PetDashboardViewState extends State<PetDashboardView> {
             const SizedBox(height: 24),
 
             // --- BOTÃO DE AÇÃO (Scan / Analyze) ---
-            // Visual Identity: Pink Button, Black Text, Black Border
             ElevatedButton.icon(
               onPressed: () {
                 // VALIDATION (Pilar 0: Zero erros de fluxo)
@@ -99,14 +119,19 @@ class _PetDashboardViewState extends State<PetDashboardView> {
 
                 Navigator.pushNamed(context, '/pet_capture', arguments: {
                   PetConstants.argUuid: uuid,
-                  PetConstants.argType: _selectedType, // Guaranteed not null here
+                  PetConstants.argType: _selectedType,
                   PetConstants.argName: name,
                   PetConstants.argBreed: breed,
                   PetConstants.argImagePath: imagePath,
-                }).then((_) => setState(() {})); // Refresh history on return
+                }).then((_) {
+                   setState(() {
+                      // Reset logic if needed, though mostly handled by navigation return
+                      _selectedType = null; // Optional: reset selection on return
+                   });
+                }); 
               },
               icon: const Icon(Icons.camera_alt, color: AppColors.petText),
-              label: Text(l10n.btn_scan_image.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold)), // "SCAN IMAGE"
+              label: Text(l10n.btn_scan_image.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.petPrimary, // #FFD1DC
                 foregroundColor: AppColors.petText,    // Black
@@ -121,37 +146,36 @@ class _PetDashboardViewState extends State<PetDashboardView> {
             
             const SizedBox(height: 16),
             
-            // --- BOTÃO DE PRONTUÁRIO (History Timeline) ---
+            // --- BOTÃO DE HISTÓRICO (Restaurado) ---
             OutlinedButton.icon(
-               onPressed: () {
-                 Navigator.push(
-                   context,
-                   MaterialPageRoute(
-                     builder: (_) => PetHistoryTimelineView(
-                       petUuid: uuid,
-                       petName: name,
-                       petImage: imagePath,
-                     ),
-                   ),
-                 ).then((_) => setState(() {}));
-               },
-               icon: const Icon(Icons.history, color: Colors.white),
-               label: Text(l10n.pet_action_history.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-               style: OutlinedButton.styleFrom(
-                 side: const BorderSide(color: Colors.white54, width: 1),
-                 padding: const EdgeInsets.symmetric(vertical: 16),
-                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-               ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PetHistoryScreen(petUuid: uuid)),
+                );
+                print('SCAN_NUT_TRACE: [NAV] Navegando para o Histórico do Pet: $uuid');
+              },
+              icon: const Icon(Icons.history, color: Colors.white70),
+              label: Text(
+                l10n.pet_history_button, 
+                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white70)
+              ),
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Colors.white24),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
             ),
-
-            const SizedBox(height: 24),
-            
-
           ],
         ),
       ),
     );
   }
+
+
+
+
+
 
   DropdownMenuItem<PetImageType> _buildDropdownItem(BuildContext context, PetImageType type, String label, IconData icon) {
     return DropdownMenuItem<PetImageType>(

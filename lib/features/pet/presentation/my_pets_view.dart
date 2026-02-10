@@ -7,6 +7,14 @@ import 'package:scannutplus/features/pet/data/pet_repository.dart';
  // Or AppLocalizations if central
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'dart:io';
+import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_analysis_button.dart';
+import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_profile_button.dart';
+import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_health_button.dart';
+import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_agenda_button.dart';
+import 'package:scannutplus/features/pet/presentation/pet_profile_view.dart';
+import 'package:scannutplus/features/pet/presentation/pet_profile_view.dart';
+import 'package:scannutplus/features/pet/presentation/placeholder_health_view.dart';
+import 'package:scannutplus/features/pet/presentation/pet_ai_chat_view.dart'; // Import AI View
 
 class MyPetsView extends StatefulWidget {
   const MyPetsView({super.key});
@@ -67,7 +75,14 @@ class _MyPetsViewState extends State<MyPetsView> {
                   return const Center(child: CircularProgressIndicator(color: AppColors.petPrimary));
                 }
 
-                final pets = snapshot.data ?? [];
+                // UI FILTER: Double protection against ghost cards
+                final allPets = snapshot.data ?? [];
+                final pets = allPets.where((p) => p[PetConstants.fieldName] != null && p[PetConstants.fieldName].toString().isNotEmpty && p[PetConstants.fieldName].toString() != 'null').toList();
+                
+                print('SCAN_NUT_TRACE: [UI_BUILD] Renderizando My Pets. Total no banco: ${pets.length}');
+                for (var p in pets) {
+                  print('SCAN_NUT_TRACE: [UI_ITEM] Pet no Banco -> UUID: ${p[PetConstants.fieldUuid]}, Name: ${p[PetConstants.fieldName]}');
+                }
 
                 if (pets.isEmpty) {
                   return Center(
@@ -295,128 +310,213 @@ class _MyPetsViewState extends State<MyPetsView> {
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Row(
+          child: Column(
             children: [
-              // IMAGEM DO PET: Circular com border preto fino
-              Hero(
-                tag: 'pet_image_$uuid',
-                child: Container(
-                  width: 65,
-                  height: 65,
-                  decoration: BoxDecoration(
-                    color: Colors.white, 
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.petText, width: 1.5), // Black Border
-                    image: imagePath.isNotEmpty 
-                      ? DecorationImage(
-                          image: FileImage(File(imagePath)),
-                          fit: BoxFit.cover,
-                        ) 
-                      : null,
+              Row(
+                children: [
+                  // IMAGEM DO PET: Circular com border preto fino
+                  Hero(
+                    tag: 'pet_image_$uuid',
+                    child: Container(
+                      width: 65,
+                      height: 65,
+                      decoration: BoxDecoration(
+                        color: Colors.white, 
+                        shape: BoxShape.circle,
+                        border: Border.all(color: AppColors.petText, width: 1.5), // Black Border
+                        image: imagePath.isNotEmpty 
+                          ? DecorationImage(
+                              image: FileImage(File(imagePath)),
+                              fit: BoxFit.cover,
+                            ) 
+                          : null,
+                      ),
+                      child: imagePath.isEmpty 
+                        ? const Icon(Icons.pets, size: 32, color: Colors.black54) 
+                        : null,
+                    ),
                   ),
-                  child: imagePath.isEmpty 
-                    ? const Icon(Icons.pets, size: 32, color: Colors.black54) 
-                    : null,
-                ),
-              ),
-              const SizedBox(width: 16),
-              // INFORMAÇÕES: Nome e Raça (PRETO)
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800, // Extra Bold
-                        color: AppColors.petText, // Black
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    // Raça com estilo condicional (Preto ou Cinza Escuro)
-                    Text(
-                      displayBreed,
-                      style: TextStyle(
-                        fontSize: 14,
-                        // Se desconhecido: Cinza Escuro Itálico. Se conhecido: Preto Normal.
-                        color: isBreedUnknown ? Colors.black54 : AppColors.petText.withValues(alpha: 0.8),
-                        fontStyle: isBreedUnknown ? FontStyle.italic : FontStyle.normal,
-                        fontWeight: isBreedUnknown ? FontWeight.normal : FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 4), // Spacing
-                    // Creation Timestamp (Pilar 0: Localized & Formatted)
-                    if (pet[PetConstants.fieldCreatedAt] != null) ...[
-                      Text(
-                        '${appL10n.pet_created_at_label} ${_formatDate(pet[PetConstants.fieldCreatedAt])}',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.black87, // High contrast on Pink
-                          fontWeight: FontWeight.w400,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              // BOTÃO DE EXCLUSÃO (Preto/Vermelho)
-              IconButton(
-                icon: const Icon(Icons.delete_outline, color: AppColors.petText), // Alert Icon Black
-                tooltip: appL10n.pet_delete_title,
-                onPressed: () {
-                  // Diálogo de Confirmação (Mantém estilo Dark para contraste de alerta)
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext dialogContext) {
-                      return AlertDialog(
-                        backgroundColor: AppColors.petBackgroundDark,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          side: const BorderSide(color: AppColors.petPrimary, width: 1), // Pink Border
-                        ),
-                        title: Text(
-                          appL10n.pet_delete_title, 
-                          style: const TextStyle(color: Colors.white)
-                        ),
-                        content: Text(
-                          appL10n.pet_delete_content,
-                          style: const TextStyle(color: Colors.white70)
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(dialogContext).pop(),
-                            child: Text(
-                              appL10n.pet_delete_cancel, 
-                              style: const TextStyle(color: Colors.white54)
-                            ),
+                  const SizedBox(width: 16),
+                  // INFORMAÇÕES: Nome e Raça (PRETO)
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800, // Extra Bold
+                            color: AppColors.petText, // Black
+                            letterSpacing: -0.5,
                           ),
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.of(dialogContext).pop(); 
-                              await _repository.deleteFullPetData(uuid);
-                              if (!mounted) return;
-                              setState(() {});
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(appL10n.pet_delete_success),
-                                  backgroundColor: const Color(0xFF10AC84),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              appL10n.pet_delete_confirm, 
-                              style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)
+                        ),
+                        const SizedBox(height: 4),
+                        // Raça com estilo condicional (Preto ou Cinza Escuro)
+                        Text(
+                          displayBreed,
+                          style: TextStyle(
+                            fontSize: 14,
+                            // Se desconhecido: Cinza Escuro Itálico. Se conhecido: Preto Normal.
+                            color: isBreedUnknown ? Colors.black54 : AppColors.petText.withValues(alpha: 0.8),
+                            fontStyle: isBreedUnknown ? FontStyle.italic : FontStyle.normal,
+                            fontWeight: isBreedUnknown ? FontWeight.normal : FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 4), // Spacing
+                        // Creation Timestamp (Pilar 0: Localized & Formatted)
+                        if (pet[PetConstants.fieldCreatedAt] != null) ...[
+                          Text(
+                            '${appL10n.pet_created_at_label} ${_formatDate(pet[PetConstants.fieldCreatedAt])}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.black87, // High contrast on Pink
+                              fontWeight: FontWeight.w400,
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
+                      ],
+                    ),
+                  ),
+                  // BOTÃO DE IA (Sparkles) - Novo Entry Point
+                  IconButton(
+                    icon: const Icon(Icons.auto_awesome, color: AppColors.petText),
+                    tooltip: appL10n.ai_assistant_title(name),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PetAiChatView(petUuid: uuid, petName: name),
+                        ),
                       );
                     },
-                  );
-                },
+                  ),
+                  
+                  // BOTÃO DE EXCLUSÃO (Preto/Vermelho)
+                  IconButton(
+                    icon: const Icon(Icons.delete_outline, color: AppColors.petText), // Alert Icon Black
+                    tooltip: appL10n.pet_delete_title,
+                    onPressed: () {
+                      // Diálogo de Confirmação (Mantém estilo Dark para contraste de alerta)
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext dialogContext) {
+                          return AlertDialog(
+                            backgroundColor: AppColors.petBackgroundDark,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              side: const BorderSide(color: AppColors.petPrimary, width: 1), // Pink Border
+                            ),
+                            title: Text(
+                              appL10n.pet_delete_title, 
+                              style: const TextStyle(color: Colors.white)
+                            ),
+                            content: Text(
+                              appL10n.pet_delete_content,
+                              style: const TextStyle(color: Colors.white70)
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(dialogContext).pop(),
+                                child: Text(
+                                  appL10n.pet_delete_cancel, 
+                                  style: const TextStyle(color: Colors.white54)
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  Navigator.of(dialogContext).pop(); 
+                                  await _repository.deleteFullPetData(uuid);
+                                  if (!mounted) return;
+                                  setState(() {});
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(appL10n.pet_delete_success),
+                                      backgroundColor: const Color(0xFF10AC84),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  appL10n.pet_delete_confirm, 
+                                  style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
               ),
+              
+              const SizedBox(height: 12),
+              // Separator (Optional, subtle)
+              Divider(color: AppColors.petText.withValues(alpha: 0.2), height: 1),
+              const SizedBox(height: 8),
+
+              // ACTION BUTTONS ROW
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                   // 1. Analyses (Implemented)
+                   PetAnalysisButton(
+                     label: appL10n.pet_action_analyses,
+                     onTap: () {
+                        Navigator.pushNamed(
+                          context, 
+                          '/pet_dashboard', 
+                          arguments: {
+                            PetConstants.argUuid: uuid,
+                            PetConstants.argName: name,
+                            PetConstants.argBreed: displayBreed, 
+                            PetConstants.argImagePath: imagePath,
+                          },
+                        ).then((_) => setState(() {})); 
+                     }
+                   ),
+                   
+                   // 2. Profile (Implemented)
+                   PetProfileButton(
+                     label: appL10n.pet_profile_title,
+                     onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PetProfileView(petUuid: uuid),
+                          ),
+                        ).then((_) => setState(() {}));
+                     },
+                   ),
+
+                   // 3. Health (Placeholder)
+                   PetHealthButton(
+                     label: appL10n.pet_action_health,
+                     onTap: () {
+                        print('SCAN_NUT_TRACE: [NAV] Health clicked for UUID: $uuid (Placeholder)');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PlaceholderHealthView(),
+                          ),
+                        ).then((_) => setState(() {}));
+                     }
+                   ),
+                   
+                   // 4. Agenda (Placeholder Action)
+                   PetAgendaButton(
+                     label: appL10n.pet_action_agenda,
+                     onTap: () {
+                        // Future navigation to Agenda/Vaccines
+                        print('SCAN_NUT_TRACE: Navigation to [Agenda] for UUID: $uuid');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                           SnackBar(content: Text('Agenda Module Coming Soon for $name'), duration: const Duration(seconds: 1))
+                        );
+                     }
+                   ),
+                ],
+              )
             ],
           ),
         ),

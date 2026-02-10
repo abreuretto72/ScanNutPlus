@@ -30,7 +30,7 @@ class ScanNutApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp(        
       onGenerateTitle: (context) => AppLocalizations.of(context)!.app_title,
       localizationsDelegates: const [
         AppLocalizations.delegate,

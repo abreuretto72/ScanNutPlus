@@ -1,5 +1,16 @@
 # ScanNutPlus 📱🌿🐾🍎
 
+## New Feature: AI Veterinary Assistant (v1.0)
+Integrated **Gemini Pro** + **RAG** (Retrieval-Augmented Generation) to analyze pet health.
+
+### Key Capabilities:
+- **Context-Aware:** Reads Pet Profile & Medical History from ObjectBox.
+- **Dynamic Brain:** Model configuration fetches remotely from `food_config.json`.
+- **Strict Grounding:**
+  - **Facts:** Only answers based on database records.
+  - **Advice:** Only gives general suggestions if explicitly asked, and **MUST** cite sources.
+  - **Time:** Aware of "Today" vs "Future" events.
+
 **ScanNutPlus** é um "Super App" de inteligência artificial focado na análise e monitoramento de domínios biológicos. O projeto integra visão computacional, inteligência artificial generativa (Gemini) e uma arquitetura modular robusta para oferecer insights profundos sobre **Alimentação**,
 - **Pet Analysis**:
   - **Dynamic UI**: AI-driven interface that adapts to the analysis content using structured blocks (Protocol 2026).

@@ -16,7 +16,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # Pilar 0 & I18n
-  intl:
+  intl: ^0.20.2
 
   # Biometria
   local_auth: ^2.1.6

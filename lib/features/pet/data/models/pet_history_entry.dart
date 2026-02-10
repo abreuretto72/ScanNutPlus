@@ -1,33 +1,59 @@
-import 'package:hive/hive.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
-part 'pet_history_entry.g.dart';
+import 'dart:convert';
 
-@HiveType(typeId: 11) // Verifique se o ID não conflita
-class PetHistoryEntry extends HiveObject {
-  @HiveField(0) final String id;
-  @HiveField(1) final String petUuid;
-  @HiveField(2) final String rawJson;
-  @HiveField(3) final DateTime timestamp;
-  @HiveField(4) final String category;
+@Entity()
+class PetHistoryEntry {
+  @Id()
+  int id = 0;
+
+  @Index()
+  String petUuid;
+  
+  String rawJson;
+  
+  @Property(type: PropertyType.date)
+  DateTime timestamp;
+  
+  String category;
+  int severityIndex;
+  String trendAnalysis;
+  
+  // ObjectBox doesn't support Lists directly, store as JSON/String
+  String tagsString; 
+  String petName;
+  String imagePath;
+  String analysisCardsJson;
 
   PetHistoryEntry({
-    required this.id,
+    this.id = 0,
     required this.petUuid,
     required this.rawJson,
-    required this.timestamp,
+    DateTime? timestamp,
     this.category = PetConstants.valGeneral,
     this.severityIndex = 0,
     this.trendAnalysis = PetConstants.valStable,
-    this.tags = const [],
+    List<String> tags = const [],
     this.petName = '',
     this.imagePath = '',
-    this.analysisCards = const [],
-  });
+    List<Map<String, dynamic>> analysisCards = const [],
+  }) : 
+    timestamp = timestamp ?? DateTime.now(),
+    tagsString = jsonEncode(tags),
+    analysisCardsJson = jsonEncode(analysisCards);
 
-  @HiveField(5) final int severityIndex;
-  @HiveField(6) final String trendAnalysis;
-  @HiveField(7) final List<String> tags;
-  @HiveField(8) final String petName;
-  @HiveField(9) final String imagePath;
-  @HiveField(10) final List<Map<String, dynamic>> analysisCards;
+  // Helper getters/setters for Lists
+  List<String> get tags {
+      if (tagsString.isEmpty) return [];
+      try {
+        return List<String>.from(jsonDecode(tagsString));
+      } catch (_) { return []; }
+  }
+  
+  List<Map<String, dynamic>> get analysisCards {
+      if (analysisCardsJson.isEmpty) return [];
+      try {
+        return List<Map<String, dynamic>>.from(jsonDecode(analysisCardsJson));
+      } catch (_) { return []; }
+  }
 }

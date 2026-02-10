@@ -8,6 +8,12 @@ class PetService {
   PetService() : _box = ObjectBoxManager.currentStore.box<PetEntity>();
 
   Future<int> savePet(PetEntity pet) async {
+    // [FIX] Unique Constraint Violation: Check if UUID exists before putting
+    final existing = _box.query(PetEntity_.uuid.equals(pet.uuid)).build().findFirst();
+    if (existing != null) {
+      pet.id = existing.id; // Update existing record
+    }
+    
     return _box.put(pet);
   }
 

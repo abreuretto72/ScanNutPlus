@@ -888,4 +888,262 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_type_posture => 'Análise de Postura';
+
+  @override
+  String get pet_profile_title => 'Perfil do Pet';
+
+  @override
+  String get pet_management_title => 'Gestão do Pet';
+
+  @override
+  String get pet_label_health_plan => 'Plano de Saúde';
+
+  @override
+  String get pet_label_funeral_plan => 'Plano Funerário';
+
+  @override
+  String get pet_label_weight => 'Peso';
+
+  @override
+  String get pet_label_size => 'Porte';
+
+  @override
+  String get pet_label_neutered => 'Castrado';
+
+  @override
+  String get pet_label_birth_date => 'Data de Nascimento';
+
+  @override
+  String get pet_btn_add_metric => 'Adicionar Métrica';
+
+  @override
+  String get pet_profile_save_success => 'Perfil atualizado com sucesso';
+
+  @override
+  String get pet_action_save_profile => 'SALVAR PERFIL PET';
+
+  @override
+  String get pet_not_found => 'Pet não encontrado';
+
+  @override
+  String get pet_plans_title => 'Planos';
+
+  @override
+  String get pet_action_manage_health_plan => 'Gerenciar Plano de Saúde';
+
+  @override
+  String get health_plan_title => 'Gestão do Plano de Saúde';
+
+  @override
+  String get health_plan_section_identification => '1. Identificação';
+
+  @override
+  String get health_plan_section_coverages => '2. Coberturas';
+
+  @override
+  String get health_plan_section_limits => '3. Limites e Regras';
+
+  @override
+  String get health_plan_section_support => '4. Rede e Suporte';
+
+  @override
+  String get health_plan_saved_success => 'Plano de Saúde salvo com sucesso!';
+
+  @override
+  String get health_plan_action_save => 'SALVAR PLANO';
+
+  @override
+  String get health_plan_label_operator => 'Operadora';
+
+  @override
+  String get health_plan_label_plan_name => 'Nome do Plano';
+
+  @override
+  String get health_plan_label_card_number => 'Nº da Carteirinha';
+
+  @override
+  String get health_plan_label_holder_name => 'Nome do Titular';
+
+  @override
+  String get health_plan_label_grace_period => 'Carência (Dias)';
+
+  @override
+  String get health_plan_label_annual_limit => 'Limite Anual';
+
+  @override
+  String get health_plan_label_copay => 'Coparticipação %';
+
+  @override
+  String get health_plan_label_reimburse => 'Reembolso %';
+
+  @override
+  String get health_plan_label_deductible => 'Franquia';
+
+  @override
+  String get health_plan_label_main_clinic => 'Clínica Principal';
+
+  @override
+  String get health_plan_label_city => 'Cidade';
+
+  @override
+  String get health_plan_label_24h => 'Atendimento 24h';
+
+  @override
+  String get health_plan_label_phone => 'Telefone';
+
+  @override
+  String get health_plan_label_whatsapp => 'WhatsApp';
+
+  @override
+  String get health_plan_label_email => 'E-mail de Suporte';
+
+  @override
+  String get health_cov_consultations => 'Consultas';
+
+  @override
+  String get health_cov_vaccines => 'Vacinas';
+
+  @override
+  String get health_cov_lab_exams => 'Exames Lab';
+
+  @override
+  String get health_cov_imaging => 'Imagem';
+
+  @override
+  String get health_cov_surgery => 'Cirurgia';
+
+  @override
+  String get health_cov_hospitalization => 'Internação';
+
+  @override
+  String get health_cov_emergency => 'Emergência';
+
+  @override
+  String get health_cov_pre_existing => 'Pré-existentes';
+
+  @override
+  String get health_cov_dentistry => 'Odonto';
+
+  @override
+  String get health_cov_physiotherapy => 'Fisioterapia';
+
+  @override
+  String get pet_db_sync_error =>
+      'Erro de Sincronização - Por favor reinicie o app';
+
+  @override
+  String get pet_action_manage_funeral_plan => 'Gerenciar Plano Funerário';
+
+  @override
+  String get funeral_plan_title => 'Gestão do Plano Funerário';
+
+  @override
+  String get funeral_section_identity => '1. Identificação';
+
+  @override
+  String get funeral_section_services => '2. Serviços Inclusos';
+
+  @override
+  String get funeral_section_rules => '3. Regras';
+
+  @override
+  String get funeral_section_emergency => '4. EMERGÊNCIA';
+
+  @override
+  String get funeral_label_company => 'Empresa Funerária';
+
+  @override
+  String get funeral_label_plan_name => 'Nome do Plano';
+
+  @override
+  String get funeral_label_contract => 'Número do Contrato';
+
+  @override
+  String get funeral_label_start_date => 'Data de Início';
+
+  @override
+  String get funeral_label_status => 'Status';
+
+  @override
+  String get funeral_label_grace_period => 'Carência (Dias)';
+
+  @override
+  String get funeral_label_max_weight => 'Peso Limite (kg)';
+
+  @override
+  String get funeral_label_24h => 'Atendimento 24h';
+
+  @override
+  String get funeral_label_phone => 'Telefone 24h';
+
+  @override
+  String get funeral_label_whatsapp => 'WhatsApp';
+
+  @override
+  String get funeral_label_value => 'Valor do Plano';
+
+  @override
+  String get funeral_label_extra_fees => 'Taxas Extras';
+
+  @override
+  String get funeral_svc_removal => 'Remoção 24h';
+
+  @override
+  String get funeral_svc_viewing => 'Velório';
+
+  @override
+  String get funeral_svc_cremation_ind => 'Cremação Individual';
+
+  @override
+  String get funeral_svc_cremation_col => 'Cremação Coletiva';
+
+  @override
+  String get funeral_svc_burial => 'Sepultamento';
+
+  @override
+  String get funeral_svc_urn => 'Urna';
+
+  @override
+  String get funeral_svc_ashes => 'Entrega de Cinzas';
+
+  @override
+  String get funeral_svc_certificate => 'Certificado';
+
+  @override
+  String get funeral_action_call_emergency => 'LIGAR EMERGÊNCIA AGORA';
+
+  @override
+  String get funeral_action_save => 'SALVAR PLANO FUNERÁRIO';
+
+  @override
+  String get funeral_save_success => 'Plano Funerário salvo com sucesso!';
+
+  @override
+  String get pet_action_analyses => 'Análises';
+
+  @override
+  String get pet_action_health => 'Saúde';
+
+  @override
+  String get pet_action_agenda => 'Agenda';
+
+  @override
+  String get pet_history_button => 'Histórico de Análises';
+
+  @override
+  String ai_assistant_title(String name) {
+    return 'Assistente IA do $name';
+  }
+
+  @override
+  String get ai_input_hint => 'Pergunte sobre seu pet...';
+
+  @override
+  String get ai_listening => 'Ouvindo...';
+
+  @override
+  String get ai_error_mic => 'Permissão de microfone necessária';
+
+  @override
+  String get ai_thinking => 'Pensando...';
 }

@@ -230,7 +230,10 @@ class _PetCaptureViewState extends State<PetCaptureView> {
            },
         ).then((_) {
            // [STATE RESET] Force reset to 'Existing Pet' mode after return
-           if (mounted) setState(() => _isAddingNewPet = false);
+           if (mounted) {
+              print('SCAN_NUT_TRACE: [RESET] Resetting _isAddingNewPet to FALSE');
+              setState(() => _isAddingNewPet = false);
+           }
         });
       } on PetIdentityException catch (_) {
          if (kDebugMode) debugPrint('[SCAN_NUT_LOG] Identidade não confirmada. Solicitando nome...');
@@ -419,8 +422,13 @@ class _PetCaptureViewState extends State<PetCaptureView> {
     
     // l10n usage removed
     
+    // FIX: Use existing UUID/Name to prevents duplicates (Ghost Records)
+    final uuid = _existingUuid ?? const Uuid().v4();
+    final name = _existingName;
+
     final pet = PetEntity(
-      uuid: const Uuid().v4(),
+      uuid: uuid,
+      name: name, // Prevent null name if we already have it
       species: _selectedSpecies!,
       imagePath: _imagePath!,
       type: _isLabel ? AppLocalizations.of(context)!.pet_type_label : PetConstants.typePet,
