@@ -3,6 +3,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:scannutplus/core/data/objectbox_manager.dart';
 import 'package:scannutplus/features/pet/data/models/pet_entity.dart';
 import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
+import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/objectbox.g.dart';
 import 'package:intl/intl.dart';
 
@@ -26,15 +27,15 @@ class PetAiRepository {
     final pet = _petBox.query(PetEntity_.uuid.equals(uuid)).build().findFirst();
     
     if (pet != null) {
-      buffer.writeln('--- PET PROFILE ---');
-      buffer.writeln('Name: ${pet.name}');
-      buffer.writeln('Breed: ${pet.breed}');
-      buffer.writeln('Species: ${pet.species}');
+      buffer.writeln(PetConstants.ragProfileHeader);
+      buffer.writeln('${PetConstants.labelName}${pet.name}');
+      buffer.writeln('${PetConstants.labelBreed}${pet.breed}');
+      buffer.writeln('${PetConstants.labelSpecies}${pet.species}');
       // buffer.writeln('Age: ${pet.age}'); // If available in Entity
       // buffer.writeln('Weight: ${pet.weight}'); // If available
-      buffer.writeln('-------------------\n');
+      buffer.writeln(PetConstants.ragSeparator);
     } else {
-      buffer.writeln('--- PET PROFILE: Unknown (UUID: $uuid) ---\n');
+      buffer.writeln(PetConstants.ragUnknownProfile.replaceFirst('{}', uuid));
     }
 
     // 2. Fetch History (Limit to last 5 for context window efficiency)
@@ -48,18 +49,18 @@ class PetAiRepository {
     query.close();
 
     if (history.isNotEmpty) {
-      buffer.writeln('--- RECENT MEDICAL & ANALYSIS HISTORY (Last ${history.length}) ---');
+      buffer.writeln(PetConstants.ragHistoryHeader.replaceFirst('{}', history.length.toString()));
       final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
       
       for (var entry in history) {
-        buffer.writeln('Date: ${dateFormat.format(entry.timestamp)}');
-        buffer.writeln('Category: ${entry.category}');
-        buffer.writeln('Analysis Summary: ${entry.rawJson}'); // Pass full raw text for AI to reason
+        buffer.writeln('${PetConstants.labelDate}${dateFormat.format(entry.timestamp)}');
+        buffer.writeln('${PetConstants.labelCategory}${entry.category}');
+        buffer.writeln('${PetConstants.labelSummary}${entry.rawJson}'); // Pass full raw text for AI to reason
         buffer.writeln('---');
       }
-      buffer.writeln('--------------------------------------------------\n');
+      buffer.writeln(PetConstants.ragEndBlock);
     } else {
-      buffer.writeln('No medical history recorded yet.\n');
+      buffer.writeln(PetConstants.ragNoHistory);
     }
 
     return buffer.toString();

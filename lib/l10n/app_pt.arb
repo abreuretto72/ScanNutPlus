@@ -214,7 +214,6 @@
   "pet_type_eyes": "Olhos",
   "pet_type_skin": "Pele/Pelo",
   "pet_type_lab": "Exame Lab",
-  "pet_type_lab": "Exame Lab",
   "pet_select_context": "Selecione o tipo de análise:",
   "pet_unknown": "Desconhecido",
   "pet_analyzing_x": "Analisando: {name}",
@@ -258,6 +257,8 @@
   "pet_delete_content": "Tem certeza que deseja excluir este pet e todo o histórico?",
   "pet_delete_confirm": "Excluir",
   "pet_delete_cancel": "Cancelar",
+  "pet_history_delete_success": "Histórico excluído com sucesso!",
+  "pet_ai_overloaded_message": "IA sobrecarregada! Por favor, tente novamente em alguns instantes.",
   "pet_delete_success": "Pet excluído com sucesso",
   "pet_recent_analyses": "Últimas Análises",
   "pet_no_history": "Nenhuma análise recente.",
@@ -302,6 +303,11 @@
   "pet_label_size": "Porte",
   "pet_label_neutered": "Castrado",
   "pet_label_birth_date": "Data de Nascimento",
+  "pet_btn_add_metric": "Adicionar Métrica",
+  "pet_agenda_add_event": "Adicionar evento",
+  "error_unexpected_title": "Ops! Algo inesperado aconteceu.",
+  "error_unexpected_message": "Nosso time de esquilos já foi notificado. Por favor, reinicie o app.",
+  "error_try_recover": "Tentar Recuperar",
   "pet_btn_add_metric": "Adicionar Métrica",
   "pet_profile_save_success": "Perfil atualizado com sucesso",
   "pet_action_save_profile": "SALVAR PERFIL PET",
@@ -414,5 +420,239 @@
   "pet_profile_title_dynamic": "Perfil do Pet: {name}",
   "pet_health_title": "Saúde: {name}",
   "pet_health_plan_title": "Plano de Saúde: {name}",
-  "pet_funeral_plan_title": "Plano Funerário: {name}"
+  "pet_funeral_plan_title": "Plano Funerário: {name}",
+  "pet_event_type_food": "Alimentação",
+  "pet_event_type_health": "Saúde",
+  "pet_event_type_weight": "Peso",
+  "pet_event_type_hygiene": "Higiene",
+  "pet_event_type_activity": "Atividade",
+  "pet_event_type_other": "Outros",
+  "pet_agenda_coming_soon": "Módulo Agenda em Breve para {name}",
+  "pet_medical_history_empty": "Nenhum histórico médico registrado ainda.",
+  "pet_share_not_implemented": "Compartilhamento não implementado para histórico ainda",
+  "pet_ai_brain_not_ready": "Cérebro da IA não está pronto. Verifique a internet ou a chave API.",
+  "pet_ai_connection_error": "Erro de Conexão: {error}",
+  "pet_ai_trouble_thinking": "Estou com dificuldades para pensar agora. Por favor, tente novamente.",
+  "pet_stt_not_available": "STT não disponível",
+  "pet_stt_error": "Erro STT: {error}",
+  "pet_entry_deleted": "Entrada excluída",
+  "pet_error_history_load": "Erro ao carregar histórico: {error}",
+  "@pet_error_history_load": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "pet_ai_greeting": "Olá! Analisei os dados de {name}. Como posso ajudar?",
+  "@pet_ai_greeting": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "tabFood": "Alimentos",
+  "tabPlants": "Plantas",
+  "tabPets": "Pets",
+  "pet_section_species": "Identificação da Espécie",
+  "pet_section_health": "Saúde e Comportamento Geral",
+  "pet_section_coat": "Condição Geral da Pelagem",
+  "pet_section_skin": "Aparência da Pele",
+  "pet_section_ears": "Saúde dos Ouvidos",
+  "pet_section_nose": "Nariz",
+  "pet_section_issues": "Problemas Potenciais",
+  "pet_status_healthy": "STATUS SAUDÁVEL",
+  "pet_status_attention": "ATENÇÃO NECESSÁRIA",
+  "pet_analysis_title": "Análise: {name}",
+  "@pet_analysis_title": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "pet_event_food": "Alimentação",
+  "pet_event_health": "Saúde",
+  "pet_event_weight": "Peso",
+  "pet_event_walk": "Passeio",
+  "pet_event_hygiene": "Higiene",
+  "pet_event_behavior": "Comportamento",
+  "pet_event_medication": "Medicação",
+  "pet_event_note": "Anotação",
+  "pet_ai_thinking_status": "Pensando...",
+  "pet_agenda_title": "Agenda do Pet",
+  "pet_agenda_title_dynamic": "Agenda do Pet: {petName}",
+  "@pet_agenda_title_dynamic": {
+    "placeholders": {
+      "petName": {
+        "type": "String"
+      }
+    }
+  },
+  "pet_agenda_empty": "Nenhum evento agendado",
+  "pet_agenda_add_event": "Adicionar evento",
+  "pet_agenda_add_event_dynamic": "Adicionar evento: {petName}",
+  "@pet_agenda_add_event_dynamic": {
+    "placeholders": {
+      "petName": {
+        "type": "String"
+      }
+    }
+  },
+  "pet_agenda_today": "Hoje",
+  "pet_agenda_yesterday": "Ontem",
+  "pet_agenda_select_type": "Selecione o tipo",
+  "pet_agenda_event_date": "Data",
+  "pet_agenda_event_time": "Hora",
+  "pet_agenda_notes_hint": "Observações (opcional)",
+  "pet_agenda_save": "Salvar Evento",
+  "pet_journal_add_event": "Diário de {petName}",
+  "@pet_journal_add_event": {
+    "placeholders": {
+      "petName": { "type": "String" }
+    }
+  },
+  "pet_journal_question": "O que aconteceu?",
+  "pet_journal_placeholder": "Descreve o que aconteceu...",
+  "pet_journal_register": "Registar Evento",
+  "label_friend_name": "Nome do Amigo",
+  "label_tutor_name": "Nome do Tutor",
+  "ai_simulating_analysis": "Microscópio ativo... analisando...",
+  "pet_journal_location_loading": "Obtendo GPS...",
+  "pet_journal_location_captured": "Localização capturada",
+  "pet_journal_audio_recording": "Gravando...",
+  "pet_journal_audio_saved": "Nota de áudio salva",
+  "ai_audio_analysis_cough_detected": "IA detectou som de tosse.",
+  "ai_suggest_health_category": "Mudar para categoria Saúde?",
+  "pet_journal_location_name_simulated": "Parque Ibirapuera, SP",
+  "journal_guide_title": "Capacidades do Diário IA",
+  "journal_guide_voice": "Conte o que aconteceu e a IA organiza para você.",
+  "journal_guide_camera": "Analise na hora fotos de saúde (fezes, pele), comida ou amigos.",
+  "journal_guide_audio": "Grave sons de tosse ou respiração para análise clínica imediata.",
+  "journal_guide_location": "Registre onde os eventos importantes acontecem.",
+  "common_ok": "OK",
+  "pet_journal_analyzed_by_nano": "Imagem analisada por Nano Banana",
+  "pet_journal_social_context": "Contexto Social Detectado",
+  "journal_guide_unlock_hint": "Comece contando o que houve para liberar a análise de fotos, áudio e localização.",
+
+  "pet_journal_mic_permission_denied": "Permissão de microfone negada. Habilite nas configurações.",
+  "label_relate": "Relatar",
+  "label_photo": "Foto",
+  "label_place": "Local",
+  "label_audio": "Áudio",
+  "label_sounds": "Sons",
+  "label_alert": "Alerta",
+  "alert_poison": "Isca / Veneno",
+  "alert_dog_loose": "Cão Bravo",
+  "alert_risk_area": "Perigo / Assalto",
+  "alert_noise": "Barulho Excessivo",
+  "error_gps": "Erro GPS: {error}",
+  "gps_error_snack": "Não foi possível obter a localização atual. Verifique o GPS.",
+  "map_type_normal": "Padrão",
+  "map_type_satellite": "Satélite",
+  "map_type_hybrid": "Híbrido",
+  "map_type_terrain": "Terreno",
+  "label_map_type": "Tipo de Mapa",
+  "pet_journal_hint_text": "Descreva o evento...",
+  "pet_journal_register_button": "Registrar Evento",
+  "pet_journal_report_action": "Relatar",
+  "map_alert_title": "Reportar Perigo",
+  "map_alert_dog": "Cão Bravo",
+  "map_alert_poison": "Risco de Veneno",
+  "map_alert_noise": "Barulho Excessivo",
+  "map_alert_risk": "Área de Risco",
+  "map_alert_success": "Alerta Registrado!",
+  "pet_journal_recording": "Gravando som ambiente...",
+  "pet_journal_audio_saved": "Áudio salvo!",
+  "pet_journal_photo_saved": "Foto salva!",
+  "map_alert_description_user": "Reportado pelo usuário",
+  "pet_journal_gps_error": "Erro ao obter GPS",
+  "pet_journal_loading_gps": "Obtendo GPS...",
+  "pet_journal_location_unknown": "Localização desconhecida",
+  "pet_journal_location_approx": "Localização Aproximada",
+  "label_gallery": "Galeria",
+  "label_file": "Arquivo",
+  "pet_journal_file_selected": "Arquivo selecionado: {name}",
+  "@pet_journal_file_selected": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "pet_journal_file_error": "Erro ao selecionar arquivo: {error}",
+  "@pet_journal_file_error": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "pet_journal_help_title": "Diretrizes",
+  "pet_journal_help_photo_title": "Foto/Galeria",
+  "pet_journal_help_photo_desc": "Capture ou suba imagens para análise imediata da saúde ou comportamento do pet via IA.",
+  "pet_journal_help_audio_title": "Áudio/Upload",
+  "pet_journal_help_audio_desc": "Grave sons (respiração, tosse, latido) ou suba arquivos para detecção de anomalias.",
+  "pet_journal_help_map_title": "Mapa/Endereço",
+  "pet_journal_help_map_desc": "O local é capturado automaticamente. Toque no mapa se precisar ajustar o ponto do evento.",
+  "pet_journal_help_notes_title": "Notas",
+  "pet_journal_help_notes_desc": "Descreva o que aconteceu. A IA cruzará seu texto com as mídias para gerar o alerta correto.",
+  "pet_journal_help_videos_title": "Vídeos (Em Breve)",
+  "pet_journal_help_videos_desc": "Focamos em foto e áudio para agilidade, mas vídeos chegarão logo!",
+  "pet_journal_help_ai_title": "Inteligência Artificial",
+  "pet_journal_help_ai_desc": "Escreva do seu jeito. A IA cruza dados de fotos e sons para um parecer clínico.",
+  "btn_got_it": "Entendi!",
+  "help_guide_title": "Guia de Campo do Tutor",
+  "pet_journal_searching_address": "Buscar endereço...",
+  "pet_journal_address_not_found": "Endereço não encontrado",
+  "pet_error_ai_analysis_failed": "Falha na análise IA: {error}",
+  "@pet_error_ai_analysis_failed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "pet_error_repository_failure": "Falha no repositório: {status}",
+  "@pet_error_repository_failure": {
+    "placeholders": {
+      "status": { "type": "String" }
+    }
+  },
+  "pet_error_saving_event": "Erro ao salvar evento: {error}",
+  "@pet_error_saving_event": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "pet_agenda_summary_format": "{keywords}",
+  "@pet_agenda_summary_format": {
+    "placeholders": {
+      "keywords": { "type": "String" }
+    }
+  },
+  "common_delete_confirm_title": "Excluir Evento?",
+  "common_delete_confirm_message": "Esta ação não pode ser desfeita. Deseja realmente remover este registro?",
+  "common_cancel": "Cancelar",
+  "common_delete": "Excluir",
+  "pet_error_delete_event": "Erro ao excluir evento",
+  "pet_label_address": "Endereço",
+  "pet_label_ai_summary": "Sumário IA",
+  "pet_analysis_data_not_found": "Dados de análise não encontrados.",
+  "pet_logic_keywords_health": "vômito,diarreia,sangue,machucado,dor,febre,vacina,veterinário,remédio,cocô,fezes,amarelado,latido,uivo,chorando,tosse,engasgo,espirro,respiração,tontura,desmaio,convulsão,verme,carrapato,pulga,coceira,inchaço,vermelhidão,secreção,pus,claudicação,mancando,tremor,espasmo,andando em círculos,pressionando cabeça,gemido",
+  "pet_ai_language": "pt_BR",
+  "map_gps_disabled": "O GPS está desativado. Por favor, ative-o.",
+  "map_permission_denied": "Permissão de localização negada.",
+  "map_permission_denied_forever": "As permissões estão negadas permanentemente. Abra as configurações para liberar o acesso.",
+  "map_error_location": "Erro ao obter localização: {error}",
+  "@map_error_location": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "map_title_pet_location": "Localização do Pet",
+  "action_open_settings": "Abrir Configurações",
+  "map_sync_satellites": "Sincronizando satélites GPS...",
+  "pet_analysis_visual_title": "Análise Visual",
+  "pet_icon_pet": "Pet",
+  "pet_journal_audio_processing": "Processando áudio...",
+  "pet_journal_audio_error_file_not_found": "Arquivo de áudio não encontrado.",
+  "pet_journal_audio_error_generic": "Sem resultado na análise de áudio.",
+  "pet_journal_audio_pending": "Áudio registrado. Análise pendente.",
+  "pet_journal_video_saved": "Vídeo curto salvo!",
+  "pet_journal_video_processing": "Analisando movimento...",
+  "pet_journal_video_error": "Erro na análise de vídeo.",
+  "label_video": "Vídeo",
+  "label_vocal": "Vocal",
+  "error_file_too_large": "Arquivo muito grande (Máx 30MB).",
+  "error_video_too_long": "Vídeo muito longo (Máx 60s)."
 }

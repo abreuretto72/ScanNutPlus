@@ -1,0 +1,1 @@
+PetBaseAiService is used by PetAiService and specific domain services.

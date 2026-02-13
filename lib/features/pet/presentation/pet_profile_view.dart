@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/data/models/pet_entity.dart';
-import 'package:scannutplus/features/pet/data/models/pet_metrics.dart';
+// import 'package:scannutplus/features/pet/data/models/pet_metrics.dart'; // Removed unused import
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/features/pet/presentation/plans/health_plan_view.dart';
 import 'package:scannutplus/features/pet/presentation/plans/funeral_plan_view.dart';
@@ -20,7 +20,7 @@ class PetProfileView extends StatefulWidget {
 
 class _PetProfileViewState extends State<PetProfileView> {
   late Box<PetEntity> _petBox;
-  late Box<PetMetrics> _metricsBox;
+  // late Box<PetMetrics> _metricsBox; // Removed unused field
   PetEntity? _pet;
   
   // Controllers for Fixed Data
@@ -55,7 +55,7 @@ class _PetProfileViewState extends State<PetProfileView> {
   Future<void> _initData() async {
     final store = ObjectBoxManager.currentStore;
     _petBox = store.box<PetEntity>();
-    _metricsBox = store.box<PetMetrics>();
+    // _metricsBox = store.box<PetMetrics>(); // Removed unused field
     
     // Find pet by UUID - Diagnostic & Robust Implementation
     final allInBox = _petBox.getAll();

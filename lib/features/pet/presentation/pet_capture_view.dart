@@ -13,6 +13,8 @@ import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/features/pet/services/pet_ai_service.dart';
 // import 'package:scannutplus/features/pet/presentation/pet_generic_result_view.dart'; // Deprecated Protocol 2026
 
+import 'package:scannutplus/features/pet/services/pet_base_ai_service.dart'; // Added for PetAiOverloadException
+
 import 'package:scannutplus/features/pet/data/pet_rag_service.dart'; // For saving identity
 import 'package:scannutplus/features/pet/data/pet_repository.dart';
 
@@ -45,6 +47,19 @@ class _PetCaptureViewState extends State<PetCaptureView> {
   }
 
   @override
+  void dispose() {
+    _clearImageCache();
+    super.dispose();
+  }
+
+  void _clearImageCache() {
+    if (_imagePath != null) {
+      FileImage(File(_imagePath!)).evict();
+      if (kDebugMode) debugPrint('[SCAN_NUT_MEMORY] Evicted image from cache: $_imagePath');
+    }
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
@@ -74,6 +89,9 @@ class _PetCaptureViewState extends State<PetCaptureView> {
     try {
       final XFile? image = await _picker.pickImage(source: source);
       if (image != null) {
+        // Clear previous image from memory before setting new one
+        _clearImageCache();
+        
         setState(() {
           _imagePath = image.path;
         });
@@ -231,7 +249,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
         ).then((_) {
            // [STATE RESET] Force reset to 'Existing Pet' mode after return
            if (mounted) {
-              print('SCAN_NUT_TRACE: [RESET] Resetting _isAddingNewPet to FALSE');
+              if (kDebugMode) debugPrint(PetConstants.logResetAddingPet);
               setState(() => _isAddingNewPet = false);
            }
         });
@@ -296,8 +314,23 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                  }
               }
             );
+          }
+       } on PetAiOverloadException catch (_) {
+         if (mounted) {
+            setState(() {
+               _isAnalyzing = false;
+               _errorMessage = AppLocalizations.of(context)!.pet_ai_overloaded_message;
+            });
+            
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(AppLocalizations.of(context)!.pet_ai_overloaded_message), 
+                backgroundColor: Colors.amber[900], // Orange/Amber for Overload
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
          }
-      } catch (e, stack) {
+       } catch (e, stack) {
          if (kDebugMode) {
             debugPrint('[SCAN_NUT_ERROR] Erro na View: $e');
             debugPrint('[SCAN_NUT_ERROR] Stack: $stack');

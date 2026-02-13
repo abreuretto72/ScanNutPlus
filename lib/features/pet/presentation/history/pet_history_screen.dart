@@ -14,7 +14,8 @@ import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensio
 
 class PetHistoryScreen extends StatefulWidget {
   final String? petUuid; // Filter by Pet
-  const PetHistoryScreen({super.key, this.petUuid});
+  final String? petName; // For Title
+  const PetHistoryScreen({super.key, this.petUuid, this.petName});
 
   @override
   State<PetHistoryScreen> createState() => _PetHistoryScreenState();
@@ -48,11 +49,18 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E17),
       appBar: AppBar(
-        // Use generic "History" title or "Analysis History" depending on context
-        title: Text(AppLocalizations.of(context)!.pet_history_button, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        // Dynamic Title: Análise: [Nome]
+        title: Text(
+          widget.petName != null 
+            ? l10n.pet_analysis_title(widget.petName!) 
+            : l10n.pet_history_button, 
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)
+        ),
         backgroundColor: Colors.transparent, // Restore to dark/transparent
         iconTheme: const IconThemeData(color: Colors.white), // Ensure back arrow is white
         centerTitle: true,
@@ -67,14 +75,30 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
           }
 
           if (snapshot.hasError) {
-             return Center(child: Text('Error loading history: ${snapshot.error}', style: const TextStyle(color: Colors.red)));
+             return Center(child: Text(l10n.pet_error_history_load(snapshot.error.toString()), style: const TextStyle(color: Colors.red)));
           }
           
-          final entries = snapshot.data ?? [];
+          var entries = snapshot.data ?? [];
+
+          // ACTIVE PROFILES LOGIC (Global Mode)
+          if (widget.petUuid == null && entries.isNotEmpty) {
+             final Map<String, PetHistoryEntry> latestMap = {};
+             for (var entry in entries) {
+                // If petUuid is empty or generic, use Name as key
+                final key = (entry.petUuid.isEmpty || entry.petUuid == PetConstants.tagEnvironment) 
+                    ? entry.petName 
+                    : entry.petUuid;
+                
+                if (!latestMap.containsKey(key)) {
+                   latestMap[key] = entry; // First found is latest due to query order (descending)
+                }
+             }
+             entries = latestMap.values.toList();
+          }
 
           if (entries.isEmpty) {
              return Center(
-               child: Text(AppLocalizations.of(context)!.pet_history_empty, 
+               child: Text(l10n.pet_history_empty, 
                style: const TextStyle(color: Colors.white54, fontSize: 16)),
              );
           }
@@ -91,23 +115,26 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                             radius: 25,
                             backgroundImage: FileImage(File(pet.imagePath)),
                             onBackgroundImageError: (_, __) {},
-                            child: const Icon(Icons.pets, color: Colors.transparent), // Verify if transparent works or just empty
+                            child: const Icon(Icons.pets, color: Colors.transparent), 
                           )
                         : const CircleAvatar(
                             radius: 25,
                             backgroundColor: Colors.black12,
                             child: Icon(Icons.pets, color: Colors.black54),
                           ),
-                    title: Text(pet.petName, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                    title: Text(
+                      pet.category, // Type first (Bold)
+                      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)
+                    ),
                     subtitle: Text(
-                       '${pet.category.toCategoryDisplay(context)} • ${pet.timestamp.toString().substring(0, 16)}',
+                       '${pet.petName} • ${pet.timestamp.toString().substring(0, 16)}', // Name second (Normal)
                        style: const TextStyle(color: Colors.black54),
                     ),
                     trailing: IconButton(
                        icon: const Icon(Icons.delete, color: Colors.redAccent),
                        onPressed: () {
                          _historyBox.remove(pet.id);
-                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Entry deleted")));
+                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_entry_deleted)));
                        }, 
                     ),
                    onTap: () {
@@ -118,8 +145,8 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                            RegExp(r'breed_name:\s*([^|\]\n]*)', caseSensitive: false), // Metadata format
                            RegExp(r'\[BREED\]:\s*([^\n]*)', caseSensitive: false),     // Tag format
                            RegExp(r'\*\*Breed\*\*:\s*([^\n]*)', caseSensitive: false), // Bold format
-                           RegExp(r'Raça:\s*([^\n]*)', caseSensitive: false),          // Portuguese
-                           RegExp(r'Race:\s*([^\n]*)', caseSensitive: false),          // English fallback
+                           RegExp(PetConstants.regexBreedPt, caseSensitive: false),          // Portuguese
+                           RegExp(PetConstants.regexBreedEn, caseSensitive: false),          // English fallback
                        ];
 
                        for (final pattern in breedPatterns) {
@@ -152,7 +179,7 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                              },
                              onRetake: () => Navigator.of(context).pop(), 
                              onShare: () {
-                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Share not implemented for history yet")));
+                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_share_not_implemented)));
                              },
                            ),
                          ),

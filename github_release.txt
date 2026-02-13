@@ -1,2 +1,17 @@
 git tag -a v1.0.2 -m "Botoes no card"
 git push origin v1.0.2
+git tag -a v1.0.3 -m "Refactoring e Clean Code"
+git push origin v1.0.3
+git tag -a v1.0.4 -m "Profile ok"
+git push origin v1.0.4
+git tag -a v1.0.5 -m "Stability & Polish Protocol"
+git push origin v1.0.5
+git tag -a v1.0.6 -m "Walk pet"
+git push origin v1.0.6
+git tag -a v1.0.7 -m "Agenda AI Cards & GPS Fix"
+git push origin v1.0.7
+git tag -a v1.0.8 -m "Vocal Analysis & Performance Stability"
+git push origin v1.0.8
+v1.0.9
+git tag v1.0.9
+git push origin v1.0.9

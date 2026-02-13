@@ -47,5 +47,9 @@
 	<true/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Precisamos da sua biometria para autenticar seu acesso de forma segura.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>O ScanNutPlus precisa da sua localização para mapear eventos do seu pet.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>O ScanNutPlus precisa da sua localização para mapear eventos do seu pet.</string>
 </dict>
 </plist>

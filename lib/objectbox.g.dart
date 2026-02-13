@@ -26,652 +26,544 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(1, 8969489880642630653),
-    name: 'UserEntity',
-    lastPropertyId: const obx_int.IdUid(5, 468359755930285326),
-    flags: 0,
-    properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 3756887049867524224),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 1095928158348022768),
-        name: 'name',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 6861776087152607584),
-        name: 'email',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 1103686336142285649),
-        name: 'isActive',
-        type: 1,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 468359755930285326),
-        name: 'photoPath',
-        type: 9,
-        flags: 0,
-      ),
-    ],
-    relations: <obx_int.ModelRelation>[],
-    backlinks: <obx_int.ModelBacklink>[],
-  ),
+      id: const obx_int.IdUid(1, 8969489880642630653),
+      name: 'UserEntity',
+      lastPropertyId: const obx_int.IdUid(5, 468359755930285326),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3756887049867524224),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1095928158348022768),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6861776087152607584),
+            name: 'email',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1103686336142285649),
+            name: 'isActive',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 468359755930285326),
+            name: 'photoPath',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(2, 7190639932575767621),
-    name: 'FoodLogEntity',
-    lastPropertyId: const obx_int.IdUid(8, 6543491016059924),
-    flags: 0,
-    properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 8168052279142380922),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 6785722462571130404),
-        name: 'foodName',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 704541705861918533),
-        name: 'calories',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 3438631998267807140),
-        name: 'protein',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 5713020604719377356),
-        name: 'carbs',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 6430850188894604022),
-        name: 'fat',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(7, 1410380697912162436),
-        name: 'imagePath',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(8, 6543491016059924),
-        name: 'timestamp',
-        type: 10,
-        flags: 0,
-      ),
-    ],
-    relations: <obx_int.ModelRelation>[],
-    backlinks: <obx_int.ModelBacklink>[],
-  ),
+      id: const obx_int.IdUid(2, 7190639932575767621),
+      name: 'FoodLogEntity',
+      lastPropertyId: const obx_int.IdUid(8, 6543491016059924),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8168052279142380922),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6785722462571130404),
+            name: 'foodName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 704541705861918533),
+            name: 'calories',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3438631998267807140),
+            name: 'protein',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5713020604719377356),
+            name: 'carbs',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6430850188894604022),
+            name: 'fat',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 1410380697912162436),
+            name: 'imagePath',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 6543491016059924),
+            name: 'timestamp',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(4, 5240057698647776569),
-    name: 'PetMetrics',
-    lastPropertyId: const obx_int.IdUid(7, 6799721272674060739),
-    flags: 0,
-    properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 2524813281240436593),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 46433736956751096),
-        name: 'weight',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 998083780361995893),
-        name: 'size',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 5928204805255547014),
-        name: 'isNeutered',
-        type: 1,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 5356613817845427558),
-        name: 'timestamp',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 2285555602309646988),
-        name: 'petUuid',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(7, 6799721272674060739),
-        name: 'petId',
-        type: 11,
-        flags: 520,
-        indexId: const obx_int.IdUid(2, 5847355982479568720),
-        relationField: 'pet',
-        relationTarget: 'PetEntity',
-      ),
-    ],
-    relations: <obx_int.ModelRelation>[],
-    backlinks: <obx_int.ModelBacklink>[],
-  ),
+      id: const obx_int.IdUid(4, 5240057698647776569),
+      name: 'PetMetrics',
+      lastPropertyId: const obx_int.IdUid(7, 6799721272674060739),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2524813281240436593),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 46433736956751096),
+            name: 'weight',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 998083780361995893),
+            name: 'size',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5928204805255547014),
+            name: 'isNeutered',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5356613817845427558),
+            name: 'timestamp',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2285555602309646988),
+            name: 'petUuid',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 6799721272674060739),
+            name: 'petId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(2, 5847355982479568720),
+            relationTarget: 'PetEntity')
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(5, 1343406732095717703),
-    name: 'PetEntity',
-    lastPropertyId: const obx_int.IdUid(20, 123601156119929355),
-    flags: 0,
-    properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 1422646480821316965),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 1478989930366027022),
-        name: 'uuid',
-        type: 9,
-        flags: 2080,
-        indexId: const obx_int.IdUid(3, 3623154803441801846),
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 2646186727887625875),
-        name: 'name',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 3247207764916831441),
-        name: 'breed',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 7574877574784094965),
-        name: 'species',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 4431539980425390173),
-        name: 'imagePath',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(7, 5967137234215779676),
-        name: 'type',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(8, 5416159019975359954),
-        name: 'birthDate',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(9, 6046574605563596997),
-        name: 'healthPlan',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(10, 1706535841073033915),
-        name: 'funeralPlan',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(11, 3936305065490517869),
-        name: 'createdAt',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(12, 8900880471596866962),
-        name: 'gender',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(13, 5911461107085481453),
-        name: 'sizeCategory',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(14, 3428995381145695749),
-        name: 'estimatedWeight',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(15, 9178570565848279180),
-        name: 'allergies',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(16, 8194452166527916529),
-        name: 'chronicConditions',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(17, 7398868065347091666),
-        name: 'disabilities',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(18, 7916843244111898998),
-        name: 'clinicalNotes',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(19, 9203848011011689026),
-        name: 'microchip',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(20, 123601156119929355),
-        name: 'registryId',
-        type: 9,
-        flags: 0,
-      ),
-    ],
-    relations: <obx_int.ModelRelation>[
-      obx_int.ModelRelation(
-        id: const obx_int.IdUid(1, 6603765512276553527),
-        name: 'metrics',
-        targetId: const obx_int.IdUid(4, 5240057698647776569),
-      ),
-    ],
-    backlinks: <obx_int.ModelBacklink>[],
-  ),
+      id: const obx_int.IdUid(5, 1343406732095717703),
+      name: 'PetEntity',
+      lastPropertyId: const obx_int.IdUid(20, 123601156119929355),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1422646480821316965),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1478989930366027022),
+            name: 'uuid',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(3, 3623154803441801846)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2646186727887625875),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3247207764916831441),
+            name: 'breed',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 7574877574784094965),
+            name: 'species',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4431539980425390173),
+            name: 'imagePath',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 5967137234215779676),
+            name: 'type',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 5416159019975359954),
+            name: 'birthDate',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 6046574605563596997),
+            name: 'healthPlan',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 1706535841073033915),
+            name: 'funeralPlan',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 3936305065490517869),
+            name: 'createdAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 8900880471596866962),
+            name: 'gender',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 5911461107085481453),
+            name: 'sizeCategory',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 3428995381145695749),
+            name: 'estimatedWeight',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 9178570565848279180),
+            name: 'allergies',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 8194452166527916529),
+            name: 'chronicConditions',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(17, 7398868065347091666),
+            name: 'disabilities',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(18, 7916843244111898998),
+            name: 'clinicalNotes',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(19, 9203848011011689026),
+            name: 'microchip',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(20, 123601156119929355),
+            name: 'registryId',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[
+        obx_int.ModelRelation(
+            id: const obx_int.IdUid(1, 6603765512276553527),
+            name: 'metrics',
+            targetId: const obx_int.IdUid(4, 5240057698647776569))
+      ],
+      backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(6, 7687619418686670090),
-    name: 'HealthPlanEntity',
-    lastPropertyId: const obx_int.IdUid(24, 8271940186970069415),
-    flags: 0,
-    properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 3673676759929068504),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 7511280279577544907),
-        name: 'petUuid',
-        type: 9,
-        flags: 2048,
-        indexId: const obx_int.IdUid(4, 1226819546064874175),
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 1442859558296605492),
-        name: 'operatorName',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 1594169503594601300),
-        name: 'planName',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 8905089776156453786),
-        name: 'cardNumber',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 1038405035665690414),
-        name: 'holderName',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(7, 2087785810995315349),
-        name: 'holderCpf',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(8, 8860971687911239742),
-        name: 'startDate',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(9, 5782836068331438183),
-        name: 'renewalDate',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(10, 4235993124968351638),
-        name: 'status',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(11, 4898501812409573537),
-        name: 'coveragesJson',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(12, 8577898100831318684),
-        name: 'gracePeriodDays',
-        type: 6,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(13, 7912469640843448639),
-        name: 'annualLimit',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(14, 222947471388634518),
-        name: 'copayPercent',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(15, 391156579541710715),
-        name: 'reimbursementPercent',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(16, 6252956083670219677),
-        name: 'deductible',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(17, 5363413216594979183),
-        name: 'mainClinicName',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(18, 6067324687719623438),
-        name: 'supportCity',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(19, 8237624207670838378),
-        name: 'supportPhone',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(20, 4761090403248100837),
-        name: 'supportWhatsapp',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(21, 4738284629257762479),
-        name: 'supportEmail',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(22, 5005347157835951004),
-        name: 'is24hService',
-        type: 1,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(23, 3901029973969773035),
-        name: 'policyPath',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(24, 8271940186970069415),
-        name: 'cardImagePath',
-        type: 9,
-        flags: 0,
-      ),
-    ],
-    relations: <obx_int.ModelRelation>[],
-    backlinks: <obx_int.ModelBacklink>[],
-  ),
+      id: const obx_int.IdUid(6, 7687619418686670090),
+      name: 'HealthPlanEntity',
+      lastPropertyId: const obx_int.IdUid(24, 8271940186970069415),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3673676759929068504),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7511280279577544907),
+            name: 'petUuid',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(4, 1226819546064874175)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1442859558296605492),
+            name: 'operatorName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1594169503594601300),
+            name: 'planName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8905089776156453786),
+            name: 'cardNumber',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1038405035665690414),
+            name: 'holderName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2087785810995315349),
+            name: 'holderCpf',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 8860971687911239742),
+            name: 'startDate',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 5782836068331438183),
+            name: 'renewalDate',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 4235993124968351638),
+            name: 'status',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 4898501812409573537),
+            name: 'coveragesJson',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 8577898100831318684),
+            name: 'gracePeriodDays',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 7912469640843448639),
+            name: 'annualLimit',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 222947471388634518),
+            name: 'copayPercent',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 391156579541710715),
+            name: 'reimbursementPercent',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 6252956083670219677),
+            name: 'deductible',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(17, 5363413216594979183),
+            name: 'mainClinicName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(18, 6067324687719623438),
+            name: 'supportCity',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(19, 8237624207670838378),
+            name: 'supportPhone',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(20, 4761090403248100837),
+            name: 'supportWhatsapp',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(21, 4738284629257762479),
+            name: 'supportEmail',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(22, 5005347157835951004),
+            name: 'is24hService',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(23, 3901029973969773035),
+            name: 'policyPath',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(24, 8271940186970069415),
+            name: 'cardImagePath',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(7, 311236929730405592),
-    name: 'FuneralPlanEntity',
-    lastPropertyId: const obx_int.IdUid(17, 1123552509680877962),
-    flags: 0,
-    properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 6035600632025649464),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 3897338876117137),
-        name: 'petUuid',
-        type: 9,
-        flags: 2048,
-        indexId: const obx_int.IdUid(5, 7332613706855859339),
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 3569823359904027700),
-        name: 'funeralCompany',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 7646123593907604288),
-        name: 'planName',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 4417974861506294699),
-        name: 'contractNumber',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 7998833941193222952),
-        name: 'startDate',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(7, 4085461562234571247),
-        name: 'status',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(8, 447893710278960616),
-        name: 'includedServicesJson',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(9, 6988404607092847301),
-        name: 'gracePeriodDays',
-        type: 6,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(10, 7173040585454316951),
-        name: 'maxWeightKg',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(11, 4472379177614701308),
-        name: 'is24hService',
-        type: 1,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(12, 4572271663639138617),
-        name: 'phone24h',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(13, 2728623046749468880),
-        name: 'whatsApp',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(14, 338680036362787345),
-        name: 'planValue',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(15, 5290896244505221596),
-        name: 'extraFees',
-        type: 8,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(16, 1446683852022138380),
-        name: 'contractPath',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(17, 1123552509680877962),
-        name: 'certificatePath',
-        type: 9,
-        flags: 0,
-      ),
-    ],
-    relations: <obx_int.ModelRelation>[],
-    backlinks: <obx_int.ModelBacklink>[],
-  ),
+      id: const obx_int.IdUid(7, 311236929730405592),
+      name: 'FuneralPlanEntity',
+      lastPropertyId: const obx_int.IdUid(17, 1123552509680877962),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6035600632025649464),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3897338876117137),
+            name: 'petUuid',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(5, 7332613706855859339)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3569823359904027700),
+            name: 'funeralCompany',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7646123593907604288),
+            name: 'planName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4417974861506294699),
+            name: 'contractNumber',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7998833941193222952),
+            name: 'startDate',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 4085461562234571247),
+            name: 'status',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 447893710278960616),
+            name: 'includedServicesJson',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 6988404607092847301),
+            name: 'gracePeriodDays',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 7173040585454316951),
+            name: 'maxWeightKg',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 4472379177614701308),
+            name: 'is24hService',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 4572271663639138617),
+            name: 'phone24h',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 2728623046749468880),
+            name: 'whatsApp',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 338680036362787345),
+            name: 'planValue',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 5290896244505221596),
+            name: 'extraFees',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 1446683852022138380),
+            name: 'contractPath',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(17, 1123552509680877962),
+            name: 'certificatePath',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(8, 8540376022321957282),
-    name: 'PetHistoryEntry',
-    lastPropertyId: const obx_int.IdUid(13, 7302812156000947113),
-    flags: 0,
-    properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 6525307646090179095),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 7995696419448507253),
-        name: 'petUuid',
-        type: 9,
-        flags: 2048,
-        indexId: const obx_int.IdUid(6, 2846940055487712870),
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 7663977512003522088),
-        name: 'rawJson',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 26948484757083248),
-        name: 'timestamp',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 8517427335418626028),
-        name: 'category',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 7674497402248648247),
-        name: 'severityIndex',
-        type: 6,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(7, 8587887293442035142),
-        name: 'trendAnalysis',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(8, 81857043507496012),
-        name: 'tagsString',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(9, 1480142123339319912),
-        name: 'petName',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(10, 3736635130822176067),
-        name: 'imagePath',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(11, 5048727459926328832),
-        name: 'analysisCardsJson',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(12, 7849152435168699003),
-        name: 'tags',
-        type: 30,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(13, 7302812156000947113),
-        name: 'analysisCards',
-        type: 13,
-        flags: 0,
-      ),
-    ],
-    relations: <obx_int.ModelRelation>[],
-    backlinks: <obx_int.ModelBacklink>[],
-  ),
+      id: const obx_int.IdUid(8, 8540376022321957282),
+      name: 'PetHistoryEntry',
+      lastPropertyId: const obx_int.IdUid(13, 7302812156000947113),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6525307646090179095),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7995696419448507253),
+            name: 'petUuid',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(6, 2846940055487712870)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7663977512003522088),
+            name: 'rawJson',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 26948484757083248),
+            name: 'timestamp',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8517427335418626028),
+            name: 'category',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7674497402248648247),
+            name: 'severityIndex',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8587887293442035142),
+            name: 'trendAnalysis',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 81857043507496012),
+            name: 'tagsString',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 1480142123339319912),
+            name: 'petName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 3736635130822176067),
+            name: 'imagePath',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 5048727459926328832),
+            name: 'analysisCardsJson',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 7849152435168699003),
+            name: 'tags',
+            type: 30,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[])
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -685,904 +577,711 @@ final _entities = <obx_int.ModelEntity>[
 /// For Flutter apps, also calls `loadObjectBoxLibraryAndroidCompat()` from
 /// the ObjectBox Flutter library to fix loading the native ObjectBox library
 /// on Android 6 and older.
-Future<obx.Store> openStore({
-  String? directory,
-  int? maxDBSizeInKB,
-  int? maxDataSizeInKB,
-  int? fileMode,
-  int? maxReaders,
-  bool queriesCaseSensitiveDefault = true,
-  String? macosApplicationGroup,
-}) async {
+Future<obx.Store> openStore(
+    {String? directory,
+    int? maxDBSizeInKB,
+    int? maxDataSizeInKB,
+    int? fileMode,
+    int? maxReaders,
+    bool queriesCaseSensitiveDefault = true,
+    String? macosApplicationGroup}) async {
   await loadObjectBoxLibraryAndroidCompat();
-  return obx.Store(
-    getObjectBoxModel(),
-    directory: directory ?? (await defaultStoreDirectory()).path,
-    maxDBSizeInKB: maxDBSizeInKB,
-    maxDataSizeInKB: maxDataSizeInKB,
-    fileMode: fileMode,
-    maxReaders: maxReaders,
-    queriesCaseSensitiveDefault: queriesCaseSensitiveDefault,
-    macosApplicationGroup: macosApplicationGroup,
-  );
+  return obx.Store(getObjectBoxModel(),
+      directory: directory ?? (await defaultStoreDirectory()).path,
+      maxDBSizeInKB: maxDBSizeInKB,
+      maxDataSizeInKB: maxDataSizeInKB,
+      fileMode: fileMode,
+      maxReaders: maxReaders,
+      queriesCaseSensitiveDefault: queriesCaseSensitiveDefault,
+      macosApplicationGroup: macosApplicationGroup);
 }
 
 /// Returns the ObjectBox model definition for this project for use with
 /// [obx.Store.new].
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
-    // If this version is not found, it means that this file was generated
-    // with an older version of the ObjectBox Dart generator.
-    // Please regenerate this file with the current generator version.
-    // Typically, this is done with `dart run build_runner build`.
-    generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
-    entities: _entities,
-    lastEntityId: const obx_int.IdUid(8, 8540376022321957282),
-    lastIndexId: const obx_int.IdUid(6, 2846940055487712870),
-    lastRelationId: const obx_int.IdUid(1, 6603765512276553527),
-    lastSequenceId: const obx_int.IdUid(0, 0),
-    retiredEntityUids: const [783428171470640664],
-    retiredIndexUids: const [],
-    retiredPropertyUids: const [
-      8038105039076692754,
-      4292303367666524408,
-      3154268870460813651,
-      7954506711847462263,
-      629167436274531319,
-      6047037066559026534,
-      322402669160939439,
-      5713754980626256512,
-    ],
-    retiredRelationUids: const [],
-    modelVersion: 5,
-    modelVersionParserMinimum: 5,
-    version: 1,
-  );
+      entities: _entities,
+      lastEntityId: const obx_int.IdUid(8, 8540376022321957282),
+      lastIndexId: const obx_int.IdUid(6, 2846940055487712870),
+      lastRelationId: const obx_int.IdUid(1, 6603765512276553527),
+      lastSequenceId: const obx_int.IdUid(0, 0),
+      retiredEntityUids: const [783428171470640664],
+      retiredIndexUids: const [],
+      retiredPropertyUids: const [
+        8038105039076692754,
+        4292303367666524408,
+        3154268870460813651,
+        7954506711847462263,
+        629167436274531319,
+        6047037066559026534,
+        322402669160939439,
+        5713754980626256512,
+        7302812156000947113
+      ],
+      retiredRelationUids: const [],
+      modelVersion: 5,
+      modelVersionParserMinimum: 5,
+      version: 1);
 
   final bindings = <Type, obx_int.EntityDefinition>{
     UserEntity: obx_int.EntityDefinition<UserEntity>(
-      model: _entities[0],
-      toOneRelations: (UserEntity object) => [],
-      toManyRelations: (UserEntity object) => {},
-      getId: (UserEntity object) => object.id,
-      setId: (UserEntity object, int id) {
-        object.id = id;
-      },
-      objectToFB: (UserEntity object, fb.Builder fbb) {
-        final nameOffset = fbb.writeString(object.name);
-        final emailOffset = fbb.writeString(object.email);
-        final photoPathOffset = object.photoPath == null
-            ? null
-            : fbb.writeString(object.photoPath!);
-        fbb.startTable(6);
-        fbb.addInt64(0, object.id);
-        fbb.addOffset(1, nameOffset);
-        fbb.addOffset(2, emailOffset);
-        fbb.addBool(3, object.isActive);
-        fbb.addOffset(4, photoPathOffset);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final nameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
-        final emailParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
-        final isActiveParam = const fb.BoolReader().vTableGet(
-          buffer,
-          rootOffset,
-          10,
-          false,
-        );
-        final photoPathParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 12);
-        final object = UserEntity(
-          id: idParam,
-          name: nameParam,
-          email: emailParam,
-          isActive: isActiveParam,
-          photoPath: photoPathParam,
-        );
+        model: _entities[0],
+        toOneRelations: (UserEntity object) => [],
+        toManyRelations: (UserEntity object) => {},
+        getId: (UserEntity object) => object.id,
+        setId: (UserEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (UserEntity object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          final emailOffset = fbb.writeString(object.email);
+          final photoPathOffset = object.photoPath == null
+              ? null
+              : fbb.writeString(object.photoPath!);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.addOffset(2, emailOffset);
+          fbb.addBool(3, object.isActive);
+          fbb.addOffset(4, photoPathOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final emailParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final isActiveParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false);
+          final photoPathParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 12);
+          final object = UserEntity(
+              id: idParam,
+              name: nameParam,
+              email: emailParam,
+              isActive: isActiveParam,
+              photoPath: photoPathParam);
 
-        return object;
-      },
-    ),
+          return object;
+        }),
     FoodLogEntity: obx_int.EntityDefinition<FoodLogEntity>(
-      model: _entities[1],
-      toOneRelations: (FoodLogEntity object) => [],
-      toManyRelations: (FoodLogEntity object) => {},
-      getId: (FoodLogEntity object) => object.id,
-      setId: (FoodLogEntity object, int id) {
-        object.id = id;
-      },
-      objectToFB: (FoodLogEntity object, fb.Builder fbb) {
-        final foodNameOffset = fbb.writeString(object.foodName);
-        final imagePathOffset = fbb.writeString(object.imagePath);
-        fbb.startTable(9);
-        fbb.addInt64(0, object.id);
-        fbb.addOffset(1, foodNameOffset);
-        fbb.addFloat64(2, object.calories);
-        fbb.addFloat64(3, object.protein);
-        fbb.addFloat64(4, object.carbs);
-        fbb.addFloat64(5, object.fat);
-        fbb.addOffset(6, imagePathOffset);
-        fbb.addInt64(7, object.timestamp.millisecondsSinceEpoch);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final foodNameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
-        final caloriesParam = const fb.Float64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          8,
-          0,
-        );
-        final proteinParam = const fb.Float64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          10,
-          0,
-        );
-        final carbsParam = const fb.Float64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          12,
-          0,
-        );
-        final fatParam = const fb.Float64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          14,
-          0,
-        );
-        final imagePathParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 16, '');
-        final timestampParam = DateTime.fromMillisecondsSinceEpoch(
-          const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0),
-        );
-        final object = FoodLogEntity(
-          id: idParam,
-          foodName: foodNameParam,
-          calories: caloriesParam,
-          protein: proteinParam,
-          carbs: carbsParam,
-          fat: fatParam,
-          imagePath: imagePathParam,
-          timestamp: timestampParam,
-        );
+        model: _entities[1],
+        toOneRelations: (FoodLogEntity object) => [],
+        toManyRelations: (FoodLogEntity object) => {},
+        getId: (FoodLogEntity object) => object.id,
+        setId: (FoodLogEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (FoodLogEntity object, fb.Builder fbb) {
+          final foodNameOffset = fbb.writeString(object.foodName);
+          final imagePathOffset = fbb.writeString(object.imagePath);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, foodNameOffset);
+          fbb.addFloat64(2, object.calories);
+          fbb.addFloat64(3, object.protein);
+          fbb.addFloat64(4, object.carbs);
+          fbb.addFloat64(5, object.fat);
+          fbb.addOffset(6, imagePathOffset);
+          fbb.addInt64(7, object.timestamp.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final foodNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final caloriesParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final proteinParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final carbsParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final fatParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final imagePathParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
+          final timestampParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+          final object = FoodLogEntity(
+              id: idParam,
+              foodName: foodNameParam,
+              calories: caloriesParam,
+              protein: proteinParam,
+              carbs: carbsParam,
+              fat: fatParam,
+              imagePath: imagePathParam,
+              timestamp: timestampParam);
 
-        return object;
-      },
-    ),
+          return object;
+        }),
     PetMetrics: obx_int.EntityDefinition<PetMetrics>(
-      model: _entities[2],
-      toOneRelations: (PetMetrics object) => [object.pet],
-      toManyRelations: (PetMetrics object) => {},
-      getId: (PetMetrics object) => object.id,
-      setId: (PetMetrics object, int id) {
-        object.id = id;
-      },
-      objectToFB: (PetMetrics object, fb.Builder fbb) {
-        final sizeOffset = object.size == null
-            ? null
-            : fbb.writeString(object.size!);
-        final petUuidOffset = fbb.writeString(object.petUuid);
-        fbb.startTable(8);
-        fbb.addInt64(0, object.id);
-        fbb.addFloat64(1, object.weight);
-        fbb.addOffset(2, sizeOffset);
-        fbb.addBool(3, object.isNeutered);
-        fbb.addInt64(4, object.timestamp.millisecondsSinceEpoch);
-        fbb.addOffset(5, petUuidOffset);
-        fbb.addInt64(6, object.pet.targetId);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final petUuidParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 14, '');
-        final weightParam = const fb.Float64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          6,
-        );
-        final sizeParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 8);
-        final isNeuteredParam = const fb.BoolReader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          10,
-        );
-        final timestampParam = DateTime.fromMillisecondsSinceEpoch(
-          const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
-        );
-        final object = PetMetrics(
-          id: idParam,
-          petUuid: petUuidParam,
-          weight: weightParam,
-          size: sizeParam,
-          isNeutered: isNeuteredParam,
-          timestamp: timestampParam,
-        );
-        object.pet.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          16,
-          0,
-        );
-        object.pet.attach(store);
-        return object;
-      },
-    ),
+        model: _entities[2],
+        toOneRelations: (PetMetrics object) => [object.pet],
+        toManyRelations: (PetMetrics object) => {},
+        getId: (PetMetrics object) => object.id,
+        setId: (PetMetrics object, int id) {
+          object.id = id;
+        },
+        objectToFB: (PetMetrics object, fb.Builder fbb) {
+          final sizeOffset =
+              object.size == null ? null : fbb.writeString(object.size!);
+          final petUuidOffset = fbb.writeString(object.petUuid);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addFloat64(1, object.weight);
+          fbb.addOffset(2, sizeOffset);
+          fbb.addBool(3, object.isNeutered);
+          fbb.addInt64(4, object.timestamp.millisecondsSinceEpoch);
+          fbb.addOffset(5, petUuidOffset);
+          fbb.addInt64(6, object.pet.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final petUuidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final weightParam =
+              const fb.Float64Reader().vTableGetNullable(buffer, rootOffset, 6);
+          final sizeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 8);
+          final isNeuteredParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 10);
+          final timestampParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = PetMetrics(
+              id: idParam,
+              petUuid: petUuidParam,
+              weight: weightParam,
+              size: sizeParam,
+              isNeutered: isNeuteredParam,
+              timestamp: timestampParam);
+          object.pet.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.pet.attach(store);
+          return object;
+        }),
     PetEntity: obx_int.EntityDefinition<PetEntity>(
-      model: _entities[3],
-      toOneRelations: (PetEntity object) => [],
-      toManyRelations: (PetEntity object) => {
-        obx_int.RelInfo<PetEntity>.toMany(1, object.id): object.metrics,
-      },
-      getId: (PetEntity object) => object.id,
-      setId: (PetEntity object, int id) {
-        object.id = id;
-      },
-      objectToFB: (PetEntity object, fb.Builder fbb) {
-        final uuidOffset = fbb.writeString(object.uuid);
-        final nameOffset = object.name == null
-            ? null
-            : fbb.writeString(object.name!);
-        final breedOffset = object.breed == null
-            ? null
-            : fbb.writeString(object.breed!);
-        final speciesOffset = fbb.writeString(object.species);
-        final imagePathOffset = fbb.writeString(object.imagePath);
-        final typeOffset = object.type == null
-            ? null
-            : fbb.writeString(object.type!);
-        final healthPlanOffset = object.healthPlan == null
-            ? null
-            : fbb.writeString(object.healthPlan!);
-        final funeralPlanOffset = object.funeralPlan == null
-            ? null
-            : fbb.writeString(object.funeralPlan!);
-        final genderOffset = object.gender == null
-            ? null
-            : fbb.writeString(object.gender!);
-        final sizeCategoryOffset = object.sizeCategory == null
-            ? null
-            : fbb.writeString(object.sizeCategory!);
-        final allergiesOffset = object.allergies == null
-            ? null
-            : fbb.writeString(object.allergies!);
-        final chronicConditionsOffset = object.chronicConditions == null
-            ? null
-            : fbb.writeString(object.chronicConditions!);
-        final disabilitiesOffset = object.disabilities == null
-            ? null
-            : fbb.writeString(object.disabilities!);
-        final clinicalNotesOffset = object.clinicalNotes == null
-            ? null
-            : fbb.writeString(object.clinicalNotes!);
-        final microchipOffset = object.microchip == null
-            ? null
-            : fbb.writeString(object.microchip!);
-        final registryIdOffset = object.registryId == null
-            ? null
-            : fbb.writeString(object.registryId!);
-        fbb.startTable(21);
-        fbb.addInt64(0, object.id);
-        fbb.addOffset(1, uuidOffset);
-        fbb.addOffset(2, nameOffset);
-        fbb.addOffset(3, breedOffset);
-        fbb.addOffset(4, speciesOffset);
-        fbb.addOffset(5, imagePathOffset);
-        fbb.addOffset(6, typeOffset);
-        fbb.addInt64(7, object.birthDate?.millisecondsSinceEpoch);
-        fbb.addOffset(8, healthPlanOffset);
-        fbb.addOffset(9, funeralPlanOffset);
-        fbb.addInt64(10, object.createdAt.millisecondsSinceEpoch);
-        fbb.addOffset(11, genderOffset);
-        fbb.addOffset(12, sizeCategoryOffset);
-        fbb.addFloat64(13, object.estimatedWeight);
-        fbb.addOffset(14, allergiesOffset);
-        fbb.addOffset(15, chronicConditionsOffset);
-        fbb.addOffset(16, disabilitiesOffset);
-        fbb.addOffset(17, clinicalNotesOffset);
-        fbb.addOffset(18, microchipOffset);
-        fbb.addOffset(19, registryIdOffset);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final birthDateValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          18,
-        );
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final uuidParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
-        final nameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 8);
-        final breedParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 10);
-        final speciesParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 12, '');
-        final imagePathParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 14, '');
-        final typeParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 16);
-        final genderParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 26);
-        final sizeCategoryParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 28);
-        final estimatedWeightParam = const fb.Float64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          30,
-        );
-        final allergiesParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 32);
-        final chronicConditionsParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 34);
-        final disabilitiesParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 36);
-        final clinicalNotesParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 38);
-        final microchipParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 40);
-        final registryIdParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 42);
-        final birthDateParam = birthDateValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(birthDateValue);
-        final healthPlanParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 20);
-        final funeralPlanParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 22);
-        final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
-          const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0),
-        );
-        final object = PetEntity(
-          id: idParam,
-          uuid: uuidParam,
-          name: nameParam,
-          breed: breedParam,
-          species: speciesParam,
-          imagePath: imagePathParam,
-          type: typeParam,
-          gender: genderParam,
-          sizeCategory: sizeCategoryParam,
-          estimatedWeight: estimatedWeightParam,
-          allergies: allergiesParam,
-          chronicConditions: chronicConditionsParam,
-          disabilities: disabilitiesParam,
-          clinicalNotes: clinicalNotesParam,
-          microchip: microchipParam,
-          registryId: registryIdParam,
-          birthDate: birthDateParam,
-          healthPlan: healthPlanParam,
-          funeralPlan: funeralPlanParam,
-          createdAt: createdAtParam,
-        );
-        obx_int.InternalToManyAccess.setRelInfo<PetEntity>(
-          object.metrics,
-          store,
-          obx_int.RelInfo<PetEntity>.toMany(1, object.id),
-        );
-        return object;
-      },
-    ),
+        model: _entities[3],
+        toOneRelations: (PetEntity object) => [],
+        toManyRelations: (PetEntity object) =>
+            {obx_int.RelInfo<PetEntity>.toMany(1, object.id): object.metrics},
+        getId: (PetEntity object) => object.id,
+        setId: (PetEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (PetEntity object, fb.Builder fbb) {
+          final uuidOffset = fbb.writeString(object.uuid);
+          final nameOffset =
+              object.name == null ? null : fbb.writeString(object.name!);
+          final breedOffset =
+              object.breed == null ? null : fbb.writeString(object.breed!);
+          final speciesOffset = fbb.writeString(object.species);
+          final imagePathOffset = fbb.writeString(object.imagePath);
+          final typeOffset =
+              object.type == null ? null : fbb.writeString(object.type!);
+          final healthPlanOffset = object.healthPlan == null
+              ? null
+              : fbb.writeString(object.healthPlan!);
+          final funeralPlanOffset = object.funeralPlan == null
+              ? null
+              : fbb.writeString(object.funeralPlan!);
+          final genderOffset =
+              object.gender == null ? null : fbb.writeString(object.gender!);
+          final sizeCategoryOffset = object.sizeCategory == null
+              ? null
+              : fbb.writeString(object.sizeCategory!);
+          final allergiesOffset = object.allergies == null
+              ? null
+              : fbb.writeString(object.allergies!);
+          final chronicConditionsOffset = object.chronicConditions == null
+              ? null
+              : fbb.writeString(object.chronicConditions!);
+          final disabilitiesOffset = object.disabilities == null
+              ? null
+              : fbb.writeString(object.disabilities!);
+          final clinicalNotesOffset = object.clinicalNotes == null
+              ? null
+              : fbb.writeString(object.clinicalNotes!);
+          final microchipOffset = object.microchip == null
+              ? null
+              : fbb.writeString(object.microchip!);
+          final registryIdOffset = object.registryId == null
+              ? null
+              : fbb.writeString(object.registryId!);
+          fbb.startTable(21);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, uuidOffset);
+          fbb.addOffset(2, nameOffset);
+          fbb.addOffset(3, breedOffset);
+          fbb.addOffset(4, speciesOffset);
+          fbb.addOffset(5, imagePathOffset);
+          fbb.addOffset(6, typeOffset);
+          fbb.addInt64(7, object.birthDate?.millisecondsSinceEpoch);
+          fbb.addOffset(8, healthPlanOffset);
+          fbb.addOffset(9, funeralPlanOffset);
+          fbb.addInt64(10, object.createdAt.millisecondsSinceEpoch);
+          fbb.addOffset(11, genderOffset);
+          fbb.addOffset(12, sizeCategoryOffset);
+          fbb.addFloat64(13, object.estimatedWeight);
+          fbb.addOffset(14, allergiesOffset);
+          fbb.addOffset(15, chronicConditionsOffset);
+          fbb.addOffset(16, disabilitiesOffset);
+          fbb.addOffset(17, clinicalNotesOffset);
+          fbb.addOffset(18, microchipOffset);
+          fbb.addOffset(19, registryIdOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final birthDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final uuidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 8);
+          final breedParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 10);
+          final speciesParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final imagePathParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final typeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 16);
+          final genderParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 26);
+          final sizeCategoryParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 28);
+          final estimatedWeightParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 30);
+          final allergiesParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 32);
+          final chronicConditionsParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 34);
+          final disabilitiesParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 36);
+          final clinicalNotesParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 38);
+          final microchipParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 40);
+          final registryIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 42);
+          final birthDateParam = birthDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(birthDateValue);
+          final healthPlanParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 20);
+          final funeralPlanParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 22);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0));
+          final object = PetEntity(
+              id: idParam,
+              uuid: uuidParam,
+              name: nameParam,
+              breed: breedParam,
+              species: speciesParam,
+              imagePath: imagePathParam,
+              type: typeParam,
+              gender: genderParam,
+              sizeCategory: sizeCategoryParam,
+              estimatedWeight: estimatedWeightParam,
+              allergies: allergiesParam,
+              chronicConditions: chronicConditionsParam,
+              disabilities: disabilitiesParam,
+              clinicalNotes: clinicalNotesParam,
+              microchip: microchipParam,
+              registryId: registryIdParam,
+              birthDate: birthDateParam,
+              healthPlan: healthPlanParam,
+              funeralPlan: funeralPlanParam,
+              createdAt: createdAtParam);
+          obx_int.InternalToManyAccess.setRelInfo<PetEntity>(object.metrics,
+              store, obx_int.RelInfo<PetEntity>.toMany(1, object.id));
+          return object;
+        }),
     HealthPlanEntity: obx_int.EntityDefinition<HealthPlanEntity>(
-      model: _entities[4],
-      toOneRelations: (HealthPlanEntity object) => [],
-      toManyRelations: (HealthPlanEntity object) => {},
-      getId: (HealthPlanEntity object) => object.id,
-      setId: (HealthPlanEntity object, int id) {
-        object.id = id;
-      },
-      objectToFB: (HealthPlanEntity object, fb.Builder fbb) {
-        final petUuidOffset = fbb.writeString(object.petUuid);
-        final operatorNameOffset = object.operatorName == null
-            ? null
-            : fbb.writeString(object.operatorName!);
-        final planNameOffset = object.planName == null
-            ? null
-            : fbb.writeString(object.planName!);
-        final cardNumberOffset = object.cardNumber == null
-            ? null
-            : fbb.writeString(object.cardNumber!);
-        final holderNameOffset = object.holderName == null
-            ? null
-            : fbb.writeString(object.holderName!);
-        final holderCpfOffset = object.holderCpf == null
-            ? null
-            : fbb.writeString(object.holderCpf!);
-        final statusOffset = object.status == null
-            ? null
-            : fbb.writeString(object.status!);
-        final coveragesJsonOffset = object.coveragesJson == null
-            ? null
-            : fbb.writeString(object.coveragesJson!);
-        final mainClinicNameOffset = object.mainClinicName == null
-            ? null
-            : fbb.writeString(object.mainClinicName!);
-        final supportCityOffset = object.supportCity == null
-            ? null
-            : fbb.writeString(object.supportCity!);
-        final supportPhoneOffset = object.supportPhone == null
-            ? null
-            : fbb.writeString(object.supportPhone!);
-        final supportWhatsappOffset = object.supportWhatsapp == null
-            ? null
-            : fbb.writeString(object.supportWhatsapp!);
-        final supportEmailOffset = object.supportEmail == null
-            ? null
-            : fbb.writeString(object.supportEmail!);
-        final policyPathOffset = object.policyPath == null
-            ? null
-            : fbb.writeString(object.policyPath!);
-        final cardImagePathOffset = object.cardImagePath == null
-            ? null
-            : fbb.writeString(object.cardImagePath!);
-        fbb.startTable(25);
-        fbb.addInt64(0, object.id);
-        fbb.addOffset(1, petUuidOffset);
-        fbb.addOffset(2, operatorNameOffset);
-        fbb.addOffset(3, planNameOffset);
-        fbb.addOffset(4, cardNumberOffset);
-        fbb.addOffset(5, holderNameOffset);
-        fbb.addOffset(6, holderCpfOffset);
-        fbb.addInt64(7, object.startDate?.millisecondsSinceEpoch);
-        fbb.addInt64(8, object.renewalDate?.millisecondsSinceEpoch);
-        fbb.addOffset(9, statusOffset);
-        fbb.addOffset(10, coveragesJsonOffset);
-        fbb.addInt64(11, object.gracePeriodDays);
-        fbb.addFloat64(12, object.annualLimit);
-        fbb.addFloat64(13, object.copayPercent);
-        fbb.addFloat64(14, object.reimbursementPercent);
-        fbb.addFloat64(15, object.deductible);
-        fbb.addOffset(16, mainClinicNameOffset);
-        fbb.addOffset(17, supportCityOffset);
-        fbb.addOffset(18, supportPhoneOffset);
-        fbb.addOffset(19, supportWhatsappOffset);
-        fbb.addOffset(20, supportEmailOffset);
-        fbb.addBool(21, object.is24hService);
-        fbb.addOffset(22, policyPathOffset);
-        fbb.addOffset(23, cardImagePathOffset);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final startDateValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          18,
-        );
-        final renewalDateValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          20,
-        );
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final petUuidParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
-        final operatorNameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 8);
-        final planNameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 10);
-        final cardNumberParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 12);
-        final holderNameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 14);
-        final holderCpfParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 16);
-        final startDateParam = startDateValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(startDateValue);
-        final renewalDateParam = renewalDateValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(renewalDateValue);
-        final statusParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 22);
-        final coveragesJsonParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 24);
-        final gracePeriodDaysParam = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          26,
-        );
-        final annualLimitParam = const fb.Float64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          28,
-        );
-        final copayPercentParam = const fb.Float64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          30,
-        );
-        final reimbursementPercentParam = const fb.Float64Reader()
-            .vTableGetNullable(buffer, rootOffset, 32);
-        final deductibleParam = const fb.Float64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          34,
-        );
-        final mainClinicNameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 36);
-        final supportCityParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 38);
-        final supportPhoneParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 40);
-        final supportWhatsappParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 42);
-        final supportEmailParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 44);
-        final is24hServiceParam = const fb.BoolReader().vTableGet(
-          buffer,
-          rootOffset,
-          46,
-          false,
-        );
-        final policyPathParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 48);
-        final cardImagePathParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 50);
-        final object = HealthPlanEntity(
-          id: idParam,
-          petUuid: petUuidParam,
-          operatorName: operatorNameParam,
-          planName: planNameParam,
-          cardNumber: cardNumberParam,
-          holderName: holderNameParam,
-          holderCpf: holderCpfParam,
-          startDate: startDateParam,
-          renewalDate: renewalDateParam,
-          status: statusParam,
-          coveragesJson: coveragesJsonParam,
-          gracePeriodDays: gracePeriodDaysParam,
-          annualLimit: annualLimitParam,
-          copayPercent: copayPercentParam,
-          reimbursementPercent: reimbursementPercentParam,
-          deductible: deductibleParam,
-          mainClinicName: mainClinicNameParam,
-          supportCity: supportCityParam,
-          supportPhone: supportPhoneParam,
-          supportWhatsapp: supportWhatsappParam,
-          supportEmail: supportEmailParam,
-          is24hService: is24hServiceParam,
-          policyPath: policyPathParam,
-          cardImagePath: cardImagePathParam,
-        );
+        model: _entities[4],
+        toOneRelations: (HealthPlanEntity object) => [],
+        toManyRelations: (HealthPlanEntity object) => {},
+        getId: (HealthPlanEntity object) => object.id,
+        setId: (HealthPlanEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (HealthPlanEntity object, fb.Builder fbb) {
+          final petUuidOffset = fbb.writeString(object.petUuid);
+          final operatorNameOffset = object.operatorName == null
+              ? null
+              : fbb.writeString(object.operatorName!);
+          final planNameOffset = object.planName == null
+              ? null
+              : fbb.writeString(object.planName!);
+          final cardNumberOffset = object.cardNumber == null
+              ? null
+              : fbb.writeString(object.cardNumber!);
+          final holderNameOffset = object.holderName == null
+              ? null
+              : fbb.writeString(object.holderName!);
+          final holderCpfOffset = object.holderCpf == null
+              ? null
+              : fbb.writeString(object.holderCpf!);
+          final statusOffset =
+              object.status == null ? null : fbb.writeString(object.status!);
+          final coveragesJsonOffset = object.coveragesJson == null
+              ? null
+              : fbb.writeString(object.coveragesJson!);
+          final mainClinicNameOffset = object.mainClinicName == null
+              ? null
+              : fbb.writeString(object.mainClinicName!);
+          final supportCityOffset = object.supportCity == null
+              ? null
+              : fbb.writeString(object.supportCity!);
+          final supportPhoneOffset = object.supportPhone == null
+              ? null
+              : fbb.writeString(object.supportPhone!);
+          final supportWhatsappOffset = object.supportWhatsapp == null
+              ? null
+              : fbb.writeString(object.supportWhatsapp!);
+          final supportEmailOffset = object.supportEmail == null
+              ? null
+              : fbb.writeString(object.supportEmail!);
+          final policyPathOffset = object.policyPath == null
+              ? null
+              : fbb.writeString(object.policyPath!);
+          final cardImagePathOffset = object.cardImagePath == null
+              ? null
+              : fbb.writeString(object.cardImagePath!);
+          fbb.startTable(25);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, petUuidOffset);
+          fbb.addOffset(2, operatorNameOffset);
+          fbb.addOffset(3, planNameOffset);
+          fbb.addOffset(4, cardNumberOffset);
+          fbb.addOffset(5, holderNameOffset);
+          fbb.addOffset(6, holderCpfOffset);
+          fbb.addInt64(7, object.startDate?.millisecondsSinceEpoch);
+          fbb.addInt64(8, object.renewalDate?.millisecondsSinceEpoch);
+          fbb.addOffset(9, statusOffset);
+          fbb.addOffset(10, coveragesJsonOffset);
+          fbb.addInt64(11, object.gracePeriodDays);
+          fbb.addFloat64(12, object.annualLimit);
+          fbb.addFloat64(13, object.copayPercent);
+          fbb.addFloat64(14, object.reimbursementPercent);
+          fbb.addFloat64(15, object.deductible);
+          fbb.addOffset(16, mainClinicNameOffset);
+          fbb.addOffset(17, supportCityOffset);
+          fbb.addOffset(18, supportPhoneOffset);
+          fbb.addOffset(19, supportWhatsappOffset);
+          fbb.addOffset(20, supportEmailOffset);
+          fbb.addBool(21, object.is24hService);
+          fbb.addOffset(22, policyPathOffset);
+          fbb.addOffset(23, cardImagePathOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final startDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18);
+          final renewalDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 20);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final petUuidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final operatorNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 8);
+          final planNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 10);
+          final cardNumberParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 12);
+          final holderNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 14);
+          final holderCpfParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 16);
+          final startDateParam = startDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(startDateValue);
+          final renewalDateParam = renewalDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(renewalDateValue);
+          final statusParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 22);
+          final coveragesJsonParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 24);
+          final gracePeriodDaysParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 26);
+          final annualLimitParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 28);
+          final copayPercentParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 30);
+          final reimbursementPercentParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 32);
+          final deductibleParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 34);
+          final mainClinicNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 36);
+          final supportCityParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 38);
+          final supportPhoneParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 40);
+          final supportWhatsappParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 42);
+          final supportEmailParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 44);
+          final is24hServiceParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 46, false);
+          final policyPathParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 48);
+          final cardImagePathParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 50);
+          final object = HealthPlanEntity(
+              id: idParam,
+              petUuid: petUuidParam,
+              operatorName: operatorNameParam,
+              planName: planNameParam,
+              cardNumber: cardNumberParam,
+              holderName: holderNameParam,
+              holderCpf: holderCpfParam,
+              startDate: startDateParam,
+              renewalDate: renewalDateParam,
+              status: statusParam,
+              coveragesJson: coveragesJsonParam,
+              gracePeriodDays: gracePeriodDaysParam,
+              annualLimit: annualLimitParam,
+              copayPercent: copayPercentParam,
+              reimbursementPercent: reimbursementPercentParam,
+              deductible: deductibleParam,
+              mainClinicName: mainClinicNameParam,
+              supportCity: supportCityParam,
+              supportPhone: supportPhoneParam,
+              supportWhatsapp: supportWhatsappParam,
+              supportEmail: supportEmailParam,
+              is24hService: is24hServiceParam,
+              policyPath: policyPathParam,
+              cardImagePath: cardImagePathParam);
 
-        return object;
-      },
-    ),
+          return object;
+        }),
     FuneralPlanEntity: obx_int.EntityDefinition<FuneralPlanEntity>(
-      model: _entities[5],
-      toOneRelations: (FuneralPlanEntity object) => [],
-      toManyRelations: (FuneralPlanEntity object) => {},
-      getId: (FuneralPlanEntity object) => object.id,
-      setId: (FuneralPlanEntity object, int id) {
-        object.id = id;
-      },
-      objectToFB: (FuneralPlanEntity object, fb.Builder fbb) {
-        final petUuidOffset = fbb.writeString(object.petUuid);
-        final funeralCompanyOffset = fbb.writeString(object.funeralCompany);
-        final planNameOffset = fbb.writeString(object.planName);
-        final contractNumberOffset = fbb.writeString(object.contractNumber);
-        final statusOffset = fbb.writeString(object.status);
-        final includedServicesJsonOffset = fbb.writeString(
-          object.includedServicesJson,
-        );
-        final phone24hOffset = fbb.writeString(object.phone24h);
-        final whatsAppOffset = fbb.writeString(object.whatsApp);
-        final contractPathOffset = object.contractPath == null
-            ? null
-            : fbb.writeString(object.contractPath!);
-        final certificatePathOffset = object.certificatePath == null
-            ? null
-            : fbb.writeString(object.certificatePath!);
-        fbb.startTable(18);
-        fbb.addInt64(0, object.id);
-        fbb.addOffset(1, petUuidOffset);
-        fbb.addOffset(2, funeralCompanyOffset);
-        fbb.addOffset(3, planNameOffset);
-        fbb.addOffset(4, contractNumberOffset);
-        fbb.addInt64(5, object.startDate?.millisecondsSinceEpoch);
-        fbb.addOffset(6, statusOffset);
-        fbb.addOffset(7, includedServicesJsonOffset);
-        fbb.addInt64(8, object.gracePeriodDays);
-        fbb.addFloat64(9, object.maxWeightKg);
-        fbb.addBool(10, object.is24hService);
-        fbb.addOffset(11, phone24hOffset);
-        fbb.addOffset(12, whatsAppOffset);
-        fbb.addFloat64(13, object.planValue);
-        fbb.addFloat64(14, object.extraFees);
-        fbb.addOffset(15, contractPathOffset);
-        fbb.addOffset(16, certificatePathOffset);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final startDateValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          14,
-        );
-        final petUuidParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
-        final funeralCompanyParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
-        final planNameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 10, '');
-        final contractNumberParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 12, '');
-        final startDateParam = startDateValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(startDateValue);
-        final statusParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 16, '');
-        final includedServicesJsonParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 18, '');
-        final gracePeriodDaysParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          20,
-          0,
-        );
-        final maxWeightKgParam = const fb.Float64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          22,
-          0,
-        );
-        final is24hServiceParam = const fb.BoolReader().vTableGet(
-          buffer,
-          rootOffset,
-          24,
-          false,
-        );
-        final phone24hParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 26, '');
-        final whatsAppParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 28, '');
-        final planValueParam = const fb.Float64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          30,
-          0,
-        );
-        final extraFeesParam = const fb.Float64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          32,
-          0,
-        );
-        final contractPathParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 34);
-        final certificatePathParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 36);
-        final object = FuneralPlanEntity(
-          petUuid: petUuidParam,
-          funeralCompany: funeralCompanyParam,
-          planName: planNameParam,
-          contractNumber: contractNumberParam,
-          startDate: startDateParam,
-          status: statusParam,
-          includedServicesJson: includedServicesJsonParam,
-          gracePeriodDays: gracePeriodDaysParam,
-          maxWeightKg: maxWeightKgParam,
-          is24hService: is24hServiceParam,
-          phone24h: phone24hParam,
-          whatsApp: whatsAppParam,
-          planValue: planValueParam,
-          extraFees: extraFeesParam,
-          contractPath: contractPathParam,
-          certificatePath: certificatePathParam,
-        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        model: _entities[5],
+        toOneRelations: (FuneralPlanEntity object) => [],
+        toManyRelations: (FuneralPlanEntity object) => {},
+        getId: (FuneralPlanEntity object) => object.id,
+        setId: (FuneralPlanEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (FuneralPlanEntity object, fb.Builder fbb) {
+          final petUuidOffset = fbb.writeString(object.petUuid);
+          final funeralCompanyOffset = fbb.writeString(object.funeralCompany);
+          final planNameOffset = fbb.writeString(object.planName);
+          final contractNumberOffset = fbb.writeString(object.contractNumber);
+          final statusOffset = fbb.writeString(object.status);
+          final includedServicesJsonOffset =
+              fbb.writeString(object.includedServicesJson);
+          final phone24hOffset = fbb.writeString(object.phone24h);
+          final whatsAppOffset = fbb.writeString(object.whatsApp);
+          final contractPathOffset = object.contractPath == null
+              ? null
+              : fbb.writeString(object.contractPath!);
+          final certificatePathOffset = object.certificatePath == null
+              ? null
+              : fbb.writeString(object.certificatePath!);
+          fbb.startTable(18);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, petUuidOffset);
+          fbb.addOffset(2, funeralCompanyOffset);
+          fbb.addOffset(3, planNameOffset);
+          fbb.addOffset(4, contractNumberOffset);
+          fbb.addInt64(5, object.startDate?.millisecondsSinceEpoch);
+          fbb.addOffset(6, statusOffset);
+          fbb.addOffset(7, includedServicesJsonOffset);
+          fbb.addInt64(8, object.gracePeriodDays);
+          fbb.addFloat64(9, object.maxWeightKg);
+          fbb.addBool(10, object.is24hService);
+          fbb.addOffset(11, phone24hOffset);
+          fbb.addOffset(12, whatsAppOffset);
+          fbb.addFloat64(13, object.planValue);
+          fbb.addFloat64(14, object.extraFees);
+          fbb.addOffset(15, contractPathOffset);
+          fbb.addOffset(16, certificatePathOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final startDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+          final petUuidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final funeralCompanyParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final planNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final contractNumberParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final startDateParam = startDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(startDateValue);
+          final statusParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
+          final includedServicesJsonParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+          final gracePeriodDaysParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          final maxWeightKgParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          final is24hServiceParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 24, false);
+          final phone24hParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 26, '');
+          final whatsAppParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 28, '');
+          final planValueParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 30, 0);
+          final extraFeesParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          final contractPathParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 34);
+          final certificatePathParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 36);
+          final object = FuneralPlanEntity(
+              petUuid: petUuidParam,
+              funeralCompany: funeralCompanyParam,
+              planName: planNameParam,
+              contractNumber: contractNumberParam,
+              startDate: startDateParam,
+              status: statusParam,
+              includedServicesJson: includedServicesJsonParam,
+              gracePeriodDays: gracePeriodDaysParam,
+              maxWeightKg: maxWeightKgParam,
+              is24hService: is24hServiceParam,
+              phone24h: phone24hParam,
+              whatsApp: whatsAppParam,
+              planValue: planValueParam,
+              extraFees: extraFeesParam,
+              contractPath: contractPathParam,
+              certificatePath: certificatePathParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
-        return object;
-      },
-    ),
+          return object;
+        }),
     PetHistoryEntry: obx_int.EntityDefinition<PetHistoryEntry>(
-      model: _entities[6],
-      toOneRelations: (PetHistoryEntry object) => [],
-      toManyRelations: (PetHistoryEntry object) => {},
-      getId: (PetHistoryEntry object) => object.id,
-      setId: (PetHistoryEntry object, int id) {
-        object.id = id;
-      },
-      objectToFB: (PetHistoryEntry object, fb.Builder fbb) {
-        final petUuidOffset = fbb.writeString(object.petUuid);
-        final rawJsonOffset = fbb.writeString(object.rawJson);
-        final categoryOffset = fbb.writeString(object.category);
-        final trendAnalysisOffset = fbb.writeString(object.trendAnalysis);
-        final tagsStringOffset = fbb.writeString(object.tagsString);
-        final petNameOffset = fbb.writeString(object.petName);
-        final imagePathOffset = fbb.writeString(object.imagePath);
-        final analysisCardsJsonOffset = fbb.writeString(
-          object.analysisCardsJson,
-        );
-        final tagsOffset = fbb.writeList(
-          object.tags.map(fbb.writeString).toList(growable: false),
-        );
-        final analysisCardsOffset = fbb.writeListInt8(
-          obx_int.toFlexBuffer(object.analysisCards),
-        );
-        fbb.startTable(14);
-        fbb.addInt64(0, object.id);
-        fbb.addOffset(1, petUuidOffset);
-        fbb.addOffset(2, rawJsonOffset);
-        fbb.addInt64(3, object.timestamp.millisecondsSinceEpoch);
-        fbb.addOffset(4, categoryOffset);
-        fbb.addInt64(5, object.severityIndex);
-        fbb.addOffset(6, trendAnalysisOffset);
-        fbb.addOffset(7, tagsStringOffset);
-        fbb.addOffset(8, petNameOffset);
-        fbb.addOffset(9, imagePathOffset);
-        fbb.addOffset(10, analysisCardsJsonOffset);
-        fbb.addOffset(11, tagsOffset);
-        fbb.addOffset(12, analysisCardsOffset);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final petUuidParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
-        final rawJsonParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
-        final timestampParam = DateTime.fromMillisecondsSinceEpoch(
-          const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0),
-        );
-        final categoryParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 12, '');
-        final severityIndexParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          14,
-          0,
-        );
-        final trendAnalysisParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 16, '');
-        final tagsParam = const fb.ListReader<String>(
-          fb.StringReader(asciiOptimization: true),
-          lazy: false,
-        ).vTableGet(buffer, rootOffset, 26, []);
-        final petNameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 20, '');
-        final imagePathParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 22, '');
-        final analysisCardsParam =
-            obx_int.flexBufferToListOfMaps(buffer, rootOffset, 28) ??
-            <Map<String, dynamic>>[];
-        final object =
-            PetHistoryEntry(
-                id: idParam,
-                petUuid: petUuidParam,
-                rawJson: rawJsonParam,
-                timestamp: timestampParam,
-                category: categoryParam,
-                severityIndex: severityIndexParam,
-                trendAnalysis: trendAnalysisParam,
-                tags: tagsParam,
-                petName: petNameParam,
-                imagePath: imagePathParam,
-                analysisCards: analysisCardsParam,
-              )
-              ..tagsString = const fb.StringReader(
-                asciiOptimization: true,
-              ).vTableGet(buffer, rootOffset, 18, '')
-              ..analysisCardsJson = const fb.StringReader(
-                asciiOptimization: true,
-              ).vTableGet(buffer, rootOffset, 24, '');
+        model: _entities[6],
+        toOneRelations: (PetHistoryEntry object) => [],
+        toManyRelations: (PetHistoryEntry object) => {},
+        getId: (PetHistoryEntry object) => object.id,
+        setId: (PetHistoryEntry object, int id) {
+          object.id = id;
+        },
+        objectToFB: (PetHistoryEntry object, fb.Builder fbb) {
+          final petUuidOffset = fbb.writeString(object.petUuid);
+          final rawJsonOffset = fbb.writeString(object.rawJson);
+          final categoryOffset = fbb.writeString(object.category);
+          final trendAnalysisOffset = fbb.writeString(object.trendAnalysis);
+          final tagsStringOffset = fbb.writeString(object.tagsString);
+          final petNameOffset = fbb.writeString(object.petName);
+          final imagePathOffset = fbb.writeString(object.imagePath);
+          final analysisCardsJsonOffset =
+              fbb.writeString(object.analysisCardsJson);
+          final tagsOffset = fbb.writeList(
+              object.tags.map(fbb.writeString).toList(growable: false));
+          fbb.startTable(14);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, petUuidOffset);
+          fbb.addOffset(2, rawJsonOffset);
+          fbb.addInt64(3, object.timestamp.millisecondsSinceEpoch);
+          fbb.addOffset(4, categoryOffset);
+          fbb.addInt64(5, object.severityIndex);
+          fbb.addOffset(6, trendAnalysisOffset);
+          fbb.addOffset(7, tagsStringOffset);
+          fbb.addOffset(8, petNameOffset);
+          fbb.addOffset(9, imagePathOffset);
+          fbb.addOffset(10, analysisCardsJsonOffset);
+          fbb.addOffset(11, tagsOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final petUuidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final rawJsonParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final timestampParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final categoryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final severityIndexParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final trendAnalysisParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, '');
+          final tagsParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGet(buffer, rootOffset, 26, []);
+          final petNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 20, '');
+          final imagePathParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 22, '');
+          final object = PetHistoryEntry(
+              id: idParam,
+              petUuid: petUuidParam,
+              rawJson: rawJsonParam,
+              timestamp: timestampParam,
+              category: categoryParam,
+              severityIndex: severityIndexParam,
+              trendAnalysis: trendAnalysisParam,
+              tags: tagsParam,
+              petName: petNameParam,
+              imagePath: imagePathParam)
+            ..tagsString = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 18, '')
+            ..analysisCardsJson = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 24, '');
 
-        return object;
-      },
-    ),
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -1591,489 +1290,396 @@ obx_int.ModelDefinition getObjectBoxModel() {
 /// [UserEntity] entity fields to define ObjectBox queries.
 class UserEntity_ {
   /// See [UserEntity.id].
-  static final id = obx.QueryIntegerProperty<UserEntity>(
-    _entities[0].properties[0],
-  );
+  static final id =
+      obx.QueryIntegerProperty<UserEntity>(_entities[0].properties[0]);
 
   /// See [UserEntity.name].
-  static final name = obx.QueryStringProperty<UserEntity>(
-    _entities[0].properties[1],
-  );
+  static final name =
+      obx.QueryStringProperty<UserEntity>(_entities[0].properties[1]);
 
   /// See [UserEntity.email].
-  static final email = obx.QueryStringProperty<UserEntity>(
-    _entities[0].properties[2],
-  );
+  static final email =
+      obx.QueryStringProperty<UserEntity>(_entities[0].properties[2]);
 
   /// See [UserEntity.isActive].
-  static final isActive = obx.QueryBooleanProperty<UserEntity>(
-    _entities[0].properties[3],
-  );
+  static final isActive =
+      obx.QueryBooleanProperty<UserEntity>(_entities[0].properties[3]);
 
   /// See [UserEntity.photoPath].
-  static final photoPath = obx.QueryStringProperty<UserEntity>(
-    _entities[0].properties[4],
-  );
+  static final photoPath =
+      obx.QueryStringProperty<UserEntity>(_entities[0].properties[4]);
 }
 
 /// [FoodLogEntity] entity fields to define ObjectBox queries.
 class FoodLogEntity_ {
   /// See [FoodLogEntity.id].
-  static final id = obx.QueryIntegerProperty<FoodLogEntity>(
-    _entities[1].properties[0],
-  );
+  static final id =
+      obx.QueryIntegerProperty<FoodLogEntity>(_entities[1].properties[0]);
 
   /// See [FoodLogEntity.foodName].
-  static final foodName = obx.QueryStringProperty<FoodLogEntity>(
-    _entities[1].properties[1],
-  );
+  static final foodName =
+      obx.QueryStringProperty<FoodLogEntity>(_entities[1].properties[1]);
 
   /// See [FoodLogEntity.calories].
-  static final calories = obx.QueryDoubleProperty<FoodLogEntity>(
-    _entities[1].properties[2],
-  );
+  static final calories =
+      obx.QueryDoubleProperty<FoodLogEntity>(_entities[1].properties[2]);
 
   /// See [FoodLogEntity.protein].
-  static final protein = obx.QueryDoubleProperty<FoodLogEntity>(
-    _entities[1].properties[3],
-  );
+  static final protein =
+      obx.QueryDoubleProperty<FoodLogEntity>(_entities[1].properties[3]);
 
   /// See [FoodLogEntity.carbs].
-  static final carbs = obx.QueryDoubleProperty<FoodLogEntity>(
-    _entities[1].properties[4],
-  );
+  static final carbs =
+      obx.QueryDoubleProperty<FoodLogEntity>(_entities[1].properties[4]);
 
   /// See [FoodLogEntity.fat].
-  static final fat = obx.QueryDoubleProperty<FoodLogEntity>(
-    _entities[1].properties[5],
-  );
+  static final fat =
+      obx.QueryDoubleProperty<FoodLogEntity>(_entities[1].properties[5]);
 
   /// See [FoodLogEntity.imagePath].
-  static final imagePath = obx.QueryStringProperty<FoodLogEntity>(
-    _entities[1].properties[6],
-  );
+  static final imagePath =
+      obx.QueryStringProperty<FoodLogEntity>(_entities[1].properties[6]);
 
   /// See [FoodLogEntity.timestamp].
-  static final timestamp = obx.QueryDateProperty<FoodLogEntity>(
-    _entities[1].properties[7],
-  );
+  static final timestamp =
+      obx.QueryDateProperty<FoodLogEntity>(_entities[1].properties[7]);
 }
 
 /// [PetMetrics] entity fields to define ObjectBox queries.
 class PetMetrics_ {
   /// See [PetMetrics.id].
-  static final id = obx.QueryIntegerProperty<PetMetrics>(
-    _entities[2].properties[0],
-  );
+  static final id =
+      obx.QueryIntegerProperty<PetMetrics>(_entities[2].properties[0]);
 
   /// See [PetMetrics.weight].
-  static final weight = obx.QueryDoubleProperty<PetMetrics>(
-    _entities[2].properties[1],
-  );
+  static final weight =
+      obx.QueryDoubleProperty<PetMetrics>(_entities[2].properties[1]);
 
   /// See [PetMetrics.size].
-  static final size = obx.QueryStringProperty<PetMetrics>(
-    _entities[2].properties[2],
-  );
+  static final size =
+      obx.QueryStringProperty<PetMetrics>(_entities[2].properties[2]);
 
   /// See [PetMetrics.isNeutered].
-  static final isNeutered = obx.QueryBooleanProperty<PetMetrics>(
-    _entities[2].properties[3],
-  );
+  static final isNeutered =
+      obx.QueryBooleanProperty<PetMetrics>(_entities[2].properties[3]);
 
   /// See [PetMetrics.timestamp].
-  static final timestamp = obx.QueryDateProperty<PetMetrics>(
-    _entities[2].properties[4],
-  );
+  static final timestamp =
+      obx.QueryDateProperty<PetMetrics>(_entities[2].properties[4]);
 
   /// See [PetMetrics.petUuid].
-  static final petUuid = obx.QueryStringProperty<PetMetrics>(
-    _entities[2].properties[5],
-  );
+  static final petUuid =
+      obx.QueryStringProperty<PetMetrics>(_entities[2].properties[5]);
 
   /// See [PetMetrics.pet].
-  static final pet = obx.QueryRelationToOne<PetMetrics, PetEntity>(
-    _entities[2].properties[6],
-  );
+  static final pet =
+      obx.QueryRelationToOne<PetMetrics, PetEntity>(_entities[2].properties[6]);
 }
 
 /// [PetEntity] entity fields to define ObjectBox queries.
 class PetEntity_ {
   /// See [PetEntity.id].
-  static final id = obx.QueryIntegerProperty<PetEntity>(
-    _entities[3].properties[0],
-  );
+  static final id =
+      obx.QueryIntegerProperty<PetEntity>(_entities[3].properties[0]);
 
   /// See [PetEntity.uuid].
-  static final uuid = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[1],
-  );
+  static final uuid =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[1]);
 
   /// See [PetEntity.name].
-  static final name = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[2],
-  );
+  static final name =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[2]);
 
   /// See [PetEntity.breed].
-  static final breed = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[3],
-  );
+  static final breed =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[3]);
 
   /// See [PetEntity.species].
-  static final species = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[4],
-  );
+  static final species =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[4]);
 
   /// See [PetEntity.imagePath].
-  static final imagePath = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[5],
-  );
+  static final imagePath =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[5]);
 
   /// See [PetEntity.type].
-  static final type = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[6],
-  );
+  static final type =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[6]);
 
   /// See [PetEntity.birthDate].
-  static final birthDate = obx.QueryDateProperty<PetEntity>(
-    _entities[3].properties[7],
-  );
+  static final birthDate =
+      obx.QueryDateProperty<PetEntity>(_entities[3].properties[7]);
 
   /// See [PetEntity.healthPlan].
-  static final healthPlan = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[8],
-  );
+  static final healthPlan =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[8]);
 
   /// See [PetEntity.funeralPlan].
-  static final funeralPlan = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[9],
-  );
+  static final funeralPlan =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[9]);
 
   /// See [PetEntity.createdAt].
-  static final createdAt = obx.QueryDateProperty<PetEntity>(
-    _entities[3].properties[10],
-  );
+  static final createdAt =
+      obx.QueryDateProperty<PetEntity>(_entities[3].properties[10]);
 
   /// See [PetEntity.gender].
-  static final gender = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[11],
-  );
+  static final gender =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[11]);
 
   /// See [PetEntity.sizeCategory].
-  static final sizeCategory = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[12],
-  );
+  static final sizeCategory =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[12]);
 
   /// See [PetEntity.estimatedWeight].
-  static final estimatedWeight = obx.QueryDoubleProperty<PetEntity>(
-    _entities[3].properties[13],
-  );
+  static final estimatedWeight =
+      obx.QueryDoubleProperty<PetEntity>(_entities[3].properties[13]);
 
   /// See [PetEntity.allergies].
-  static final allergies = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[14],
-  );
+  static final allergies =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[14]);
 
   /// See [PetEntity.chronicConditions].
-  static final chronicConditions = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[15],
-  );
+  static final chronicConditions =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[15]);
 
   /// See [PetEntity.disabilities].
-  static final disabilities = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[16],
-  );
+  static final disabilities =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[16]);
 
   /// See [PetEntity.clinicalNotes].
-  static final clinicalNotes = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[17],
-  );
+  static final clinicalNotes =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[17]);
 
   /// See [PetEntity.microchip].
-  static final microchip = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[18],
-  );
+  static final microchip =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[18]);
 
   /// See [PetEntity.registryId].
-  static final registryId = obx.QueryStringProperty<PetEntity>(
-    _entities[3].properties[19],
-  );
+  static final registryId =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[19]);
 
   /// see [PetEntity.metrics]
-  static final metrics = obx.QueryRelationToMany<PetEntity, PetMetrics>(
-    _entities[3].relations[0],
-  );
+  static final metrics =
+      obx.QueryRelationToMany<PetEntity, PetMetrics>(_entities[3].relations[0]);
 }
 
 /// [HealthPlanEntity] entity fields to define ObjectBox queries.
 class HealthPlanEntity_ {
   /// See [HealthPlanEntity.id].
-  static final id = obx.QueryIntegerProperty<HealthPlanEntity>(
-    _entities[4].properties[0],
-  );
+  static final id =
+      obx.QueryIntegerProperty<HealthPlanEntity>(_entities[4].properties[0]);
 
   /// See [HealthPlanEntity.petUuid].
-  static final petUuid = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[1],
-  );
+  static final petUuid =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[1]);
 
   /// See [HealthPlanEntity.operatorName].
-  static final operatorName = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[2],
-  );
+  static final operatorName =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[2]);
 
   /// See [HealthPlanEntity.planName].
-  static final planName = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[3],
-  );
+  static final planName =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[3]);
 
   /// See [HealthPlanEntity.cardNumber].
-  static final cardNumber = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[4],
-  );
+  static final cardNumber =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[4]);
 
   /// See [HealthPlanEntity.holderName].
-  static final holderName = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[5],
-  );
+  static final holderName =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[5]);
 
   /// See [HealthPlanEntity.holderCpf].
-  static final holderCpf = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[6],
-  );
+  static final holderCpf =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[6]);
 
   /// See [HealthPlanEntity.startDate].
-  static final startDate = obx.QueryDateProperty<HealthPlanEntity>(
-    _entities[4].properties[7],
-  );
+  static final startDate =
+      obx.QueryDateProperty<HealthPlanEntity>(_entities[4].properties[7]);
 
   /// See [HealthPlanEntity.renewalDate].
-  static final renewalDate = obx.QueryDateProperty<HealthPlanEntity>(
-    _entities[4].properties[8],
-  );
+  static final renewalDate =
+      obx.QueryDateProperty<HealthPlanEntity>(_entities[4].properties[8]);
 
   /// See [HealthPlanEntity.status].
-  static final status = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[9],
-  );
+  static final status =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[9]);
 
   /// See [HealthPlanEntity.coveragesJson].
-  static final coveragesJson = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[10],
-  );
+  static final coveragesJson =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[10]);
 
   /// See [HealthPlanEntity.gracePeriodDays].
-  static final gracePeriodDays = obx.QueryIntegerProperty<HealthPlanEntity>(
-    _entities[4].properties[11],
-  );
+  static final gracePeriodDays =
+      obx.QueryIntegerProperty<HealthPlanEntity>(_entities[4].properties[11]);
 
   /// See [HealthPlanEntity.annualLimit].
-  static final annualLimit = obx.QueryDoubleProperty<HealthPlanEntity>(
-    _entities[4].properties[12],
-  );
+  static final annualLimit =
+      obx.QueryDoubleProperty<HealthPlanEntity>(_entities[4].properties[12]);
 
   /// See [HealthPlanEntity.copayPercent].
-  static final copayPercent = obx.QueryDoubleProperty<HealthPlanEntity>(
-    _entities[4].properties[13],
-  );
+  static final copayPercent =
+      obx.QueryDoubleProperty<HealthPlanEntity>(_entities[4].properties[13]);
 
   /// See [HealthPlanEntity.reimbursementPercent].
-  static final reimbursementPercent = obx.QueryDoubleProperty<HealthPlanEntity>(
-    _entities[4].properties[14],
-  );
+  static final reimbursementPercent =
+      obx.QueryDoubleProperty<HealthPlanEntity>(_entities[4].properties[14]);
 
   /// See [HealthPlanEntity.deductible].
-  static final deductible = obx.QueryDoubleProperty<HealthPlanEntity>(
-    _entities[4].properties[15],
-  );
+  static final deductible =
+      obx.QueryDoubleProperty<HealthPlanEntity>(_entities[4].properties[15]);
 
   /// See [HealthPlanEntity.mainClinicName].
-  static final mainClinicName = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[16],
-  );
+  static final mainClinicName =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[16]);
 
   /// See [HealthPlanEntity.supportCity].
-  static final supportCity = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[17],
-  );
+  static final supportCity =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[17]);
 
   /// See [HealthPlanEntity.supportPhone].
-  static final supportPhone = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[18],
-  );
+  static final supportPhone =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[18]);
 
   /// See [HealthPlanEntity.supportWhatsapp].
-  static final supportWhatsapp = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[19],
-  );
+  static final supportWhatsapp =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[19]);
 
   /// See [HealthPlanEntity.supportEmail].
-  static final supportEmail = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[20],
-  );
+  static final supportEmail =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[20]);
 
   /// See [HealthPlanEntity.is24hService].
-  static final is24hService = obx.QueryBooleanProperty<HealthPlanEntity>(
-    _entities[4].properties[21],
-  );
+  static final is24hService =
+      obx.QueryBooleanProperty<HealthPlanEntity>(_entities[4].properties[21]);
 
   /// See [HealthPlanEntity.policyPath].
-  static final policyPath = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[22],
-  );
+  static final policyPath =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[22]);
 
   /// See [HealthPlanEntity.cardImagePath].
-  static final cardImagePath = obx.QueryStringProperty<HealthPlanEntity>(
-    _entities[4].properties[23],
-  );
+  static final cardImagePath =
+      obx.QueryStringProperty<HealthPlanEntity>(_entities[4].properties[23]);
 }
 
 /// [FuneralPlanEntity] entity fields to define ObjectBox queries.
 class FuneralPlanEntity_ {
   /// See [FuneralPlanEntity.id].
-  static final id = obx.QueryIntegerProperty<FuneralPlanEntity>(
-    _entities[5].properties[0],
-  );
+  static final id =
+      obx.QueryIntegerProperty<FuneralPlanEntity>(_entities[5].properties[0]);
 
   /// See [FuneralPlanEntity.petUuid].
-  static final petUuid = obx.QueryStringProperty<FuneralPlanEntity>(
-    _entities[5].properties[1],
-  );
+  static final petUuid =
+      obx.QueryStringProperty<FuneralPlanEntity>(_entities[5].properties[1]);
 
   /// See [FuneralPlanEntity.funeralCompany].
-  static final funeralCompany = obx.QueryStringProperty<FuneralPlanEntity>(
-    _entities[5].properties[2],
-  );
+  static final funeralCompany =
+      obx.QueryStringProperty<FuneralPlanEntity>(_entities[5].properties[2]);
 
   /// See [FuneralPlanEntity.planName].
-  static final planName = obx.QueryStringProperty<FuneralPlanEntity>(
-    _entities[5].properties[3],
-  );
+  static final planName =
+      obx.QueryStringProperty<FuneralPlanEntity>(_entities[5].properties[3]);
 
   /// See [FuneralPlanEntity.contractNumber].
-  static final contractNumber = obx.QueryStringProperty<FuneralPlanEntity>(
-    _entities[5].properties[4],
-  );
+  static final contractNumber =
+      obx.QueryStringProperty<FuneralPlanEntity>(_entities[5].properties[4]);
 
   /// See [FuneralPlanEntity.startDate].
-  static final startDate = obx.QueryDateProperty<FuneralPlanEntity>(
-    _entities[5].properties[5],
-  );
+  static final startDate =
+      obx.QueryDateProperty<FuneralPlanEntity>(_entities[5].properties[5]);
 
   /// See [FuneralPlanEntity.status].
-  static final status = obx.QueryStringProperty<FuneralPlanEntity>(
-    _entities[5].properties[6],
-  );
+  static final status =
+      obx.QueryStringProperty<FuneralPlanEntity>(_entities[5].properties[6]);
 
   /// See [FuneralPlanEntity.includedServicesJson].
   static final includedServicesJson =
       obx.QueryStringProperty<FuneralPlanEntity>(_entities[5].properties[7]);
 
   /// See [FuneralPlanEntity.gracePeriodDays].
-  static final gracePeriodDays = obx.QueryIntegerProperty<FuneralPlanEntity>(
-    _entities[5].properties[8],
-  );
+  static final gracePeriodDays =
+      obx.QueryIntegerProperty<FuneralPlanEntity>(_entities[5].properties[8]);
 
   /// See [FuneralPlanEntity.maxWeightKg].
-  static final maxWeightKg = obx.QueryDoubleProperty<FuneralPlanEntity>(
-    _entities[5].properties[9],
-  );
+  static final maxWeightKg =
+      obx.QueryDoubleProperty<FuneralPlanEntity>(_entities[5].properties[9]);
 
   /// See [FuneralPlanEntity.is24hService].
-  static final is24hService = obx.QueryBooleanProperty<FuneralPlanEntity>(
-    _entities[5].properties[10],
-  );
+  static final is24hService =
+      obx.QueryBooleanProperty<FuneralPlanEntity>(_entities[5].properties[10]);
 
   /// See [FuneralPlanEntity.phone24h].
-  static final phone24h = obx.QueryStringProperty<FuneralPlanEntity>(
-    _entities[5].properties[11],
-  );
+  static final phone24h =
+      obx.QueryStringProperty<FuneralPlanEntity>(_entities[5].properties[11]);
 
   /// See [FuneralPlanEntity.whatsApp].
-  static final whatsApp = obx.QueryStringProperty<FuneralPlanEntity>(
-    _entities[5].properties[12],
-  );
+  static final whatsApp =
+      obx.QueryStringProperty<FuneralPlanEntity>(_entities[5].properties[12]);
 
   /// See [FuneralPlanEntity.planValue].
-  static final planValue = obx.QueryDoubleProperty<FuneralPlanEntity>(
-    _entities[5].properties[13],
-  );
+  static final planValue =
+      obx.QueryDoubleProperty<FuneralPlanEntity>(_entities[5].properties[13]);
 
   /// See [FuneralPlanEntity.extraFees].
-  static final extraFees = obx.QueryDoubleProperty<FuneralPlanEntity>(
-    _entities[5].properties[14],
-  );
+  static final extraFees =
+      obx.QueryDoubleProperty<FuneralPlanEntity>(_entities[5].properties[14]);
 
   /// See [FuneralPlanEntity.contractPath].
-  static final contractPath = obx.QueryStringProperty<FuneralPlanEntity>(
-    _entities[5].properties[15],
-  );
+  static final contractPath =
+      obx.QueryStringProperty<FuneralPlanEntity>(_entities[5].properties[15]);
 
   /// See [FuneralPlanEntity.certificatePath].
-  static final certificatePath = obx.QueryStringProperty<FuneralPlanEntity>(
-    _entities[5].properties[16],
-  );
+  static final certificatePath =
+      obx.QueryStringProperty<FuneralPlanEntity>(_entities[5].properties[16]);
 }
 
 /// [PetHistoryEntry] entity fields to define ObjectBox queries.
 class PetHistoryEntry_ {
   /// See [PetHistoryEntry.id].
-  static final id = obx.QueryIntegerProperty<PetHistoryEntry>(
-    _entities[6].properties[0],
-  );
+  static final id =
+      obx.QueryIntegerProperty<PetHistoryEntry>(_entities[6].properties[0]);
 
   /// See [PetHistoryEntry.petUuid].
-  static final petUuid = obx.QueryStringProperty<PetHistoryEntry>(
-    _entities[6].properties[1],
-  );
+  static final petUuid =
+      obx.QueryStringProperty<PetHistoryEntry>(_entities[6].properties[1]);
 
   /// See [PetHistoryEntry.rawJson].
-  static final rawJson = obx.QueryStringProperty<PetHistoryEntry>(
-    _entities[6].properties[2],
-  );
+  static final rawJson =
+      obx.QueryStringProperty<PetHistoryEntry>(_entities[6].properties[2]);
 
   /// See [PetHistoryEntry.timestamp].
-  static final timestamp = obx.QueryDateProperty<PetHistoryEntry>(
-    _entities[6].properties[3],
-  );
+  static final timestamp =
+      obx.QueryDateProperty<PetHistoryEntry>(_entities[6].properties[3]);
 
   /// See [PetHistoryEntry.category].
-  static final category = obx.QueryStringProperty<PetHistoryEntry>(
-    _entities[6].properties[4],
-  );
+  static final category =
+      obx.QueryStringProperty<PetHistoryEntry>(_entities[6].properties[4]);
 
   /// See [PetHistoryEntry.severityIndex].
-  static final severityIndex = obx.QueryIntegerProperty<PetHistoryEntry>(
-    _entities[6].properties[5],
-  );
+  static final severityIndex =
+      obx.QueryIntegerProperty<PetHistoryEntry>(_entities[6].properties[5]);
 
   /// See [PetHistoryEntry.trendAnalysis].
-  static final trendAnalysis = obx.QueryStringProperty<PetHistoryEntry>(
-    _entities[6].properties[6],
-  );
+  static final trendAnalysis =
+      obx.QueryStringProperty<PetHistoryEntry>(_entities[6].properties[6]);
 
   /// See [PetHistoryEntry.tagsString].
-  static final tagsString = obx.QueryStringProperty<PetHistoryEntry>(
-    _entities[6].properties[7],
-  );
+  static final tagsString =
+      obx.QueryStringProperty<PetHistoryEntry>(_entities[6].properties[7]);
 
   /// See [PetHistoryEntry.petName].
-  static final petName = obx.QueryStringProperty<PetHistoryEntry>(
-    _entities[6].properties[8],
-  );
+  static final petName =
+      obx.QueryStringProperty<PetHistoryEntry>(_entities[6].properties[8]);
 
   /// See [PetHistoryEntry.imagePath].
-  static final imagePath = obx.QueryStringProperty<PetHistoryEntry>(
-    _entities[6].properties[9],
-  );
+  static final imagePath =
+      obx.QueryStringProperty<PetHistoryEntry>(_entities[6].properties[9]);
 
   /// See [PetHistoryEntry.analysisCardsJson].
-  static final analysisCardsJson = obx.QueryStringProperty<PetHistoryEntry>(
-    _entities[6].properties[10],
-  );
+  static final analysisCardsJson =
+      obx.QueryStringProperty<PetHistoryEntry>(_entities[6].properties[10]);
 
   /// See [PetHistoryEntry.tags].
   static final tags = obx.QueryStringVectorProperty<PetHistoryEntry>(
-    _entities[6].properties[11],
-  );
+      _entities[6].properties[11]);
 }

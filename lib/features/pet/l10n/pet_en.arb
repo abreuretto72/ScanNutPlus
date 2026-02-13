@@ -25,5 +25,19 @@
   "pet_voice_retry": "Retry",
   "pet_rag_new_identity": "Identity saved: {name}",
   "pet_analysis_for": "Analysis: {name}",
-  "pet_voice_who_is_this": "Who is this pet?"
+  "pet_voice_who_is_this": "Who is this pet?",
+  "pet_agenda_title": "Agenda",
+  "pet_agenda_empty": "No events recorded",
+  "pet_agenda_add_event": "Add event",
+  "pet_agenda_today": "Today",
+  "pet_agenda_yesterday": "Yesterday",
+  "pet_agenda_date_format": "{date}",
+  "@pet_agenda_date_format": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    }
+  }
 }

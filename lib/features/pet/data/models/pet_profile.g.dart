@@ -22,6 +22,7 @@ class PetProfileAdapter extends TypeAdapter<PetProfile> {
       profileImagePath: fields[2] as String,
       breed: fields[3] as String,
       age: fields[4] as String,
+      species: fields[7] as String,
       createdAt: fields[5] as DateTime?,
       updatedAt: fields[6] as DateTime?,
     );
@@ -30,7 +31,7 @@ class PetProfileAdapter extends TypeAdapter<PetProfile> {
   @override
   void write(BinaryWriter writer, PetProfile obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.uuid)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class PetProfileAdapter extends TypeAdapter<PetProfile> {
       ..writeByte(5)
       ..write(obj.createdAt)
       ..writeByte(6)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(7)
+      ..write(obj.species);
   }
 
   @override

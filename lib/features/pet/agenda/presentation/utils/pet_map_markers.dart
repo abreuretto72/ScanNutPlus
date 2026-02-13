@@ -1,0 +1,66 @@
+import 'dart:ui' as ui;
+import 'dart:typed_data'; // Required for Uint8List
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+class PetMapMarkers {
+  /// Converte um IconData + Cor em um BitmapDescriptor para o Google Maps
+  static Future<BitmapDescriptor> getMarkerIcon(
+      IconData iconData, Color color, Color backgroundColor, double size) async {
+    
+    final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+    final Canvas canvas = Canvas(pictureRecorder);
+    final double radius = size / 2;
+
+    // 1. Desenha o Círculo de Fundo
+    final Paint circlePaint = Paint()..color = backgroundColor;
+    canvas.drawCircle(Offset(radius, radius), radius, circlePaint);
+
+    // 2. Desenha um contorno branco para contraste (opcional, estilo Waze)
+    final Paint borderPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = size * 0.05; // 5% do tamanho
+    canvas.drawCircle(Offset(radius, radius), radius, borderPaint);
+
+    // 3. Configura o Ícone de Texto
+    final TextPainter textPainter = TextPainter(
+      textDirection: TextDirection.ltr,
+    );
+
+    textPainter.text = TextSpan(
+      text: String.fromCharCode(iconData.codePoint),
+      style: TextStyle(
+        fontSize: size * 0.6, // Ícone ocupa 60% do círculo
+        fontFamily: iconData.fontFamily,
+        color: color,
+      ),
+    );
+
+    textPainter.layout();
+    
+    // 4. Centraliza o Ícone no Círculo
+    textPainter.paint(
+      canvas,
+      Offset(
+        radius - textPainter.width / 2,
+        radius - textPainter.height / 2,
+      ),
+    );
+
+    // 5. Converte para Imagem -> Bytes -> BitmapDescriptor
+    final ui.Image image = await pictureRecorder.endRecording().toImage(
+          size.toInt(),
+          size.toInt(),
+        );
+    
+    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List? pngBytes = byteData?.buffer.asUint8List();
+
+    if (pngBytes == null) {
+      return BitmapDescriptor.defaultMarker;
+    }
+
+    return BitmapDescriptor.bytes(pngBytes);
+  }
+}

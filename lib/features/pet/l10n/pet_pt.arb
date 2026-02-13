@@ -62,5 +62,18 @@
   "pet_section_biometrics": "Biometria",
   "pet_section_weight": "Peso",
   "pet_section_issues": "Problemas",
-  "pet_ui_my_pets": "Meus Pets"
-}
+  "pet_ui_my_pets": "Meus Pets",
+  "pet_agenda_title": "Agenda",
+  "pet_agenda_empty": "Nenhum evento registrado",
+  "pet_agenda_add_event": "Adicionar evento",
+  "pet_agenda_today": "Hoje",
+  "pet_agenda_yesterday": "Ontem",
+  "pet_agenda_date_format": "{date}",
+  "@pet_agenda_date_format": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    }
+  }

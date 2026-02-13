@@ -103,6 +103,12 @@ Este projeto segue rigorosamente o "Pilar 0":
 3.  **Auditoria Contínua:** Scripts Python (`audit_pilar0.py`) garantem a conformidade do código antes de cada build.
 4.  **Resiliência:** Tratamento de erros com feedback visual claro (Verde/Vermelho/Amarelo) e falha graciosa.
 
+### Protocolo de Estabilidade e Anti-Crash (v1.0.5)
+- **Global Error Boundary**: `runZonedGuarded` em todo o ciclo de vida do app.
+- **Fail-Fast**: Timeouts de rede reduzidos para 60s.
+- **Memory Safety**: Evicção agressiva de cache de imagens de alta resolução.
+- **Feedback Amigável**: Substituição da "Tela Vermelha da Morte" por UI amigável e mensagens de sobrecarga de IA traduzidas.
+
 ---
 
 ## 📦 Instalação e Execução

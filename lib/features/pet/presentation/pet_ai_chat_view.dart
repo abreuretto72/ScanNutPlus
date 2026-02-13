@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/features/pet/data/pet_ai_repository.dart';
+import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:permission_handler/permission_handler.dart';
@@ -32,7 +34,7 @@ class _PetAiChatViewState extends State<PetAiChatView> {
   late GenerativeModel _model;
   bool _isGeminiReady = false;
 
-  List<Map<String, String>> _messages = []; // {'sender': 'user'|'ai', 'text': '...'}
+  final List<Map<String, String>> _messages = []; // Structure: {KEY_SENDER: ..., KEY_TEXT: ...}
   bool _isListening = false;
   bool _isLoadingContext = true;
   String _ragContext = '';
@@ -48,9 +50,9 @@ class _PetAiChatViewState extends State<PetAiChatView> {
 
   Future<void> _initGemini() async {
     try {
-      final apiKey = dotenv.env['GEMINI_API_KEY'];
+      final apiKey = dotenv.env[PetConstants.envGeminiApiKey];
       if (apiKey == null || apiKey.isEmpty) {
-        print('SCAN_NUT_ERROR: GEMINI_API_KEY not found in .env');
+        if (kDebugMode) debugPrint(PetConstants.logErrorGeminiEnv);
         return;
       }
       
@@ -59,9 +61,9 @@ class _PetAiChatViewState extends State<PetAiChatView> {
       String modelName = 'gemini-pro'; // Default Fallback
       try {
         modelName = await RemoteConfigService().getActiveModel();
-        print('SCAN_NUT_TRACE: AI Model initialized with: $modelName');
+        if (kDebugMode) debugPrint('${PetConstants.logTraceAiModel}$modelName');
       } catch (e) {
-        print('SCAN_NUT_WARN: Failed to fetch remote model config. Using default ($modelName). Error: $e');
+        if (kDebugMode) debugPrint('${PetConstants.logWarnAiModel}$modelName. Error: $e');
       }
 
       _model = GenerativeModel(
@@ -71,7 +73,7 @@ class _PetAiChatViewState extends State<PetAiChatView> {
       );
       setState(() => _isGeminiReady = true);
     } catch (e) {
-      print('SCAN_NUT_ERROR: Failed to init Gemini: $e');
+      if (kDebugMode) debugPrint('${PetConstants.logErrorGeminiInit}$e');
     }
   }
 
@@ -80,20 +82,22 @@ class _PetAiChatViewState extends State<PetAiChatView> {
     setState(() {
       _isLoadingContext = false;
       // Optional: Add initial AI greeting
+      // Optional: Add initial AI greeting
       _messages.add({
-        'sender': 'ai',
-        'text': 'Hello! I have analyzed ${widget.petName}\'s data. How can I help?' 
+        PetConstants.keySender: PetConstants.keyAi,
+        PetConstants.keyText: AppLocalizations.of(context)!.pet_ai_greeting(widget.petName)
       });
     });
   }
 
   Future<void> _initSpeech() async {
     bool available = await _speech.initialize(
-      onStatus: (status) => print('STT Status: $status'),
-      onError: (errorNotification) => print('STT Error: $errorNotification'),
+      onStatus: (status) => kDebugMode ? debugPrint('${PetConstants.logSttStatus}$status') : null,
+      onError: (errorNotification) => kDebugMode ? debugPrint('${PetConstants.logSttError}$errorNotification') : null,
     );
     if (!available) {
-      print('STT not available');
+      if (!mounted) return;
+      if (kDebugMode) debugPrint(AppLocalizations.of(context)!.pet_stt_not_available);
     }
   }
 
@@ -101,7 +105,7 @@ class _PetAiChatViewState extends State<PetAiChatView> {
     if (text.trim().isEmpty) return;
 
     setState(() {
-      _messages.add({'sender': 'user', 'text': text});
+      _messages.add({PetConstants.keySender: PetConstants.keyUser, PetConstants.keyText: text});
       _isThinking = true;
     });
     _textController.clear();
@@ -109,45 +113,28 @@ class _PetAiChatViewState extends State<PetAiChatView> {
 
     try {
        if (!_isGeminiReady) {
-         throw Exception('AI Brain not ready. Check Internet or API Key.');
+         throw Exception(AppLocalizations.of(context)!.pet_ai_brain_not_ready);
        }
 
        // RAG PROMPT ENGINEERING
-       final prompt = '''
-You are an advanced Veterinary AI Assistant for the ScanNut+ App.
-Your goal is to assist the owner of the pet named "${widget.petName}".
-
-SYSTEM TIME:
-CURRENT DATE: ${DateTime.now().toLocal()}
-
-CONTEXT (RAG DATA):
-$_ragContext
-
-INSTRUCTIONS (STRICT GROUNDING):
-- **FACTUAL QUESTIONS:** Answer ONLY based on the "CONTEXT" provided above. If the info is missing, say "I don't find that in the records."
-- **RECOMMENDATIONS/SUGGESTIONS:** If the user explicitly asks for advice (e.g., "What should I feed?", "Tips for this breed?"), you MAY use your general veterinary knowledge.
-  - *Constraint 1:* You must clearly state: "This is a general suggestion, not specific to [Pet Name]'s data."
-  - *Constraint 2 (MANDATORY):* You **MUST** cite the source of your general knowledge (e.g., "According to general veterinary consensus...", "Based on AAHA guidelines...", "Common practice suggests...").
-- **PROHIBITED:** Do not hallucinate data (weight, dates, exams) that are not in the CONTEXT.
-- **DATE HANDLING:**
-  - Compare all dates with CURRENT DATE.
-  - Future dates = "Scheduled Event" or "Data Error".
-- Language: Respond in the same language as the user (English/Portuguese).
-
-USER QUESTION:
-$text
-       ''';
+       final prompt = PetPrompts.chatSystemContext
+          .replaceFirst('{petName}', widget.petName)
+          .replaceFirst('{date}', DateTime.now().toLocal().toString())
+          .replaceFirst('{context}', _ragContext)
+          .replaceFirst('{question}', text);
 
        final content = [Content.text(prompt)];
-       final response = await _model.generateContent(content);
-       final aiResponse = response.text ?? 'I am having trouble thinking right now. Please try again.';
+       final response = await _model.generateContent(content).timeout(const Duration(seconds: 60)); // Global Timeout 60s
+       
+       if (!mounted) return;
+       final aiResponse = response.text ?? AppLocalizations.of(context)!.pet_ai_trouble_thinking;
 
        if (mounted) {
         setState(() {
           _isThinking = false;
           _messages.add({
-            'sender': 'ai',
-            'text': aiResponse
+            PetConstants.keySender: PetConstants.keyAi,
+            PetConstants.keyText: aiResponse
           });
           _scrollToBottom();
         });
@@ -155,12 +142,31 @@ $text
 
     } catch (e) {
       if (mounted) {
+        String errorMessage = AppLocalizations.of(context)!.pet_ai_connection_error(e.toString());
+        
+        // Protocol 2026: Error 500 Handling
+        if (e.toString().contains(PetConstants.err500) || e.toString().contains(PetConstants.errInternal) || e.toString().contains(PetConstants.errOverloaded) || e.toString().contains(PetConstants.errTimeout)) {
+             if (e.toString().contains(PetConstants.errTimeout)) {
+                // Handle timeout specifically if needed, or group with overload
+             }
+             errorMessage = AppLocalizations.of(context)!.pet_ai_overloaded_message;
+             
+             ScaffoldMessenger.of(context).showSnackBar(
+               SnackBar(
+                 content: Text(errorMessage), 
+                 backgroundColor: Colors.amber[900], 
+                 behavior: SnackBarBehavior.floating,
+               ),
+             );
+        }
+
         setState(() {
            _isThinking = false;
            _messages.add({
-            'sender': 'ai',
-            'text': 'Connection Error: $e'
+            PetConstants.keySender: PetConstants.keyAi,
+            PetConstants.keyText: errorMessage
           });
+
           _scrollToBottom();
         });
       }
@@ -184,6 +190,7 @@ $text
       _speech.stop();
       setState(() => _isListening = false);
     } else {
+      final localeId = Localizations.localeOf(context).toString();
       var status = await Permission.microphone.request();
       if (status.isGranted) {
         bool available = await _speech.initialize();
@@ -198,12 +205,14 @@ $text
                 }
               });
             },
-            localeId: Localizations.localeOf(context).toString(),
+            localeId: localeId,
           );
         }
       } else {
+        if (!mounted) return;
+        final appL10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.ai_error_mic)),
+          SnackBar(content: Text(appL10n.ai_error_mic)),
         );
       }
     }
@@ -237,17 +246,17 @@ $text
                       itemCount: _messages.length + (_isThinking ? 1 : 0),
                       itemBuilder: (context, index) {
                         if (index == _messages.length) {
-                          return const Padding(
+                          return Padding(
                             padding: EdgeInsets.symmetric(vertical: 8),
                             child: Align(
                               alignment: Alignment.centerLeft,
-                              child: Text('🤖 Thinking...', style: TextStyle(color: Colors.white54, fontStyle: FontStyle.italic)),
+                              child: Text('🤖 ${appL10n.pet_ai_thinking_status}', style: const TextStyle(color: Colors.white54, fontStyle: FontStyle.italic)),
                             ),
                           );
                         }
                         
                         final msg = _messages[index];
-                        final isUser = msg['sender'] == 'user';
+                        final isUser = msg[PetConstants.keySender] == PetConstants.keyUser;
                         
                         return Align(
                           alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
@@ -265,7 +274,7 @@ $text
                               ),
                             ),
                             child: Text(
-                              msg['text']!,
+                              msg[PetConstants.keyText]!,
                               style: TextStyle(
                                 color: isUser ? Colors.black : Colors.white,
                                 fontSize: 16,

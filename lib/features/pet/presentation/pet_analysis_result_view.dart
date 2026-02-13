@@ -386,7 +386,7 @@ class PetAnalysisResultView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: AppColors.petPrimary, // Pastel Pink (#FFD1DC)
-        borderRadius: BorderRadius.circular(16), // Slightly less rounded for a "Block" feel
+        borderRadius: BorderRadius.circular(16), // Slightly less rounded for a structured feel
         border: Border.all(color: AppColors.petText, width: 1.5), // Black Border
         boxShadow: const [
            BoxShadow(

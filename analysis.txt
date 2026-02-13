@@ -1,0 +1,35 @@
+Analyzing ScanNutPlus...                                        
+
+warning - Unused import: 'package:scannutplus/features/pet/presentation/pet_capture_view.dart' - lib\features\home\presentation\home_view.dart:11:8 - unused_import
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:393:51 - use_build_context_synchronously
+  error - Undefined name '_recordedAudioPath' - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1073:49 - undefined_identifier
+   info - Don't use 'BuildContext's across async gaps - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1091:57 - use_build_context_synchronously
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1105:96 - invalid_null_aware_operator
+warning - Unused import: 'package:scannutplus/features/pet/data/pet_constants.dart' - lib\features\pet\agenda\presentation\pet_map_styles.dart:2:8 - unused_import
+   info - The import of 'package:objectbox/objectbox.dart' is unnecessary because all of the used elements are also provided by the import of 'package:scannutplus/objectbox.g.dart' - lib\features\pet\data\pet_ai_repository.dart:2:8 - unnecessary_import
+   info - The import of 'package:objectbox/objectbox.dart' is unnecessary because all of the used elements are also provided by the import of 'package:scannutplus/objectbox.g.dart' - lib\features\pet\data\pet_repository.dart:1:8 - unnecessary_import
+   info - The private field _mapController could be 'final' - lib\features\pet\map\presentation\pet_map_screen.dart:15:34 - prefer_final_fields
+  error - Undefined class 'Position' - lib\features\pet\map\presentation\pet_map_screen.dart:18:3 - undefined_class
+warning - The value of the field '_currentPosition' isn't used - lib\features\pet\map\presentation\pet_map_screen.dart:18:13 - unused_field
+  error - Undefined class 'LocationPermission' - lib\features\pet\map\presentation\pet_map_screen.dart:50:5 - undefined_class
+  error - Undefined name 'Geolocator' - lib\features\pet\map\presentation\pet_map_screen.dart:53:28 - undefined_identifier
+  error - Undefined name 'Geolocator' - lib\features\pet\map\presentation\pet_map_screen.dart:60:24 - undefined_identifier
+  error - Undefined name 'LocationPermission' - lib\features\pet\map\presentation\pet_map_screen.dart:61:23 - undefined_identifier
+  error - Undefined name 'Geolocator' - lib\features\pet\map\presentation\pet_map_screen.dart:62:26 - undefined_identifier
+  error - Undefined name 'LocationPermission' - lib\features\pet\map\presentation\pet_map_screen.dart:63:25 - undefined_identifier
+  error - Undefined name 'LocationPermission' - lib\features\pet\map\presentation\pet_map_screen.dart:70:23 - undefined_identifier
+  error - Undefined class 'LocationSettings' - lib\features\pet\map\presentation\pet_map_screen.dart:86:13 - undefined_class
+  error - Const variables must be initialized with a constant value - lib\features\pet\map\presentation\pet_map_screen.dart:86:49 - const_initialized_with_non_constant_value
+  error - The method 'LocationSettings' isn't defined for the type '_PetMapScreenState' - lib\features\pet\map\presentation\pet_map_screen.dart:86:49 - undefined_method
+  error - Undefined name 'LocationAccuracy' - lib\features\pet\map\presentation\pet_map_screen.dart:87:19 - undefined_identifier
+  error - Undefined class 'Position' - lib\features\pet\map\presentation\pet_map_screen.dart:90:7 - undefined_class
+  error - Undefined name 'Geolocator' - lib\features\pet\map\presentation\pet_map_screen.dart:90:33 - undefined_identifier
+  error - Undefined class 'Position' - lib\features\pet\map\presentation\pet_map_screen.dart:115:28 - undefined_class
+  error - Undefined name 'Geolocator' - lib\features\pet\map\presentation\pet_map_screen.dart:163:44 - undefined_identifier
+  error - Invalid constant value - lib\features\pet\map\presentation\pet_map_screen.dart:182:26 - invalid_constant
+warning - Unused import: 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart' - lib\features\pet\presentation\history\pet_history_list_view.dart:16:8 - unused_import
+warning - Unused import: 'package:scannutplus/features/pet/presentation/pet_capture_view.dart' - lib\features\pet\presentation\history\pet_history_screen.dart:12:8 - unused_import
+warning - Unused import: 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart' - lib\features\pet\presentation\history\pet_history_screen.dart:13:8 - unused_import
+warning - The declaration '_buildActionButton' isn't referenced - lib\features\pet\presentation\pet_analysis_result_view.dart:360:10 - unused_element
+warning - A value for optional parameter 'isPrimary' isn't ever given - lib\features\pet\presentation\pet_analysis_result_view.dart:360:133 - unused_element_parameter
+

@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:scannutplus/features/pet/data/pet_constants.dart';
 
 @Entity()
 class FuneralPlanEntity {
@@ -42,7 +43,7 @@ class FuneralPlanEntity {
     this.planName = '',
     this.contractNumber = '',
     this.startDate,
-    this.status = 'Active',
+    this.status = PetConstants.statusActive,
     this.includedServicesJson = '{}',
     this.gracePeriodDays = 0,
     this.maxWeightKg = 0.0,

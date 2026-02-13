@@ -787,6 +787,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_delete_cancel => 'Cancel';
 
   @override
+  String get pet_history_delete_success => 'History deleted successfully!';
+
+  @override
+  String get pet_ai_overloaded_message =>
+      'AI overloaded! Please try again in a few moments.';
+
+  @override
   String get pet_delete_success => 'Pet deleted successfully';
 
   @override
@@ -922,6 +929,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pet_label_birth_date => 'Date of Birth';
+
+  @override
+  String get pet_agenda_add_event => 'Add event';
+
+  @override
+  String get error_unexpected_title => 'Oops! Something unexpected happened.';
+
+  @override
+  String get error_unexpected_message =>
+      'Our team has been notified. Please restart the app.';
+
+  @override
+  String get error_try_recover => 'Try to Recover';
 
   @override
   String get pet_btn_add_metric => 'Add Metric';
@@ -1253,4 +1273,507 @@ class AppLocalizationsEn extends AppLocalizations {
   String pet_funeral_plan_title(Object name) {
     return 'Funeral Plan: $name';
   }
+
+  @override
+  String get pet_event_type_food => 'Food';
+
+  @override
+  String get pet_event_type_health => 'Health';
+
+  @override
+  String get pet_event_type_weight => 'Weight';
+
+  @override
+  String get pet_event_type_hygiene => 'Hygiene';
+
+  @override
+  String get pet_event_type_activity => 'Activity';
+
+  @override
+  String get pet_event_type_other => 'Other';
+
+  @override
+  String pet_agenda_coming_soon(Object name) {
+    return 'Agenda Module Coming Soon for $name';
+  }
+
+  @override
+  String get pet_medical_history_empty => 'No medical history recorded yet.';
+
+  @override
+  String get pet_share_not_implemented =>
+      'Share not implemented for history yet';
+
+  @override
+  String get pet_ai_brain_not_ready =>
+      'AI Brain not ready. Check Internet or API Key.';
+
+  @override
+  String pet_ai_connection_error(Object error) {
+    return 'Connection Error: $error';
+  }
+
+  @override
+  String get pet_ai_trouble_thinking =>
+      'I am having trouble thinking right now. Please try again.';
+
+  @override
+  String get pet_stt_not_available => 'STT not available';
+
+  @override
+  String pet_stt_error(Object error) {
+    return 'STT Error: $error';
+  }
+
+  @override
+  String get pet_entry_deleted => 'Entry deleted';
+
+  @override
+  String pet_error_history_load(String error) {
+    return 'Error loading history: $error';
+  }
+
+  @override
+  String pet_ai_greeting(String name) {
+    return 'Hello! I have analyzed $name\'s data. How can I help?';
+  }
+
+  @override
+  String pet_analysis_title(String name) {
+    return 'Analysis: $name';
+  }
+
+  @override
+  String get pet_event_food => 'Food';
+
+  @override
+  String get pet_event_health => 'Health';
+
+  @override
+  String get pet_event_weight => 'Weight';
+
+  @override
+  String get pet_event_walk => 'Walk';
+
+  @override
+  String get pet_event_hygiene => 'Hygiene';
+
+  @override
+  String get pet_event_behavior => 'Behavior';
+
+  @override
+  String get pet_event_medication => 'Medication';
+
+  @override
+  String get pet_event_note => 'Note';
+
+  @override
+  String get pet_ai_thinking_status => 'Thinking...';
+
+  @override
+  String get pet_agenda_title => 'Pet Agenda';
+
+  @override
+  String pet_agenda_title_dynamic(String petName) {
+    return 'Pet Agenda: $petName';
+  }
+
+  @override
+  String get pet_agenda_empty => 'No events scheduled';
+
+  @override
+  String pet_agenda_add_event_dynamic(String petName) {
+    return 'Add event: $petName';
+  }
+
+  @override
+  String get pet_agenda_today => 'Today';
+
+  @override
+  String get pet_agenda_yesterday => 'Yesterday';
+
+  @override
+  String get pet_agenda_select_type => 'Select type';
+
+  @override
+  String get pet_agenda_event_date => 'Date';
+
+  @override
+  String get pet_agenda_event_time => 'Time';
+
+  @override
+  String get pet_agenda_notes_hint => 'Notes (optional)';
+
+  @override
+  String get pet_agenda_save => 'Save Event';
+
+  @override
+  String pet_journal_add_event(String petName) {
+    return '$petName\'s Journal';
+  }
+
+  @override
+  String get pet_journal_question => 'What happened?';
+
+  @override
+  String get pet_journal_placeholder => 'Describe what happened...';
+
+  @override
+  String get pet_journal_register => 'Register Event';
+
+  @override
+  String get label_friend_name => 'Friend Name';
+
+  @override
+  String get label_tutor_name => 'Tutor Name';
+
+  @override
+  String get ai_simulating_analysis => 'Microscope active... analyzing...';
+
+  @override
+  String get pet_journal_location_loading => 'Getting GPS...';
+
+  @override
+  String get pet_journal_location_captured => 'Location captured';
+
+  @override
+  String get pet_journal_audio_recording => 'Recording...';
+
+  @override
+  String get pet_journal_audio_saved => 'Audio saved!';
+
+  @override
+  String get ai_audio_analysis_cough_detected => 'AI detected coughing sound.';
+
+  @override
+  String get ai_suggest_health_category => 'Switch to Health category?';
+
+  @override
+  String get pet_journal_location_name_simulated => 'Ibirapuera Park, SP';
+
+  @override
+  String get journal_guide_title => 'AI Journal Capabilities';
+
+  @override
+  String get journal_guide_voice =>
+      'Tell what happened and AI organizes it for you.';
+
+  @override
+  String get journal_guide_camera =>
+      'Analyze health photos (stool, skin), food, or friends instantly.';
+
+  @override
+  String get journal_guide_audio =>
+      'Record cough or breathing sounds for immediate clinical analysis.';
+
+  @override
+  String get journal_guide_location =>
+      'Register where important events happen.';
+
+  @override
+  String get common_ok => 'OK';
+
+  @override
+  String get pet_journal_analyzed_by_nano => 'Image analyzed by Nano Banana';
+
+  @override
+  String get pet_journal_social_context => 'Social Context Detected';
+
+  @override
+  String get journal_guide_unlock_hint =>
+      'Start by telling what happened to unlock photo, audio, and location analysis.';
+
+  @override
+  String get pet_journal_mic_permission_denied =>
+      'Microphone permission denied. Enable in settings.';
+
+  @override
+  String get label_relate => 'Relate';
+
+  @override
+  String get label_photo => 'Photo';
+
+  @override
+  String get label_place => 'Place';
+
+  @override
+  String get label_audio => 'Audio';
+
+  @override
+  String get label_sounds => 'Sounds';
+
+  @override
+  String get label_alert => 'Alert';
+
+  @override
+  String get alert_poison => 'Poison / Bait';
+
+  @override
+  String get alert_dog_loose => 'Hostile Dog';
+
+  @override
+  String get alert_risk_area => 'Danger Area';
+
+  @override
+  String get alert_noise => 'Loud Noise';
+
+  @override
+  String error_gps(Object error) {
+    return 'GPS Error: $error';
+  }
+
+  @override
+  String get gps_error_snack =>
+      'Could not get current location. GPS might be disabled.';
+
+  @override
+  String get map_type_normal => 'Default';
+
+  @override
+  String get map_type_satellite => 'Satellite';
+
+  @override
+  String get map_type_hybrid => 'Hybrid';
+
+  @override
+  String get map_type_terrain => 'Terrain';
+
+  @override
+  String get label_map_type => 'Map Type';
+
+  @override
+  String get pet_journal_hint_text => 'Describe the event...';
+
+  @override
+  String get pet_journal_register_button => 'Register Event';
+
+  @override
+  String get pet_journal_report_action => 'Report';
+
+  @override
+  String get map_alert_title => 'Report Danger';
+
+  @override
+  String get map_alert_dog => 'Loose Dog';
+
+  @override
+  String get map_alert_poison => 'Poison Risk';
+
+  @override
+  String get map_alert_noise => 'Loud Noise';
+
+  @override
+  String get map_alert_risk => 'Risk Area';
+
+  @override
+  String get map_alert_success => 'Alert Registered!';
+
+  @override
+  String get pet_journal_recording => 'Recording ambient sound...';
+
+  @override
+  String get pet_journal_photo_saved => 'Photo saved!';
+
+  @override
+  String get map_alert_description_user => 'Reported by user';
+
+  @override
+  String get pet_journal_gps_error => 'Error getting GPS';
+
+  @override
+  String get pet_journal_loading_gps => 'Getting GPS...';
+
+  @override
+  String get pet_journal_location_unknown => 'Unknown Location';
+
+  @override
+  String get pet_journal_location_approx => 'Approximate Location';
+
+  @override
+  String get label_gallery => 'Gallery';
+
+  @override
+  String get label_file => 'File';
+
+  @override
+  String pet_journal_file_selected(String name) {
+    return 'File selected: $name';
+  }
+
+  @override
+  String pet_journal_file_error(String error) {
+    return 'Error selecting file: $error';
+  }
+
+  @override
+  String get pet_journal_help_title => 'Guidelines';
+
+  @override
+  String get pet_journal_help_photo_title => 'Photo/Gallery';
+
+  @override
+  String get pet_journal_help_photo_desc =>
+      'Capture or upload images for immediate AI health or behavior analysis.';
+
+  @override
+  String get pet_journal_help_audio_title => 'Audio/Upload';
+
+  @override
+  String get pet_journal_help_audio_desc =>
+      'Record sounds (breathing, coughing, barking) or upload files for anomaly detection.';
+
+  @override
+  String get pet_journal_help_map_title => 'Map/Address';
+
+  @override
+  String get pet_journal_help_map_desc =>
+      'Location is captured automatically. Tap the map if you need to adjust the event point.';
+
+  @override
+  String get pet_journal_help_notes_title => 'Notes';
+
+  @override
+  String get pet_journal_help_notes_desc =>
+      'Describe what happened. AI will cross-reference your text with media to generate the correct alert.';
+
+  @override
+  String get pet_journal_help_videos_title => 'Videos (Coming Soon)';
+
+  @override
+  String get pet_journal_help_videos_desc =>
+      'We focus on photo & audio for speed, but videos are coming!';
+
+  @override
+  String get pet_journal_help_ai_title => 'Artificial Intelligence';
+
+  @override
+  String get pet_journal_help_ai_desc =>
+      'Write freely. AI crosses photo and audio data for clinical insights.';
+
+  @override
+  String get btn_got_it => 'Got it!';
+
+  @override
+  String get help_guide_title => 'Tutor Field Guide';
+
+  @override
+  String get pet_journal_searching_address => 'Searching address...';
+
+  @override
+  String get pet_journal_address_not_found => 'Address not found';
+
+  @override
+  String pet_error_ai_analysis_failed(String error) {
+    return 'AI Analysis failed: $error';
+  }
+
+  @override
+  String pet_error_repository_failure(String status) {
+    return 'Repository failure: $status';
+  }
+
+  @override
+  String pet_error_saving_event(String error) {
+    return 'Error saving event: $error';
+  }
+
+  @override
+  String pet_agenda_summary_format(String keywords) {
+    return '$keywords';
+  }
+
+  @override
+  String get common_delete_confirm_title => 'Delete Event?';
+
+  @override
+  String get common_delete_confirm_message =>
+      'This action cannot be undone. Do you really want to remove this record?';
+
+  @override
+  String get common_cancel => 'Cancel';
+
+  @override
+  String get common_delete => 'Delete';
+
+  @override
+  String get pet_error_delete_event => 'Error deleting event';
+
+  @override
+  String get pet_label_address => 'Address';
+
+  @override
+  String get pet_label_ai_summary => 'AI Summary';
+
+  @override
+  String get pet_analysis_data_not_found => 'Analysis data not found.';
+
+  @override
+  String get pet_logic_keywords_health =>
+      'vomit,diarrhea,blood,wound,hurt,pain,fever,vaccine,vet,medication,poop,feces,yellow,bark,howl,crying,cough,choke,sneeze,breathing,dizziness,fainting,seizure,worm,tick,flea,itch,swelling,redness,discharge,pus,limping,lameness,tremor,spasm,circling,head pressing,moan';
+
+  @override
+  String get pet_ai_language => 'en_US';
+
+  @override
+  String get map_gps_disabled => 'GPS is disabled. Please enable it.';
+
+  @override
+  String get map_permission_denied => 'Location permission denied.';
+
+  @override
+  String get map_permission_denied_forever =>
+      'Permissions are permanently denied. Open settings to allow access.';
+
+  @override
+  String map_error_location(String error) {
+    return 'Error getting location: $error';
+  }
+
+  @override
+  String get map_title_pet_location => 'Pet Location';
+
+  @override
+  String get action_open_settings => 'Open Settings';
+
+  @override
+  String get map_sync_satellites => 'Syncing GPS satellites...';
+
+  @override
+  String get pet_analysis_visual_title => 'Visual Analysis';
+
+  @override
+  String get pet_icon_pet => 'Pet';
+
+  @override
+  String get pet_journal_audio_processing => 'Processing audio...';
+
+  @override
+  String get pet_journal_audio_error_file_not_found => 'Audio file not found.';
+
+  @override
+  String get pet_journal_audio_error_generic => 'No audio analysis result.';
+
+  @override
+  String get pet_journal_audio_pending => 'Audio registered. Analysis pending.';
+
+  @override
+  String get pet_journal_video_saved => 'Short video saved!';
+
+  @override
+  String get pet_journal_video_processing => 'Analyzing movement...';
+
+  @override
+  String get pet_journal_video_error => 'Video analysis error.';
+
+  @override
+  String get label_video => 'Video';
+
+  @override
+  String get label_vocal => 'Vocal';
+
+  @override
+  String get error_file_too_large => 'File too large (Max 30MB).';
+
+  @override
+  String get error_video_too_long => 'Video too long (Max 60s).';
 }

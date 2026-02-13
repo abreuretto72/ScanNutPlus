@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
+import 'package:scannutplus/features/pet/data/pet_constants.dart';
 
 class PetAnalysisButton extends StatelessWidget {
   final String label;
@@ -15,7 +17,9 @@ class PetAnalysisButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print('SCAN_NUT_TRACE: [CLIQUE] Iniciando análise para o Pet.'); // UUID not available here directly as prop? Wait, it is a reusable button.
+        if (kDebugMode) {
+          debugPrint(PetConstants.logAnalysisClick);
+        } // UUID not available here directly as prop? Wait, it is a reusable button.
         onTap();
       },
       borderRadius: BorderRadius.circular(8),

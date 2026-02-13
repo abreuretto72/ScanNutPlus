@@ -1,77 +1,10 @@
-Resolving dependencies...
-Downloading packages...
-  _fe_analyzer_shared 91.0.0 (94.0.0 available)
-  analyzer 8.4.1 (10.0.2 available)
-  app_links 6.4.1 (7.0.0 available)
-  build_runner 2.10.5 (2.11.0 available)
-  characters 1.4.0 (1.4.1 available)
-  dart_style 3.1.3 (3.1.5 available)
-  flutter_riverpod 3.2.0 (3.2.1 available)
-  google_fonts 8.0.0 (8.0.1 available)
-  hooks 1.0.0 (1.0.1 available)
-  image 4.5.4 (4.7.2 available)
-  js 0.6.7 (0.7.2 available)
-  local_auth 2.3.0 (3.0.0 available)
-  local_auth_android 1.0.56 (2.0.4 available)
-  local_auth_darwin 1.6.1 (2.0.1 available)
-  local_auth_windows 1.0.11 (2.0.1 available)
-  matcher 0.12.17 (0.12.18 available)
-  material_color_utilities 0.11.1 (0.13.0 available)
-  meta 1.17.0 (1.18.1 available)
-  objective_c 9.2.5 (9.3.0 available)
-  permission_handler 11.4.0 (12.0.1 available)
-  permission_handler_android 12.1.0 (13.0.1 available)
-  riverpod 3.2.0 (3.2.1 available)
-  source_span 1.10.1 (1.10.2 available)
-  test 1.26.3 (1.29.0 available)
-  test_api 0.7.7 (0.7.9 available)
-  test_core 0.6.12 (0.6.15 available)
-Got dependencies!
-26 packages have newer versions incompatible with dependency constraints.
-Try `flutter pub outdated` for more information.
-Analyzing pet...                                                
+Analyzing create_pet_event_screen.dart...                       
 
-   info - The import of 'package:hive/hive.dart' is unnecessary because all of the used elements are also provided by the import of 'package:hive_flutter/hive_flutter.dart' - lib\features\pet\data\datasources\pet_history_source.dart:3:8 - unnecessary_import
-warning - The operand can't be 'null', so the condition is always 'false' - lib\features\pet\data\datasources\pet_history_source.dart:174:25 - unnecessary_null_comparison
-warning - Dead code - lib\features\pet\data\datasources\pet_history_source.dart:174:34 - dead_code
-warning - The '!' will have no effect because the receiver can't be null - lib\features\pet\data\datasources\pet_history_source.dart:179:26 - unnecessary_non_null_assertion
-warning - Unused import: 'dart:convert' - lib\features\pet\data\models\pet_history_entry.dart:1:8 - unused_import
-warning - The operand can't be 'null', so the condition is always 'false' - lib\features\pet\data\pet_history_repository.dart:44:33 - unnecessary_null_comparison
-   info - The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/foundation.dart' - lib\features\pet\data\pet_rag_service.dart:4:8 - unnecessary_import
-  error - Undefined class 'PetEntity' - lib\features\pet\data\pet_repository.dart:14:31 - undefined_class
-  error - The method 'PetEntity' isn't defined for the type 'PetRepository' - lib\features\pet\data\pet_repository.dart:82:30 - undefined_method
-warning - The declaration '_buildRealIdentityBadge' isn't referenced - lib\features\pet\modules\dentistry\dentistry_result_view.dart:142:10 - unused_element
-warning - Duplicate import - lib\features\pet\modules\gastro\pet_gastro_service.dart:3:8 - duplicate_import
-warning - Unused import: 'dart:developer' - lib\features\pet\modules\gastro\pet_gastro_service.dart:4:8 - unused_import
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:30:9 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:30:40 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:31:9 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:31:40 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:39:9 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:48:46 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:49:41 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:50:9 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:51:9 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:51:49 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:52:9 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:52:49 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:55:19 - unnecessary_this
-   info - Unnecessary 'this.' qualifier - lib\features\pet\presentation\extensions\pet_ui_extensions.dart:80:19 - unnecessary_this
-warning - The operand can't be 'null', so the condition is always 'true' - lib\features\pet\presentation\history\pet_history_list_view.dart:79:75 - unnecessary_null_comparison
-   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_list_view.dart:131:43 - unnecessary_underscores
-   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_list_view.dart:131:47 - unnecessary_underscores
-   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_screen.dart:73:122 - unnecessary_underscores
-   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_screen.dart:73:125 - unnecessary_underscores
-warning - Unused import: 'package:scannutplus/features/pet/data/pet_constants.dart' - lib\features\pet\presentation\history\pet_profile_screen.dart:2:8 - unused_import
-   info - The private field _isLoading could be 'final' - lib\features\pet\presentation\history\pet_profile_screen.dart:17:8 - prefer_final_fields
-  error - Undefined name 'args' - lib\features\pet\presentation\pet_analysis_result_view.dart:37:61 - undefined_identifier
-  error - Undefined name 'args' - lib\features\pet\presentation\pet_analysis_result_view.dart:38:23 - undefined_identifier
-  error - Undefined name 'args' - lib\features\pet\presentation\pet_analysis_result_view.dart:46:73 - undefined_identifier
-  error - The method '_parseDynamicCards' isn't defined for the type 'PetAnalysisResultView' - lib\features\pet\presentation\pet_analysis_result_view.dart:103:16 - undefined_method
-  error - The method '_extractSources' isn't defined for the type 'PetAnalysisResultView' - lib\features\pet\presentation\pet_analysis_result_view.dart:106:40 - undefined_method
-warning - The value of the local variable 'accentColor' isn't used - lib\features\pet\presentation\pet_analysis_result_view.dart:150:11 - unused_local_variable
-  error - The method '_resolveSource' isn't defined for the type 'PetAnalysisResultView' - lib\features\pet\presentation\pet_analysis_result_view.dart:227:35 - undefined_method
-warning - The value of the local variable 'cardBorderColor' isn't used - lib\features\pet\presentation\pet_capture_view.dart:484:11 - unused_local_variable
-warning - The value of the local variable 'theme' isn't used - lib\features\pet\presentation\pet_capture_view.dart:753:11 - unused_local_variable
-warning - Unused import: 'package:scannutplus/features/pet/data/pet_constants.dart' - lib\features\pet\presentation\pet_management_screen.dart:2:8 - unused_import
+   info - The private field _selectedDate could be 'final' - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:39:12 - prefer_final_fields
+   info - The private field _selectedTime could be 'final' - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:40:13 - prefer_final_fields
+   info - 'desiredAccuracy' is deprecated and shouldn't be used. use settings parameter with AndroidSettings, AppleSettings, WebSettings, or LocationSettings - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:74:9 - deprecated_member_use
+   info - 'setMapStyle' is deprecated and shouldn't be used. Use GoogleMap.style instead - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:133:36 - deprecated_member_use
+  error - Invalid constant value - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:238:27 - invalid_constant
+  error - The values in a const list literal must be constants - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:238:27 - non_constant_list_element
+   info - Unnecessary 'const' keyword - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:239:34 - unnecessary_const
 

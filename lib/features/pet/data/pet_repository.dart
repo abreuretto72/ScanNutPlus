@@ -23,8 +23,8 @@ class PetRepository {
   /// Does NOT save analysis results. Only Identity.
   Future<void> savePetProfile(PetEntity pet) async {
     // [GUARD] Prevent saving pets with null or empty names
-    if ((pet.name?.isEmpty ?? true) || pet.name == 'null') {
-       if (kDebugMode) debugPrint('${PetConstants.logTagPetData}: [BLOCKED] Attempt to save profile with empty name.');
+    if ((pet.name?.isEmpty ?? true) || pet.name == PetConstants.valNull) {
+       if (kDebugMode) debugPrint(PetConstants.logBlockedEmpty);
        return;
     }
 
@@ -58,8 +58,10 @@ class PetRepository {
     String analysisType = PetConstants.typeClinical,
   }) async {
     // [GUARD] Prevent saving analysis for nameless pets
-    if (petName.isEmpty || petName == 'null') {
-        print('SCAN_NUT_TRACE: [BLOCKED] Attempt to save analysis with empty name. Aborting.');
+    if (petName.isEmpty || petName == PetConstants.valNull) {
+        if (kDebugMode) {
+          debugPrint(PetConstants.logBlockedEmpty);
+        }
         return;
     }
     
@@ -76,10 +78,14 @@ class PetRepository {
           species: PetConstants.speciesUnknown, // Default, update later
           type: PetConstants.typePet
         );
-        print('SCAN_NUT_TRACE: [DB_WRITE] Tentando salvar pet (New Profile Logic).');
-        print('SCAN_NUT_TRACE: [DB_WRITE] Dados: UUID: ${pet.uuid}, Name: ${pet.name}, Type: $analysisType');
+        if (kDebugMode) {
+          debugPrint(PetConstants.logDbWriteNew);
+          debugPrint('${PetConstants.logDbWriteData}UUID: ${pet.uuid}, Name: ${pet.name}, Type: $analysisType');
+        }
         final exist = _petBox.query(PetEntity_.uuid.equals(pet.uuid)).build().findFirst();
-        print('SCAN_NUT_TRACE: [DB_WRITE] Já existe no banco? ${exist != null ? "SIM (ID: ${exist.id})" : "NÃO"}');
+        if (kDebugMode) {
+          debugPrint('${PetConstants.logDbWriteExist}${exist != null ? "${PetConstants.valYes} (ID: ${exist.id})" : PetConstants.valNo}');
+        }
         
         _petBox.put(pet);
     } else {
@@ -93,10 +99,14 @@ class PetRepository {
              pet.imagePath = imagePath; // Only update image here!
              // pet.createdAt = DateTime.now(); // Do NOT update creation time on edit
              
-             print('SCAN_NUT_TRACE: [DB_WRITE] Tentando atualizar pet (UPDATE Logic).');
-             print('SCAN_NUT_TRACE: [DB_WRITE] Dados: UUID: ${pet.uuid}, Name: ${pet.name}, Type: $analysisType');
+             if (kDebugMode) {
+               debugPrint(PetConstants.logDbWriteUpdate);
+               debugPrint('${PetConstants.logDbWriteData}UUID: ${pet.uuid}, Name: ${pet.name}, Type: $analysisType');
+             }
              final exist = _petBox.query(PetEntity_.uuid.equals(pet.uuid)).build().findFirst();
-             print('SCAN_NUT_TRACE: [DB_WRITE] Já existe no banco? ${exist != null ? "SIM (ID: ${exist.id})" : "NÃO"}');
+             if (kDebugMode) {
+               debugPrint('${PetConstants.logDbWriteExist}${exist != null ? "${PetConstants.valYes} (ID: ${exist.id})" : PetConstants.valNo}');
+             }
 
              _petBox.put(pet);
              if (kDebugMode) debugPrint('${PetConstants.logTagPetData}: Profile synced with IDENTITY data (Breed: $breed)');
@@ -145,7 +155,9 @@ class PetRepository {
     // This runs on every fetch to ensure the list stays clean
     final ghostPets = _petBox.query(PetEntity_.name.isNull().or(PetEntity_.name.equals(''))).build().find();
     if (ghostPets.isNotEmpty) {
-       print('SCAN_NUT_TRACE: [SANITIZATION] Removing ${ghostPets.length} ghost pets found.');
+       if (kDebugMode) {
+         debugPrint(PetConstants.logSanitization.replaceFirst('{}', ghostPets.length.toString()));
+       }
        _petBox.removeMany(ghostPets.map((e) => e.id).toList());
     }
     
@@ -166,14 +178,18 @@ class PetRepository {
     // If UUID is Environment tag, we want all general history or specific env history
     // For now, let's assume UUID is specific pet UUID.
     
-    print('SCAN_NUT_TRACE: [HISTORY] Buscando para UUID: $uuid');
+    if (kDebugMode) {
+      debugPrint('${PetConstants.logHistorySearch}$uuid');
+    }
     
     final query = _historyBox.query(
         PetHistoryEntry_.petUuid.equals(uuid)
     ).order(PetHistoryEntry_.timestamp, flags: Order.descending).build();
     
     final entries = query.find();
-    print('SCAN_NUT_TRACE: [HISTORY] Encontrados: ${entries.length}');
+    if (kDebugMode) {
+      debugPrint('${PetConstants.logHistoryFound}${entries.length}');
+    }
     query.close();
 
     // Map to legacy format for compatibility if needed, or update consumers

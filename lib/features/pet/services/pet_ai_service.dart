@@ -130,8 +130,8 @@ class PetAiService extends PetBaseAiService {
              imagePath, 
              compressedPath,
              quality: 75, // More aggressive compression
-             minWidth: 800,
-             minHeight: 800,
+             minWidth: 1080,
+             minHeight: 1080,
            );
            
            if (result != null) {
@@ -193,7 +193,7 @@ class PetAiService extends PetBaseAiService {
         petName: petName,
         petUuid: petUuid, 
         analysisType: analysisType, 
-      ).timeout(const Duration(seconds: 90), onTimeout: () {
+      ).timeout(const Duration(seconds: 60), onTimeout: () {
          if (kDebugMode) debugPrint('[SCAN_NUT_ERROR] Timeout na resposta da IA.');
          throw TimeoutException(AppKeys.petErrorTimeout); 
       });

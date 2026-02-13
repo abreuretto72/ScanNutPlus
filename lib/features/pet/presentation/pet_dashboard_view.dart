@@ -1,6 +1,7 @@
 import 'package:scannutplus/core/theme/app_colors.dart'; // AppColors
 import 'package:flutter/material.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/presentation/history/pet_history_screen.dart';
 
@@ -151,9 +152,11 @@ class _PetDashboardViewState extends State<PetDashboardView> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PetHistoryScreen(petUuid: uuid)),
+                  MaterialPageRoute(builder: (context) => PetHistoryScreen(petUuid: uuid, petName: name)),
                 );
-                print('SCAN_NUT_TRACE: [NAV] Navegando para o Histórico do Pet: $uuid');
+                if (kDebugMode) {
+                  debugPrint('${PetConstants.logNavHistory}$uuid');
+                }
               },
               icon: const Icon(Icons.history, color: Colors.white70),
               label: Text(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:lucide_icons/lucide_icons.dart'; // Removed
 
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:flutter/foundation.dart'; // Added for kDebugMode
 import 'package:scannutplus/features/pet/data/pet_repository.dart';
  // Or AppLocalizations if central
 import 'package:scannutplus/l10n/app_localizations.dart';
@@ -11,7 +12,8 @@ import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/p
 import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_profile_button.dart';
 import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_health_button.dart';
 import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_agenda_button.dart';
-import 'package:scannutplus/features/pet/presentation/pet_profile_view.dart';
+import 'package:scannutplus/features/pet/agenda/presentation/pet_agenda_screen.dart';
+
 import 'package:scannutplus/features/pet/presentation/pet_profile_view.dart';
 import 'package:scannutplus/features/pet/presentation/placeholder_health_view.dart';
 import 'package:scannutplus/features/pet/presentation/pet_ai_chat_view.dart'; // Import AI View
@@ -77,11 +79,15 @@ class _MyPetsViewState extends State<MyPetsView> {
 
                 // UI FILTER: Double protection against ghost cards
                 final allPets = snapshot.data ?? [];
-                final pets = allPets.where((p) => p[PetConstants.fieldName] != null && p[PetConstants.fieldName].toString().isNotEmpty && p[PetConstants.fieldName].toString() != 'null').toList();
+                final pets = allPets.where((p) => p[PetConstants.fieldName] != null && p[PetConstants.fieldName].toString().isNotEmpty && p[PetConstants.fieldName].toString() != PetConstants.valNull).toList();
                 
-                print('SCAN_NUT_TRACE: [UI_BUILD] Renderizando My Pets. Total no banco: ${pets.length}');
+                if (kDebugMode) {
+                  debugPrint('${PetConstants.logUiBuild}${pets.length}');
+                }
                 for (var p in pets) {
-                  print('SCAN_NUT_TRACE: [UI_ITEM] Pet no Banco -> UUID: ${p[PetConstants.fieldUuid]}, Name: ${p[PetConstants.fieldName]}');
+                  if (kDebugMode) {
+                    debugPrint('${PetConstants.logUiItem}UUID: ${p[PetConstants.fieldUuid]}, Name: ${p[PetConstants.fieldName]}');
+                  }
                 }
 
                 if (pets.isEmpty) {
@@ -326,7 +332,7 @@ class _MyPetsViewState extends State<MyPetsView> {
                         border: Border.all(color: AppColors.petText, width: 1.5), // Black Border
                         image: imagePath.isNotEmpty 
                           ? DecorationImage(
-                              image: FileImage(File(imagePath)),
+                              image: ResizeImage(FileImage(File(imagePath)), width: 150), // Optimization: Cache Width
                               fit: BoxFit.cover,
                             ) 
                           : null,
@@ -494,7 +500,9 @@ class _MyPetsViewState extends State<MyPetsView> {
                    PetHealthButton(
                      label: appL10n.pet_action_health,
                      onTap: () {
-                        print('SCAN_NUT_TRACE: [NAV] Health clicked for UUID: $uuid (Placeholder)');
+                        if (kDebugMode) {
+                          debugPrint('${PetConstants.logNavHealthPlaceholder}$uuid (Placeholder)');
+                        }
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -508,11 +516,18 @@ class _MyPetsViewState extends State<MyPetsView> {
                    PetAgendaButton(
                      label: appL10n.pet_action_agenda,
                      onTap: () {
-                        // Future navigation to Agenda/Vaccines
-                        print('SCAN_NUT_TRACE: Navigation to [Agenda] for UUID: $uuid');
-                        ScaffoldMessenger.of(context).showSnackBar(
-                           SnackBar(content: Text('Agenda Module Coming Soon for $name'), duration: const Duration(seconds: 1))
-                        );
+                        if (kDebugMode) {
+                          debugPrint('${PetConstants.logNavAgenda}$uuid');
+                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PetAgendaScreen(
+                              petId: uuid,
+                              petName: name,
+                            ),
+                          ),
+                        ).then((_) => setState(() {}));
                      }
                    ),
                 ],
