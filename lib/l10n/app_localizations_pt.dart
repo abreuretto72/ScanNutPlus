@@ -763,6 +763,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_breed_unknown => 'Raça não informada';
 
   @override
+  String get pet_label_breed => 'Raça';
+
+  @override
+  String get pet_label_sex => 'Sexo';
+
+  @override
+  String get pet_sex_male => 'Macho';
+
+  @override
+  String get pet_sex_female => 'Fêmea';
+
+  @override
   String get pet_delete_title => 'Excluir Pet';
 
   @override
@@ -1146,4 +1158,101 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get ai_thinking => 'Pensando...';
+
+  @override
+  String pet_age_years(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count anos',
+      one: '1 ano',
+      zero: '',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String pet_age_months(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count meses',
+      one: '1 mês',
+      zero: '',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get pet_age_estimate_label => 'Idade estimada: ';
+
+  @override
+  String get pet_size_small => 'Pequeno';
+
+  @override
+  String get pet_size_medium => 'Médio';
+
+  @override
+  String get pet_size_large => 'Grande';
+
+  @override
+  String get pet_label_estimated_weight => 'Peso estimado';
+
+  @override
+  String get pet_weight_unit => 'kg';
+
+  @override
+  String get pet_clinical_title => 'Condições Clínicas Fixas';
+
+  @override
+  String get pet_label_allergies => 'Alergias conhecidas';
+
+  @override
+  String get pet_label_chronic => 'Doenças crônicas';
+
+  @override
+  String get pet_label_disabilities => 'Deficiências';
+
+  @override
+  String get pet_label_observations => 'Observações importantes';
+
+  @override
+  String get pet_id_external_title => 'Identificação Externa (opcional)';
+
+  @override
+  String get pet_label_microchip => 'Microchip';
+
+  @override
+  String get pet_label_registry => 'Registro (Pedigree/ONG)';
+
+  @override
+  String get pet_label_qrcode => 'QR Code';
+
+  @override
+  String get pet_qrcode_future => 'Em breve';
+
+  @override
+  String pet_analyses_title(Object name) {
+    return 'Análises: $name';
+  }
+
+  @override
+  String pet_profile_title_dynamic(Object name) {
+    return 'Perfil do Pet: $name';
+  }
+
+  @override
+  String pet_health_title(Object name) {
+    return 'Saúde: $name';
+  }
+
+  @override
+  String pet_health_plan_title(Object name) {
+    return 'Plano de Saúde: $name';
+  }
+
+  @override
+  String pet_funeral_plan_title(Object name) {
+    return 'Plano Funerário: $name';
+  }
 }

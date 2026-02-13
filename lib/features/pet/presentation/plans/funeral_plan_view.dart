@@ -8,8 +8,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class FuneralPlanView extends StatefulWidget {
   final String petUuid;
-
-  const FuneralPlanView({super.key, required this.petUuid});
+  final String petName;
+  
+  const FuneralPlanView({super.key, required this.petUuid, required this.petName});
 
   @override
   State<FuneralPlanView> createState() => _FuneralPlanViewState();
@@ -140,8 +141,8 @@ class _FuneralPlanViewState extends State<FuneralPlanView> {
     return Scaffold(
       backgroundColor: Colors.black, // AppColors.backgroundDark
       appBar: AppBar(
-        title: Text(l10n.funeral_plan_title),
-        backgroundColor: Colors.black,
+        title: Text(l10n.pet_funeral_plan_title(widget.petName)),
+        backgroundColor: Colors.black, // AppColors.backgroundDark
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(

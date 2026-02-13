@@ -119,7 +119,8 @@ class PetAnalysisResultView extends StatelessWidget {
             // References Section (Protocol V6)
             _buildSourcesCard(context, _extractSources(analysisResult)),
 
-             // Actions
+             // Actions - HIDDEN AS PER USER REQUEST (11/02/2026)
+            /*
             Padding(
               padding: const EdgeInsets.only(top: 24),
               child: Column(
@@ -144,6 +145,7 @@ class PetAnalysisResultView extends StatelessWidget {
                 ],
               ),
             ),
+            */
           ],
         ),
       ),

@@ -12,6 +12,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart' show rootBundle;
 
+
+class PetAiOverloadException implements Exception {
+  final String message;
+  PetAiOverloadException([this.message = PetConstants.msgAiOverloaded]);
+  @override
+  String toString() => message;
+}
+
 abstract class PetBaseAiService {
   GenerativeModel? _model;
   String _activeModelName = 'gemini-1.5-flash';
@@ -40,7 +48,7 @@ abstract class PetBaseAiService {
       model: _activeModelName,
       apiKey: apiKey,
       generationConfig: GenerationConfig(
-        maxOutputTokens: 4000, // Boosted for Emergency Anti-Truncation
+        maxOutputTokens: 4000,
         temperature: 0.1, // Precisão técnica
       ),
     );
@@ -149,6 +157,14 @@ abstract class PetBaseAiService {
 
       return responseText;
     } catch (e) {
+      if (kDebugMode) debugPrint('[PET_ERROR_RAW] $e');
+      
+      final errorStr = e.toString();
+      // Detect 500 or Overload signals
+      if (errorStr.contains(PetConstants.err500) || errorStr.contains(PetConstants.errInternal) || errorStr.contains(PetConstants.errOverloaded)) {
+         throw PetAiOverloadException();
+      }
+      
       throw Exception('${AppKeys.errorAiUnavailable}$e');
     }
   }

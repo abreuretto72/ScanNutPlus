@@ -51,7 +51,7 @@ class PetHistorySource {
 
       // Step B: Create Entry
       final entry = PetHistoryEntry(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        id: DateTime.now().millisecondsSinceEpoch,
         petUuid: finalUuid, 
         petName: petName,
         timestamp: DateTime.now(),

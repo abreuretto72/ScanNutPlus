@@ -1,0 +1,10 @@
+Analyzing pet_profile_view.dart...                              
+
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:54:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:56:8 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:74:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:76:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:79:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\pet\presentation\pet_profile_view.dart:83:7 - avoid_print
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\features\pet\presentation\pet_profile_view.dart:257:16 - deprecated_member_use
+

@@ -52,7 +52,7 @@ The app parses the `URGENCY:` tag to determine the status header's color and tex
 ### Scientific Sourcing
 To ensure verifiability (Pilar 0), the AI must now cite 3 scientific sources at the end of the analysis.
 *   **Prompt Constraint**: Enforced via `PetPrompts` with a mandatory `[CARD]` structure.
-*   **Token Limit**: Increased to `2500` to prevent truncation of sources.
+*   **Token Limit**: Increased to `4000` to prevent truncation of sources.
 
 ### Robust Regex Extraction
 The system employs a "Checkmate" regex extraction logic to handle variations in AI output:

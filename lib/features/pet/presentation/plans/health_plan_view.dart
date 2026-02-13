@@ -7,8 +7,9 @@ import 'package:scannutplus/objectbox.g.dart'; // Ensure build_runner runs
 
 class HealthPlanView extends StatefulWidget {
   final String petUuid;
+  final String petName;
 
-  const HealthPlanView({super.key, required this.petUuid});
+  const HealthPlanView({super.key, required this.petUuid, required this.petName});
 
   @override
   State<HealthPlanView> createState() => _HealthPlanViewState();
@@ -155,7 +156,7 @@ class _HealthPlanViewState extends State<HealthPlanView> {
     return Scaffold(
       backgroundColor: Colors.black, // AppColors.backgroundDark
       appBar: AppBar(
-        title: Text(l10n.health_plan_title),
+        title: Text(l10n.pet_health_plan_title(widget.petName)),
         backgroundColor: Colors.black, // AppColors.backgroundDark
         foregroundColor: Colors.white,
       ),

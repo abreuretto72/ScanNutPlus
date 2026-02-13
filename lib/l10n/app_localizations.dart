@@ -1550,6 +1550,30 @@ abstract class AppLocalizations {
   /// **'Breed not informed'**
   String get pet_breed_unknown;
 
+  /// No description provided for @pet_label_breed.
+  ///
+  /// In en, this message translates to:
+  /// **'Breed'**
+  String get pet_label_breed;
+
+  /// No description provided for @pet_label_sex.
+  ///
+  /// In en, this message translates to:
+  /// **'Sex'**
+  String get pet_label_sex;
+
+  /// No description provided for @pet_sex_male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get pet_sex_male;
+
+  /// No description provided for @pet_sex_female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get pet_sex_female;
+
   /// No description provided for @pet_delete_title.
   ///
   /// In en, this message translates to:
@@ -2299,6 +2323,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thinking...'**
   String get ai_thinking;
+
+  /// No description provided for @pet_age_years.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{} =1{1 year} other{{count} years}}'**
+  String pet_age_years(num count);
+
+  /// No description provided for @pet_age_months.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{} =1{1 month} other{{count} months}}'**
+  String pet_age_months(num count);
+
+  /// No description provided for @pet_age_estimate_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated age: '**
+  String get pet_age_estimate_label;
+
+  /// No description provided for @pet_size_small.
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get pet_size_small;
+
+  /// No description provided for @pet_size_medium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get pet_size_medium;
+
+  /// No description provided for @pet_size_large.
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get pet_size_large;
+
+  /// No description provided for @pet_label_estimated_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated weight'**
+  String get pet_label_estimated_weight;
+
+  /// No description provided for @pet_weight_unit.
+  ///
+  /// In en, this message translates to:
+  /// **'kg'**
+  String get pet_weight_unit;
+
+  /// No description provided for @pet_clinical_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinical Conditions'**
+  String get pet_clinical_title;
+
+  /// No description provided for @pet_label_allergies.
+  ///
+  /// In en, this message translates to:
+  /// **'Known allergies'**
+  String get pet_label_allergies;
+
+  /// No description provided for @pet_label_chronic.
+  ///
+  /// In en, this message translates to:
+  /// **'Chronic diseases'**
+  String get pet_label_chronic;
+
+  /// No description provided for @pet_label_disabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabilities'**
+  String get pet_label_disabilities;
+
+  /// No description provided for @pet_label_observations.
+  ///
+  /// In en, this message translates to:
+  /// **'Important observations'**
+  String get pet_label_observations;
+
+  /// No description provided for @pet_id_external_title.
+  ///
+  /// In en, this message translates to:
+  /// **'External Identification (optional)'**
+  String get pet_id_external_title;
+
+  /// No description provided for @pet_label_microchip.
+  ///
+  /// In en, this message translates to:
+  /// **'Microchip'**
+  String get pet_label_microchip;
+
+  /// No description provided for @pet_label_registry.
+  ///
+  /// In en, this message translates to:
+  /// **'Registry (Pedigree/NGO)'**
+  String get pet_label_registry;
+
+  /// No description provided for @pet_label_qrcode.
+  ///
+  /// In en, this message translates to:
+  /// **'QR Code'**
+  String get pet_label_qrcode;
+
+  /// No description provided for @pet_qrcode_future.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get pet_qrcode_future;
+
+  /// No description provided for @pet_analyses_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyses: {name}'**
+  String pet_analyses_title(Object name);
+
+  /// No description provided for @pet_profile_title_dynamic.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Profile: {name}'**
+  String pet_profile_title_dynamic(Object name);
+
+  /// No description provided for @pet_health_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Health: {name}'**
+  String pet_health_title(Object name);
+
+  /// No description provided for @pet_health_plan_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Plan: {name}'**
+  String pet_health_plan_title(Object name);
+
+  /// No description provided for @pet_funeral_plan_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Funeral Plan: {name}'**
+  String pet_funeral_plan_title(Object name);
 }
 
 class _AppLocalizationsDelegate

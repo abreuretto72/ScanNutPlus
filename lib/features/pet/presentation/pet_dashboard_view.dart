@@ -30,7 +30,7 @@ class _PetDashboardViewState extends State<PetDashboardView> {
 
     return Scaffold(
       backgroundColor: AppColors.petBackgroundDark, // Dark Theme
-      appBar: AppBar(title: Text(name), backgroundColor: Colors.transparent),
+      appBar: AppBar(title: Text(l10n.pet_analyses_title(name)), backgroundColor: Colors.transparent),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(), // Ergonomia SM A256E
         padding: const EdgeInsets.all(16),

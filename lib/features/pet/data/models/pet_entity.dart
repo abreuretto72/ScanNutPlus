@@ -15,6 +15,19 @@ class PetEntity {
   String species;
   String imagePath;
   String? type;
+  String? gender;
+  String? sizeCategory; // Small, Medium, Large
+  double? estimatedWeight; // Numeric weight in kg for profile
+  
+  // Clinical Conditions
+  String? allergies;
+  String? chronicConditions;
+  String? disabilities;
+  String? clinicalNotes;
+  
+  // External ID
+  String? microchip;
+  String? registryId;
   
   @Property(type: PropertyType.date)
   DateTime? birthDate;
@@ -35,6 +48,15 @@ class PetEntity {
     required this.species,
     required this.imagePath,
     this.type,
+    this.gender,
+    this.sizeCategory,
+    this.estimatedWeight,
+    this.allergies,
+    this.chronicConditions,
+    this.disabilities,
+    this.clinicalNotes,
+    this.microchip,
+    this.registryId,
     this.birthDate,
     this.healthPlan,
     this.funeralPlan,

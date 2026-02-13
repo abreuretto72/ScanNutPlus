@@ -135,7 +135,7 @@
     },
     {
       "id": "5:1343406732095717703",
-      "lastPropertyId": "11:3936305065490517869",
+      "lastPropertyId": "20:123601156119929355",
       "name": "PetEntity",
       "properties": [
         {
@@ -195,6 +195,51 @@
           "id": "11:3936305065490517869",
           "name": "createdAt",
           "type": 10
+        },
+        {
+          "id": "12:8900880471596866962",
+          "name": "gender",
+          "type": 9
+        },
+        {
+          "id": "13:5911461107085481453",
+          "name": "sizeCategory",
+          "type": 9
+        },
+        {
+          "id": "14:3428995381145695749",
+          "name": "estimatedWeight",
+          "type": 8
+        },
+        {
+          "id": "15:9178570565848279180",
+          "name": "allergies",
+          "type": 9
+        },
+        {
+          "id": "16:8194452166527916529",
+          "name": "chronicConditions",
+          "type": 9
+        },
+        {
+          "id": "17:7398868065347091666",
+          "name": "disabilities",
+          "type": 9
+        },
+        {
+          "id": "18:7916843244111898998",
+          "name": "clinicalNotes",
+          "type": 9
+        },
+        {
+          "id": "19:9203848011011689026",
+          "name": "microchip",
+          "type": 9
+        },
+        {
+          "id": "20:123601156119929355",
+          "name": "registryId",
+          "type": 9
         }
       ],
       "relations": [

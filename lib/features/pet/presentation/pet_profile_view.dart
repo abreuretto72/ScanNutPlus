@@ -27,9 +27,20 @@ class _PetProfileViewState extends State<PetProfileView> {
   final _healthPlanController = TextEditingController();
   final _birthDateController = TextEditingController(); // Date of Birth
   
-  // Controllers for Variable Data (New Metric)
-  final _weightController = TextEditingController();
-  final _sizeController = TextEditingController();
+
+  final _estimatedWeightController = TextEditingController(); // New Profile Weight
+  
+  // Clinical Conditions Controllers
+  final _allergiesController = TextEditingController();
+  final _chronicController = TextEditingController();
+  final _disabilitiesController = TextEditingController();
+  final _notesController = TextEditingController();
+  
+  // External ID Controllers
+  final _microchipController = TextEditingController();
+  final _registryController = TextEditingController();
+  String? _selectedSex; 
+  String? _selectedSize; // New state for Size Category (Small/Medium/Large)
   bool _isNeutered = false;
   
   bool _isLoading = true;
@@ -47,59 +58,68 @@ class _PetProfileViewState extends State<PetProfileView> {
     _metricsBox = store.box<PetMetrics>();
     
     // Find pet by UUID - Diagnostic & Robust Implementation
-    
-    // 2. Diagnóstico de Emergência
     final allInBox = _petBox.getAll();
-    print('SCAN_NUT_TRACE: [DB_CHECK] Itens na Box de Pets: ${allInBox.length}');
-    if (allInBox.isNotEmpty) {
-       print('SCAN_NUT_TRACE: [DB_CHECK] Exemplo de UUID no banco: ${allInBox.first.uuid}');
-    } else {
-       if (mounted) {
-          // 4. Tratamento de Erro Visual
-          ScaffoldMessenger.of(context).showSnackBar(
-             SnackBar(content: Text(AppLocalizations.of(context)!.pet_db_sync_error), backgroundColor: Colors.red)
-          );
-       }
-    }
-
+    
     // 3. Busca por Correspondência Parcial (Strings limpas)
     try {
       _pet = allInBox.cast<PetEntity?>().firstWhere(
         (p) => p?.uuid.trim() == widget.petUuid.trim(),
         orElse: () => null,
       );
-      
-      if (_pet != null) {
-        print('SCAN_NUT_TRACE: [SUCESSO] Pet localizado via Trim Match.');
-      } else {
-        print('SCAN_NUT_TRACE: [ERRO FATAL] UUID ${widget.petUuid} não encontrado mesmo com Trim Check.');
-      }
     } catch (e) {
-      print('SCAN_NUT_TRACE: [EXCEPTION] Erro na busca: $e');
+      // Error finding pet
     }
 
-    if (_pet != null) {
-      print('SCAN_NUT_TRACE: [SPECIES_CHECK] Espécie recuperada do banco: "${_pet!.species}" (Raw)');
-      
-      _healthPlanController.text = _pet!.healthPlan ?? '';
-      
-      // Load Birth Date
-      if (_pet!.birthDate != null) {
+    if (_pet == null) {
+       // 4. Tratamento de Erro Visual
+       if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+             SnackBar(content: Text(AppLocalizations.of(context)!.pet_db_sync_error), backgroundColor: Colors.red)
+          );
+       }
+    } else {
+       // Load data
+       // _nameController and _breedController are not used in ReadOnly UI
+       _healthPlanController.text = _pet!.healthPlan ?? '';
+       
+       // Load Estimated Weight -- NEW
+       if (_pet!.estimatedWeight != null) {
+         _estimatedWeightController.text = _pet!.estimatedWeight.toString();
+       }
+       
+       // Load Clinical Conditions
+       _allergiesController.text = _pet!.allergies ?? '';
+       _chronicController.text = _pet!.chronicConditions ?? '';
+       _disabilitiesController.text = _pet!.disabilities ?? '';
+       _notesController.text = _pet!.clinicalNotes ?? '';
+       
+       // Load External ID
+       _microchipController.text = _pet!.microchip ?? '';
+       _registryController.text = _pet!.registryId ?? '';
+       
+       // Load Birth Date
+       if (_pet!.birthDate != null) {
          _birthDate = _pet!.birthDate;
          _birthDateController.text = "${_birthDate!.day}/${_birthDate!.month}/${_birthDate!.year}";
-      }
+       }
+       
+       // Load Sex -- NEW
+       _selectedSex = _pet!.gender;
+       
+       // Load Size Category -- NEW
+       _selectedSize = _pet!.sizeCategory;
 
-      // Load latest metric for initial UI state if needed, though we show list
-      if (_pet!.metrics.isNotEmpty) {
-        // Sort explicitly if needed, but we used insertion order usually
-        final latest = _pet!.metrics.last; 
-        _isNeutered = latest.isNeutered ?? false;
-      }
+       // Load latest metric for initial UI state if needed
+       if (_pet!.metrics.isNotEmpty) {
+         final latest = _pet!.metrics.last; 
+
+         _isNeutered = latest.isNeutered ?? false;
+       }
     }
     
     if (mounted) setState(() => _isLoading = false);
   }
-
+  
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -133,29 +153,32 @@ class _PetProfileViewState extends State<PetProfileView> {
     
     // 1. Update Fixed Data
     _pet!.healthPlan = _healthPlanController.text;
+    _pet!.healthPlan = _healthPlanController.text;
     _pet!.birthDate = _birthDate;
+    _pet!.gender = _selectedSex; // Save Sex
+    _pet!.sizeCategory = _selectedSize; // Save Size Category
+    
+    // Save Estimated Weight
+    if (_estimatedWeightController.text.isNotEmpty) {
+      _pet!.estimatedWeight = double.tryParse(_estimatedWeightController.text.replaceAll(',', '.'));
+    } else {
+      _pet!.estimatedWeight = null;
+    }
+    
+    // Save Clinical Conditions
+    _pet!.allergies = _allergiesController.text;
+    _pet!.chronicConditions = _chronicController.text;
+    _pet!.disabilities = _disabilitiesController.text;
+    _pet!.clinicalNotes = _notesController.text;
+    
+    // Save External ID
+    _pet!.microchip = _microchipController.text;
+    _pet!.registryId = _registryController.text;
     // _pet!.birthDate is not editable in this simplified view yet, as per requirements focus
     
     _petBox.put(_pet!);
 
-    // 2. Add New Metric if data is present
-    if (_weightController.text.isNotEmpty || _sizeController.text.isNotEmpty) {
-       final newMetric = PetMetrics(
-         petUuid: _pet!.uuid,
-         weight: double.tryParse(_weightController.text.replaceAll(',', '.')),
-         size: _sizeController.text,
-         isNeutered: _isNeutered,
-         timestamp: DateTime.now(),
-       );
-       
-       // Relation update
-       newMetric.pet.target = _pet;
-       _metricsBox.put(newMetric);
-       
-       // Clear metric inputs after save
-       _weightController.clear();
-       _sizeController.clear();
-    }
+
     
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -175,7 +198,7 @@ class _PetProfileViewState extends State<PetProfileView> {
     return Scaffold(
       backgroundColor: AppColors.petBackgroundDark,
       appBar: AppBar(
-        title: Text(l10n.pet_profile_title, style: const TextStyle(color: Colors.white)),
+        title: Text(l10n.pet_profile_title_dynamic(_pet?.name ?? l10n.pet_unknown)),
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -185,16 +208,23 @@ class _PetProfileViewState extends State<PetProfileView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // --- READ ONLY SECTION ---
+            // --- READ ONLY SECTION ---
             _buildReadOnlyCard(l10n),
+            const SizedBox(height: 16),
+            
+            // --- CLINICAL CONDITIONS ---
+            _buildClinicalDataCard(l10n),
+            const SizedBox(height: 16),
+            
+            // --- EXTERNAL IDENTIFICATION ---
+            _buildExternalIdCard(l10n),
             const SizedBox(height: 16),
             
             // --- EDITABLE FIXED DATA ---
             _buildFixedDataCard(l10n),
             const SizedBox(height: 16),
             
-            // --- NEW METRIC SECTION ---
-            _buildNewMetricCard(l10n),
-            const SizedBox(height: 16),
+
             
             // --- SAVE BUTTON ---
             ElevatedButton.icon(
@@ -207,7 +237,7 @@ class _PetProfileViewState extends State<PetProfileView> {
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
             ),
-             const SizedBox(height: 24),
+             const SizedBox(height: 48),
           ],
         ),
       ),
@@ -235,7 +265,188 @@ class _PetProfileViewState extends State<PetProfileView> {
             _buildReadOnlyRow(l10n.species_label, displaySpecies), // Keeps existing species logic
             const Divider(color: Colors.grey),
             // Fix Overflow for Breed
-             _buildReadOnlyRow("Breed", _pet!.breed ?? l10n.pet_breed_unknown, isExpanded: true),
+             _buildReadOnlyRow(l10n.pet_label_breed, _pet!.breed ?? l10n.pet_breed_unknown, isExpanded: true),
+             const Divider(color: Colors.grey),
+             // --- DATE OF BIRTH FIELD (Moved here) ---
+             GestureDetector(
+               onTap: () => _selectDate(context),
+               child: AbsorbPointer(
+                 child: _buildTextField(_birthDateController, l10n.pet_label_birth_date, Icons.cake),
+               ),
+             ),
+             if (_birthDate != null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 4, top: 4, bottom: 8),
+                  child: Text(
+                    _getFormattedAge(_birthDate!, l10n),
+                    style: TextStyle(color: AppColors.petPrimary, fontSize: 13, fontWeight: FontWeight.w500),
+                  ),
+                ),
+             const SizedBox(height: 12),
+             
+             // --- SEX DROPDOWN ---
+             DropdownButtonFormField<String>(
+               key: ValueKey('sex_$_selectedSex'), // Distinct Key
+               initialValue: _selectedSex,
+               decoration: InputDecoration(
+                 labelText: l10n.pet_label_sex,
+                 labelStyle: const TextStyle(color: Colors.grey),
+                 prefixIcon: const Icon(Icons.male, color: AppColors.petPrimary), // Using male/male-female icon generic
+                 filled: true,
+                 fillColor: Colors.black26,
+                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+               ),
+               dropdownColor: Colors.grey[850],
+               style: const TextStyle(color: Colors.white),
+               items: [
+                 DropdownMenuItem(value: 'Male', child: Text(l10n.pet_sex_male)),
+                 DropdownMenuItem(value: 'Female', child: Text(l10n.pet_sex_female)),
+               ],
+               onChanged: (val) => setState(() => _selectedSex = val),
+             ),
+             const SizedBox(height: 12),
+
+             // --- SIZE DROPDOWN (PORTE) ---
+             DropdownButtonFormField<String>(
+               key: ValueKey('size_$_selectedSize'), // Distinct Key
+               initialValue: _selectedSize,
+               decoration: InputDecoration(
+                 labelText: l10n.pet_label_size,
+                 labelStyle: const TextStyle(color: Colors.grey),
+                 prefixIcon: const Icon(Icons.fitness_center, color: AppColors.petPrimary),
+                 filled: true,
+                 fillColor: Colors.black26,
+                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+               ),
+               dropdownColor: Colors.grey[850],
+               style: const TextStyle(color: Colors.white),
+               items: [
+                 DropdownMenuItem(value: 'Small', child: Text(l10n.pet_size_small)),
+                 DropdownMenuItem(value: 'Medium', child: Text(l10n.pet_size_medium)),
+                 DropdownMenuItem(value: 'Large', child: Text(l10n.pet_size_large)),
+               ],
+               onChanged: (val) => setState(() => _selectedSize = val),
+             ),
+             const SizedBox(height: 12),
+
+             const SizedBox(height: 12),
+
+             // --- ESTIMATED WEIGHT INPUT ---
+             _buildTextField(
+               _estimatedWeightController,
+               "${l10n.pet_label_estimated_weight} (${l10n.pet_weight_unit})",
+               Icons.monitor_weight,
+               isNumber: true,
+             ),
+             const SizedBox(height: 12),
+             
+             // --- NEUTERED SWITCH (Moved here) ---
+             SwitchListTile(
+               title: Text(l10n.pet_label_neutered, style: const TextStyle(color: Colors.white)),
+               value: _isNeutered,
+               onChanged: (v) => setState(() => _isNeutered = v),
+               thumbColor: WidgetStateProperty.resolveWith((states) {
+                 if (states.contains(WidgetState.selected)) {
+                   return AppColors.petPrimary;
+                 }
+                 return Colors.grey; 
+               }),
+               trackColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return AppColors.petPrimary.withValues(alpha: 0.5);
+                  }
+                  return null;
+               }),
+               contentPadding: EdgeInsets.zero,
+             ),
+          ],
+        ),
+      ),
+    );
+  }
+  
+  Widget _buildClinicalDataCard(AppLocalizations l10n) {
+    return Card(
+      color: Colors.grey[900],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l10n.pet_clinical_title, style: TextStyle(color: AppColors.petPrimary, fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
+            
+            _buildTextField(_allergiesController, l10n.pet_label_allergies, Icons.no_food),
+            const SizedBox(height: 12),
+            
+            _buildTextField(_chronicController, l10n.pet_label_chronic, Icons.healing),
+            const SizedBox(height: 12),
+            
+            _buildTextField(_disabilitiesController, l10n.pet_label_disabilities, Icons.accessible),
+             const SizedBox(height: 12),
+            
+            TextField(
+              controller: _notesController,
+              maxLines: 3,
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                labelText: l10n.pet_label_observations,
+                labelStyle: const TextStyle(color: Colors.grey),
+                prefixIcon: const Icon(Icons.note, color: AppColors.petPrimary),
+                filled: true,
+                fillColor: Colors.black26,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+
+  Widget _buildExternalIdCard(AppLocalizations l10n) {
+    return Card(
+      color: Colors.grey[900],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l10n.pet_id_external_title, style: TextStyle(color: AppColors.petPrimary, fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
+            
+            _buildTextField(_microchipController, l10n.pet_label_microchip, Icons.memory),
+            const SizedBox(height: 12),
+            
+            _buildTextField(_registryController, l10n.pet_label_registry, Icons.app_registration),
+            const SizedBox(height: 16),
+            
+            // Placeholder QR Code
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.black26, // Distinct background
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.white12),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.qr_code_2, size: 48, color: Colors.grey),
+                  const SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(l10n.pet_label_qrcode, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      Text(l10n.pet_qrcode_future, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -254,90 +465,60 @@ class _PetProfileViewState extends State<PetProfileView> {
             const SizedBox(height: 12),
             
             // --- HEALTH PLAN BUTTON ---
-            OutlinedButton.icon(
-               onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => HealthPlanView(petUuid: widget.petUuid)));
-               },
-               icon: const Icon(Icons.shield_outlined, color: Colors.white), 
-               label: Text(l10n.pet_action_manage_health_plan, style: const TextStyle(color: Colors.white)),
-               style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.white54),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  alignment: Alignment.centerLeft,
-               ),
+            _buildPlanButton(
+              icon: Icons.shield_outlined,
+              label: l10n.pet_action_manage_health_plan,
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => HealthPlanView(petUuid: widget.petUuid, petName: _pet?.name ?? l10n.pet_unknown))),
             ),
 
-            const SizedBox(height: 12),
-            const SizedBox(height: 12),
-            // --- FUNERAL PLAN BUTTON ---
-            OutlinedButton.icon(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => FuneralPlanView(petUuid: widget.petUuid)));
-                },
-                icon: const Icon(Icons.church, color: Colors.white),
-                label: Text(l10n.pet_action_manage_funeral_plan, style: const TextStyle(color: Colors.white)),
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.white54),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  alignment: Alignment.centerLeft,
-                ),
-            ),
             const SizedBox(height: 12),
             
-            // --- DATE OF BIRTH FIELD ---
-             GestureDetector(
-              onTap: () => _selectDate(context),
-              child: AbsorbPointer(
-                child: _buildTextField(_birthDateController, l10n.pet_label_birth_date, Icons.cake),
-              ),
+            // --- FUNERAL PLAN BUTTON ---
+            _buildPlanButton(
+              icon: Icons.church,
+              label: l10n.pet_action_manage_funeral_plan,
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => FuneralPlanView(petUuid: widget.petUuid, petName: _pet?.name ?? l10n.pet_unknown))),
             ),
+            
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNewMetricCard(AppLocalizations l10n) {
-    return Card(
-      color: Colors.grey[850],
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.pet_btn_add_metric, style: TextStyle(color: AppColors.petPrimary, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Row(
+  Widget _buildPlanButton({required IconData icon, required String label, required VoidCallback onTap}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.petPrimary, // Pink Background
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Row(
               children: [
-                Expanded(child: _buildTextField(_weightController, l10n.pet_label_weight, Icons.monitor_weight, isNumber: true)),
+                Icon(icon, color: Colors.black), // Black Icon
                 const SizedBox(width: 12),
-                Expanded(child: _buildTextField(_sizeController, l10n.pet_label_size, Icons.height)),
+                Expanded(
+                  child: Text(
+                    label,
+                    style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                ),
+                const Icon(Icons.chevron_right, color: Colors.black), // Black Chevron
               ],
             ),
-            const SizedBox(height: 12),
-            SwitchListTile(
-              title: Text(l10n.pet_label_neutered, style: const TextStyle(color: Colors.white)),
-              value: _isNeutered,
-              onChanged: (v) => setState(() => _isNeutered = v),
-              thumbColor: WidgetStateProperty.resolveWith((states) {
-                if (states.contains(WidgetState.selected)) {
-                  return AppColors.petPrimary;
-                }
-                return Colors.grey; 
-              }),
-              trackColor: WidgetStateProperty.resolveWith((states) {
-                 if (states.contains(WidgetState.selected)) {
-                   return AppColors.petPrimary.withValues(alpha: 0.5);
-                 }
-                 return null;
-              }),
-              contentPadding: EdgeInsets.zero,
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
+
+
 
   Widget _buildReadOnlyRow(String label, String value, {bool isExpanded = false}) {
     return Row(
@@ -366,5 +547,34 @@ class _PetProfileViewState extends State<PetProfileView> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
       ),
     );
+  }
+  String _getFormattedAge(DateTime birthDate, AppLocalizations l10n) {
+    final now = DateTime.now();
+    int years = now.year - birthDate.year;
+    int months = now.month - birthDate.month;
+    int days = now.day - birthDate.day;
+
+    if (months < 0 || (months == 0 && days < 0)) {
+      years--;
+      months += 12;
+    }
+    
+    if (days < 0) {
+      months--;
+    }
+    
+    if (years < 0) years = 0;
+    if (months < 0) months = 0;
+    
+    final yearsStr = l10n.pet_age_years(years);
+    final monthsStr = l10n.pet_age_months(months);
+    
+    String ageParts = [yearsStr, monthsStr].where((s) => s.isNotEmpty).join(' ');
+    
+    if (ageParts.isEmpty) {
+       return "${l10n.pet_age_estimate_label} < 1 ${l10n.pet_age_months(1).replaceAll('1 ', '')}";
+    }
+    
+    return "${l10n.pet_age_estimate_label}$ageParts";
   }
 }

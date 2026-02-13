@@ -498,7 +498,7 @@ class _MyPetsViewState extends State<MyPetsView> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const PlaceholderHealthView(),
+                            builder: (context) => PlaceholderHealthView(petName: name),
                           ),
                         ).then((_) => setState(() {}));
                      }

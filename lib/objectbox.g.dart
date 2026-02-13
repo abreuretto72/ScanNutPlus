@@ -181,7 +181,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(5, 1343406732095717703),
     name: 'PetEntity',
-    lastPropertyId: const obx_int.IdUid(11, 3936305065490517869),
+    lastPropertyId: const obx_int.IdUid(20, 123601156119929355),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -249,6 +249,60 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(11, 3936305065490517869),
         name: 'createdAt',
         type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(12, 8900880471596866962),
+        name: 'gender',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(13, 5911461107085481453),
+        name: 'sizeCategory',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(14, 3428995381145695749),
+        name: 'estimatedWeight',
+        type: 8,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(15, 9178570565848279180),
+        name: 'allergies',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(16, 8194452166527916529),
+        name: 'chronicConditions',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(17, 7398868065347091666),
+        name: 'disabilities',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(18, 7916843244111898998),
+        name: 'clinicalNotes',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(19, 9203848011011689026),
+        name: 'microchip',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(20, 123601156119929355),
+        name: 'registryId',
+        type: 9,
         flags: 0,
       ),
     ],
@@ -922,7 +976,31 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final funeralPlanOffset = object.funeralPlan == null
             ? null
             : fbb.writeString(object.funeralPlan!);
-        fbb.startTable(12);
+        final genderOffset = object.gender == null
+            ? null
+            : fbb.writeString(object.gender!);
+        final sizeCategoryOffset = object.sizeCategory == null
+            ? null
+            : fbb.writeString(object.sizeCategory!);
+        final allergiesOffset = object.allergies == null
+            ? null
+            : fbb.writeString(object.allergies!);
+        final chronicConditionsOffset = object.chronicConditions == null
+            ? null
+            : fbb.writeString(object.chronicConditions!);
+        final disabilitiesOffset = object.disabilities == null
+            ? null
+            : fbb.writeString(object.disabilities!);
+        final clinicalNotesOffset = object.clinicalNotes == null
+            ? null
+            : fbb.writeString(object.clinicalNotes!);
+        final microchipOffset = object.microchip == null
+            ? null
+            : fbb.writeString(object.microchip!);
+        final registryIdOffset = object.registryId == null
+            ? null
+            : fbb.writeString(object.registryId!);
+        fbb.startTable(21);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, uuidOffset);
         fbb.addOffset(2, nameOffset);
@@ -934,6 +1012,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(8, healthPlanOffset);
         fbb.addOffset(9, funeralPlanOffset);
         fbb.addInt64(10, object.createdAt.millisecondsSinceEpoch);
+        fbb.addOffset(11, genderOffset);
+        fbb.addOffset(12, sizeCategoryOffset);
+        fbb.addFloat64(13, object.estimatedWeight);
+        fbb.addOffset(14, allergiesOffset);
+        fbb.addOffset(15, chronicConditionsOffset);
+        fbb.addOffset(16, disabilitiesOffset);
+        fbb.addOffset(17, clinicalNotesOffset);
+        fbb.addOffset(18, microchipOffset);
+        fbb.addOffset(19, registryIdOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -969,6 +1056,35 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final typeParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 16);
+        final genderParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 26);
+        final sizeCategoryParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 28);
+        final estimatedWeightParam = const fb.Float64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          30,
+        );
+        final allergiesParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 32);
+        final chronicConditionsParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 34);
+        final disabilitiesParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 36);
+        final clinicalNotesParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 38);
+        final microchipParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 40);
+        final registryIdParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 42);
         final birthDateParam = birthDateValue == null
             ? null
             : DateTime.fromMillisecondsSinceEpoch(birthDateValue);
@@ -989,6 +1105,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
           species: speciesParam,
           imagePath: imagePathParam,
           type: typeParam,
+          gender: genderParam,
+          sizeCategory: sizeCategoryParam,
+          estimatedWeight: estimatedWeightParam,
+          allergies: allergiesParam,
+          chronicConditions: chronicConditionsParam,
+          disabilities: disabilitiesParam,
+          clinicalNotes: clinicalNotesParam,
+          microchip: microchipParam,
+          registryId: registryIdParam,
           birthDate: birthDateParam,
           healthPlan: healthPlanParam,
           funeralPlan: funeralPlanParam,
@@ -1627,6 +1752,51 @@ class PetEntity_ {
   /// See [PetEntity.createdAt].
   static final createdAt = obx.QueryDateProperty<PetEntity>(
     _entities[3].properties[10],
+  );
+
+  /// See [PetEntity.gender].
+  static final gender = obx.QueryStringProperty<PetEntity>(
+    _entities[3].properties[11],
+  );
+
+  /// See [PetEntity.sizeCategory].
+  static final sizeCategory = obx.QueryStringProperty<PetEntity>(
+    _entities[3].properties[12],
+  );
+
+  /// See [PetEntity.estimatedWeight].
+  static final estimatedWeight = obx.QueryDoubleProperty<PetEntity>(
+    _entities[3].properties[13],
+  );
+
+  /// See [PetEntity.allergies].
+  static final allergies = obx.QueryStringProperty<PetEntity>(
+    _entities[3].properties[14],
+  );
+
+  /// See [PetEntity.chronicConditions].
+  static final chronicConditions = obx.QueryStringProperty<PetEntity>(
+    _entities[3].properties[15],
+  );
+
+  /// See [PetEntity.disabilities].
+  static final disabilities = obx.QueryStringProperty<PetEntity>(
+    _entities[3].properties[16],
+  );
+
+  /// See [PetEntity.clinicalNotes].
+  static final clinicalNotes = obx.QueryStringProperty<PetEntity>(
+    _entities[3].properties[17],
+  );
+
+  /// See [PetEntity.microchip].
+  static final microchip = obx.QueryStringProperty<PetEntity>(
+    _entities[3].properties[18],
+  );
+
+  /// See [PetEntity.registryId].
+  static final registryId = obx.QueryStringProperty<PetEntity>(
+    _entities[3].properties[19],
   );
 
   /// see [PetEntity.metrics]
