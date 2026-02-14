@@ -3397,6 +3397,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Video too long (Max 60s).'**
   String get error_video_too_long;
+
+  /// No description provided for @keywordFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'friend,visitor,guest,other dog,neighbor\'s dog'**
+  String get keywordFriend;
+
+  /// No description provided for @keywordGuest.
+  ///
+  /// In en, this message translates to:
+  /// **'guest,visitor,stranger'**
+  String get keywordGuest;
+
+  /// No description provided for @pet_agenda_view_calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'View Calendar'**
+  String get pet_agenda_view_calendar;
 }
 
 class _AppLocalizationsDelegate

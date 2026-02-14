@@ -23,4 +23,7 @@ enum PetEventType {
 
   @HiveField(5)
   other,
+
+  @HiveField(6)
+  friend,
 }

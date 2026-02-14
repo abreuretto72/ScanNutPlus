@@ -6,11 +6,12 @@ import 'package:scannutplus/l10n/app_localizations.dart';
 
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart';
-// import 'package:scannutplus/features/pet/data/models/pet_event_type.dart'; // Unused
+import 'package:scannutplus/features/pet/data/models/pet_event_type.dart'; // Required for Enum Values
 import 'package:scannutplus/features/pet/agenda/domain/pet_event_type_extension.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_event_type_label.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/create_pet_event_screen.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_event_detail_screen.dart';
+import 'package:scannutplus/features/pet/agenda/presentation/widgets/pet_activity_calendar.dart'; // Calendar Widget
 import 'package:scannutplus/features/pet/data/pet_constants.dart'; // Constants
 
 class PetAgendaScreen extends StatefulWidget {
@@ -110,6 +111,44 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.pet_agenda_title_dynamic(widget.petName)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.calendar_month),
+            tooltip: l10n.pet_agenda_view_calendar ?? 'Ver Calendário',
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: const Color(0xFF1C1C1E),
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+                builder: (_) => DraggableScrollableSheet(
+                  initialChildSize: 0.6,
+                  minChildSize: 0.4,
+                  maxChildSize: 0.9,
+                  expand: false,
+                  builder: (context, scrollController) {
+                     return FutureBuilder<List<PetEvent>>(
+                       future: _futureEvents,
+                       builder: (context, snapshot) {
+                         if (snapshot.connectionState == ConnectionState.waiting) {
+                           return const Center(child: CircularProgressIndicator());
+                         }
+                         final events = snapshot.data ?? [];
+                         return PetActivityCalendar(
+                           events: events,
+                           onDateSelected: (date) {
+                             Navigator.pop(context); // Close calendar
+                             // TODO: Implement scroll to specific date if needed
+                           },
+                         );
+                       }
+                     );
+                  }
+                ),
+              );
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _onAddEventPressed,
@@ -157,9 +196,15 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                   // 📋 Eventos do dia
                   ...dayEvents.map((event) {
                     final type = event.eventTypeIndex.toPetEventType();
+                    // Custom Logic for FRIEND type (Master Prompt 5)
+                    final isFriend = type == PetEventType.friend || (event.metrics != null && event.metrics!['event_type'] == 'FRIEND');
+                    
+                    // Card Color: Green for Friend, Pink for Normal
+                    final cardColor = isFriend ? const Color(0xFFE0F2F1) : const Color(0xFFFFD1DC); 
+                    final textColor = Colors.black;
 
                     return Card(
-                      color: const Color(0xFFFFD1DC), // Rosa Pastel (Pet Domain)
+                      color: cardColor, 
                       margin: const EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 4,
@@ -175,25 +220,47 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                                   cacheWidth: 150, // Optimization: Memory
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
-                                    return Icon(type.icon, size: 32);
+                                    return Icon(isFriend ? Icons.pets : type.icon, size: 32);
                                   },
                                 ),
                               )
                             : (event.metrics != null && event.metrics![PetConstants.keyVideoPath] != null)
-                                ? Icon(Icons.videocam, size: 32, color: Colors.black) // Video Analysis Icon
+                                ? Icon(Icons.videocam, size: 32, color: textColor) // Video Analysis Icon
                             : (event.metrics != null && event.metrics![PetConstants.keyAudioPath] != null)
-                                ? Icon(Icons.campaign, size: 32, color: Colors.black) // Vocal Analysis Icon
-                                : Icon(type.icon, size: 32, color: Colors.black), // Default Icon
-                        title: Text(type.label(l10n), style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                ? Icon(Icons.campaign, size: 32, color: textColor) // Vocal Analysis Icon
+                                : Icon(isFriend ? Icons.pets : type.icon, size: 32, color: textColor), // Default Icon
+
+                        // Title with Guest Name if available
+                        title: Row(
+                          children: [
+                             Text(
+                               isFriend ? (event.metrics?['guest_pet_name'] ?? 'Visitante') : type.label(l10n), 
+                               style: TextStyle(fontWeight: FontWeight.bold, color: textColor)
+                             ),
+                             if (isFriend) ...[
+                                const SizedBox(width: 8),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  decoration: BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(4)),
+                                  child: const Text("FRIEND", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+                                )
+                             ]
+                          ],
+                        ),
+                        
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             // Data e Hora (Black Text)
                             Text(
                               DateFormat("dd/MM/yyyy • HH:mm").format(event.startDateTime),
-                              style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+                              style: TextStyle(color: textColor, fontWeight: FontWeight.w500),
                             ),
                             
+                            // Tutor Name (if Friend)
+                            if (isFriend && event.metrics?['guest_tutor_name'] != null && event.metrics!['guest_tutor_name'].toString().isNotEmpty)
+                               Text("Tutor: ${event.metrics!['guest_tutor_name']}", style: TextStyle(fontSize: 12, color: Colors.grey[800], fontStyle: FontStyle.italic)),
+
                             // Palavras-chave (Resumo)
                             if (event.notes != null && event.notes!.isNotEmpty)
                                Padding(
@@ -231,13 +298,13 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                     const Icon(Icons.location_on, size: 12, color: Colors.black),
+                                     Icon(Icons.location_on, size: 12, color: textColor),
                                      const SizedBox(width: 4),
                                      Expanded(
                                        child: Text(
                                          event.address!,
-                                         style: const TextStyle(fontSize: 12, color: Colors.black),
-                                         maxLines: 2, // Aumentado para 2 linhas
+                                         style: TextStyle(fontSize: 12, color: textColor),
+                                         maxLines: 2, 
                                          overflow: TextOverflow.ellipsis,
                                        ),
                                      ),

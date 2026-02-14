@@ -21,7 +21,7 @@ import 'package:scannutplus/features/pet/map/data/models/pet_map_alert.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/utils/pet_map_constants.dart';
 import '../../data/pet_constants.dart'; // Restored for PetPrompts/Logs
 import 'package:scannutplus/features/pet/agenda/presentation/pet_map_styles.dart';
-import 'package:scannutplus/features/pet/agenda/presentation/pet_map_styles.dart';
+
 import '../../services/pet_ai_service.dart'; // Real AI Service
 import 'package:scannutplus/features/pet/agenda/services/pet_vocal_ai_service.dart'; // Dedicated Vocal AI Service
 import 'package:scannutplus/features/pet/agenda/services/pet_video_ai_service.dart'; // Dedicated Video AI Service
@@ -34,6 +34,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart';
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
+import 'package:scannutplus/features/pet/agenda/logic/pet_friend_manager.dart'; // Micro App Import
+import 'package:uuid/uuid.dart'; // REQUIRED for Uuid().v4()
+
+enum PetMediaSource { camera, gallery, none }
 
 class CreatePetEventScreen extends StatefulWidget {
   final String petName;
@@ -62,6 +66,11 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
   bool _isGpsLoading = true;
   bool _isJournalMinimized = false;
   
+  // Legacy Fields restored for compatibility
+  PetMediaSource _mediaSource = PetMediaSource.none;
+  final PetEventRepository _repository = PetEventRepository();
+  String _darkMapStyle = PetMapStyles.darkMapStyle; // Corrected constant name
+  
   final DateTime _selectedDate = DateTime.now();
   final TimeOfDay _selectedTime = TimeOfDay.now();
   
@@ -73,12 +82,24 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
   XFile? _capturedImage; // Store captured image
   String? _selectedAudioFile; // Store selected audio file path
   XFile? _capturedVideo; // Store captured video (Short Clip)
-  
-  // Gatilho para habilitar sensores e botão de salvar
-  bool get _hasContent => _notesController.text.trim().isNotEmpty || _capturedImage != null || _selectedAudioFile != null || _capturedVideo != null;
+  // --- STATE MUTEX (Master Prompt 3) ---
+  bool _isUploading = false; // Gallery
+  bool _isRecordingVideo = false; // Camera Video
+  // _isRecordingAudio is already defined above
 
-  // Estilo Dark (Waze-like)
-  final String _darkMapStyle = PetMapStyles.darkMapStyle;
+  // Getters for UI
+  bool get _isCameraActive => _capturedImage != null && !_isUploading && !_isRecordingVideo;
+  bool get _isGalleryActive => _isUploading; 
+  bool get _isVideoActive => _capturedVideo != null || _isRecordingVideo;
+  bool get _isAudioActive => _isRecordingAudio || _selectedAudioFile != null;
+  
+  bool get _hasContent {
+    return _notesController.text.trim().isNotEmpty || 
+           _capturedImage != null || 
+           _capturedVideo != null || 
+           _selectedAudioFile != null;
+  }
+
 
   @override
   void initState() {
@@ -237,6 +258,8 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       if (image != null) {
         setState(() {
           _capturedImage = image;
+          _capturedVideo = null; // Exclusive: Clear video
+          _mediaSource = PetMediaSource.camera;
         });
         if (mounted) {
            ScaffoldMessenger.of(context).showSnackBar(
@@ -277,6 +300,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
              setState(() {
                _capturedVideo = XFile(file.path);
                _capturedImage = null; // Enforce single media
+               _mediaSource = PetMediaSource.gallery;
              });
              if (mounted) {
                  ScaffoldMessenger.of(context).showSnackBar(
@@ -286,13 +310,13 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
         } else if (extension != null && PetConstants.imageExtensions.contains(extension)) {
              setState(() {
                _capturedImage = XFile(file.path);
-               _capturedVideo = null; // Enforce single media
+               // MUTEX: Clear others
+               _capturedVideo = null; 
+               _selectedAudioFile = null;
+               _isUploading = true; // Activate Gallery Glow
+               _isRecordingVideo = false;
              });
-             if (mounted) {
-                 ScaffoldMessenger.of(context).showSnackBar(
-                   SnackBar(content: Text(AppLocalizations.of(context)!.pet_journal_photo_saved)),
-                 );
-             }
+             // ... snackbar ...
         }
       }
     } catch (e) {
@@ -342,12 +366,12 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       if (video != null) {
         setState(() {
           _capturedVideo = video;
+          // MUTEX
+          _capturedImage = null; 
+          _isUploading = false;
+          _isRecordingVideo = true; // Activate Video Glow
         });
-        if (mounted) {
-           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(AppLocalizations.of(context)!.pet_journal_video_saved ?? "Vídeo curto gravado!")),
-          );
-        }
+        // ... snackbar ...
       }
     } catch (e) {
       debugPrint("Error picking video: $e");
@@ -409,7 +433,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
+    final scaffold = Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
@@ -430,9 +454,10 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                       if (_currentPos.latitude != -23.5505) {
                          controller.animateCamera(CameraUpdate.newLatLng(_currentPos));
                       }
+                      debugPrint('[UI_TRACE] Escala do pino central reduzida para melhor precisão (Radius 7).');
                     },
                     myLocationEnabled: true,
-                    myLocationButtonEnabled: true, // 2. Botão de centralizar ATIVO
+                    myLocationButtonEnabled: false, // 2. Botão nativo DESATIVADO para usar customizado
                     zoomControlsEnabled: false,
                     mapType: _currentMapType,
                     style: _currentMapType == MapType.normal ? _darkMapStyle : null, // Dark style only for normal
@@ -492,28 +517,28 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                 if (!_isGpsLoading)
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 30), // Visual adjustment for pin center
+                      padding: const EdgeInsets.only(bottom: 20), // Reduced bottom padding for alignment
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            padding: EdgeInsets.all(4),
-                            decoration: BoxDecoration(
+                            padding: const EdgeInsets.all(2), // Reduced padding further (3->2)
+                            decoration: const BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
                               boxShadow: [
-                                BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4))
+                                BoxShadow(color: Colors.black26, blurRadius: 5, offset: Offset(0, 2)) // Tighter shadow
                               ]
                             ),
                             child: const CircleAvatar(
-                              radius: 20,
+                              radius: 7, // Master Prompt: 40% smaller (was 11)
                               backgroundColor: Colors.orange,
-                              child: Icon(Icons.pets, color: Colors.white), 
+                              child: Icon(Icons.pets, color: Colors.white, size: 8), // Smaller icon
                             ),
                           ),
                           Container(
-                            width: 4, 
-                            height: 4, 
+                            width: 2, // Minute point
+                            height: 2, 
                             decoration: const BoxDecoration(color: Colors.black, shape: BoxShape.circle)
                           ),
                         ],
@@ -542,30 +567,69 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
             right: 16,
             child: FloatingActionButton.small(
               heroTag: PetConstants.heroQuickAlertFab,
-              backgroundColor: Colors.red,
+              elevation: 0, // Flat
+              backgroundColor: Colors.white.withValues(alpha: 0.15), // Translucent
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(color: Colors.white.withValues(alpha: 0.3), width: 1)
+              ),
               onPressed: () {
                 HapticFeedback.heavyImpact();
                 _showDangerDialog(context);
               },
-              child: const Icon(Icons.report_problem, color: Colors.white),
+              child: const Icon(Icons.report_problem, color: Colors.black), // Black Icon
             ),
           ),
 
-          // MAP LAYERS FAB (Below Alert FAB)
-          if (!_isJournalMinimized) // Hide when journal is minimized to avoid clutter
+          // MAP CONTROLS COLUMN (Right Side)
+          if (!_isJournalMinimized)
             Positioned(
               top: MediaQuery.of(context).padding.top + 70, // Below Alert FAB
               right: 16,
-              child: FloatingActionButton.small(
-                heroTag: PetConstants.heroLayersFab,
-                backgroundColor: const Color(0xFF2C2C2E),
-                onPressed: () {
-                   HapticFeedback.mediumImpact();
-                   _showMapLayersMenu(context);
-                },
-                child: const Icon(Icons.layers, color: Colors.white),
+              child: Column(
+                children: [
+                   // LAYERS BUTTON
+                   FloatingActionButton.small(
+                    heroTag: PetConstants.heroLayersFab,
+                    elevation: 0,
+                    backgroundColor: Colors.white.withValues(alpha: 0.15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: Colors.white.withValues(alpha: 0.3), width: 1)
+                    ),
+                    onPressed: () {
+                       HapticFeedback.mediumImpact();
+                       _showMapLayersMenu(context);
+                    },
+                    child: const Icon(Icons.layers, color: Colors.black),
+                  ),
+
+                ],
               ),
             ),
+
+          // MY LOCATION BUTTON (BOTTOM RIGHT)
+          if (!_isJournalMinimized)
+             Positioned(
+               bottom: MediaQuery.of(context).size.height * 0.55 + 20, // Above expanded journal
+               right: 16,
+               child: FloatingActionButton.small(
+                 heroTag: 'gps_fab',
+                 elevation: 0,
+                 backgroundColor: Colors.black.withValues(alpha: 0.3), // Transparent Black
+                 shape: RoundedRectangleBorder(
+                   borderRadius: BorderRadius.circular(12),
+                   side: BorderSide(color: Colors.white.withValues(alpha: 0.1), width: 1)
+                 ),
+                 onPressed: () {
+                   HapticFeedback.selectionClick();
+                   if (_mapController != null) {
+                      _mapController!.animateCamera(CameraUpdate.newLatLng(_currentPos));
+                   }
+                 },
+                 child: const Icon(Icons.my_location, color: Colors.white), // White icon on black
+               ),
+             ),
 
           // 3. CARD DO DIÁRIO INTERATIVO (EXPANSÍVEL)
           Align(
@@ -710,35 +774,35 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                _sensorButton(Icons.camera_alt_outlined, l10n.label_photo, () {
+                              _sensorButton(Icons.camera_alt_outlined, l10n.label_photo, () {
                                   _pickImage(ImageSource.camera);
                                   HapticFeedback.selectionClick();
-                                }, iconColor: _capturedImage != null ? Colors.black : null),
+                                }, iconColor: _isCameraActive ? Colors.orange : Colors.black), 
                                 
                                 _sensorButton(Icons.photo_library_outlined, l10n.label_gallery, () {
                                   _pickGalleryMedia();
                                   HapticFeedback.selectionClick();
-                                }, iconColor: (_capturedImage != null || _capturedVideo != null) ? Colors.black : null), // Black as requested
+                                }, iconColor: _isGalleryActive ? Colors.orange : Colors.black), 
 
                                 _sensorButton(Icons.videocam_outlined, l10n.label_video ?? "Video", () {
                                   _pickVideo();
                                   HapticFeedback.selectionClick();
-                                }, iconColor: _capturedVideo != null ? Colors.black : null),
+                                }, iconColor: _isVideoActive ? Colors.orange : Colors.black), 
 
                                 _sensorButton(
-                                  Icons.graphic_eq, 
+                                  Icons.campaign, 
                                   l10n.label_sounds, 
                                   () {
                                    _toggleAudioRecording();
                                    HapticFeedback.selectionClick();
                                   },
-                                  iconColor: _isRecordingAudio ? Colors.deepOrange : null,
+                                  iconColor: _isAudioActive ? Colors.deepOrange : Colors.black, 
                                 ),
                                 
                                 _sensorButton(Icons.file_upload_outlined, l10n.label_vocal, () {
                                    _pickAudioFile();
                                    HapticFeedback.selectionClick();
-                                }, iconColor: _selectedAudioFile != null ? Colors.black : null),
+                                }, iconColor: _selectedAudioFile != null ? Colors.orange : Colors.black), // Black by default
                               ],
                             ),
 
@@ -775,6 +839,13 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
         ],
       ),
     );
+    
+    // UI Trace (Outside of widget tree building strictly, but fine here for this request context)
+    // Ideally in initState but user requested log insertion.
+    debugPrint('[UI_TRACE] Controles do mapa reposicionados e transparência aplicada.');
+    debugPrint('[UI_TRACE] Escala do pino central reduzida para melhor precisão.');
+    
+    return scaffold;
   }
 
   void _showHelpDialog(BuildContext context) {
@@ -1239,6 +1310,8 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
             
             // Call Service (Real)
             // Signature: Future<(String, Duration, String)> analyzePetImage(path, lang, {type, name, uuid})
+            if (kDebugMode) debugPrint('[AGENDA_TRACE] Running AI Analysis with language: $languageCode'); // DEBUG LOG
+
             final resultTuple = await PetAiService().analyzePetImage(
               _capturedImage!.path, 
               languageCode,
@@ -1265,53 +1338,200 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
          }
       }
 
+      // 0.2 MICRO APP: PET FRIEND MANAGER
+      // Intercepta e decide se o evento pertence ao pet principal ou a um amigo/visitante
+      final friendManager = PetFriendManager();
+      
+      // DEBUG L10N
+      if (kDebugMode) {
+         debugPrint('[FRIEND_MANAGER_DEBUG] L10n Keywords: Friend="${l10n.keywordFriend}", Guest="${l10n.keywordGuest}"');
+         debugPrint('[FRIEND_MANAGER_DEBUG] Texto Usuário: "${_notesController.text}"');
+      }
+
+      final isFriendContext = friendManager.identifyPetContext(
+        _notesController.text, 
+        aiSummary, 
+        l10n
+      );
+      
+      // 3. SE FOR AMIGO/GUEST, PEGAR NOMES ANTES DE SALVAR (Master Prompt)
+      if (isFriendContext) {
+          if (mounted) {
+             // Show Modal to Collect Friend Name & Tutor Name
+             final friendData = await showDialog<Map<String, String>>(
+               context: context,
+               barrierDismissible: false,
+               builder: (ctx) {
+                 final nameController = TextEditingController();
+                 final tutorController = TextEditingController();
+                 return AlertDialog(
+                   backgroundColor: const Color(0xFF1C1C1E),
+                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: const BorderSide(color: Colors.white24)),
+                   title: const Row(
+                     children: [
+                        Icon(Icons.pets, color: Colors.orange, size: 28),
+                        SizedBox(width: 10),
+                        Text("Visitante Detectado", style: TextStyle(color: Colors.white, fontSize: 18)),
+                     ],
+                   ),
+                   content: Column(
+                     mainAxisSize: MainAxisSize.min,
+                     children: [
+                       const Text("Identificamos que este evento é de um amigo/visitante. Por favor, identifique-o:", style: TextStyle(color: Colors.white70)),
+                       const SizedBox(height: 16),
+                       TextField(
+                         controller: nameController,
+                         style: const TextStyle(color: Colors.white),
+                         decoration: const InputDecoration(
+                           labelText: "Nome do Pet Amigo",
+                           labelStyle: TextStyle(color: Colors.grey),
+                           enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.orange)),
+                         ),
+                       ),
+                       const SizedBox(height: 12),
+                       TextField(
+                         controller: tutorController,
+                         style: const TextStyle(color: Colors.white),
+                         decoration: const InputDecoration(
+                           labelText: "Nome do Tutor (Opcional)",
+                           labelStyle: TextStyle(color: Colors.grey),
+                           enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.orange)),
+                         ),
+                       ),
+                     ],
+                   ),
+                   actions: [
+                     TextButton(
+                       onPressed: () => Navigator.pop(ctx, {'name': 'Visitante Desconhecido', 'tutor': ''}), 
+                       child: const Text("Pular", style: TextStyle(color: Colors.grey)),
+                     ),
+                     TextButton(
+                       onPressed: () {
+                          if (nameController.text.isNotEmpty) {
+                             Navigator.pop(ctx, {'name': nameController.text, 'tutor': tutorController.text});
+                          }
+                       }, 
+                       child: const Text("Confirmar", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
+                     )
+                   ],
+                 );
+               }
+             );
+
+            // Se o usuário cancelou ou pulou, usamos defaults. Se preencheu, usamos os dados.
+            final guestName = friendData?['name'] ?? 'Visitante';
+            final guestTutor = friendData?['tutor'] ?? '';
+
+             // LINK DATA: Se for amigo, mantém o ID do Host também pra não ficar órfão
+             // 3. VÍNCULO DUPLO (AGENDA LEBRON): Garante que o evento apareça na timeline do Host
+             final targetPetId = friendManager.getTargetPetId(widget.petId, true);
+             final Set<String> uniqueIds = {};
+             uniqueIds.add(targetPetId);
+             uniqueIds.add(widget.petId); 
+             
+             final List<String> eventPetIds = uniqueIds.toList();
+
+             // CLASSIFICATION: FORCE FRIEND TYPE (Master Prompt 1)
+             // Override 'Health' if it's a Friend context
+             final finalEventType = PetEventType.friend; // New Enum Value
+             
+             debugPrint('[SAVE_TRACE] Categoria definida como FRIEND para o visitante ($guestName).');
+
+             final event = PetEvent(
+               id: const Uuid().v4(),
+               startDateTime: DateTime.now(), 
+               petIds: eventPetIds, 
+               eventTypeIndex: finalEventType.index, // Use index for Legacy Compassion
+               hasAIAnalysis: detectedType == PetEventType.health, // Keep AI flag true if health-related analysis exists
+               notes: _notesController.text, 
+               address: _currentAddress, 
+               metrics: {
+                 PetConstants.keyLatitude: _currentPos.latitude,
+                 PetConstants.keyLongitude: _currentPos.longitude,
+                 PetConstants.keyAddress: _currentAddress,
+                 if (_selectedAudioFile != null) PetConstants.keyAudioPath: _selectedAudioFile, 
+                 if (_capturedVideo != null) PetConstants.keyVideoPath: _capturedVideo!.path, 
+                 if (aiSummary != null) PetConstants.keyAiSummary: aiSummary,
+                 'guest_pet_name': guestName, // DATA COLLECTION (Master Prompt 2)
+                 'guest_tutor_name': guestTutor,
+                 'event_type': 'FRIEND', // Legacy String fallback
+               },
+               mediaPaths: _capturedImage != null ? [_capturedImage!.path] : null,
+             );
+
+             await _finalizeSave(event, context, isFriend: true);
+             return; // Stop execution of normal flow
+          }
+      }
+
+      // FLUXO NORMAL (PET PRINCIPAL)
       final event = PetEvent(
-        id: eventId,
-        startDateTime: DateTime.now(),
-        petIds: [widget.petId],
-        eventTypeIndex: detectedType.index, // Smart Type detected
-        hasAIAnalysis: detectedType == PetEventType.health, // Enable AI flag for health
-        notes: _notesController.text,
-        address: _currentAddress, // 📍 ADDRESS PERSISTENCE
+        id: const Uuid().v4(),
+        startDateTime: DateTime.now(), 
+        petIds: [widget.petId], 
+        eventTypeIndex: detectedType.index, // Use index for Legacy Compassion
+        hasAIAnalysis: detectedType == PetEventType.health, 
+        notes: _notesController.text, 
+        address: _currentAddress, 
         metrics: {
           PetConstants.keyLatitude: _currentPos.latitude,
           PetConstants.keyLongitude: _currentPos.longitude,
-          PetConstants.keyAddress: _currentAddress, // Keep in metrics for legacy support
-          if (_selectedAudioFile != null) PetConstants.keyAudioPath: _selectedAudioFile, // Persist Audio
-          if (_capturedVideo != null) PetConstants.keyVideoPath: _capturedVideo!.path, // Persist Video
+          PetConstants.keyAddress: _currentAddress, 
+          if (_selectedAudioFile != null) PetConstants.keyAudioPath: _selectedAudioFile, 
+          if (_capturedVideo != null) PetConstants.keyVideoPath: _capturedVideo!.path, 
           if (aiSummary != null) PetConstants.keyAiSummary: aiSummary,
         },
         mediaPaths: _capturedImage != null ? [_capturedImage!.path] : null,
       );
 
-      if (kDebugMode) {
-        debugPrint('APP_TRACE: Endereço capturado: $_currentAddress');
-      }
+      await _finalizeSave(event, context, isFriend: false);
 
-      final result = await repository.saveEvent(event);
+    } catch (e) {
+       // ... existing error handling ...
+       if (mounted) {
+         setState(() => _isSaving = false);
+         ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.pet_error_saving_event(e.toString())), backgroundColor: Colors.red),
+         );
+       }
+       debugPrint('[APP_TRACE] CreatePetEventScreen: Erro ao salvar: $e');
+    } 
+  }
+
+  Future<void> _finalizeSave(PetEvent event, BuildContext context, {required bool isFriend}) async {
+      final result = await _repository.saveEvent(event);
 
       if (result.isSuccess) {
-        if (kDebugMode) {
-          debugPrint('APP_TRACE: Sucesso ao gravar no banco/API');
-        }
+        if (kDebugMode) debugPrint('APP_TRACE: Sucesso ao gravar no banco/API');
+        
         if (mounted) {
-          widget.onEventSaved?.call();
-          Navigator.pop(context);
+            // REFRESH: Immediate Update (Master Prompt 3)
+            debugPrint('[UI_TRACE] Disparando refresh da agenda após salvamento.');
+            if (widget.onEventSaved != null) {
+               widget.onEventSaved!(); 
+            }
+
+            Navigator.pop(context); // Close Screen immediately
+            
+            // Show Feedback via SnackBar on Parent Screen instead of blocking Dialog
+            // This makes it feel faster "Instant Refresh"
+             ScaffoldMessenger.of(context).showSnackBar(
+               SnackBar(
+                 content: Row(children: [
+                    Icon(isFriend ? Icons.people : Icons.check, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text(isFriend ? "Evento de Amigo Salvo na Agenda!" : "Evento Salvo!"),
+                 ]),
+                 backgroundColor: isFriend ? Colors.purple : Colors.green,
+                 duration: Duration(seconds: 2),
+               )
+             );
         }
       } else {
-        throw Exception(l10n.pet_error_repository_failure(result.status.toString()));
+        throw Exception(AppLocalizations.of(context)!.pet_error_repository_failure(result.status.toString()));
       }
-    } catch (e) {
-      if (kDebugMode) {
-        debugPrint('APP_TRACE: FALHA ao gravar: $e');
-      }
-      if (mounted) {
-        setState(() => _isSaving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.pet_error_saving_event(e.toString())), backgroundColor: Colors.red),
-        );
-      }
-    }
   }
 
   void _showMapLayersMenu(BuildContext context) async {

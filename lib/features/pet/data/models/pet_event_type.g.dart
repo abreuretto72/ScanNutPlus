@@ -25,6 +25,8 @@ class PetEventTypeAdapter extends TypeAdapter<PetEventType> {
         return PetEventType.activity;
       case 5:
         return PetEventType.other;
+      case 6:
+        return PetEventType.friend;
       default:
         return PetEventType.food;
     }
@@ -50,6 +52,9 @@ class PetEventTypeAdapter extends TypeAdapter<PetEventType> {
         break;
       case PetEventType.other:
         writer.writeByte(5);
+        break;
+      case PetEventType.friend:
+        writer.writeByte(6);
         break;
     }
   }

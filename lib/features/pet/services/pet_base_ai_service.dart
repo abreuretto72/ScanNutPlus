@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:developer' as dev; // Telemetry
 import 'package:flutter/foundation.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // Added for Env access
 import 'package:scannutplus/core/services/env_service.dart';
 import 'package:scannutplus/core/constants/app_keys.dart';
 import 'package:scannutplus/core/constants/ai_prompts.dart';
@@ -239,25 +240,36 @@ abstract class PetBaseAiService {
 
   Future<void> _loadConfig() async {
     try {
-      // Try Remote Config First
-      // Using generic http get
-      final url = Uri.parse(PetConstants.remoteConfigUrl);
-      final response = await http.get(url).timeout(const Duration(seconds: 10)); // Increased from 5s to 10s
+      // Try Remote Config First (Env or Constant)
+      final envBase = dotenv.env['SITE_BASE_URL'];
+      String targetUrl;
+
+      if (envBase != null && envBase.isNotEmpty) {
+          // Master Prompt: Construct explicit path using SITE_BASE_URL
+          final base = envBase.endsWith('/') ? envBase.substring(0, envBase.length - 1) : envBase;
+          targetUrl = '$base/config/food_config.json';
+      } else {
+          targetUrl = PetConstants.remoteConfigUrl;
+      }
+      
+      final url = Uri.parse(targetUrl);
+      final response = await http.get(url).timeout(const Duration(seconds: 10)); 
       
       if (response.statusCode == 200) {
         final config = json.decode(response.body);
-        _activeModelName = config[PetConstants.fieldActiveModel] ?? _activeModelName;
-        // Force v1 if remote tries v1beta, or just use config. But here we safeguard.
-        // Actually, we should just let remote decide, but user said FORCE v1.
-        // I will just ignore remote endpoint if it is v1beta? No, let's just make sure we request stable.
-        // The google_generative_ai package usually handles versions via constructor or internal constants.
-        // Wait, the package `google_generative_ai` might default to v1beta.
-        // To force v1, we might need a newer package version or configuration.
-        // But the prompt says "Force usage of v1... for calls...".
-        // Let's assume `_apiEndpoint` variable was being used loosely.
-        _apiEndpoint = config[PetConstants.fieldApiEndpoint] ?? _apiEndpoint;
         
-        if (kDebugMode) debugPrint('${PetConstants.logTagPetAi}: Remote Config Loaded: $_activeModelName');
+        // Protocol: Prioritize 'model_id' as per Architect instructions
+        if (config['model_id'] != null) {
+           _activeModelName = config['model_id'];
+        } else {
+           // Fallback to legacy key if model_id missing
+           _activeModelName = config[PetConstants.fieldActiveModel] ?? _activeModelName;
+        }
+
+        // debugPrint to Console for Validation
+        debugPrint('[CONFIG_TRACE] Modelo de Imagem coletado do servidor: $_activeModelName');
+        
+        if (kDebugMode) debugPrint('${PetConstants.logTagPetAi}: Remote Config Loaded from $targetUrl');
         return;
       }
     } catch (e) {

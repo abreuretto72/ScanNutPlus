@@ -1,6 +1,0 @@
-Analyzing pet_history_screen.dart...                            
-
-   info - The import of 'package:objectbox/objectbox.dart' is unnecessary because all of the used elements are also provided by the import of 'package:scannutplus/objectbox.g.dart' - lib\features\pet\presentation\history\pet_history_screen.dart:1:8 - unnecessary_import
-   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_screen.dart:89:118 - unnecessary_underscores
-   info - Unnecessary use of multiple underscores - lib\features\pet\presentation\history\pet_history_screen.dart:89:121 - unnecessary_underscores
-

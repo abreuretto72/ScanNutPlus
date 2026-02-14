@@ -652,5 +652,8 @@
   "label_video": "Video",
   "label_vocal": "Vocal",
   "error_file_too_large": "File too large (Max 30MB).",
-  "error_video_too_long": "Video too long (Max 60s)."
+  "error_video_too_long": "Video too long (Max 60s).",
+  "keywordFriend": "friend,visitor,guest,other dog,neighbor's dog",
+  "keywordGuest": "guest,visitor,stranger",
+  "pet_agenda_view_calendar": "View Calendar"
 }

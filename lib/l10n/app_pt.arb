@@ -654,5 +654,8 @@
   "label_video": "Vídeo",
   "label_vocal": "Vocal",
   "error_file_too_large": "Arquivo muito grande (Máx 30MB).",
-  "error_video_too_long": "Vídeo muito longo (Máx 60s)."
+  "error_video_too_long": "Vídeo muito longo (Máx 60s).",
+  "keywordFriend": "amigo,visitante,hóspede,outro cachorro,cachorro do vizinho",
+  "keywordGuest": "convidado,visitante,estranho",
+  "pet_agenda_view_calendar": "Ver Calendário"
 }

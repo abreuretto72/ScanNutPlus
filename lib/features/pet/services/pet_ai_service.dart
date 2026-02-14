@@ -175,7 +175,7 @@ class PetAiService extends PetBaseAiService {
       }
       // ------------------------------------
 
-      final contextInstruction = _getContextInstruction(type);
+      final contextInstruction = _getLanguageInstruction(languageCode) + _getContextInstruction(type);
       final String analysisType = _mapTypeToAnalysis(type);
       
       if (kDebugMode) {
@@ -268,6 +268,16 @@ class PetAiService extends PetBaseAiService {
       case PetImageType.newProfile:
         return ''; 
     }
+  }
+
+  /// Appends language instruction to ensure localized response
+  String _getLanguageInstruction(String languageCode) {
+    if (languageCode.toLowerCase().startsWith('pt')) {
+      return 'RESPONDER EM PORTUGUÊS (PT-BR). ';
+    } else if (languageCode.toLowerCase().startsWith('es')) {
+      return 'RESPONDER EN ESPAÑOL. ';
+    }
+    return 'RESPOND IN ENGLISH. ';
   }
 }
 

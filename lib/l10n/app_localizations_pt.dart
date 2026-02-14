@@ -1781,4 +1781,14 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get error_video_too_long => 'Vídeo muito longo (Máx 60s).';
+
+  @override
+  String get keywordFriend =>
+      'amigo,visitante,hóspede,outro cachorro,cachorro do vizinho';
+
+  @override
+  String get keywordGuest => 'convidado,visitante,estranho';
+
+  @override
+  String get pet_agenda_view_calendar => 'Ver Calendário';
 }
