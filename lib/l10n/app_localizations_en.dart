@@ -871,7 +871,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_module_nutrition => 'Nutrition & Label Analysis';
 
   @override
-  String get pet_module_ophthalmology => 'Eyes & Ears Analysis';
+  String get pet_module_ophthalmology => 'Ophthalmology (Eyes)';
 
   @override
   String get pet_module_physique => 'Body Condition & Weight';
@@ -1785,4 +1785,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pet_agenda_view_calendar => 'View Calendar';
+
+  @override
+  String get pet_module_dentistry_programs => 'Tartar, Gums, Broken Teeth';
+
+  @override
+  String get pet_module_dermatology_programs =>
+      'Alopecia, Dermatitis, Wounds, Parasites';
+
+  @override
+  String get pet_module_gastro_programs =>
+      'Consistency, Color, Parasites, Blood';
+
+  @override
+  String get pet_module_ears => 'Ears';
+
+  @override
+  String get pet_module_ophthalmology_programs =>
+      'Discharge, Redness, Cataracts, Spots';
+
+  @override
+  String get pet_module_otology_programs => 'Wax, Itching, Odor, Redness';
+
+  @override
+  String get pet_module_physique_programs =>
+      'Body Condition Score, Muscle Mass, Obesity';
+
+  @override
+  String get pet_module_lab_programs =>
+      'Blood Count, Biochemistry, Urine, Stool';
+
+  @override
+  String get pet_module_nutrition_programs =>
+      'Ingredients, Guaranteed Analysis, Calories, Serving Size';
+
+  @override
+  String get pet_module_vocal => 'Vocalization';
+
+  @override
+  String get pet_module_vocal_programs => 'Barks, Coughs, Panting, Meows';
+
+  @override
+  String get pet_module_behavior => 'Behavior (Video)';
+
+  @override
+  String get pet_module_behavior_programs =>
+      'Barking + Posture, Anxiety, Aggression';
+
+  @override
+  String get pet_module_plant => 'Plants (Toxicity)';
+
+  @override
+  String get pet_module_plant_programs =>
+      'Identification, Toxicity, Plant Health, Care Tips';
+
+  @override
+  String get action_record_video_audio => 'Record Audio/Video';
+
+  @override
+  String get action_select_audio => 'Select Audio';
+
+  @override
+  String get action_upload_video_audio => 'Upload File';
+
+  @override
+  String get pet_mode_my_pet => 'My Pet';
+
+  @override
+  String get pet_mode_friend => 'Friend Pet';
+
+  @override
+  String get pet_label_tutor => 'Tutor Name';
+
+  @override
+  String get pet_hint_select_friend => 'Select a Friend';
+
+  @override
+  String get pet_new_friend_option => 'New Friend';
+
+  @override
+  String get pet_friend_list_label => 'Friend List';
+
+  @override
+  String get pet_error_fill_friend_fields => 'Please fill all Friend fields';
+
+  @override
+  String pet_result_title_my_pet(Object name) {
+    return 'My Pet: $name';
+  }
+
+  @override
+  String pet_result_title_friend_pet(Object name, Object tutor) {
+    return 'Friend Pet: $name (Tutor: $tutor)';
+  }
+
+  @override
+  String get pet_action_edit_friend => 'Edit Friend';
+
+  @override
+  String get pet_action_delete_friend => 'Delete Friend';
+
+  @override
+  String get pet_msg_confirm_delete_friend =>
+      'Are you sure you want to delete this friend?';
+
+  @override
+  String get pet_msg_friend_updated => 'Friend updated successfully!';
+
+  @override
+  String get pet_msg_friend_deleted => 'Friend deleted successfully!';
+
+  @override
+  String get pet_dialog_edit_title => 'Edit Friend Pet';
+
+  @override
+  String get pet_plant_toxic => 'TOXIC ⚠️';
+
+  @override
+  String get pet_plant_safe => 'SAFE ✅';
 }

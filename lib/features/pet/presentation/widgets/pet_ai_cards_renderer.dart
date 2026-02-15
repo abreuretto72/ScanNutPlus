@@ -139,13 +139,18 @@ class PetAiCardsRenderer extends StatelessWidget {
       
       final title = RegExp(PetConstants.regexTitle).firstMatch(body)?.group(1) ?? PetConstants.keyAnalyse;
       final content = RegExp(PetConstants.regexContent, dotAll: true).firstMatch(body)?.group(1) ?? '';
+      
+      // [SANITIZER] Remove structural tags from the content to be displayed
+      final cleanContent = content.replaceAll(RegExp(r'(ICON:|CONTENT:)'), '').trim();
+
       final iconName = RegExp(PetConstants.regexIcon).firstMatch(body)?.group(1) ?? PetConstants.keyInfo;
 
-      if (content.isEmpty && body.contains(PetConstants.tagContent)) {
-         final fallbackContent = body.split(PetConstants.tagContent).last.trim();
+      if (cleanContent.isEmpty && body.contains(PetConstants.tagContent)) {
+         var fallbackContent = body.split(PetConstants.tagContent).last.trim();
+         fallbackContent = fallbackContent.replaceAll(RegExp(r'(ICON:|CONTENT:)'), '').trim();
          blocks.add(_AnalysisBlock(title: title.trim(), content: fallbackContent, icon: _getIconData(iconName.trim())));
-      } else if (content.isNotEmpty) {
-         blocks.add(_AnalysisBlock(title: title.trim(), content: content.trim(), icon: _getIconData(iconName.trim())));
+      } else if (cleanContent.isNotEmpty) {
+         blocks.add(_AnalysisBlock(title: title.trim(), content: cleanContent, icon: _getIconData(iconName.trim())));
       } else {
          if (body.length > 20) {
              blocks.add(_AnalysisBlock(title: title.trim(), content: body.replaceAll(RegExp(PetConstants.regexTitleIcon), '').trim(), icon: _getIconData(iconName.trim())));

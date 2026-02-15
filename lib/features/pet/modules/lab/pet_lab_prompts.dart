@@ -43,9 +43,11 @@ ${PetConstants.tagSources}
 ${PetConstants.tagEndSources}
 
 **Directives:**
-- VISUAL TRUTH: Use the image evidence.
 - ${PetPrompts.truthDirective}
 - ${PetPrompts.noMarkdown}
+
+**3. LANGUAGE CONSTRAINT (CRITICAL)**
+OUTPUT THE FINAL REPORT STRICTLY IN LANGUAGE: $languageCode.
 ''';
   }
 }

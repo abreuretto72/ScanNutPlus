@@ -17,3 +17,9 @@ git tag v1.0.9
 git push origin v1.0.9
 git tag -a v1.1.0 -m "Activity Calendar, Friend Logic & Map UI Refinement"
 git push origin v1.1.0
+git tag -a v1.1.1 -m "Universal AI Architecture, Strict Language Sync & Stability Protocol Finalization"
+git push origin v1.1.1
+git tag -a v1.1.2 -m "Universal AI Integration (New Pet Flow), Universal Result View & Regex Parsing Fix"
+git push origin v1.1.2
+git tag -a v1.1.3 -m "Friend Pet Management, History Localization Fix, Plant/Vocal Analysis & Stability Improvements"
+git push origin v1.1.3

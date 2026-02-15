@@ -157,7 +157,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(5, 1343406732095717703),
       name: 'PetEntity',
-      lastPropertyId: const obx_int.IdUid(20, 123601156119929355),
+      lastPropertyId: const obx_int.IdUid(21, 8500998657030593451),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -259,6 +259,11 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(20, 123601156119929355),
             name: 'registryId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(21, 8500998657030593451),
+            name: 'tutorName',
             type: 9,
             flags: 0)
       ],
@@ -821,7 +826,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final registryIdOffset = object.registryId == null
               ? null
               : fbb.writeString(object.registryId!);
-          fbb.startTable(21);
+          final tutorNameOffset = object.tutorName == null
+              ? null
+              : fbb.writeString(object.tutorName!);
+          fbb.startTable(22);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, uuidOffset);
           fbb.addOffset(2, nameOffset);
@@ -842,6 +850,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(17, clinicalNotesOffset);
           fbb.addOffset(18, microchipOffset);
           fbb.addOffset(19, registryIdOffset);
+          fbb.addOffset(20, tutorNameOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -856,6 +865,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 6, '');
           final nameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGetNullable(buffer, rootOffset, 8);
+          final tutorNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 44);
           final breedParam = const fb.StringReader(asciiOptimization: true)
               .vTableGetNullable(buffer, rootOffset, 10);
           final speciesParam = const fb.StringReader(asciiOptimization: true)
@@ -900,6 +911,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               id: idParam,
               uuid: uuidParam,
               name: nameParam,
+              tutorName: tutorNameParam,
               breed: breedParam,
               species: speciesParam,
               imagePath: imagePathParam,
@@ -1457,6 +1469,10 @@ class PetEntity_ {
   /// See [PetEntity.registryId].
   static final registryId =
       obx.QueryStringProperty<PetEntity>(_entities[3].properties[19]);
+
+  /// See [PetEntity.tutorName].
+  static final tutorName =
+      obx.QueryStringProperty<PetEntity>(_entities[3].properties[20]);
 
   /// see [PetEntity.metrics]
   static final metrics =

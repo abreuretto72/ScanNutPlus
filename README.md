@@ -103,11 +103,28 @@ Este projeto segue rigorosamente o "Pilar 0":
 3.  **Auditoria Contínua:** Scripts Python (`audit_pilar0.py`) garantem a conformidade do código antes de cada build.
 4.  **Resiliência:** Tratamento de erros com feedback visual claro (Verde/Vermelho/Amarelo) e falha graciosa.
 
-### Protocolo de Estabilidade e Anti-Crash (v1.0.5)
+### Protocolo de Estabilidade e Anti-Crash (v1.1.1 - Final)
+- **Universal AI Engine**: Implementação dos motores unificados `UniversalAiService` (Análise Clínica) e `UniversalOcrService` (OCR Laboratorial).
+- **Strict Fallback**: Garantia de fallback para `gemini-2.5-pro` em caso de falha de conexão.
+- **Dynamic Language Sync**: Sincronização estrita do idioma da IA com o `languageCode` do dispositivo em todos os 7 módulos médicos.
+- **Visual Sanitization**: Limpeza automática de tags técnicas (`ICON:`, `CONTENT:`) na camada de visualização.
 - **Global Error Boundary**: `runZonedGuarded` em todo o ciclo de vida do app.
-- **Fail-Fast**: Timeouts de rede reduzidos para 60s.
-- **Memory Safety**: Evicção agressiva de cache de imagens de alta resolução.
-- **Feedback Amigável**: Substituição da "Tela Vermelha da Morte" por UI amigável e mensagens de sobrecarga de IA traduzidas.
+- **Fail-Fast**: Timeouts de rede reduzidos e tratamentos de erro graciosos.
+
+### Universal AI Integration (v1.1.2)
+- **New Engine**: `UniversalAiService` activated for new pet registrations.
+- **Enhanced UI**: `UniversalResultView` with dynamic card parsing and structured health reports.
+- **Robustness**: Improved Regex parsing for AI responses to handle cross-platform line endings.
+
+### Stability & Feature Expansion (v1.1.3)
+- **Friend Pet Management**: Full CRUD (Create, Read, Update, Delete) for friend pets.
+- **History Refinement**: Correct localization of history cards ("Plant Check" -> "Nome da Planta", etc.).
+- **New Modules**:
+  - **Plant Toxicity**: Identification + Toxic/Safe Icon + Metadata Extraction.
+  - **Vocalization**: Audio/Video analysis for coughs, barks, and distress signals.
+  - **Behavior**: Video analysis for gait, posture, and neurological signs.
+- **Deep Metadata Search**: Extraction of scientific names and details even from generic AI titles.
+- **Audio Support**: Native audio file picking (.mp3, .wav) and visual waveform representation.
 
 ---
 

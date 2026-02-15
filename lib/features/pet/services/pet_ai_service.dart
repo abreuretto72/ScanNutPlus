@@ -236,6 +236,7 @@ class PetAiService extends PetBaseAiService {
         case PetImageType.stool: return PetConstants.typeClinical;
         case PetImageType.mouth: return PetConstants.typeClinical;
         case PetImageType.eyes: return PetConstants.typeClinical;
+        case PetImageType.ears: return PetConstants.typeClinical;
         case PetImageType.skin: return PetConstants.typeClinical;
         // Add remaining cases or default
         default: return PetConstants.typeClinical;
@@ -251,7 +252,8 @@ class PetAiService extends PetBaseAiService {
       case PetImageType.mouth:
         return AiPrompts.contextMouth;
       case PetImageType.eyes:
-        return AiPrompts.contextEyes;
+      case PetImageType.ears:
+        return AiPrompts.contextEyes; // Shared or separate context? I'll use separate string literal if needed or reuse for now, checking logic.
       case PetImageType.skin:
         return AiPrompts.contextSkin;
       case PetImageType.label:
@@ -264,8 +266,13 @@ class PetAiService extends PetBaseAiService {
       case PetImageType.profile:
       case PetImageType.posture:
         return AiPrompts.contextPosture; 
+      case PetImageType.behavior:
+        return 'Behavioral Analysis (Video): Observe gait, posture, circling, head pressing, AND listen to vocalizations.';
+      case PetImageType.plantCheck:
+        return 'Plant Analysis: Identify species, check TOXICITY for the pet, assess plant health.';
       case PetImageType.safety:
       case PetImageType.newProfile:
+      case PetImageType.vocal:
         return ''; 
     }
   }

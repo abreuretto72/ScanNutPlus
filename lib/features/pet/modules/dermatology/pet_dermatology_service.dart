@@ -40,6 +40,7 @@ class PetDermatologyService extends PetBaseAiService {
 
       // Localized Feedback
       final l10n = lookupAppLocalizations(Locale(languageCode));
+      debugPrint('[LANG_TRACE] Idioma detetado no telemóvel: $languageCode | Enviando para a IA: $languageCode');
       
       // Construct specialized prompt
       final systemPrompt = PetDermatologyPrompts.buildSystemPrompt(

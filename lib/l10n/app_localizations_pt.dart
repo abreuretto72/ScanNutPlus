@@ -872,7 +872,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_module_nutrition => 'Análise de Rótulos e Alimentos';
 
   @override
-  String get pet_module_ophthalmology => 'Análise de Olhos e Ouvidos';
+  String get pet_module_ophthalmology => 'Oftalmologia (Olhos)';
 
   @override
   String get pet_module_physique => 'Condição Corporal e Peso (ECC)';
@@ -1791,4 +1791,123 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_agenda_view_calendar => 'Ver Calendário';
+
+  @override
+  String get pet_module_dentistry_programs =>
+      'Tártaro, Gengivas, Dentes Quebrados';
+
+  @override
+  String get pet_module_dermatology_programs =>
+      'Alopecia, Dermatite, Feridas, Parasitas';
+
+  @override
+  String get pet_module_gastro_programs =>
+      'Consistência, Cor, Parasitas, Sangue';
+
+  @override
+  String get pet_module_ears => 'Ouvidos';
+
+  @override
+  String get pet_module_ophthalmology_programs =>
+      'Secreção, Vermelhidão, Catarata, Manchas';
+
+  @override
+  String get pet_module_otology_programs => 'Cera, Coceira, Odor, Vermelhidão';
+
+  @override
+  String get pet_module_physique_programs =>
+      'Escore Corporal, Massa Muscular, Obesidade';
+
+  @override
+  String get pet_module_lab_programs => 'Hemograma, Bioquímico, Urina, Copro';
+
+  @override
+  String get pet_module_nutrition_programs =>
+      'Ingredientes, Níveis de Garantia, Calorias, Porção';
+
+  @override
+  String get pet_module_vocal => 'Vocalização';
+
+  @override
+  String get pet_module_vocal_programs => 'Latidos, Tosses, Respiração, Miados';
+
+  @override
+  String get pet_module_behavior => 'Comportamento (Vídeo)';
+
+  @override
+  String get pet_module_behavior_programs =>
+      'Latidos + Postura, Ansiedade, Agressividade';
+
+  @override
+  String get pet_module_plant => 'Plantas (Toxicidade)';
+
+  @override
+  String get pet_module_plant_programs =>
+      'Identificação, Toxicidade, Saúde da Planta, Cuidados';
+
+  @override
+  String get action_record_video_audio => 'Gravar Áudio/Vídeo';
+
+  @override
+  String get action_select_audio => 'Selecionar Áudio';
+
+  @override
+  String get action_upload_video_audio => 'Carregar Arquivo';
+
+  @override
+  String get pet_mode_my_pet => 'Meu Pet';
+
+  @override
+  String get pet_mode_friend => 'Pet Amigo';
+
+  @override
+  String get pet_label_tutor => 'Nome do Tutor';
+
+  @override
+  String get pet_hint_select_friend => 'Selecione um Amigo';
+
+  @override
+  String get pet_new_friend_option => 'Novo Amigo';
+
+  @override
+  String get pet_friend_list_label => 'Lista de Amigos';
+
+  @override
+  String get pet_error_fill_friend_fields =>
+      'Por favor, preencha todos os campos do amigo';
+
+  @override
+  String pet_result_title_my_pet(Object name) {
+    return 'Meu Pet: $name';
+  }
+
+  @override
+  String pet_result_title_friend_pet(Object name, Object tutor) {
+    return 'Pet Amigo: $name (Tutor: $tutor)';
+  }
+
+  @override
+  String get pet_action_edit_friend => 'Editar Amigo';
+
+  @override
+  String get pet_action_delete_friend => 'Excluir Amigo';
+
+  @override
+  String get pet_msg_confirm_delete_friend =>
+      'Tem certeza que deseja excluir este amigo?';
+
+  @override
+  String get pet_msg_friend_updated => 'Amigo atualizado com sucesso!';
+
+  @override
+  String get pet_msg_friend_deleted => 'Amigo excluído com sucesso!';
+
+  @override
+  String get pet_dialog_edit_title => 'Editar Pet Amigo';
+
+  @override
+  String get pet_plant_toxic => 'TÓXICA ⚠️';
+
+  @override
+  String get pet_plant_safe => 'SEGURA ✅';
 }

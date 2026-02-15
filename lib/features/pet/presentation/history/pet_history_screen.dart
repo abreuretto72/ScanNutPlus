@@ -123,7 +123,7 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                             child: Icon(Icons.pets, color: Colors.black54),
                           ),
                     title: Text(
-                      pet.category, // Type first (Bold)
+                      pet.getPlantTitle(context) ?? pet.category.toCategoryDisplay(context), // Localized Fallback
                       style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)
                     ),
                     subtitle: Text(

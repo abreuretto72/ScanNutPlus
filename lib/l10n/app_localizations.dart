@@ -1757,7 +1757,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_module_ophthalmology.
   ///
   /// In en, this message translates to:
-  /// **'Eyes & Ears Analysis'**
+  /// **'Ophthalmology (Eyes)'**
   String get pet_module_ophthalmology;
 
   /// No description provided for @pet_module_physique.
@@ -3415,6 +3415,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View Calendar'**
   String get pet_agenda_view_calendar;
+
+  /// No description provided for @pet_module_dentistry_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Tartar, Gums, Broken Teeth'**
+  String get pet_module_dentistry_programs;
+
+  /// No description provided for @pet_module_dermatology_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Alopecia, Dermatitis, Wounds, Parasites'**
+  String get pet_module_dermatology_programs;
+
+  /// No description provided for @pet_module_gastro_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency, Color, Parasites, Blood'**
+  String get pet_module_gastro_programs;
+
+  /// No description provided for @pet_module_ears.
+  ///
+  /// In en, this message translates to:
+  /// **'Ears'**
+  String get pet_module_ears;
+
+  /// No description provided for @pet_module_ophthalmology_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Discharge, Redness, Cataracts, Spots'**
+  String get pet_module_ophthalmology_programs;
+
+  /// No description provided for @pet_module_otology_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Wax, Itching, Odor, Redness'**
+  String get pet_module_otology_programs;
+
+  /// No description provided for @pet_module_physique_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Condition Score, Muscle Mass, Obesity'**
+  String get pet_module_physique_programs;
+
+  /// No description provided for @pet_module_lab_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood Count, Biochemistry, Urine, Stool'**
+  String get pet_module_lab_programs;
+
+  /// No description provided for @pet_module_nutrition_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients, Guaranteed Analysis, Calories, Serving Size'**
+  String get pet_module_nutrition_programs;
+
+  /// No description provided for @pet_module_vocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Vocalization'**
+  String get pet_module_vocal;
+
+  /// No description provided for @pet_module_vocal_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Barks, Coughs, Panting, Meows'**
+  String get pet_module_vocal_programs;
+
+  /// No description provided for @pet_module_behavior.
+  ///
+  /// In en, this message translates to:
+  /// **'Behavior (Video)'**
+  String get pet_module_behavior;
+
+  /// No description provided for @pet_module_behavior_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Barking + Posture, Anxiety, Aggression'**
+  String get pet_module_behavior_programs;
+
+  /// No description provided for @pet_module_plant.
+  ///
+  /// In en, this message translates to:
+  /// **'Plants (Toxicity)'**
+  String get pet_module_plant;
+
+  /// No description provided for @pet_module_plant_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Identification, Toxicity, Plant Health, Care Tips'**
+  String get pet_module_plant_programs;
+
+  /// No description provided for @action_record_video_audio.
+  ///
+  /// In en, this message translates to:
+  /// **'Record Audio/Video'**
+  String get action_record_video_audio;
+
+  /// No description provided for @action_select_audio.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Audio'**
+  String get action_select_audio;
+
+  /// No description provided for @action_upload_video_audio.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload File'**
+  String get action_upload_video_audio;
+
+  /// No description provided for @pet_mode_my_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'My Pet'**
+  String get pet_mode_my_pet;
+
+  /// No description provided for @pet_mode_friend.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend Pet'**
+  String get pet_mode_friend;
+
+  /// No description provided for @pet_label_tutor.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutor Name'**
+  String get pet_label_tutor;
+
+  /// No description provided for @pet_hint_select_friend.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Friend'**
+  String get pet_hint_select_friend;
+
+  /// No description provided for @pet_new_friend_option.
+  ///
+  /// In en, this message translates to:
+  /// **'New Friend'**
+  String get pet_new_friend_option;
+
+  /// No description provided for @pet_friend_list_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend List'**
+  String get pet_friend_list_label;
+
+  /// No description provided for @pet_error_fill_friend_fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill all Friend fields'**
+  String get pet_error_fill_friend_fields;
+
+  /// No description provided for @pet_result_title_my_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'My Pet: {name}'**
+  String pet_result_title_my_pet(Object name);
+
+  /// No description provided for @pet_result_title_friend_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend Pet: {name} (Tutor: {tutor})'**
+  String pet_result_title_friend_pet(Object name, Object tutor);
+
+  /// No description provided for @pet_action_edit_friend.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Friend'**
+  String get pet_action_edit_friend;
+
+  /// No description provided for @pet_action_delete_friend.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Friend'**
+  String get pet_action_delete_friend;
+
+  /// No description provided for @pet_msg_confirm_delete_friend.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this friend?'**
+  String get pet_msg_confirm_delete_friend;
+
+  /// No description provided for @pet_msg_friend_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend updated successfully!'**
+  String get pet_msg_friend_updated;
+
+  /// No description provided for @pet_msg_friend_deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend deleted successfully!'**
+  String get pet_msg_friend_deleted;
+
+  /// No description provided for @pet_dialog_edit_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Friend Pet'**
+  String get pet_dialog_edit_title;
+
+  /// No description provided for @pet_plant_toxic.
+  ///
+  /// In en, this message translates to:
+  /// **'TOXIC ⚠️'**
+  String get pet_plant_toxic;
+
+  /// No description provided for @pet_plant_safe.
+  ///
+  /// In en, this message translates to:
+  /// **'SAFE ✅'**
+  String get pet_plant_safe;
 }
 
 class _AppLocalizationsDelegate

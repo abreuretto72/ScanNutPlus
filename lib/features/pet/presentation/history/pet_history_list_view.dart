@@ -149,7 +149,7 @@ class _PetHistoryListViewState extends State<PetHistoryListView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    entry.petName,
+                    entry.getPlantTitle(context) ?? entry.category.toCategoryDisplay(context),
                     style: const TextStyle(
                       color: Color(0xFF2D3436), 
                       fontWeight: FontWeight.bold,

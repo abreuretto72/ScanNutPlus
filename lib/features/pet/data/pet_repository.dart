@@ -56,6 +56,7 @@ class PetRepository {
     required String imagePath, 
     String breed = PetConstants.valueUnknown,
     String analysisType = PetConstants.typeClinical,
+    String? tutorName, // Added for Friend Pet
   }) async {
     // [GUARD] Prevent saving analysis for nameless pets
     if (petName.isEmpty || petName == PetConstants.valNull) {
@@ -72,11 +73,12 @@ class PetRepository {
         // Create New Profile
         pet = PetEntity(
           uuid: petUuid, 
-          name: petName, 
+          name: petName,
+          tutorName: tutorName, // Save Tutor Name
           breed: breed, 
           imagePath: imagePath,
           species: PetConstants.speciesUnknown, // Default, update later
-          type: PetConstants.typePet
+          type: analysisType == PetConstants.typeFriend ? PetConstants.typeFriend : PetConstants.typePet
         );
         if (kDebugMode) {
           debugPrint(PetConstants.logDbWriteNew);
@@ -161,7 +163,13 @@ class PetRepository {
        _petBox.removeMany(ghostPets.map((e) => e.id).toList());
     }
     
-    final pets = _petBox.getAll();
+
+    
+    // [FILTER] Exclude Friend Pets from Main List (Module 2026)
+    // We want only "My Pets" (Type: 'pet' or null/legacy)
+    final pets = _petBox.query(
+      PetEntity_.type.notEquals(PetConstants.typeFriend) // Exclude friends
+    ).build().find();
     // Convert to Map for compatibility with existing UI layer expecting JSON maps
     return pets.map((p) => {
         PetConstants.fieldUuid: p.uuid,
@@ -202,6 +210,51 @@ class PetRepository {
         PetConstants.fieldName: e.petName,
         // Add other fields
     }).toList();
+  }
+
+  /// 5. Get Friend Pets (Module 2026)
+  List<PetEntity> getFriendPets() {
+    return _petBox.query(PetEntity_.type.equals(PetConstants.typeFriend))
+        .order(PetEntity_.name)
+        .build()
+        .find();
+  }
+
+  /// 5.1 Update Friend Pet (Module 2026)
+  Future<void> updateFriend(PetEntity pet) async {
+    // Re-verify existence to be safe
+    final existing = _petBox.get(pet.id);
+    if (existing != null) {
+      // Identity Updates allow Name/Tutor changes for Friends
+      existing.name = pet.name;
+      existing.tutorName = pet.tutorName;
+      _petBox.put(existing);
+      
+      if (kDebugMode) {
+          debugPrint('${PetConstants.logTagPetData}: Friend updated: ${pet.name} (Tutor: ${pet.tutorName})');
+      }
+    }
+  }
+
+  /// 5.2 Delete Friend Pet (Module 2026)
+  Future<void> deleteFriend(String uuid) async {
+      // 1. Find Friend Entity
+      final pet = _petBox.query(PetEntity_.uuid.equals(uuid) & PetEntity_.type.equals(PetConstants.typeFriend)).build().findFirst();
+      
+      if (pet != null) {
+          // 2. Remove Entity from Box
+          _petBox.remove(pet.id);
+          
+          // 3. Optional: Remove Associated History?
+          // For now, let's keep history or maybe delete it too?
+          // As per "deleteFullPetData", we usually remove everything.
+          // Let's reuse deleteFullPetData logic but specific for friend context if needed, 
+          // but calling remove(pet.id) is the core action.
+          
+          if (kDebugMode) {
+             debugPrint('${PetConstants.logTagPetData}: Friend deleted: ${pet.name} (${pet.uuid})');
+          }
+      }
   }
   
   // --- MIGRATION HELPER ---

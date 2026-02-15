@@ -1,7 +1,7 @@
 
 
 enum PetImageType { 
-  general, profile, wound, stool, mouth, eyes, skin, label, lab, posture, safety, newProfile 
+  general, profile, wound, stool, mouth, eyes, ears, skin, label, lab, posture, safety, newProfile, vocal, behavior, plantCheck
 }
 
 class PetConstants {
@@ -160,6 +160,9 @@ class PetConstants {
   static const String valEyes = 'eyes';
   static const String valPosture = 'posture';
   static const String valProfile = 'profile';
+  static const String valVocal = 'vocal';
+  static const String valBehavior = 'behavior';
+  static const String valPlantCheck = 'plantCheck';
 
   // --- PARSER DATA ---
   static const String parseGreen = 'green';
@@ -246,9 +249,9 @@ class PetConstants {
 
   // --- REGEX ---
   static const String regexCardStart = r'\[CARD_START\]\s*(.*?)\s*(?:\[CARD_END\]|\[SOURCES\]|$)';
-  static const String regexTitle = r'TITLE:\s*(.*?)(?:\n|$)';
+  static const String regexTitle = r'TITLE:\s*(.*?)(?:\s*ICON:|\s*CONTENT:|\n|$)';
   static const String regexContent = r'CONTENT:\s*(.*?)$';
-  static const String regexIcon = r'ICON:\s*(.*?)(?:\n|$)';
+  static const String regexIcon = r'ICON:\s*(.*?)(?:\s*CONTENT:|\n|$)';
   static const String regexBreed = r'\[BREED\]:\s*(.*?)(?:\n|$)';
 
 
@@ -290,12 +293,17 @@ class PetConstants {
   static const String typeLab = 'lab_result'; // restored/synced
   static const String typeNutrition = 'nutrition'; // restored
   static const String typePet = 'pet'; // restored
+  static const String typeFriend = 'friend'; // Module 2026: Friend Pet
+  static const String valNewFriend = 'new_friend'; // Dropdown option
+  static const String keyIsFriend = 'is_friend';
+  static const String keyTutorName = 'tutor_name';
   static const String speciesDog = 'dog';
   static const String speciesDogPt = 'cão';
   static const String speciesCat = 'cat';
   static const String speciesCatPt = 'gato';
   static const String speciesUnknown = 'Unknown';
   static const String typeNewProfile = 'newProfile'; // New Constant to fix Hardcoded String
+  static const String typeVocal = 'vocal';
   
   static const String keyPetUuid = 'pet_uuid';
   static const String keyPetName = 'pet_name';

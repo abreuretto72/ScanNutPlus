@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:developer' as dev;
 
+import 'package:flutter/foundation.dart';
 import 'package:scannutplus/core/constants/app_keys.dart';
 import 'package:scannutplus/features/pet/services/pet_base_ai_service.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
@@ -20,6 +21,7 @@ class PetPhysiqueService extends PetBaseAiService {
 
     try {
       if (!File(imagePath).existsSync()) throw Exception('${AppKeys.errorImageNotFound}$imagePath');
+      debugPrint('[LANG_TRACE] Idioma detetado no telemóvel: $languageCode | Enviando para a IA: $languageCode');
       
       
       final systemPrompt = PetPhysiquePrompts.buildSystemPrompt(

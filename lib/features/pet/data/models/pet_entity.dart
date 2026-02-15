@@ -11,6 +11,7 @@ class PetEntity {
   String uuid;
 
   String? name;
+  String? tutorName; // Added for Friend Pet Feature (Module 2026)
   String? breed;
   String species;
   String imagePath;
@@ -44,6 +45,7 @@ class PetEntity {
     this.id = 0,
     required this.uuid,
     this.name,
+    this.tutorName,
     this.breed,
     required this.species,
     required this.imagePath,

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:developer' as dev;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Locale; // For Locale
 import 'package:scannutplus/l10n/app_localizations.dart'; // For l10n
 
@@ -25,6 +26,8 @@ class PetLabService extends PetBaseAiService {
       if (!File(imagePath).existsSync()) throw Exception('${AppKeys.errorImageNotFound}$imagePath');
       
       final l10n = lookupAppLocalizations(Locale(languageCode));
+      debugPrint('[LANG_TRACE] Idioma detetado no telemóvel: $languageCode | Enviando para a IA: $languageCode');
+
       final systemPrompt = PetLabPrompts.buildSystemPrompt(
         languageCode, 
         petName,

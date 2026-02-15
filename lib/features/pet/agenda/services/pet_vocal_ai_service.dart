@@ -10,7 +10,7 @@ import 'package:scannutplus/features/pet/services/pet_base_ai_service.dart';
 /// SERVIÇO EXCLUSIVO PARA ANÁLISE VOCAL (MODULO AGENDA)
 /// Este arquivo resolve o erro de versão de API (v1beta) forçando v1 estável.
 class PetVocalAiService {
-  String _vocalModelName = 'gemini-1.5-flash';
+  String _vocalModelName = 'gemini-2.5-pro';
 
   /// Método principal acionado pela Agenda
   Future<String> analyzeBarking({

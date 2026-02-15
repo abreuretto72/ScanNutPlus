@@ -1,5 +1,5 @@
 {
-    "active_model": "gemini-1.5-flash",
+    "active_model": "",
     "api_endpoint": "https://generativelanguage.googleapis.com/v1beta/models/",
     "enabled_features": [
         "food",

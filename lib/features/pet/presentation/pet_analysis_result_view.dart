@@ -51,6 +51,15 @@ class PetAnalysisResultView extends StatelessWidget {
     // Otherwise fallback to "Analyzing: Name".
     String titleText = appL10n.pet_analyzing_x(displayPetName);
     
+    final isFriend = petDetails?[PetConstants.keyIsFriend] == 'true';
+    final tutorName = petDetails?[PetConstants.keyTutorName] ?? '';
+
+    if (isFriend) {
+       titleText = appL10n.pet_result_title_friend_pet(displayPetName, tutorName);
+    } else {
+       titleText = appL10n.pet_result_title_my_pet(displayPetName);
+    }
+    
     if (args != null && args.containsKey(PetConstants.argType)) {
        final type = args[PetConstants.argType]?.toString();
        if (type == PetConstants.typeNewProfile || type == PetConstants.typeNewProfileLegacy) {
@@ -167,15 +176,20 @@ class PetAnalysisResultView extends StatelessWidget {
       final title = RegExp(PetConstants.regexTitle).firstMatch(body)?.group(1) ?? PetConstants.keyAnalyse;
       // Robust Content Extraction: Capture everything after CONTENT: including newlines
       final content = RegExp(PetConstants.regexContent, dotAll: true).firstMatch(body)?.group(1) ?? '';
+      
+      // [SANITIZER] Remove structural tags from the content to be displayed
+      final cleanContent = content.replaceAll(RegExp(r'(ICON:|CONTENT:)'), '').trim();
+
       final iconName = RegExp(PetConstants.regexIcon).firstMatch(body)?.group(1) ?? PetConstants.keyInfo;
 
       // Debug: Check if content is empty
-      if (content.isEmpty && body.contains(PetConstants.tagContent)) {
+      if (cleanContent.isEmpty && body.contains(PetConstants.tagContent)) {
          // Fallback: If regex failed but tag exists, take everything after CONTENT: manually
-         final fallbackContent = body.split(PetConstants.tagContent).last.trim();
+         var fallbackContent = body.split(PetConstants.tagContent).last.trim();
+         fallbackContent = fallbackContent.replaceAll(RegExp(r'(ICON:|CONTENT:)'), '').trim(); // Sanitize fallback too
          blocks.add(_AnalysisBlock(title: title.trim(), content: fallbackContent, icon: _getIconData(iconName.trim())));
-      } else if (content.isNotEmpty) {
-         blocks.add(_AnalysisBlock(title: title.trim(), content: content.trim(), icon: _getIconData(iconName.trim())));
+      } else if (cleanContent.isNotEmpty) {
+         blocks.add(_AnalysisBlock(title: title.trim(), content: cleanContent, icon: _getIconData(iconName.trim())));
       } else {
          // Double Fallback: If no CONTENT tag, try to take the whole body if it's not just title/icon
          if (body.length > 20) {

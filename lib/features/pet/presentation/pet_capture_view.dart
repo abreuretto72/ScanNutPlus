@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart'; // Added for Audio Files
 import 'package:uuid/uuid.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/core/theme/app_colors.dart'; // AppColors
@@ -17,6 +18,10 @@ import 'package:scannutplus/features/pet/services/pet_base_ai_service.dart'; // 
 
 import 'package:scannutplus/features/pet/data/pet_rag_service.dart'; // For saving identity
 import 'package:scannutplus/features/pet/data/pet_repository.dart';
+import 'package:scannutplus/core/services/universal_ai_service.dart'; // New Engine
+import 'package:scannutplus/core/services/universal_result_view.dart'; // New View
+import 'package:scannutplus/core/services/universal_ocr_service.dart'; // New OCR Engine
+import 'package:scannutplus/core/services/universal_ocr_result_view.dart'; // New OCR View
 
 class PetCaptureView extends StatefulWidget {
   const PetCaptureView({super.key});
@@ -36,6 +41,11 @@ class _PetCaptureViewState extends State<PetCaptureView> {
   String? _existingBreed; // New
   bool _isAddingNewPet = false; // [STATE] Controls UI for New Pet vs Existing
   PetImageType? _forcedType;
+  
+  // Friend State
+  bool _isFriend = false;
+  String? _tutorName;
+  bool _isNewFriend = false;
 
   final ImagePicker _picker = ImagePicker();
   String? _errorMessage; // State to track analysis errors for Retry UI
@@ -69,6 +79,12 @@ class _PetCaptureViewState extends State<PetCaptureView> {
       _existingBreed = args[PetConstants.argBreed]; // New
       _forcedType = args[PetConstants.argType] as PetImageType?;
       _isAddingNewPet = args[PetConstants.argIsAddingNewPet] ?? false; // Extract State Flag
+      
+      // Friend Logic (Module 2026)
+      _isFriend = args['is_friend'] ?? false;
+      _tutorName = args['tutor_name'];
+      _isNewFriend = args['is_new_friend'] ?? false;
+
       final source = args[PetConstants.argSource] as String?;
       
       // Auto-open camera/gallery if requested
@@ -87,13 +103,42 @@ class _PetCaptureViewState extends State<PetCaptureView> {
 
   Future<void> _pickImage(ImageSource source) async {
     try {
-      final XFile? image = await _picker.pickImage(source: source);
-      if (image != null) {
+      XFile? media;
+      // [UNIVERSAL VOCAL / BEHAVIOR CHECK]
+      if (_forcedType == PetImageType.vocal || _forcedType == PetImageType.behavior) {
+         if (source == ImageSource.camera) {
+             // Camera: Keep using Video Picker (Records Audio+Video)
+             media = await _picker.pickVideo(
+               source: source, 
+               maxDuration: const Duration(seconds: 60),
+             );
+         } else {
+             // Gallery/Files: Use FilePicker
+             // Behavior -> Video Only (Visual + Audio)
+             // Vocal -> Audio + Video
+             List<String> extensions = (_forcedType == PetImageType.behavior) 
+                ? PetConstants.videoExtensions 
+                : [...PetConstants.audioExtensions, ...PetConstants.videoExtensions];
+
+             FilePickerResult? result = await FilePicker.platform.pickFiles(
+               type: FileType.custom,
+               allowedExtensions: extensions,
+             );
+             
+             if (result != null && result.files.single.path != null) {
+                media = XFile(result.files.single.path!);
+             }
+         }
+      } else {
+         media = await _picker.pickImage(source: source);
+      }
+
+      if (media != null) {
         // Clear previous image from memory before setting new one
         _clearImageCache();
         
         setState(() {
-          _imagePath = image.path;
+          _imagePath = media!.path;
         });
         _autoSave();
       }
@@ -130,6 +175,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
       // Use existing name/uuid if available
       final String nameToUse = _existingName ?? PetConstants.defaultPetName;
       final String uuidToUse = _existingUuid ?? PetConstants.defaultPetUuid;
+      final String breedToUse = _existingBreed ?? PetConstants.legacyUnknownBreed;
 
       if (kDebugMode) {
          debugPrint('[SCAN_NUT_LOG] Imagem carregada: $_imagePath');
@@ -137,13 +183,121 @@ class _PetCaptureViewState extends State<PetCaptureView> {
       }
 
       try {
-        final (result, duration, foundName) = await petAiService.analyzePetImage(
-          _imagePath!, 
-          lang, 
-          type: type,
-          petName: nameToUse,
-          petUuid: uuidToUse,
-        );
+        String result = '';
+        String foundName = '';
+
+        // [UNIVERSAL OCR SWITCH - 2026]
+        // Dedicated Engine for Documents (Lab Exams, Prescriptions, Food Labels)
+        if (type == PetImageType.lab || type == PetImageType.label) {
+             debugPrint('[UNIVERSAL_OCR_TRACE] Step 1: Document/Label Detected. Selecting OCR Engine.');
+             
+             final ocrService = UniversalOcrService();
+             final expertise = type == PetImageType.label 
+                ? 'Veterinary Nutritionist' 
+                : 'Veterinary Clinical Pathologist';
+
+             debugPrint('[UNIVERSAL_OCR_TRACE] Step 2: Calling UniversalOcrService with expertise: $expertise');
+             
+             // Process OCR
+             result = await ocrService.processOcr(
+               documentImage: File(_imagePath!), 
+               expertise: expertise, 
+               languageCode: lang
+             );
+             
+             debugPrint('[UNIVERSAL_OCR_TRACE] Step 3: OCR Analysis Complete. Length: ${result.length}');
+
+             if (!mounted) return;
+
+             // Navigate to UniversalOcrResultView
+             Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UniversalOcrResultView(
+                  imagePath: _imagePath!,
+                  ocrResult: result,
+                  petDetails: {
+                    PetConstants.fieldName: nameToUse,
+                    PetConstants.fieldBreed: breedToUse,
+                  },
+                ),
+              ),
+            );
+            return; // Stop execution here for OCR flow
+        }
+
+        // [UNIVERSAL AI SWITCH - 2026]
+        // Updated to include Dentist, Dermatology, Gastro, Ophthalmology, Otology, Posture & Vocal Modules
+        if (type == PetImageType.newProfile || _isAddingNewPet || type == PetImageType.mouth || type == PetImageType.skin || type == PetImageType.stool || type == PetImageType.eyes || type == PetImageType.ears || type == PetImageType.posture || type == PetImageType.vocal) {
+            String expertise = 'Veterinary Generalist';
+            String aiContext = 'New Pet Registration. Identify breed and basic health status.';
+            
+            debugPrint('[UNIVERSAL_FLOW_TRACE] Step 1: Selecting Engine for Type: $type');
+
+            if (type == PetImageType.mouth) {
+                expertise = 'Veterinary Dentist';
+                aiContext = 'Clinical assessment of Oral Health: Tartar (Calculus), Gums (Gingivitis/Periodontitis), Broken Teeth, and general hygiene. Look for signs of pain or infection.';
+                debugPrint('[DENTISTRY_FLOW_TRACE] Context Injected: $aiContext');
+            } else if (type == PetImageType.skin) {
+                expertise = 'Veterinary Dermatologist';
+                aiContext = 'Clinical assessment of Skin & Coat: Alopecia, Dermatitis, Wounds, Parasites (Fleas/Ticks), and lumps/bumps. Look for redness, crusts, or signs of infection.';
+                debugPrint('[DERMATOLOGY_FLOW_TRACE] Context Injected: $aiContext');
+            } else if (type == PetImageType.stool) {
+                expertise = 'Veterinary Gastroenterologist';
+                aiContext = 'Clinical assessment of Stool/Feces: Consistency (Bristol Scale), Color, presence of Blood/Mucus, and signs of Parasites. Evaluate digestive health.';
+                debugPrint('[GASTRO_FLOW_TRACE] Context Injected: $aiContext');
+                debugPrint('[UNIVERSAL_AI] Iniciando análise GASTROINTESTINAL via engine v2...');
+            } else if (type == PetImageType.eyes) {
+                expertise = 'Veterinary Ophthalmologist';
+                aiContext = 'Clinical assessment of Eyes: Discharge (Epiphora/Purulent), Hyperemia (Redness), Cloudiness (Cataracts/Edema), Masses, and Anisocoria. Look for signs of uveitis or glaucoma.';
+                debugPrint('[OPHTHALMOLOGY_FLOW_TRACE] Context Injected: $aiContext');
+            } else if (type == PetImageType.ears) {
+                expertise = 'Veterinary Otologist';
+                aiContext = 'Clinical assessment of Ears/Otoscopy: Cerumen accumulation, Erythema (Redness), Stenosis, Discharge (Exudate), and signs of Otitis Externa. Look for mites or foreign bodies.';
+                debugPrint('[OTOLOGY_FLOW_TRACE] Context Injected: $aiContext');
+            } else if (type == PetImageType.posture) {
+                expertise = 'Veterinary Nutritionist & Orthopedist';
+                aiContext = 'Clinical assessment of Posture & Body Condition: Body Condition Score (BCS 1-9), Muscle Mass Index (MMI), Posture alignment (Spine/Limbs), and detection of Obesity or Emaciation.';
+                debugPrint('[POSTURE_FLOW_TRACE] Context Injected: $aiContext');
+            } else if (type == PetImageType.vocal) {
+                expertise = 'Veterinary Behaviorist & Pulmonologist';
+                aiContext = 'Audio Analysis: Listen for coughs, breathing, barks. Identify distress.';
+                debugPrint('[VOCAL_FLOW_TRACE] Context Injected: $aiContext');
+            } else if (type == PetImageType.behavior) {
+                expertise = 'Veterinary Neurologist & Behaviorist';
+                aiContext = 'Behavioral Analysis (Video): Observe gait, posture, circling, head pressing, AND listen to vocalizations (barks/whines). Correlate movement with sound.';
+                debugPrint('[BEHAVIOR_FLOW_TRACE] Context Injected: $aiContext');
+            } else if (type == PetImageType.plantCheck) {
+                expertise = 'Veterinary Toxicologist & Botanist';
+                aiContext = 'Plant Analysis. Strict Output Format: Card 1 TITLE must be the **Common Non-Scientific Name** of the plant. Card 1 ICON must be "warning" if Toxic, or "check_circle" if Safe.';
+                debugPrint('[PLANT_FLOW_TRACE] Context Injected: $aiContext');
+            } else {
+                debugPrint('[UNIVERSAL_AI] Iniciando análise de NOVO PET com engine v2...');
+            }
+
+            debugPrint('[UNIVERSAL_FLOW_TRACE] Step 3: Calling UniversalAiService...');
+            final universalService = UniversalAiService();
+            result = await universalService.analyze(
+              file: File(_imagePath!), 
+              expertise: expertise, 
+              context: aiContext, 
+              languageCode: lang,
+              petName: nameToUse
+            );
+            debugPrint('[UNIVERSAL_FLOW_TRACE] Step 4: Analysis returned. Length: ${result.length}');
+            foundName = nameToUse;
+        } else {
+            // LEGACY FLOW
+            final (legacyResult, _, legacyName) = await petAiService.analyzePetImage(
+              _imagePath!, 
+              lang, 
+              type: type,
+              petName: nameToUse,
+              petUuid: uuidToUse,
+            );
+            result = legacyResult;
+            foundName = legacyName;
+        }
         
         if (kDebugMode) debugPrint('[PET_STEP_2]: Analysis Analysis complete. Result len: ${result.length}. Name found: $foundName');
 
@@ -215,8 +369,9 @@ class _PetCaptureViewState extends State<PetCaptureView> {
             analysisResult: cleanResult, // Save CLEAN visual report
             sources: [], 
             imagePath: _imagePath!,
-            breed: finalBreed, // Pass extracted breed for New Profile creation
-            analysisType: finalType, // Ensure validation checks match
+            breed: finalBreed, // Pass extracted breed for New Profile Creation
+            analysisType: _isFriend ? PetConstants.typeFriend : finalType, // Ensure validation checks match
+            tutorName: _tutorName, // Pass Tutor Name
           );
            
            if (kDebugMode) debugPrint('[PET_STEP_3]: Auto-saved to SharedPreferences.');
@@ -227,15 +382,26 @@ class _PetCaptureViewState extends State<PetCaptureView> {
         
         if (!mounted) return;
 
-        // 3. Navigate to Specialized Result View (Restructuring 2026)
-        // 3. Navigate to Generic Result View (Protocol Card 2026)
-        // Configuration for specialized views (Kept for arguments)
-        // 3. Navigate to Specialized Result View (Restructuring 2026)
-        // 3. Navigate to Generic Result View (Protocol Card 2026)
-        // Configuration for specialized views (Kept for arguments)
-
-
-        // 3. Navigate to Standardized Result View (Protocol 2026 - Golden Standard)
+        if (type == PetImageType.newProfile || _isAddingNewPet || type == PetImageType.behavior || type == PetImageType.plantCheck || type == PetImageType.mouth || type == PetImageType.skin || type == PetImageType.stool || type == PetImageType.eyes || type == PetImageType.ears || type == PetImageType.posture) {
+            // [UNIVERSAL RESULT VIEW]
+             Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UniversalResultView(
+                  filePath: _imagePath!,
+                  analysisResult: cleanResult,
+                  onRetake: () => Navigator.pop(context),
+                  onShare: () {},
+                  petDetails: {
+                    PetConstants.fieldName: finalName,
+                    PetConstants.fieldBreed: finalBreed,
+                    PetConstants.keyIsFriend: _isFriend.toString(),
+                    PetConstants.keyTutorName: _tutorName ?? '',
+                  },
+                ),
+              ),
+            );
+        } else {
         Navigator.of(context).pushReplacementNamed(
           '/pet_analysis_result',
           arguments: {
@@ -248,11 +414,12 @@ class _PetCaptureViewState extends State<PetCaptureView> {
            },
         ).then((_) {
            // [STATE RESET] Force reset to 'Existing Pet' mode after return
-           if (mounted) {
-              if (kDebugMode) debugPrint(PetConstants.logResetAddingPet);
-              setState(() => _isAddingNewPet = false);
-           }
         });
+      } // End else
+      
+      // Clear state after navigation returns or completes
+
+
       } on PetIdentityException catch (_) {
          if (kDebugMode) debugPrint('[SCAN_NUT_LOG] Identidade não confirmada. Solicitando nome...');
          
@@ -311,6 +478,8 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                  PetConstants.argPetDetails: {
                     PetConstants.fieldName: name,
                     PetConstants.fieldBreed: PetConstants.valueUnknown,
+                    PetConstants.keyIsFriend: _isFriend.toString(),
+                    PetConstants.keyTutorName: _tutorName ?? '',
                  }
               }
             );
@@ -464,7 +633,8 @@ class _PetCaptureViewState extends State<PetCaptureView> {
       name: name, // Prevent null name if we already have it
       species: _selectedSpecies!,
       imagePath: _imagePath!,
-      type: _isLabel ? AppLocalizations.of(context)!.pet_type_label : PetConstants.typePet,
+      tutorName: _tutorName,
+      type: _isFriend ? PetConstants.typeFriend : (_isLabel ? AppLocalizations.of(context)!.pet_type_label : PetConstants.typePet),
     );
 
     await petService.savePet(pet);
@@ -547,6 +717,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
 
                       _buildCapabilitiesCard(context),
 
+                      if (_forcedType != PetImageType.vocal && _forcedType != PetImageType.behavior)
                       _buildCaptureButton(
                         context,
                         icon: Icons.camera_alt_outlined,
@@ -556,8 +727,12 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                       const SizedBox(height: 24),
                       _buildCaptureButton(
                         context,
-                        icon: Icons.photo_library_outlined,
-                        label: l10n.action_upload_gallery,
+                        icon: (_forcedType == PetImageType.vocal || _forcedType == PetImageType.behavior) 
+                              ? (_forcedType == PetImageType.behavior ? Icons.videocam : Icons.audio_file)
+                              : Icons.photo_library_outlined,
+                        label: (_forcedType == PetImageType.vocal) 
+                               ? l10n.action_select_audio 
+                               : (_forcedType == PetImageType.behavior ? l10n.action_upload_video_audio : l10n.action_upload_gallery),
                         onTap: () => _pickImage(ImageSource.gallery),
                       ),
                     ] else ...[
