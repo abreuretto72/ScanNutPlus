@@ -1,7 +1,7 @@
 
 
 enum PetImageType { 
-  general, profile, wound, stool, mouth, eyes, ears, skin, label, lab, posture, safety, newProfile, vocal, behavior, plantCheck
+  general, profile, wound, stool, mouth, eyes, ears, skin, label, lab, posture, safety, newProfile, vocal, behavior, plantCheck, foodBowl
 }
 
 class PetConstants {
@@ -163,6 +163,7 @@ class PetConstants {
   static const String valVocal = 'vocal';
   static const String valBehavior = 'behavior';
   static const String valPlantCheck = 'plantCheck';
+  static const String valFoodBowl = 'foodBowl'; // New: Visual Food Analysis
 
   // --- PARSER DATA ---
   static const String parseGreen = 'green';
@@ -291,6 +292,7 @@ class PetConstants {
   static const String tagEnvironment = 'environment'; // restored
   static const String typeClinical = 'clinical'; // restored
   static const String typeLab = 'lab_result'; // restored/synced
+  static const String typeLabel = 'label'; // New: Food Label
   static const String typeNutrition = 'nutrition'; // restored
   static const String typePet = 'pet'; // restored
   static const String typeFriend = 'friend'; // Module 2026: Friend Pet

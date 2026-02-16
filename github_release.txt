@@ -23,3 +23,7 @@ git tag -a v1.1.2 -m "Universal AI Integration (New Pet Flow), Universal Result 
 git push origin v1.1.2
 git tag -a v1.1.3 -m "Friend Pet Management, History Localization Fix, Plant/Vocal Analysis & Stability Improvements"
 git push origin v1.1.3
+git tag -a v1.1.4 -m "Analysis Dropdown Refined (A-Z) & Plant Analysis (Botanical Mode) & Localization Fixes"
+git push origin v1.1.4
+git tag -a v1.1.5 -m "Video Analysis Engine (Thumbnails, Controls & AI Depth), History Fixes & Performance Guardrails"
+git push origin v1.1.5

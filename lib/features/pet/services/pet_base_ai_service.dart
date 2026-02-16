@@ -72,18 +72,22 @@ abstract class PetBaseAiService {
     required String petName,
     required String petUuid, 
     String analysisType = PetConstants.typeClinical,
-    String? overrideSystemPrompt, 
+    String? overrideSystemPrompt,
+    String? mimeType, 
   }) async {
     final bytes = imageBytes ?? await File(imagePath).readAsBytes();
     final prompt = overrideSystemPrompt ?? _buildSystemPrompt(languageCode, context, petName);
     
+    // Auto-detect MimeType if not provided
+    final String finalMimeType = mimeType ?? _detectMimeType(imagePath);
+
     await _ensureInitialized(); 
 
     try {
       final content = [
         Content.multi([
           TextPart('$prompt\n${PetPrompts.noMarkdown}'), 
-          DataPart('image/jpeg', bytes),
+          DataPart(finalMimeType, bytes),
         ])
       ];
 
@@ -196,6 +200,37 @@ abstract class PetBaseAiService {
       _activeModelName = config['active_model'] ?? 'gemini-2.5-pro';
     } catch (e) {
       _activeModelName = 'gemini-2.5-pro'; // Strict Fallback (Rule 3)
+    }
+  }
+
+  String _detectMimeType(String path) {
+    try {
+      final extension = path.split('.').last.toLowerCase();
+      
+      if (['mp4', 'mov', 'avi', 'wmv', 'mpeg4', 'webm'].contains(extension)) {
+        if (extension == 'mov') return 'video/quicktime';
+        if (extension == 'avi') return 'video/x-msvideo';
+        if (extension == 'webm') return 'video/webm';
+        return 'video/mp4';
+      }
+      
+      if (['mp3', 'wav', 'aac', 'm4a', 'flac', 'ogg'].contains(extension)) {
+         if (extension == 'wav') return 'audio/wav';
+         if (extension == 'mp3') return 'audio/mpeg';
+         if (extension == 'm4a') return 'audio/mp4';
+         if (extension == 'aac') return 'audio/aac';
+         if (extension == 'ogg') return 'audio/ogg';
+         return 'audio/mpeg';
+      }
+      
+      if (extension == 'png') return 'image/png';
+      if (extension == 'webp') return 'image/webp';
+      if (extension == 'heic') return 'image/heic';
+      if (extension == 'gif') return 'image/gif';
+      return 'image/jpeg';
+    } catch (e) {
+      if (kDebugMode) debugPrint('[PET_WARN] MimeType detection failed: $e. Defaulting to jpeg.');
+      return 'image/jpeg';
     }
   }
 }

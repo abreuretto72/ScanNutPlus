@@ -230,6 +230,7 @@ class PetAiService extends PetBaseAiService {
   String _mapTypeToAnalysis(PetImageType type) {
      switch(type) {
         case PetImageType.label: return PetConstants.typeNutrition;
+        case PetImageType.foodBowl: return PetConstants.typeNutrition;
         case PetImageType.lab: return PetConstants.typeLab;
         case PetImageType.general: return PetConstants.typeClinical;
         case PetImageType.wound: return PetConstants.typeClinical;
@@ -267,12 +268,51 @@ class PetAiService extends PetBaseAiService {
       case PetImageType.posture:
         return AiPrompts.contextPosture; 
       case PetImageType.behavior:
-        return 'Behavioral Analysis (Video): Observe gait, posture, circling, head pressing, AND listen to vocalizations.';
+        return '''
+PROTOCOLO MASTER SCANNUT - MODO PET 2026
+OBJETIVO: Análise de saúde, raça e segurança animal via imagem.
+
+DIRETRIZES DE EXTRAÇÃO:
+1. IDENTIFICAÇÃO: Raça, idade estimada e porte.
+2. SAÚDE VISUAL: Avaliar estado da pele/pêlo e possíveis anormalidades oculares (manchas, secreção).
+3. SEGURANÇA AMBIENTAL: Identificar perigos na imagem (objetos cortantes, plantas tóxicas ou alimentos proibidos).
+4. RECOMENDAÇÃO: Sugestão de cuidados específicos baseados na raça identificada.
+
+SAÍDA OBRIGATÓRIA (Use tabelas Markdown):
+| Categoria | Detalhe | Status |
+| :--- | :--- | :--- |
+| **Identificação** | [Raça] / [Idade] / [Porte] | ℹ️ |
+| **Saúde Visual** | [Detalhes Pele/Olhos] | [🟢/🔴] |
+| **Segurança** | [Lista de Riscos ou 'Ambiente Seguro'] | [🟢/🔴] |
+| **Recomendação** | [Dica da Raça] | 💡 |
+
+Use Emojis. Seja direto.
+''';
       case PetImageType.plantCheck:
-        return 'Plant Analysis: Identify species, check TOXICITY for the pet, assess plant health.';
+        return '''
+PROTOCOLO MASTER SCANNUT - MODO BOTÂNICO 2026
+OBJETIVO: Identificação botânica e análise toxicológica para animais domésticos.
+
+DIRETRIZES:
+1. IDENTIFICAÇÃO: Nome científico e comum da planta.
+2. TOXICIDADE: Verificar se é tóxica para CÃES ou GATOS. Se sim, destacar com ⚠️ ou ☠️.
+3. SINTOMAS: Se tóxica, listar possíveis sintomas de ingestão.
+4. SEGURANÇA: Classificar como "SEGURA ✅" ou "PERIGOSA ⛔".
+
+SAÍDA OBRIGATÓRIA (Tabela Markdown):
+| Categoria | Detalhe |
+| :--- | :--- |
+| **Planta** | [Nome Comum] (*Nome Científico*) |
+| **Toxicidade** | [Tóxica/Segura] |
+| **Sintomas** | [Lista ou 'Nenhum'] |
+| **Ação** | [Manter longe / Seguro] |
+
+Se for tóxica, inicie a resposta com "ALERTA DE TOXICIDADE DETECTADO".
+''';
       case PetImageType.safety:
       case PetImageType.newProfile:
       case PetImageType.vocal:
+      case PetImageType.foodBowl:
         return ''; 
     }
   }

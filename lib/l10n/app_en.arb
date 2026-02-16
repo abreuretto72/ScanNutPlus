@@ -47,6 +47,13 @@
   "login_success": "Login successful",
   "signup_success": "Registration successful",
   "home_welcome_user": "Hello, {name}",
+  "@home_welcome_user": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
   "tab_food": "Food",
   "tab_plant": "Plants",
   "tab_pet": "Pets",
@@ -112,7 +119,7 @@
   "species_cat": "Cat",
   "image_type_label": "Image Type",
   "type_pet": "Pet",
-  "type_label": "Label",
+  "type_label": "Food",
   "pet_saved_success": "Pet saved successfully",
   "label_analysis_pending": "Label analysis coming soon",
   "action_retake": "Retake",
@@ -201,7 +208,7 @@
   "pet_section_posture": "Posture",
   "pet_section_exams": "Exams",
   "category_feces": "Feces",
-  "category_food_label": "Label",
+  "category_food_label": "Food",
   "pet_type_general": "General",
   "category_wound": "Wound",
   "pet_dialog_new_title": "New Profile",
@@ -216,13 +223,12 @@
   "pet_dashboard_title": "Pet Dashboard",
   "pet_action_biometrics": "Biometrics",
   "pet_action_history": "Analysis history",
-  "pet_type_label": "Label",
+  "pet_type_label": "Food",
   "pet_type_wound": "Wound",
   "pet_type_stool": "Stool",
   "pet_type_mouth": "Mouth/Teeth",
   "pet_type_eyes": "Eyes",
   "pet_type_skin": "Skin/Coat",
-  "pet_type_lab": "Lab Exam",
   "pet_type_lab": "Lab Exam",
   "pet_select_context": "Select analysis type:",
   "pet_unknown": "Unknown",
@@ -290,387 +296,19 @@
   "ai_feedback_inconclusive_angle": "Inconclusive visual angle.",
   "pet_module_dentistry": "Oral Health (Teeth & Gums)",
   "pet_module_dermatology": "Skin, Coat & Wounds",
-  "pet_module_gastro": "Stool & Digestion Analysis",
+  "pet_module_gastro": "Stool & Digestion",
   "pet_module_lab": "Lab Report Reading",
-  "pet_module_nutrition": "Nutrition & Label Analysis",
+  "pet_module_nutrition": "Labels",
   "pet_module_ophthalmology": "Ophthalmology (Eyes)",
   "pet_module_physique": "Body Condition & Weight",
-  "btn_scan_image": "Scan Image",
-  "generic_analyzing": "Analyzing image...",
-  "pet_error_image_not_found": "Error: Original image not found.",
-  "btn_go": "Go",
-  "pet_created_at_label": "Created at:",
-  "pet_initial_assessment": "Initial Assessment",
-  "pet_hint_select_type": "<Select type>",
-  "pet_label_info": "Info",
-  "pet_type_profile": "Profile Analysis",
-  "pet_type_posture": "Posture Analysis",
-  "pet_profile_title": "Pet Profile",
-  "pet_management_title": "Pet Management",
-  "pet_label_health_plan": "Health Plan",
-  "pet_label_funeral_plan": "Funeral Plan",
-  "pet_label_weight": "Weight",
-  "pet_label_size": "Size",
-  "pet_label_neutered": "Neutered Status",
-  "pet_label_birth_date": "Date of Birth",
-  "pet_agenda_add_event": "Add event",
-  "error_unexpected_title": "Oops! Something unexpected happened.",
-  "error_unexpected_message": "Our team has been notified. Please restart the app.",
-  "error_try_recover": "Try to Recover",
-  "pet_btn_add_metric": "Add Metric",
-  "pet_profile_save_success": "Profile updated successfully",
-  "pet_action_save_profile": "SAVE PET PROFILE",
-  "pet_not_found": "Pet not found",
-  "pet_plans_title": "Plans",
-  "pet_action_manage_health_plan": "Manage Health Plan",
-  
-  "health_plan_title": "Health Plan Management",
-  "health_plan_section_identification": "1. Identification",
-  "health_plan_section_coverages": "2. Coverages",
-  "health_plan_section_limits": "3. Limits & Rules",
-  "health_plan_section_support": "4. Network & Support",
-  "health_plan_saved_success": "Health Plan Saved Successfully!",
-  "health_plan_action_save": "SAVE HEALTH PLAN",
-  
-  "health_plan_label_operator": "Operator Name",
-  "health_plan_label_plan_name": "Plan Name",
-  "health_plan_label_card_number": "Card Number",
-  "health_plan_label_holder_name": "Holder Name",
-  "health_plan_label_grace_period": "Grace (Days)",
-  "health_plan_label_annual_limit": "Annual Limit",
-  "health_plan_label_copay": "Copay %",
-  "health_plan_label_reimburse": "Reimburse %",
-  "health_plan_label_deductible": "Deductible",
-  
-  "health_plan_label_main_clinic": "Main Clinic",
-  "health_plan_label_city": "City",
-  "health_plan_label_24h": "24h Service",
-  "health_plan_label_phone": "Phone",
-  "health_plan_label_whatsapp": "WhatsApp",
-  "health_plan_label_email": "Support Email",
-  
-  "health_cov_consultations": "Consultations",
-  "health_cov_vaccines": "Vaccines",
-  "health_cov_lab_exams": "Lab Exams",
-  "health_cov_imaging": "Imaging",
-  "health_cov_surgery": "Surgery",
-  "health_cov_hospitalization": "Hospitalization",
-  "health_cov_emergency": "Emergency",
-  "health_cov_pre_existing": "Pre-existing",
-  "health_cov_dentistry": "Dentistry",
-  "health_cov_physiotherapy": "Physiotherapy",
-  "pet_db_sync_error": "Database Sync Error - Please restart the app",
-  "pet_action_manage_funeral_plan": "Manage Funeral Plan",
-  
-  "funeral_plan_title": "Funeral Plan Management",
-  "funeral_section_identity": "1. Identity",
-  "funeral_section_services": "2. Included Services",
-  "funeral_section_rules": "3. Rules",
-  "funeral_section_emergency": "4. EMERGENCY",
-  
-  "funeral_label_company": "Funeral Company",
-  "funeral_label_plan_name": "Plan Name",
-  "funeral_label_contract": "Contract Number",
-  "funeral_label_start_date": "Start Date",
-  "funeral_label_status": "Status",
-  "funeral_label_grace_period": "Grace (Days)",
-  "funeral_label_max_weight": "Max Weight (kg)",
-  "funeral_label_24h": "24h Service",
-  "funeral_label_phone": "24h Phone",
-  "funeral_label_whatsapp": "WhatsApp",
-  "funeral_label_value": "Plan Value",
-  "funeral_label_extra_fees": "Extra Fees",
-  
-  "funeral_svc_removal": "Removal 24h",
-  "funeral_svc_viewing": "Viewing/Wake",
-  "funeral_svc_cremation_ind": "Individual Cremation",
-  "funeral_svc_cremation_col": "Collective Cremation",
-  "funeral_svc_burial": "Burial",
-  "funeral_svc_urn": "Urn",
-  "funeral_svc_ashes": "Ashes Delivery",
-  "funeral_svc_certificate": "Certificate",
-  
-  "funeral_action_call_emergency": "CALL EMERGENCY NOW",
-  "funeral_action_save": "SAVE FUNERAL PLAN",
-  "funeral_save_success": "Funeral Plan Saved Successfully!",
-  "pet_action_analyses": "Analyses",
-  "pet_action_health": "Health",
-  "pet_action_agenda": "Agenda",
-  "pet_history_button": "Analysis History",
-  "ai_assistant_title": "AI Assistant of {name}",
-  "@ai_assistant_title": {
-    "placeholders": {
-      "name": { "type": "String" }
-    }
-  },
-  "ai_input_hint": "Ask about your pet...",
-  "ai_listening": "Listening...",
-  "ai_error_mic": "Microphone permission required",
-  "ai_thinking": "Thinking...",
-  "pet_age_years": "{count, plural, =0{} =1{1 year} other{{count} years}}",
-  "pet_age_months": "{count, plural, =0{} =1{1 month} other{{count} months}}",
-  "pet_age_estimate_label": "Estimated age: ",
-  "pet_size_small": "Small",
-  "pet_size_medium": "Medium",
-  "pet_size_large": "Large",
-  "pet_label_estimated_weight": "Estimated weight",
-  "pet_weight_unit": "kg",
-  "pet_clinical_title": "Clinical Conditions",
-  "pet_label_allergies": "Known allergies",
-  "pet_label_chronic": "Chronic diseases",
-  "pet_label_disabilities": "Disabilities",
-  "pet_label_observations": "Important observations",
-  "pet_id_external_title": "External Identification (optional)",
-  "pet_label_microchip": "Microchip",
-  "pet_label_registry": "Registry (Pedigree/NGO)",
-  "pet_label_qrcode": "QR Code",
-  "pet_qrcode_future": "Coming soon",
-  "pet_analyses_title": "Analyses: {name}",
-  "pet_profile_title_dynamic": "Pet Profile: {name}",
-  "pet_health_title": "Health: {name}",
-  "pet_health_plan_title": "Health Plan: {name}",
-  "pet_funeral_plan_title": "Funeral Plan: {name}",
-  "pet_event_type_food": "Food",
-  "pet_event_type_health": "Health",
-  "pet_event_type_weight": "Weight",
-  "pet_event_type_hygiene": "Hygiene",
-  "pet_event_type_activity": "Activity",
-  "pet_event_type_activity": "Activity",
-  "pet_event_type_other": "Other",
-  "pet_agenda_coming_soon": "Agenda Module Coming Soon for {name}",
-  "pet_medical_history_empty": "No medical history recorded yet.",
-  "pet_share_not_implemented": "Share not implemented for history yet",
-  "pet_ai_brain_not_ready": "AI Brain not ready. Check Internet or API Key.",
-  "pet_ai_connection_error": "Connection Error: {error}",
-  "pet_ai_trouble_thinking": "I am having trouble thinking right now. Please try again.",
-  "pet_stt_not_available": "STT not available",
-  "pet_stt_error": "STT Error: {error}",
-  "pet_entry_deleted": "Entry deleted",
-  "pet_error_history_load": "Error loading history: {error}",
-  "@pet_error_history_load": {
-    "placeholders": {
-      "error": { "type": "String" }
-    }
-  },
-  "pet_ai_greeting": "Hello! I have analyzed {name}'s data. How can I help?",
-  "@pet_ai_greeting": {
-    "placeholders": {
-      "name": { "type": "String" }
-    }
-  },
-  "pet_analysis_title": "Analysis: {name}",
-  "@pet_analysis_title": {
-    "placeholders": {
-      "name": { "type": "String" }
-    }
-  },
-  "pet_event_food": "Food",
-  "pet_event_health": "Health",
-  "pet_event_weight": "Weight",
-  "pet_event_walk": "Walk",
-  "pet_event_hygiene": "Hygiene",
-  "pet_event_behavior": "Behavior",
-  "pet_event_medication": "Medication",
-  "pet_event_note": "Note",
-  "pet_ai_thinking_status": "Thinking...",
-  "pet_agenda_title": "Pet Agenda",
-  "pet_agenda_title_dynamic": "Pet Agenda: {petName}",
-  "@pet_agenda_title_dynamic": {
-    "placeholders": {
-      "petName": {
-        "type": "String"
-      }
-    }
-  },
-  "pet_agenda_empty": "No events scheduled",
-  "pet_agenda_add_event": "Add event",
-  "pet_agenda_add_event_dynamic": "Add event: {petName}",
-  "@pet_agenda_add_event_dynamic": {
-    "placeholders": {
-      "petName": {
-        "type": "String"
-      }
-    }
-  },
-  "pet_agenda_today": "Today",
-  "pet_agenda_yesterday": "Yesterday",
-  "pet_agenda_select_type": "Select type",
-  "pet_agenda_event_date": "Date",
-  "pet_agenda_event_time": "Time",
-  "pet_agenda_notes_hint": "Notes (optional)",
-  "pet_agenda_save": "Save Event",
-  "pet_journal_add_event": "{petName}'s Journal",
-  "@pet_journal_add_event": {
-    "placeholders": {
-      "petName": { "type": "String" }
-    }
-  },
-  "pet_journal_question": "What happened?",
-  "pet_journal_placeholder": "Describe what happened...",
-  "pet_journal_register": "Register Event",
-  "label_friend_name": "Friend Name",
-  "label_tutor_name": "Tutor Name",
-  "ai_simulating_analysis": "Microscope active... analyzing...",
-  "pet_journal_location_loading": "Getting GPS...",
-  "pet_journal_location_captured": "Location captured",
-  "pet_journal_audio_recording": "Recording...",
-  "pet_journal_audio_saved": "Audio note saved",
-  "ai_audio_analysis_cough_detected": "AI detected coughing sound.",
-  "ai_suggest_health_category": "Switch to Health category?",
-  "pet_journal_location_name_simulated": "Ibirapuera Park, SP",
-  "journal_guide_title": "AI Journal Capabilities",
-  "journal_guide_voice": "Tell what happened and AI organizes it for you.",
-  "journal_guide_camera": "Analyze health photos (stool, skin), food, or friends instantly.",
-  "journal_guide_audio": "Record cough or breathing sounds for immediate clinical analysis.",
-  "journal_guide_location": "Register where important events happen.",
-  "common_ok": "OK",
-  "pet_journal_analyzed_by_nano": "Image analyzed by Nano Banana",
-  "pet_journal_social_context": "Social Context Detected",
-  "journal_guide_unlock_hint": "Start by telling what happened to unlock photo, audio, and location analysis.",
-
-  "pet_journal_mic_permission_denied": "Microphone permission denied. Enable in settings.",
-  "label_relate": "Relate",
-  "label_photo": "Photo",
-  "label_place": "Place",
-  "label_audio": "Audio",
-  "label_sounds": "Sounds",
-  "label_alert": "Alert",
-  "alert_poison": "Poison / Bait",
-  "alert_dog_loose": "Hostile Dog",
-  "alert_risk_area": "Danger Area",
-  "alert_noise": "Loud Noise",
-  "error_gps": "GPS Error: {error}",
-  "gps_error_snack": "Could not get current location. GPS might be disabled.",
-  "map_type_normal": "Default",
-  "map_type_satellite": "Satellite",
-  "map_type_hybrid": "Hybrid",
-  "map_type_terrain": "Terrain",
-  "label_map_type": "Map Type",
-  "pet_journal_hint_text": "Describe the event...",
-  "pet_journal_register_button": "Register Event",
-  "pet_journal_report_action": "Report",
-  "map_alert_title": "Report Danger",
-  "map_alert_dog": "Loose Dog",
-  "map_alert_poison": "Poison Risk",
-  "map_alert_noise": "Loud Noise",
-  "map_alert_risk": "Risk Area",
-  "map_alert_success": "Alert Registered!",
-  "pet_journal_recording": "Recording ambient sound...",
-  "pet_journal_audio_saved": "Audio saved!",
-  "pet_journal_photo_saved": "Photo saved!",
-  "map_alert_description_user": "Reported by user",
-  "pet_journal_gps_error": "Error getting GPS",
-  "pet_journal_loading_gps": "Getting GPS...",
-  "pet_journal_location_unknown": "Unknown Location",
-  "pet_journal_location_approx": "Approximate Location",
-  "label_gallery": "Gallery",
-  "label_file": "File",
-  "pet_journal_file_selected": "File selected: {name}",
-  "@pet_journal_file_selected": {
-    "placeholders": {
-      "name": { "type": "String" }
-    }
-  },
-  "pet_journal_file_error": "Error selecting file: {error}",
-  "@pet_journal_file_error": {
-    "placeholders": {
-      "error": { "type": "String" }
-    }
-  },
-  "pet_journal_help_title": "Guidelines",
-  "pet_journal_help_photo_title": "Photo/Gallery",
-  "pet_journal_help_photo_desc": "Capture or upload images for immediate AI health or behavior analysis.",
-  "pet_journal_help_audio_title": "Audio/Upload",
-  "pet_journal_help_audio_desc": "Record sounds (breathing, coughing, barking) or upload files for anomaly detection.",
-  "pet_journal_help_map_title": "Map/Address",
-  "pet_journal_help_map_desc": "Location is captured automatically. Tap the map if you need to adjust the event point.",
-  "pet_journal_help_notes_title": "Notes",
-  "pet_journal_help_notes_desc": "Describe what happened. AI will cross-reference your text with media to generate the correct alert.",
-  "pet_journal_help_videos_title": "Videos (Coming Soon)",
-  "pet_journal_help_videos_desc": "We focus on photo & audio for speed, but videos are coming!",
-  "pet_journal_help_ai_title": "Artificial Intelligence",
-  "pet_journal_help_ai_desc": "Write freely. AI crosses photo and audio data for clinical insights.",
-  "btn_got_it": "Got it!",
-  "help_guide_title": "Tutor Field Guide",
-  "pet_journal_searching_address": "Searching address...",
-  "pet_journal_address_not_found": "Address not found",
-  "pet_error_ai_analysis_failed": "AI Analysis failed: {error}",
-  "@pet_error_ai_analysis_failed": {
-    "placeholders": {
-      "error": { "type": "String" }
-    }
-  },
-  "pet_error_repository_failure": "Repository failure: {status}",
-  "@pet_error_repository_failure": {
-    "placeholders": {
-      "status": { "type": "String" }
-    }
-  },
-  "pet_error_saving_event": "Error saving event: {error}",
-  "@pet_error_saving_event": {
-    "placeholders": {
-      "error": { "type": "String" }
-    }
-  },
-  "pet_agenda_summary_format": "{keywords}",
-  "@pet_agenda_summary_format": {
-    "placeholders": {
-      "keywords": { "type": "String" }
-    }
-  },
-  "common_delete_confirm_title": "Delete Event?",
-  "common_delete_confirm_message": "This action cannot be undone. Do you really want to remove this record?",
-  "common_cancel": "Cancel",
-  "common_delete": "Delete",
-  "pet_error_delete_event": "Error deleting event",
-  "pet_label_address": "Address",
-  "pet_label_ai_summary": "AI Summary",
-  "pet_analysis_data_not_found": "Analysis data not found.",
-  "pet_logic_keywords_health": "vomit,diarrhea,blood,wound,hurt,pain,fever,vaccine,vet,medication,poop,feces,yellow,bark,howl,crying,cough,choke,sneeze,breathing,dizziness,fainting,seizure,worm,tick,flea,itch,swelling,redness,discharge,pus,limping,lameness,tremor,spasm,circling,head pressing,moan",
-  "pet_ai_language": "en_US",
-  "map_gps_disabled": "GPS is disabled. Please enable it.",
-  "map_permission_denied": "Location permission denied.",
-  "map_permission_denied_forever": "Permissions are permanently denied. Open settings to allow access.",
-  "map_error_location": "Error getting location: {error}",
-  "@map_error_location": {
-    "placeholders": {
-      "error": { "type": "String" }
-    }
-  },
-  "map_title_pet_location": "Pet Location",
-  "action_open_settings": "Open Settings",
-  "map_sync_satellites": "Syncing GPS satellites...",
-  "pet_analysis_visual_title": "Visual Analysis",
-  "pet_icon_pet": "Pet",
-  "pet_journal_audio_processing": "Processing audio...",
-  "pet_journal_audio_error_file_not_found": "Audio file not found.",
-  "pet_journal_audio_error_generic": "No audio analysis result.",
-  "pet_journal_audio_pending": "Audio registered. Analysis pending.",
-  "pet_journal_video_saved": "Short video saved!",
-  "pet_journal_video_processing": "Analyzing movement...",
-  "pet_journal_video_error": "Video analysis error.",
-  "label_video": "Video",
-  "label_vocal": "Vocal",
-  "error_file_too_large": "File too large (Max 30MB).",
-  "error_video_too_long": "Video too long (Max 60s).",
-  "keywordFriend": "friend,visitor,guest,other dog,neighbor's dog",
-  "keywordGuest": "guest,visitor,stranger",
-  "pet_agenda_view_calendar": "View Calendar",
-  "pet_module_dentistry_programs": "Tartar, Gums, Broken Teeth",
-  "pet_module_dermatology_programs": "Alopecia, Dermatitis, Wounds, Parasites",
-  "pet_module_gastro_programs": "Consistency, Color, Parasites, Blood",
-  "pet_module_ears": "Ears",
-  "pet_module_ophthalmology_programs": "Discharge, Redness, Cataracts, Spots",
-  "pet_module_otology_programs": "Wax, Itching, Odor, Redness",
-  "pet_module_physique_programs": "Body Condition Score, Muscle Mass, Obesity",
-  "pet_module_lab_programs": "Blood Count, Biochemistry, Urine, Stool",
-  "pet_module_nutrition_programs": "Ingredients, Guaranteed Analysis, Calories, Serving Size",
+  "pet_module_nutrition_programs": "Ingredients, Table",
   "pet_module_vocal": "Vocalization",
   "pet_module_vocal_programs": "Barks, Coughs, Panting, Meows",
   "pet_module_behavior": "Behavior (Video)",
   "pet_module_behavior_programs": "Barking + Posture, Anxiety, Aggression",
   "pet_module_plant": "Plants (Toxicity)",
-  "pet_module_plant_programs": "Identification, Toxicity, Plant Health, Care Tips",
+  "pet_module_plant_programs": "Identification, Toxicity & Care",
+  "pet_module_food_bowl": "Food (Visual)",
   "action_record_video_audio": "Record Audio/Video",
   "action_select_audio": "Select Audio",
   "action_upload_video_audio": "Upload File",
@@ -690,5 +328,485 @@
   "pet_msg_friend_deleted": "Friend deleted successfully!",
   "pet_dialog_edit_title": "Edit Friend Pet",
   "pet_plant_toxic": "TOXIC ⚠️",
-  "pet_plant_safe": "SAFE ✅"
+  "pet_plant_safe": "SAFE ✅",
+  "pet_msg_confirm_delete_entry": "Are you sure you want to delete this analysis?",
+  "pet_event_type_activity": "Activity",
+  "health_plan_label_card_number": "Card Number",
+  "pet_analysis_visual_title": "Visual Analysis",
+  "pet_label_whatsapp": "WhatsApp",
+  "label_photo": "Photo",
+  "label_gallery": "Gallery",
+  "label_video": "Video",
+  "label_sounds": "Sounds",
+  "label_vocal": "Vocalization",
+  "pet_journal_recording": "Recording journal...",
+  "pet_journal_audio_saved": "Audio saved successfully",
+  "pet_journal_photo_saved": "Photo saved successfully",
+  "pet_journal_video_saved": "Video saved successfully",
+  "error_file_too_large": "File too large",
+  "pet_journal_searching_address": "Searching address...",
+  "pet_journal_address_not_found": "Address not found",
+  "pet_journal_report_action": "Activity Report",
+  "pet_journal_question": "What is the pet doing?",
+  "pet_journal_hint_text": "Write observations here...",
+  "pet_journal_register_button": "Register Event",
+  "help_guide_title": "Help Guide",
+  "btn_got_it": "Got it",
+  "map_alert_title": "Map Alert",
+  "map_type_normal": "Normal",
+  "map_type_satellite": "Satellite",
+  "common_delete_confirm_title": "Confirm Delete",
+  "common_delete_confirm_message": "Are you sure you want to delete?",
+  "pet_profile_title_simple": "Pet Profile",
+  "pet_action_save_profile_simple": "Save Profile",
+  "funeral_save_success": "Funeral plan saved!",
+  "health_plan_saved_success": "Health plan saved!",
+  "pet_age_years": "{count, plural, =1{1 year} other{{count} years}}",
+  "@pet_age_years": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "keywordFriend": "Friend",
+  "keywordGuest": "Guest",
+  "pet_agenda_view_calendar": "View Calendar",
+  "pet_module_dentistry_programs": "Tartar, Gingivitis, Broken Teeth",
+  "pet_module_dermatology_programs": "Alopecia, Dermatitis, Wounds, Parasites",
+  "pet_module_gastro_programs": "Consistency, Color, Parasites, Blood",
+  "pet_module_ophthalmology_programs": "Secretion, Redness, Cataracts, Spots",
+  "pet_module_otology_programs": "Wax, Itching, Odor, Redness",
+  "pet_module_physique_programs": "Body Score, Muscle Mass, Obesity",
+  "pet_module_lab_programs": "CBC, Biochemistry, Urine, Stool",
+  "pet_module_nutrition_programs": "Label Analysis, Nutritional Table",
+  "pet_module_vocal_programs": "Barks, Meows, Coughs, Breathing",
+  "pet_module_behavior_programs": "Breed, Posture, Anxiety, Tremors",
+  "pet_module_plant_programs": "Toxic Plant Identification",
+  "pet_module_food_bowl_programs": "Kibble Quality, Natural Food",
+  "pet_journal_audio_saved_success": "Audio saved!",
+  "pet_journal_photo_saved_success": "Photo saved!",
+  "pet_journal_video_saved_success": "Video saved!",
+  "pet_profile_title_simple": "Profile",
+  "pet_action_save_profile_simple": "Save",
+  "funeral_save_success_simple": "Funeral saved!",
+  "health_plan_saved_success_simple": "Health plan saved!",
+  "pet_type_skin": "Skin",
+  "pet_type_eyes": "Eyes",
+  "pet_type_mouth": "Mouth",
+  "pet_module_ears": "Ears",
+  "pet_type_lab": "Lab Results",
+  "pet_type_safety": "Safety",
+  "category_food_label": "Food Label",
+  "pet_module_plant": "Plants",
+  "pet_module_food_bowl": "Food Bowl",
+  "pet_section_biometrics": "Biometrics",
+  "category_feces": "Stool",
+  "category_wound": "Wound",
+  "pet_type_new_profile": "New Profile",
+  "pet_module_vocal": "Vocal",
+  "pet_module_behavior": "Behavior",
+  "species_dog": "Dog",
+  "species_cat": "Cat",
+  "pet_type_general": "General",
+  "pet_section_posture": "Posture",
+  "value_unknown": "Unknown",
+  "pet_unknown_name": "Unnamed",
+  "species_label": "Species",
+  "pet_label_breed": "Breed",
+  "label_name": "Name",
+  "pet_breed_unknown": "Unknown Breed",
+  "pet_label_sex": "Sex",
+  "pet_sex_male": "Male",
+  "pet_sex_female": "Female",
+  "pet_label_size": "Size",
+  "pet_size_small": "Small",
+  "pet_size_medium": "Medium",
+  "pet_size_large": "Large",
+  "pet_label_estimated_weight": "Est. Weight",
+  "pet_weight_unit": "kg",
+  "pet_label_neutered": "Neutered",
+  "pet_clinical_title": "Clinical Conditions",
+  "pet_label_allergies": "Allergies",
+  "pet_label_chronic": "Chronic Conditions",
+  "pet_label_disabilities": "Disabilities",
+  "pet_label_observations": "Notes",
+  "pet_id_external_title": "External ID",
+  "pet_label_microchip": "Microchip",
+  "pet_label_registry": "Registry ID",
+  "pet_label_qrcode": "QR Code",
+  "pet_qrcode_future": "Coming Soon",
+  "pet_plans_title": "Plans",
+  "pet_action_manage_health_plan": "Manage Health Plan",
+  "pet_unknown": "Unknown",
+  "health_plan_title": "Health Plan",
+  "health_plan_section_identification": "1. Identification",
+  "health_plan_section_coverages": "2. Coverages",
+  "health_plan_section_limits": "3. Rules",
+  "health_plan_section_support": "4. Support",
+  "health_plan_action_save": "SAVE",
+  "health_plan_label_operator": "Operator",
+  "health_plan_label_plan_name": "Name",
+  "health_plan_label_holder_name": "Holder",
+  "health_plan_label_grace_period": "Grace Period",
+  "health_plan_label_annual_limit": "Limit",
+  "health_plan_label_copay": "Copay",
+  "health_plan_label_reimburse": "Reimburse",
+  "health_plan_label_deductible": "Deductible",
+  "health_plan_label_main_clinic": "Clinic",
+  "health_plan_label_city": "City",
+  "health_plan_label_24h": "24h",
+  "health_plan_label_phone": "Phone",
+  "health_plan_label_whatsapp": "WhatsApp",
+  "health_plan_label_email": "Email",
+  "health_cov_consultations": "Consultations",
+  "health_cov_vaccines": "Vaccines",
+  "health_cov_lab_exams": "Lab Exams",
+  "health_cov_imaging": "Imaging",
+  "health_cov_surgery": "Surgery",
+  "health_cov_hospitalization": "Hospitalization",
+  "health_cov_emergency": "Emergency",
+  "health_cov_pre_existing": "Pre-existing",
+  "health_cov_dentistry": "Dentistry",
+  "health_cov_physiotherapy": "Physio",
+  "pet_db_sync_error": "Sync Error",
+  "pet_action_manage_funeral_plan": "Funeral",
+  "funeral_plan_title": "Funeral Plan",
+  "funeral_section_identity": "1. Identification",
+  "funeral_section_services": "2. Services",
+  "funeral_section_rules": "3. Rules",
+  "funeral_section_emergency": "4. EMERGENCY",
+  "funeral_label_company": "Company",
+  "funeral_label_plan_name": "Plan",
+  "funeral_label_contract": "Contract",
+  "funeral_label_start_date": "Start",
+  "funeral_label_status": "Status",
+  "funeral_label_grace_period": "Grace Period",
+  "funeral_label_max_weight": "Max Weight",
+  "funeral_label_24h": "24h",
+  "funeral_label_phone": "Phone",
+  "funeral_label_whatsapp": "WhatsApp",
+  "funeral_label_value": "Value",
+  "funeral_label_extra_fees": "Fees",
+  "funeral_svc_removal": "Removal",
+  "funeral_svc_viewing": "Viewing",
+  "funeral_svc_cremation_ind": "Cremation Ind.",
+  "funeral_svc_cremation_col": "Cremation Col.",
+  "funeral_svc_burial": "Burial",
+  "funeral_svc_urn": "Urn",
+  "funeral_svc_ashes": "Ashes",
+  "funeral_svc_certificate": "Certificate",
+  "funeral_action_call_emergency": "EMERGENCY",
+  "funeral_action_save": "SAVE",
+  "funeral_save_success": "Saved!",
+  "pet_action_analyses": "Analyses",
+  "pet_action_health": "Health",
+  "pet_action_agenda": "Agenda",
+  "pet_history_button": "History",
+  "ai_assistant_title": "AI {name}",
+  "@ai_assistant_title": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "ai_input_hint": "Ask here...",
+  "ai_listening": "Listening...",
+  "ai_error_mic": "Mic denied",
+  "ai_thinking": "Thinking...",
+  "pet_age_months": "{count, plural, =1{1 month} other{{count} months}}",
+  "@pet_age_months": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "pet_age_estimate_label": "Est. Age:",
+  "pet_event_type_food": "Food",
+  "pet_event_type_health": "Health",
+  "pet_event_type_weight": "Weight",
+  "pet_event_type_hygiene": "Hygiene",
+  "pet_event_type_other": "Other",
+  "pet_agenda_coming_soon": "Agenda Module for {name}",
+  "@pet_agenda_coming_soon": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "pet_medical_history_empty": "No medical history.",
+  "pet_share_not_implemented": "Coming soon.",
+  "pet_ai_brain_not_ready": "AI loading...",
+  "pet_ai_connection_error": "AI Error: {error}",
+  "@pet_ai_connection_error": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "pet_ai_trouble_thinking": "Trouble processing.",
+  "pet_stt_not_available": "STT unavailable",
+  "pet_stt_error": "STT Error: {error}",
+  "@pet_stt_error": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "pet_entry_deleted": "Deleted",
+  "pet_error_history_load": "History Error: {error}",
+  "@pet_error_history_load": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "pet_ai_greeting": "Hi! I am {name}'s AI.",
+  "@pet_ai_greeting": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "pet_section_ears": "Ears",
+  "pet_section_nose": "Nose",
+  "pet_event_food": "Food",
+  "pet_event_health": "Health",
+  "pet_event_weight": "Weight",
+  "pet_event_walk": "Walk",
+  "pet_event_hygiene": "Bath",
+  "pet_event_behavior": "Behavior",
+  "pet_event_medication": "Meds",
+  "pet_event_note": "Note",
+  "pet_ai_thinking_status": "AI Thinking...",
+  "pet_agenda_title": "Agenda",
+  "pet_agenda_title_dynamic": "Agenda: {petName}",
+  "@pet_agenda_title_dynamic": {
+    "placeholders": {
+      "petName": { "type": "Object" }
+    }
+  },
+  "pet_agenda_empty": "Empty Agenda",
+  "pet_agenda_add_event_dynamic": "Event for {petName}",
+  "@pet_agenda_add_event_dynamic": {
+    "placeholders": {
+      "petName": { "type": "Object" }
+    }
+  },
+  "pet_agenda_today": "Today",
+  "pet_agenda_yesterday": "Yesterday",
+  "pet_agenda_select_type": "Type",
+  "pet_agenda_event_date": "Date",
+  "pet_agenda_event_time": "Time",
+  "pet_agenda_notes_hint": "Notes",
+  "pet_agenda_save": "Save",
+  "pet_journal_add_event": "Journal {petName}",
+  "@pet_journal_add_event": {
+    "placeholders": {
+      "petName": { "type": "Object" }
+    }
+  },
+  "pet_journal_question": "What happened?",
+  "pet_journal_placeholder": "Describe...",
+  "pet_journal_register": "Register",
+  "label_friend_name": "Friend",
+  "label_tutor_name": "Tutor",
+  "ai_simulating_analysis": "Analyzing...",
+  "pet_journal_location_loading": "GPS...",
+  "pet_journal_location_captured": "Location saved",
+  "pet_journal_audio_recording": "Recording...",
+  "ai_audio_analysis_cough_detected": "Cough detected.",
+  "ai_suggest_health_category": "Health?",
+  "pet_journal_location_name_simulated": "Simulated Loc",
+  "journal_guide_title": "AI Journal",
+  "journal_guide_voice": "Speak and AI organizes.",
+  "journal_guide_camera": "Analyze photos.",
+  "journal_guide_audio": "Record clinical sounds.",
+  "journal_guide_location": "Log location.",
+  "common_ok": "OK",
+  "pet_journal_analyzed_by_nano": "Nano Banana Analysis",
+  "pet_journal_social_context": "Social Context",
+  "journal_guide_unlock_hint": "Start reporting.",
+  "pet_journal_mic_permission_denied": "Mic denied.",
+  "label_relate": "Report",
+  "label_place": "Place",
+  "label_audio": "Audio",
+  "label_alert": "Alert",
+  "alert_poison": "Poison",
+  "alert_dog_loose": "Angry Dog",
+  "alert_risk_area": "Danger",
+  "alert_noise": "Noise",
+  "error_gps": "GPS: {error}",
+  "@error_gps": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "gps_error_snack": "GPS Error.",
+  "map_type_hybrid": "Hybrid",
+  "map_type_terrain": "Terrain",
+  "label_map_type": "Map",
+  "pet_journal_hint_text": "Write here...",
+  "pet_journal_register_button": "Register",
+  "pet_journal_report_action": "Report",
+  "map_alert_dog": "Angry Dog",
+  "map_alert_poison": "Poison",
+  "map_alert_noise": "Noise",
+  "map_alert_risk": "Risk",
+  "map_alert_success": "Success!",
+  "map_alert_description_user": "By user",
+  "pet_journal_gps_error": "GPS Error",
+  "pet_journal_loading_gps": "GPS...",
+  "pet_journal_location_unknown": "Unknown",
+  "pet_journal_location_approx": "Approximate",
+  "pet_journal_file_selected": "File: {name}",
+  "@pet_journal_file_selected": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "pet_journal_file_error": "Error: {error}",
+  "@pet_journal_file_error": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "pet_journal_help_title": "Help",
+  "pet_journal_help_photo_title": "Photos",
+  "pet_journal_help_photo_desc": "Send photos.",
+  "pet_journal_help_audio_title": "Audio",
+  "pet_journal_help_audio_desc": "Record sounds.",
+  "pet_journal_help_map_title": "Map",
+  "pet_journal_help_map_desc": "Auto location.",
+  "pet_journal_help_notes_title": "Notes",
+  "pet_journal_help_notes_desc": "Describe everything.",
+  "pet_journal_help_videos_title": "Video",
+  "pet_journal_help_videos_desc": "Coming soon.",
+  "pet_journal_help_ai_title": "AI",
+  "pet_journal_help_ai_desc": "AI Clinical Opinion.",
+  "btn_got_it": "Got it",
+  "pet_error_ai_analysis_failed": "AI Error: {error}",
+  "@pet_error_ai_analysis_failed": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "pet_error_repository_failure": "Failure: {status}",
+  "@pet_error_repository_failure": {
+    "placeholders": {
+      "status": { "type": "Object" }
+    }
+  },
+  "pet_error_saving_event": "Save Error: {error}",
+  "@pet_error_saving_event": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "pet_agenda_summary_format": "{count} events",
+  "@pet_agenda_summary_format": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "common_delete": "Delete",
+  "pet_error_delete_event": "Delete Error",
+  "pet_label_address": "Address",
+  "pet_label_ai_summary": "AI Summary",
+  "pet_analysis_data_not_found": "No data.",
+  "pet_logic_keywords_health": "vomit,diarrhea,cough",
+  "pet_ai_language": "en_US",
+  "map_gps_disabled": "Enable GPS.",
+  "map_permission_denied": "No permission.",
+  "map_permission_denied_forever": "Open settings.",
+  "map_error_location": "Error: {error}",
+  "@map_error_location": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "map_title_pet_location": "Location",
+  "action_open_settings": "Settings",
+  "map_sync_satellites": "Satellites...",
+  "pet_journal_audio_processing": "Processing...",
+  "pet_journal_audio_error_file_not_found": "No audio.",
+  "pet_journal_audio_error_generic": "No result.",
+  "pet_journal_audio_pending": "Pending.",
+  "pet_journal_video_processing": "Analyzing...",
+  "pet_journal_video_error": "Video Error.",
+  "error_video_too_long": "Max 60s",
+  "pet_mode_my_pet": "My Pet",
+  "pet_mode_friend": "Friend Pet",
+  "pet_hint_select_friend": "Select",
+  "pet_new_friend_option": "New Friend",
+  "pet_error_fill_friend_fields": "Fill all.",
+  "btn_scan_image": "Scan Image",
+  "generic_analyzing": "Analyzing...",
+  "pet_error_image_not_found": "Image not found.",
+  "btn_go": "Go",
+  "pet_created_at_label": "Created at",
+  "pet_initial_assessment": "Initial Assessment",
+  "pet_hint_select_type": "Select Type",
+  "pet_label_info": "Info",
+  "pet_type_profile": "Profile",
+  "pet_type_posture": "Posture",
+  "pet_profile_title": "Pet Profile",
+  "pet_management_title": "Management",
+  "pet_label_health_plan": "Health Plan",
+  "pet_label_funeral_plan": "Funeral Plan",
+  "pet_label_weight": "Weight",
+  "pet_label_birth_date": "Birth Date",
+  "pet_btn_add_metric": "Add Metric",
+  "pet_agenda_add_event": "Add Event",
+  "error_unexpected_title": "Unexpected Error",
+  "error_unexpected_message": "Restart the app.",
+  "error_try_recover": "Recover",
+  "pet_profile_save_success": "Profile saved",
+  "pet_action_save_profile": "SAVE PROFILE",
+  "pet_not_found": "Pet not found",
+  "pet_analyses_title": "Analyses: {name}",
+  "@pet_analyses_title": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "pet_profile_title_dynamic": "Profile: {name}",
+  "@pet_profile_title_dynamic": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "pet_health_title": "Health: {name}",
+  "@pet_health_title": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "pet_health_plan_title": "Health Plan: {name}",
+  "@pet_health_plan_title": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "pet_funeral_plan_title": "Funeral Plan: {name}",
+  "@pet_funeral_plan_title": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "pet_analysis_title": "Analysis: {name}",
+  "@pet_analysis_title": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "label_file": "File",
+  "common_cancel": "Cancel",
+  "@pet_result_title_my_pet": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  },
+  "@pet_result_title_friend_pet": {
+    "placeholders": {
+      "name": { "type": "Object" },
+      "tutor": { "type": "Object" }
+    }
+  },
+  "@pet_analysis_error_generic": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  }
 }

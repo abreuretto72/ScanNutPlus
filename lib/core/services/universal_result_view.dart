@@ -42,16 +42,24 @@ class _UniversalResultViewState extends State<UniversalResultView> {
   }
 
   void _checkMediaType() {
-    final extension = p.extension(widget.filePath).toLowerCase();
-    _isVideo = ['.mp4', '.mov', '.avi'].contains(extension);
+    final extension = p.extension(widget.filePath).toLowerCase().replaceAll('.', '');
+    _isVideo = PetConstants.videoExtensions.contains(extension);
     
+    debugPrint('[UNIVERSAL_RESULT] Checking Media Type. Path: ${widget.filePath} | Ext: $extension | IsVideo: $_isVideo');
+
     if (_isVideo) {
       _videoController = VideoPlayerController.file(File(widget.filePath))
-        ..initialize().then((_) => setState(() {}))
-        ..setLooping(true)
-        ..play();
+        ..initialize().then((_) {
+            debugPrint('[UNIVERSAL_RESULT] Video Controller Initialized. AspectRatio: ${_videoController?.value.aspectRatio}');
+            setState(() {});
+        }).catchError((error) {
+            debugPrint('[UNIVERSAL_RESULT] Video Initialization Error: $error');
+        });
+        
+      _videoController?.setLooping(true);
+      _videoController?.play();
     } else {
-       _isAudio = ['.mp3', '.wav', '.m4a', '.aac', '.ogg', '.flac'].contains(extension);
+       _isAudio = PetConstants.audioExtensions.contains(extension);
     }
   }
 
@@ -131,19 +139,23 @@ class _UniversalResultViewState extends State<UniversalResultView> {
     return Container(
       height: 220,
       decoration: BoxDecoration(
+        color: Colors.black, // Better background for video
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.petPrimary, width: 2),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(14),
         child: Stack(
-          fit: StackFit.expand,
+          alignment: Alignment.center,
           children: [
-            if (_isVideo && _videoController != null && _videoController!.value.isInitialized)
+            if (_isVideo && _videoController != null && _videoController!.value.isInitialized) ...[
               AspectRatio(
                 aspectRatio: _videoController!.value.aspectRatio,
                 child: VideoPlayer(_videoController!),
-              )
+              ),
+              // Video Controls Overlay
+              _buildVideoControls(),
+            ]
             else if (_isAudio)
               Container(
                 color: Colors.black12,
@@ -151,7 +163,7 @@ class _UniversalResultViewState extends State<UniversalResultView> {
                 child: const Icon(Icons.graphic_eq, size: 80, color: AppColors.petPrimary), // Audio Icon (Not Mic)
               )
             else if (!_isVideo)
-              Image.file(File(widget.filePath), fit: BoxFit.cover)
+              Image.file(File(widget.filePath), fit: BoxFit.cover, width: double.infinity, height: double.infinity) // Ensure filled
             else
               const Center(child: CircularProgressIndicator(color: AppColors.petPrimary)),
             
@@ -166,38 +178,80 @@ class _UniversalResultViewState extends State<UniversalResultView> {
     );
   }
 
+  Widget _buildVideoControls() {
+    return Positioned.fill(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            if (_videoController!.value.isPlaying) {
+              _videoController!.pause();
+            } else {
+              _videoController!.play();
+            }
+          });
+        },
+        child: Container(
+          color: Colors.black.withValues(alpha: 0.1), // Touch target
+          child: Center(
+            child: AnimatedOpacity(
+              opacity: _videoController!.value.isPlaying ? 0.0 : 1.0,
+              duration: const Duration(milliseconds: 300),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.play_arrow,
+                  color: Colors.white,
+                  size: 48,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   // --- Métodos de Parsing e UI herdados da PetAnalysisResultView ---
 
   List<_AnalysisBlock> _parseDynamicCards(String rawResponse) {
     List<_AnalysisBlock> blocks = [];
+    debugPrint('[SCAN_NUT_TRACE] Start Parsing Dynamic Cards. Raw Length: ${rawResponse.length}');
+    
     // Regex for grabbing the block content between tags
     final blockRegex = RegExp(PetConstants.regexCardStart, dotAll: true);
     final matches = blockRegex.allMatches(rawResponse);
+    debugPrint('[SCAN_NUT_TRACE] Dynamic Cards Matches Found: ${matches.length}');
 
     for (var match in matches) {
       final body = match.group(1) ?? '';
       
-      final title = RegExp(PetConstants.regexTitle).firstMatch(body)?.group(1) ?? 'Análise';
-      // Robust Content Extraction: Capture everything after CONTENT: including newlines
-      final content = RegExp(PetConstants.regexContent, dotAll: true).firstMatch(body)?.group(1) ?? '';
+      // Polyglot Regex from PetConstants
+      final title = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(body)?.group(1) ?? 'Análise';
+      // Robust Content Extraction
+      // Use dotAll: true to capture multiline content
+      final content = RegExp(PetConstants.regexContent, dotAll: true, caseSensitive: false).firstMatch(body)?.group(1) ?? '';
       
-      // [SANITIZER] Remove structural tags from the content to be displayed
-      final cleanContent = content.replaceAll(RegExp(r'(ICON:|CONTENT:)'), '').trim();
+      // [SANITIZER] Remove structural tags (English + Portuguese variants)
+      final cleanContent = content.replaceAll(RegExp(r'(?:ICON|ÍCONE|ICONE|Ícone|Icone):|(?:CONTENT|CONTEÚDO|CONTEUDO|Conteúdo|Conteudo):', caseSensitive: false), '').trim();
 
-      final iconName = RegExp(PetConstants.regexIcon).firstMatch(body)?.group(1) ?? 'info';
+      final iconName = RegExp(PetConstants.regexIcon, caseSensitive: false).firstMatch(body)?.group(1) ?? 'info';
 
-      // Debug: Check if content is empty
-      if (cleanContent.isEmpty && body.contains('CONTENT:')) {
-         // Fallback: If regex failed but tag exists, take everything after CONTENT: manually
-         var fallbackContent = body.split('CONTENT:').last.trim();
-         fallbackContent = fallbackContent.replaceAll(RegExp(r'(ICON:|CONTENT:)'), '').trim(); // Sanitize fallback too
-         blocks.add(_AnalysisBlock(title: title.trim(), content: fallbackContent, icon: _getIconData(iconName.trim())));
-      } else if (cleanContent.isNotEmpty) {
-         blocks.add(_AnalysisBlock(title: title.trim(), content: cleanContent, icon: _getIconData(iconName.trim())));
+
+      if (cleanContent.isNotEmpty) {
+          debugPrint('[SCAN_NUT_TRACE] Card Parsed -> Title: $title | Icon: $iconName | Content: ${cleanContent.substring(0, cleanContent.length > 20 ? 20 : cleanContent.length)}...');
+          blocks.add(_AnalysisBlock(title: title.trim(), content: cleanContent, icon: _getIconData(iconName.trim())));
       } else {
-         // Double Fallback: If no CONTENT tag, try to take the whole body if it's not just title/icon
-         if (body.length > 20) {
-             blocks.add(_AnalysisBlock(title: title.trim(), content: body.replaceAll(RegExp(r'TITLE:|ICON:'), '').trim(), icon: _getIconData(iconName.trim())));
+         // Fallback: If regex failed but tag exists, try to clean blindly
+         final doubleFallback = body.replaceAll(RegExp(r'(?:TITLE|TITULO|TÍTULO|Título|Titulo):|(?:ICON|ÍCONE|ICONE|Ícone|Icone):'), '').trim();
+         if (doubleFallback.length > 5) {
+             debugPrint('[SCAN_NUT_TRACE] Card Parsed (Fallback) -> Title: $title | Content: ${doubleFallback.substring(0, doubleFallback.length > 20 ? 20 : doubleFallback.length)}...');
+             blocks.add(_AnalysisBlock(title: title.trim(), content: doubleFallback, icon: _getIconData(iconName.trim())));
+         } else {
+             debugPrint('[SCAN_NUT_WARN] Card Skipped (Empty Content). Body dump: $body');
          }
       }
     }

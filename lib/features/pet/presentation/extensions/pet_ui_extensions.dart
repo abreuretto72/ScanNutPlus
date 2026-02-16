@@ -25,6 +25,7 @@ extension PetImageTypeExt on PetImageType {
       case PetImageType.vocal: return l10n.pet_module_vocal;
       case PetImageType.behavior: return l10n.pet_module_behavior;
       case PetImageType.plantCheck: return l10n.pet_module_plant;
+      case PetImageType.foodBowl: return l10n.pet_module_food_bowl;
     }
   }
 }
@@ -64,6 +65,7 @@ extension CategoryStringExt on String {
     if (this == 'vocal' || this == PetConstants.valVocal) return l10n.pet_module_vocal;
     if (this == 'mouth' || this == PetConstants.valMouth) return l10n.pet_type_mouth;
     if (this == 'skin' || this == PetConstants.valSkin) return l10n.pet_type_skin;
+    if (this == 'foodBowl' || this == PetConstants.valFoodBowl) return l10n.pet_module_food_bowl;
     
     // New Mappings from Novas Chaves (AI Titles)
     final lower = toLowerCase();

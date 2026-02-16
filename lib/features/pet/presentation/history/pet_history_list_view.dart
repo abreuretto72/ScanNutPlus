@@ -14,6 +14,7 @@ import 'package:scannutplus/objectbox.g.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/presentation/history/pet_history_detail_screen.dart';
 import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
+import 'package:scannutplus/core/services/universal_ocr_result_view.dart'; // Added Import
 
 class PetHistoryListView extends StatefulWidget {
   const PetHistoryListView({super.key});
@@ -101,11 +102,29 @@ class _PetHistoryListViewState extends State<PetHistoryListView> {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => PetHistoryDetailScreen(entry: entry),
-          ),
-        );
+        // [OCR FLOW REDIRECT]
+        if (entry.category == PetConstants.typeLabel || entry.category == PetConstants.typeLab || entry.category == PetConstants.typeLabel.toLowerCase() || entry.category == PetConstants.typeLab.toLowerCase()) {
+             Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UniversalOcrResultView(
+                  imagePath: entry.imagePath,
+                  ocrResult: entry.rawJson, // Passing raw JSON/Text
+                  petDetails: {
+                    PetConstants.fieldName: entry.petName,
+                    PetConstants.fieldBreed: speciesDisplay, // Using display species as breed fallback or fetch real breed if needed
+                  },
+                ),
+              ),
+            );
+        } else {
+            // [LEGACY FLOW]
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => PetHistoryDetailScreen(entry: entry),
+              ),
+            );
+        }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

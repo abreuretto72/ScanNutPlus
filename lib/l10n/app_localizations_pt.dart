@@ -140,13 +140,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get debug_nav_home_session_active => 'NAVIGATE_TO_HOME_SESSION_ACTIVE';
 
   @override
-  String get auth_required_fallback => 'Autenticação Obrigatória';
+  String get auth_required_fallback => 'Authentication Required';
 
   @override
-  String get login_success => 'Login realizado com sucesso';
+  String get login_success => 'Login successful';
 
   @override
-  String get signup_success => 'Cadastro realizado com sucesso';
+  String get signup_success => 'Registration successful';
 
   @override
   String home_welcome_user(Object name) {
@@ -154,10 +154,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get tab_food => 'Food';
+  String get tab_food => 'Alimentos';
 
   @override
-  String get tab_plant => 'Plants';
+  String get tab_plant => 'Plantas';
 
   @override
   String get tab_pet => 'Pets';
@@ -226,37 +226,37 @@ class AppLocalizationsPt extends AppLocalizations {
   String get food_mock_grilled_chicken => 'Salada de Frango Grelhado';
 
   @override
-  String get food_key_calories => 'calorias';
+  String get food_key_calories => 'calories';
 
   @override
-  String get food_key_protein => 'proteínas';
+  String get food_key_protein => 'protein';
 
   @override
-  String get food_key_carbs => 'carboidratos';
+  String get food_key_carbs => 'carbs';
 
   @override
-  String get food_key_fat => 'gorduras';
+  String get food_key_fat => 'fat';
 
   @override
-  String get food_key_name => 'nome';
+  String get food_key_name => 'name';
 
   @override
-  String get test_food => 'Teste: Food';
+  String get test_food => 'Test: Food';
 
   @override
-  String get test_plants => 'Teste: Plants';
+  String get test_plants => 'Test: Plants';
 
   @override
-  String get test_pets => 'Teste: Pets';
+  String get test_pets => 'Test: Pets';
 
   @override
-  String get test_navigation => 'Teste: Navigation';
+  String get test_navigation => 'Test: Navigation';
 
   @override
-  String get debug_gallery_title => 'Galeria de Cores';
+  String get debug_gallery_title => 'Color Gallery';
 
   @override
-  String get auth_biometric_reason => 'Escaneie para verificar sua identidade';
+  String get auth_biometric_reason => 'Scan to verify your identity';
 
   @override
   String get app_name_plus => 'ScanNut+';
@@ -265,7 +265,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdf_copyright => '© 2026 ScanNut+ Multiverso Digital';
 
   @override
-  String get pdf_page => 'Página';
+  String get pdf_page => 'Page';
 
   @override
   String get dev_name => 'Multiverso Digital';
@@ -346,7 +346,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get type_pet => 'Animal';
 
   @override
-  String get type_label => 'Rótulo';
+  String get type_label => 'Alimentos';
 
   @override
   String get pet_saved_success => 'Pet salvo com sucesso';
@@ -390,17 +390,17 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get help_privacy_content =>
-      'Seus dados são processados localmente sempre que possível. Respeitamos sua privacidade.';
+      'Seus dados são processados localmente sempre que possível.';
 
   @override
-  String get help_email_subject => 'Suporte ScanNut+';
+  String get help_email_subject => 'ScanNut+ Support';
 
   @override
   String get help_story_title => 'Nossa História';
 
   @override
   String get help_origin_story =>
-      'O nome deste app é uma homenagem ao meu pet, o Nut. Minha ideia era criar uma ferramenta que fizesse a gestão completa da vida dele, partindo de organização de rotina até a criação de cardápios saudáveis. No dia a dia, o ScanNut me ajuda a registrar qualquer intercorrência. Em exames de fezes, urina e sangue, uso a IA para ter insights iniciais através da análise de imagem — um suporte tecnológico que sempre compartilho com o veterinário. Além disso, incluí um guia de plantas para identificar espécies tóxicas e garantir a segurança dele. Pensando na minha saúde, adicionei o Food Scan para controlar calorias, vitaminas e gerar planos alimentares com listas de compras. Sinto que, agora, o app está completo para nós dois.';
+      'O nome deste app é uma homenagem ao meu pet, o Nut.';
 
   @override
   String get help_analysis_guide_title => 'Guia de Análise IA';
@@ -413,43 +413,37 @@ class AppLocalizationsPt extends AppLocalizations {
   String get help_section_pet_title => 'Análise Geral do Pet';
 
   @override
-  String get help_section_pet_desc =>
-      'Analisa espécie, porte estimado, postura corporal (sinais de dor/conforto) e segurança do ambiente.';
+  String get help_section_pet_desc => 'Analisa espécie, porte e postura.';
 
   @override
   String get help_section_wound_title => 'Feridas e Lesões';
 
   @override
-  String get help_section_wound_desc =>
-      'Avalia tamanho, aspecto visual (pus/sangue), vermelhidão e sinais inflamatórios.';
+  String get help_section_wound_desc => 'Avalia aspectos visuais de lesões.';
 
   @override
   String get help_section_stool_title => 'Análise de Fezes';
 
   @override
-  String get help_section_stool_desc =>
-      'Verifica consistência (Escala de Bristol), alterações de cor e presença visível de muco ou vermes.';
+  String get help_section_stool_desc => 'Verifica consistência e cor.';
 
   @override
   String get help_section_mouth_title => 'Boca e Dentes';
 
   @override
-  String get help_section_mouth_desc =>
-      'Inspeciona cor da gengiva (pálida/vermelha), acúmulo de tártaro e dentes quebrados.';
+  String get help_section_mouth_desc => 'Inspeciona dentes e gengiva.';
 
   @override
   String get help_section_eyes_title => 'Saúde dos Olhos';
 
   @override
-  String get help_section_eyes_desc =>
-      'Detecta secreção, vermelhidão, opacidade (nuvens) e sinais de irritação.';
+  String get help_section_eyes_desc => 'Detecta secreção e vermelhidão.';
 
   @override
   String get help_section_skin_title => 'Pele e Pelagem';
 
   @override
-  String get help_section_skin_desc =>
-      'Identifica falhas no pelo (alopecia), vermelhidão, descamação e manchas suspeitas.';
+  String get help_section_skin_desc => 'Identifica falhas e descamação.';
 
   @override
   String get help_can_do => 'O que a IA detecta';
@@ -459,116 +453,111 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_capture_instructions =>
-      'A IA analisa imagens do pet, da ferida, das fezes, da boca, dos olhos e da pele. Uma de cada vez.';
+      'A IA analisa imagens do pet individualmente.';
 
   @override
   String get help_domain_pet_title => 'Domínio Pet';
 
   @override
-  String get help_domain_pet_desc =>
-      'Gestão completa para Cães e Gatos: IA para análises visuais, rotinas de saúde e segurança com guia de plantas.';
+  String get help_domain_pet_desc => 'Gestão completa para Cães e Gatos.';
 
   @override
   String get help_domain_food_title => 'Domínio Food';
 
   @override
-  String get help_domain_food_desc =>
-      'Gestão da sua saúde: Scan de alimentos, contagem de nutrientes e criação de cardápios saudáveis.';
+  String get help_domain_food_desc => 'Gestão da sua saúde nutricional.';
 
   @override
   String get help_domain_plant_title => 'Domínio Plant';
 
   @override
-  String get help_domain_plant_desc =>
-      'Guia de Plantas: Identifique espécies no seu jardim ou casa e saiba instantaneamente se são tóxicas para o seu pet, com base em dados botânicos reais.';
+  String get help_domain_plant_desc => 'Identifique plantas tóxicas.';
 
   @override
   String get pet_capture_info_title => 'Recursos IA ScanNut+';
 
   @override
-  String get pet_capture_capability_labels =>
-      'Análise de Rótulos e Ingredientes';
+  String get pet_capture_capability_labels => 'Análise de Rótulos';
 
   @override
-  String get pet_capture_capability_exams => 'Laudos Clínicos e Exames';
+  String get pet_capture_capability_exams => 'Laudos Clínicos';
 
   @override
-  String get pet_capture_capability_biometrics =>
-      'Monitoramento de Postura e Biometria';
+  String get pet_capture_capability_biometrics => 'Monitoramento Postura';
 
   @override
   String get pet_capture_capability_visual => 'Visual Health Inspection';
 
   @override
-  String get pet_input_name_hint => 'What is the pet\'s name?';
+  String get pet_input_name_hint => 'Qual o nome do pet?';
 
   @override
-  String get pet_result_status_stable => 'Status: Stable';
+  String get pet_result_status_stable => 'Status: Estável';
 
   @override
-  String get pet_result_summary_title => 'Analysis Summary';
+  String get pet_result_summary_title => 'Resumo da Análise';
 
   @override
-  String get pet_result_visual_empty => 'No visual anomalies detected';
+  String get pet_result_visual_empty => 'Sem anomalias visuais detectadas';
 
   @override
   String pet_analysis_error_generic(Object error) {
-    return 'Analysis Error: $error';
+    return 'Erro de Análise: $error';
   }
 
   @override
-  String get pet_urgency_red => 'urgency: red';
+  String get pet_urgency_red => 'Urgência: Crítico';
 
   @override
-  String get pet_urgency_immediate => 'immediate attention';
+  String get pet_urgency_immediate => 'Atenção Imediata';
 
   @override
-  String get pet_urgency_critical => 'critical';
+  String get pet_urgency_critical => 'Crítico';
 
   @override
-  String get pet_urgency_yellow => 'urgency: yellow';
+  String get pet_urgency_yellow => 'Urgência: Atenção';
 
   @override
-  String get pet_urgency_monitor => 'monitor';
+  String get pet_urgency_monitor => 'Monitorar';
 
   @override
-  String get pet_status_critical => 'Status: Critical Attention';
+  String get pet_status_critical => 'Status: Atenção Crítica';
 
   @override
-  String get pet_status_monitor => 'Status: Monitor';
+  String get pet_status_monitor => 'Status: Monitorar';
 
   @override
-  String get pet_mock_visual_confirm => 'Visual analysis confirms structure...';
+  String get pet_mock_visual_confirm => 'Análise visual confirmada.';
 
   @override
   String get pet_label_pet => 'Pet';
 
   @override
-  String get pet_section_species => 'Identificação da Espécie';
+  String get pet_section_species => 'Espécie';
 
   @override
-  String get pet_section_health => 'Saúde e Comportamento Geral';
+  String get pet_section_health => 'Saúde Geral';
 
   @override
-  String get pet_section_coat => 'Condição Geral da Pelagem';
+  String get pet_section_coat => 'Pelagem';
 
   @override
-  String get pet_section_skin => 'Aparência da Pele';
+  String get pet_section_skin => 'Pele';
 
   @override
   String get pet_action_share => 'Compartilhar';
 
   @override
-  String get source_merck => 'Manual Veterinário Merck (MSD Digital 2026)';
+  String get source_merck => 'Manual Veterinário Merck 2026';
 
   @override
-  String get source_scannut => 'Protocolo de Biometria e Fenotipagem ScanNut+';
+  String get source_scannut => 'Protocolo ScanNut+';
 
   @override
-  String get source_aaha => 'Diretrizes de Exame Físico AAHA/WSAVA';
+  String get source_aaha => 'Diretrizes AAHA/WSAVA';
 
   @override
-  String get pet_section_ears => 'Saúde dos Ouvidos';
+  String get pet_section_ears => 'Ouvidos';
 
   @override
   String get pet_section_nose => 'Nariz';
@@ -580,13 +569,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_section_body => 'Corpo';
 
   @override
-  String get pet_section_issues => 'Problemas Potenciais';
+  String get pet_section_issues => 'Alertas';
 
   @override
-  String get pet_status_healthy => 'STATUS SAUDÁVEL';
+  String get pet_status_healthy => 'SAUDÁVEL';
 
   @override
-  String get pet_status_attention => 'ATENÇÃO NECESSÁRIA';
+  String get pet_status_attention => 'ATENÇÃO';
 
   @override
   String get key_green => 'Monitorar';
@@ -602,7 +591,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String error_database_load(String error) {
-    return 'Erro ao carregar banco de dados: $error';
+    return 'Erro ao carregar banco: $error';
   }
 
   @override
@@ -618,7 +607,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get category_feces => 'Fezes';
 
   @override
-  String get category_food_label => 'Rótulo';
+  String get category_food_label => 'Alimentos';
 
   @override
   String get pet_type_general => 'Geral';
@@ -651,7 +640,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_my_pets_title => 'Meus Pets';
 
   @override
-  String get pet_no_pets_registered => 'Nenhum pet registrado ainda.';
+  String get pet_no_pets_registered => 'Nenhum pet registrado.';
 
   @override
   String get pet_dashboard_title => 'Painel do Pet';
@@ -663,7 +652,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_action_history => 'Prontuário';
 
   @override
-  String get pet_type_label => 'Rótulo';
+  String get pet_type_label => 'Alimentos';
 
   @override
   String get pet_type_wound => 'Ferida';
@@ -696,7 +685,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String pet_id_format(String id) {
-    return 'ID: $id...';
+    return 'ID: $id';
   }
 
   @override
@@ -712,7 +701,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_waze_title => 'Waze Pet';
 
   @override
-  String get pet_waze_desc => 'Alertas da comunidade próximos a você';
+  String get pet_waze_desc => 'Alertas da comunidade';
 
   @override
   String get pet_partners_title => 'Parceiros';
@@ -724,10 +713,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_tab_history => 'Histórico';
 
   @override
-  String get pet_history_empty => 'Nenhum histórico disponível';
+  String get pet_history_empty => 'Histórico vazio';
 
   @override
-  String get pet_analysis_result_title => 'Resultado da Análise';
+  String get pet_analysis_result_title => 'Resultado';
 
   @override
   String get pet_status_healthy_simple => 'Saudável';
@@ -739,16 +728,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_status_attention_simple => 'Atenção';
 
   @override
-  String get pet_section_sources => 'Referências e Protocolo';
+  String get pet_section_sources => 'Referências';
 
   @override
   String get pet_action_new_analysis => 'Nova Análise';
 
   @override
-  String get source_scannut_db => 'Banco de Dados ScanNut+';
+  String get source_scannut_db => 'Banco ScanNut+';
 
   @override
-  String get pet_unknown_name => 'Nome Desconhecido';
+  String get pet_unknown_name => 'Sem Nome';
 
   @override
   String get pet_footer_brand => 'Inteligência Pet ScanNut+';
@@ -778,8 +767,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_delete_title => 'Excluir Pet';
 
   @override
-  String get pet_delete_content =>
-      'Tem certeza que deseja excluir este pet e todo o histórico?';
+  String get pet_delete_content => 'Deseja realmente excluir?';
 
   @override
   String get pet_delete_confirm => 'Excluir';
@@ -788,20 +776,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_delete_cancel => 'Cancelar';
 
   @override
-  String get pet_history_delete_success => 'Histórico excluído com sucesso!';
+  String get pet_history_delete_success => 'Histórico excluído';
 
   @override
-  String get pet_ai_overloaded_message =>
-      'IA sobrecarregada! Por favor, tente novamente em alguns instantes.';
+  String get pet_ai_overloaded_message => 'IA sobrecarregada!';
 
   @override
-  String get pet_delete_success => 'Pet excluído com sucesso';
+  String get pet_delete_success => 'Pet excluído';
 
   @override
   String get pet_recent_analyses => 'Últimas Análises';
 
   @override
-  String get pet_no_history => 'Nenhuma análise recente.';
+  String get pet_no_history => 'Sem análises.';
 
   @override
   String get pet_new_pet => 'Novo Pet';
@@ -819,152 +806,373 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_analysis_mouth => 'Saúde Bucal';
 
   @override
-  String get pet_analysis_stool => 'Triagem de Excrementos';
+  String get pet_analysis_stool => 'Fezes';
 
   @override
-  String get pet_analysis_lab => 'Leitura de Exames';
+  String get pet_analysis_lab => 'Exames';
 
   @override
-  String get pet_analysis_label => 'Nutricional e Rótulos';
+  String get pet_analysis_label => 'Nutricional';
 
   @override
   String get pet_analysis_posture => 'Condição Corporal';
 
   @override
-  String get ai_feedback_no_oral_layout =>
-      'Nenhuma estrutura oral visível para análise.';
+  String get ai_feedback_no_oral_layout => 'Sem estrutura oral visível.';
 
   @override
-  String get ai_feedback_no_derm_abnormalities =>
-      'Nenhuma anormalidade dermatológica detectada com base na evidência visual.';
+  String get ai_feedback_no_derm_abnormalities => 'Sem anormalidades de pele.';
 
   @override
   String get ai_feedback_invalid_gastro =>
-      'CONTEXTO_INVÁLIDO: A imagem não parece ser conteúdo gastrointestinal.';
+      'Imagem não é conteúdo gastrointestinal.';
 
   @override
-  String get ai_feedback_invalid_lab =>
-      'CONTEXTO_INVÁLIDO: A imagem não é um exame laboratorial.';
+  String get ai_feedback_invalid_lab => 'Imagem não é exame laboratorial.';
 
   @override
-  String get ai_feedback_lab_disclaimer =>
-      'Interpretação baseada em texto visível. Verifique com o documento original.';
+  String get ai_feedback_lab_disclaimer => 'Verifique o documento original.';
 
   @override
-  String get ai_feedback_eyes_not_visible => 'Olhos não totalmente visíveis.';
+  String get ai_feedback_eyes_not_visible => 'Olhos não visíveis.';
 
   @override
-  String get ai_feedback_inconclusive_angle => 'Ângulo visual inconclusivo.';
+  String get ai_feedback_inconclusive_angle => 'Ângulo inconclusivo.';
 
   @override
-  String get pet_module_dentistry => 'Saúde Bucal (Dentes e Gengivas)';
+  String get pet_module_dentistry => 'Saúde Bucal';
 
   @override
-  String get pet_module_dermatology => 'Pele, Pelagem e Feridas';
+  String get pet_module_dermatology => 'Pele e Pelagem';
 
   @override
-  String get pet_module_gastro => 'Análise de Fezes e Digestão';
+  String get pet_module_gastro => 'Digestão';
 
   @override
-  String get pet_module_lab => 'Leitura de Exames Laboratoriais';
+  String get pet_module_lab => 'Laboratório';
 
   @override
-  String get pet_module_nutrition => 'Análise de Rótulos e Alimentos';
+  String get pet_module_nutrition => 'Rótulos';
 
   @override
-  String get pet_module_ophthalmology => 'Oftalmologia (Olhos)';
+  String get pet_module_ophthalmology => 'Oftalmologia';
 
   @override
-  String get pet_module_physique => 'Condição Corporal e Peso (ECC)';
+  String get pet_module_physique => 'Condição Corporal';
 
   @override
-  String get btn_scan_image => 'Escanear Imagem';
+  String get pet_module_nutrition_programs =>
+      'Análise de Rótulos, Tabela Nutricional';
 
   @override
-  String get generic_analyzing => 'Analisando imagem...';
+  String get pet_module_vocal => 'Vocalização';
 
   @override
-  String get pet_error_image_not_found =>
-      'Erro: Imagem original não encontrada.';
+  String get pet_module_vocal_programs => 'Latidos, Miados, Tosse, Respiração';
 
   @override
-  String get btn_go => 'Ir';
+  String get pet_module_behavior => 'Comportamento';
 
   @override
-  String get pet_created_at_label => 'Criado em:';
+  String get pet_module_behavior_programs =>
+      'Raça, Postura, Ansiedade, Tremores';
 
   @override
-  String get pet_initial_assessment => 'Avaliação Inicial';
+  String get pet_module_plant => 'Plantas';
 
   @override
-  String get pet_hint_select_type => '<Selecione o tipo>';
+  String get pet_module_plant_programs => 'Identificação de Plantas Tóxicas';
 
   @override
-  String get pet_label_info => 'Informação';
+  String get pet_module_food_bowl => 'Alimentação';
 
   @override
-  String get pet_type_profile => 'Análise de Perfil';
+  String get action_record_video_audio => 'Gravar';
 
   @override
-  String get pet_type_posture => 'Análise de Postura';
+  String get action_select_audio => 'Escolher Áudio';
 
   @override
-  String get pet_profile_title => 'Perfil do Pet';
+  String get action_upload_video_audio => 'Carregar';
 
   @override
-  String get pet_management_title => 'Gestão do Pet';
+  String get pet_mode_my_pet => 'Meu Pet';
 
   @override
-  String get pet_label_health_plan => 'Plano de Saúde';
+  String get pet_mode_friend => 'Pet Amigo';
 
   @override
-  String get pet_label_funeral_plan => 'Plano Funerário';
+  String get pet_label_tutor => 'Tutor';
 
   @override
-  String get pet_label_weight => 'Peso';
+  String get pet_hint_select_friend => 'Selecione';
+
+  @override
+  String get pet_new_friend_option => 'Novo Amigo';
+
+  @override
+  String get pet_friend_list_label => 'Amigos';
+
+  @override
+  String get pet_error_fill_friend_fields => 'Preencha tudo.';
+
+  @override
+  String pet_result_title_my_pet(Object name) {
+    return 'Meu Pet: $name';
+  }
+
+  @override
+  String pet_result_title_friend_pet(Object name, Object tutor) {
+    return 'Amigo: $name';
+  }
+
+  @override
+  String get pet_action_edit_friend => 'Editar';
+
+  @override
+  String get pet_action_delete_friend => 'Excluir';
+
+  @override
+  String get pet_msg_confirm_delete_friend => 'Excluir amigo?';
+
+  @override
+  String get pet_msg_friend_updated => 'Atualizado!';
+
+  @override
+  String get pet_msg_friend_deleted => 'Excluído!';
+
+  @override
+  String get pet_dialog_edit_title => 'Editar Amigo';
+
+  @override
+  String get pet_plant_toxic => 'TÓXICA ⚠️';
+
+  @override
+  String get pet_plant_safe => 'SEGURA ✅';
+
+  @override
+  String get pet_msg_confirm_delete_entry => 'Excluir análise?';
+
+  @override
+  String get pet_event_type_activity => 'Atividade';
+
+  @override
+  String get health_plan_label_card_number => 'Carteirinha';
+
+  @override
+  String get pet_analysis_visual_title => 'Análise Visual';
+
+  @override
+  String get pet_label_whatsapp => 'WhatsApp';
+
+  @override
+  String get label_photo => 'Foto';
+
+  @override
+  String get label_gallery => 'Galeria';
+
+  @override
+  String get label_video => 'Vídeo';
+
+  @override
+  String get label_sounds => 'Sons';
+
+  @override
+  String get label_vocal => 'Vocalização';
+
+  @override
+  String get pet_journal_recording => 'Gravando...';
+
+  @override
+  String get pet_journal_audio_saved => 'Áudio salvo';
+
+  @override
+  String get pet_journal_photo_saved => 'Foto salva!';
+
+  @override
+  String get pet_journal_video_saved => 'Vídeo salvo!';
+
+  @override
+  String get error_file_too_large => 'Máx 20MB';
+
+  @override
+  String get pet_journal_searching_address => 'Endereço...';
+
+  @override
+  String get pet_journal_address_not_found => 'Não achado';
+
+  @override
+  String get pet_journal_report_action => 'Relatar';
+
+  @override
+  String get pet_journal_question => 'O que houve?';
+
+  @override
+  String get pet_journal_hint_text => 'Escreva aqui...';
+
+  @override
+  String get pet_journal_register_button => 'Registrar';
+
+  @override
+  String get help_guide_title => 'Guia';
+
+  @override
+  String get btn_got_it => 'Entendi';
+
+  @override
+  String get map_alert_title => 'Reportar';
+
+  @override
+  String get map_type_normal => 'Padrão';
+
+  @override
+  String get map_type_satellite => 'Satélite';
+
+  @override
+  String get common_delete_confirm_title => 'Excluir?';
+
+  @override
+  String get common_delete_confirm_message => 'Deseja remover?';
+
+  @override
+  String get pet_profile_title_simple => 'Perfil';
+
+  @override
+  String get pet_action_save_profile_simple => 'Salvar';
+
+  @override
+  String get funeral_save_success => 'Salvo!';
+
+  @override
+  String get health_plan_saved_success => 'Salvo!';
+
+  @override
+  String pet_age_years(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count anos',
+      one: '1 ano',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get keywordFriend => 'Amigo';
+
+  @override
+  String get keywordGuest => 'Convidado';
+
+  @override
+  String get pet_agenda_view_calendar => 'Ver Calendário';
+
+  @override
+  String get pet_module_dentistry_programs =>
+      'Tártaro, Gengivite, Dentes Quebrados';
+
+  @override
+  String get pet_module_dermatology_programs =>
+      'Alopecias, Dermatites, Feridas, Parasitas';
+
+  @override
+  String get pet_module_gastro_programs =>
+      'Consistência, Cor, Parasitas, Sangue';
+
+  @override
+  String get pet_module_ophthalmology_programs =>
+      'Secreção, Vermelhidão, Catarata, Manchas';
+
+  @override
+  String get pet_module_otology_programs => 'Cera, Coceira, Odor, Vermelhidão';
+
+  @override
+  String get pet_module_physique_programs =>
+      'Escore Corporal, Massa Muscular, Obesidade';
+
+  @override
+  String get pet_module_lab_programs => 'Hemograma, Bioquímico, Urina, Fezes';
+
+  @override
+  String get pet_module_food_bowl_programs =>
+      'Qualidade da Ração, Comida Natural';
+
+  @override
+  String get pet_journal_audio_saved_success => 'Áudio salvo!';
+
+  @override
+  String get pet_journal_photo_saved_success => 'Foto salva!';
+
+  @override
+  String get pet_journal_video_saved_success => 'Vídeo salvo!';
+
+  @override
+  String get funeral_save_success_simple => 'Funeral salvo!';
+
+  @override
+  String get health_plan_saved_success_simple => 'Saúde salvo!';
+
+  @override
+  String get pet_module_ears => 'Ouvidos';
 
   @override
   String get pet_label_size => 'Porte';
 
   @override
+  String get pet_size_small => 'Pequeno';
+
+  @override
+  String get pet_size_medium => 'Médio';
+
+  @override
+  String get pet_size_large => 'Grande';
+
+  @override
+  String get pet_label_estimated_weight => 'Peso estimado';
+
+  @override
+  String get pet_weight_unit => 'kg';
+
+  @override
   String get pet_label_neutered => 'Castrado';
 
   @override
-  String get pet_label_birth_date => 'Data de Nascimento';
+  String get pet_clinical_title => 'Clínico';
 
   @override
-  String get pet_agenda_add_event => 'Adicionar evento';
+  String get pet_label_allergies => 'Alergias';
 
   @override
-  String get error_unexpected_title => 'Ops! Algo inesperado aconteceu.';
+  String get pet_label_chronic => 'Doenças crônicas';
 
   @override
-  String get error_unexpected_message =>
-      'Nosso time de esquilos já foi notificado. Por favor, reinicie o app.';
+  String get pet_label_disabilities => 'Deficiências';
 
   @override
-  String get error_try_recover => 'Tentar Recuperar';
+  String get pet_label_observations => 'Notas';
 
   @override
-  String get pet_btn_add_metric => 'Adicionar Métrica';
+  String get pet_id_external_title => 'ID Externo';
 
   @override
-  String get pet_profile_save_success => 'Perfil atualizado com sucesso';
+  String get pet_label_microchip => 'Microchip';
 
   @override
-  String get pet_action_save_profile => 'SALVAR PERFIL PET';
+  String get pet_label_registry => 'Registro';
 
   @override
-  String get pet_not_found => 'Pet não encontrado';
+  String get pet_label_qrcode => 'QR Code';
+
+  @override
+  String get pet_qrcode_future => 'Em breve';
 
   @override
   String get pet_plans_title => 'Planos';
 
   @override
-  String get pet_action_manage_health_plan => 'Gerenciar Plano de Saúde';
+  String get pet_action_manage_health_plan => 'Saúde';
 
   @override
-  String get health_plan_title => 'Gestão do Plano de Saúde';
+  String get health_plan_title => 'Plano de Saúde';
 
   @override
   String get health_plan_section_identification => '1. Identificação';
@@ -973,52 +1181,46 @@ class AppLocalizationsPt extends AppLocalizations {
   String get health_plan_section_coverages => '2. Coberturas';
 
   @override
-  String get health_plan_section_limits => '3. Limites e Regras';
+  String get health_plan_section_limits => '3. Regras';
 
   @override
-  String get health_plan_section_support => '4. Rede e Suporte';
+  String get health_plan_section_support => '4. Suporte';
 
   @override
-  String get health_plan_saved_success => 'Plano de Saúde salvo com sucesso!';
-
-  @override
-  String get health_plan_action_save => 'SALVAR PLANO';
+  String get health_plan_action_save => 'SALVAR';
 
   @override
   String get health_plan_label_operator => 'Operadora';
 
   @override
-  String get health_plan_label_plan_name => 'Nome do Plano';
+  String get health_plan_label_plan_name => 'Nome';
 
   @override
-  String get health_plan_label_card_number => 'Nº da Carteirinha';
+  String get health_plan_label_holder_name => 'Titular';
 
   @override
-  String get health_plan_label_holder_name => 'Nome do Titular';
+  String get health_plan_label_grace_period => 'Carência';
 
   @override
-  String get health_plan_label_grace_period => 'Carência (Dias)';
+  String get health_plan_label_annual_limit => 'Limite';
 
   @override
-  String get health_plan_label_annual_limit => 'Limite Anual';
+  String get health_plan_label_copay => 'Copart.';
 
   @override
-  String get health_plan_label_copay => 'Coparticipação %';
-
-  @override
-  String get health_plan_label_reimburse => 'Reembolso %';
+  String get health_plan_label_reimburse => 'Reembolso';
 
   @override
   String get health_plan_label_deductible => 'Franquia';
 
   @override
-  String get health_plan_label_main_clinic => 'Clínica Principal';
+  String get health_plan_label_main_clinic => 'Clínica';
 
   @override
   String get health_plan_label_city => 'Cidade';
 
   @override
-  String get health_plan_label_24h => 'Atendimento 24h';
+  String get health_plan_label_24h => '24h';
 
   @override
   String get health_plan_label_phone => 'Telefone';
@@ -1027,7 +1229,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get health_plan_label_whatsapp => 'WhatsApp';
 
   @override
-  String get health_plan_label_email => 'E-mail de Suporte';
+  String get health_plan_label_email => 'E-mail';
 
   @override
   String get health_cov_consultations => 'Consultas';
@@ -1057,23 +1259,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get health_cov_dentistry => 'Odonto';
 
   @override
-  String get health_cov_physiotherapy => 'Fisioterapia';
+  String get health_cov_physiotherapy => 'Fisio';
 
   @override
-  String get pet_db_sync_error =>
-      'Erro de Sincronização - Por favor reinicie o app';
+  String get pet_db_sync_error => 'Erro de Sincronização';
 
   @override
-  String get pet_action_manage_funeral_plan => 'Gerenciar Plano Funerário';
+  String get pet_action_manage_funeral_plan => 'Funeral';
 
   @override
-  String get funeral_plan_title => 'Gestão do Plano Funerário';
+  String get funeral_plan_title => 'Plano Funerário';
 
   @override
   String get funeral_section_identity => '1. Identificação';
 
   @override
-  String get funeral_section_services => '2. Serviços Inclusos';
+  String get funeral_section_services => '2. Serviços';
 
   @override
   String get funeral_section_rules => '3. Regras';
@@ -1082,73 +1283,70 @@ class AppLocalizationsPt extends AppLocalizations {
   String get funeral_section_emergency => '4. EMERGÊNCIA';
 
   @override
-  String get funeral_label_company => 'Empresa Funerária';
+  String get funeral_label_company => 'Empresa';
 
   @override
-  String get funeral_label_plan_name => 'Nome do Plano';
+  String get funeral_label_plan_name => 'Plano';
 
   @override
-  String get funeral_label_contract => 'Número do Contrato';
+  String get funeral_label_contract => 'Contrato';
 
   @override
-  String get funeral_label_start_date => 'Data de Início';
+  String get funeral_label_start_date => 'Início';
 
   @override
   String get funeral_label_status => 'Status';
 
   @override
-  String get funeral_label_grace_period => 'Carência (Dias)';
+  String get funeral_label_grace_period => 'Carência';
 
   @override
-  String get funeral_label_max_weight => 'Peso Limite (kg)';
+  String get funeral_label_max_weight => 'Peso Máx';
 
   @override
-  String get funeral_label_24h => 'Atendimento 24h';
+  String get funeral_label_24h => '24h';
 
   @override
-  String get funeral_label_phone => 'Telefone 24h';
+  String get funeral_label_phone => 'Telefone';
 
   @override
   String get funeral_label_whatsapp => 'WhatsApp';
 
   @override
-  String get funeral_label_value => 'Valor do Plano';
+  String get funeral_label_value => 'Valor';
 
   @override
-  String get funeral_label_extra_fees => 'Taxas Extras';
+  String get funeral_label_extra_fees => 'Taxas';
 
   @override
-  String get funeral_svc_removal => 'Remoção 24h';
+  String get funeral_svc_removal => 'Remoção';
 
   @override
   String get funeral_svc_viewing => 'Velório';
 
   @override
-  String get funeral_svc_cremation_ind => 'Cremação Individual';
+  String get funeral_svc_cremation_ind => 'Cremação Ind.';
 
   @override
-  String get funeral_svc_cremation_col => 'Cremação Coletiva';
+  String get funeral_svc_cremation_col => 'Cremação Col.';
 
   @override
-  String get funeral_svc_burial => 'Sepultamento';
+  String get funeral_svc_burial => 'Enterro';
 
   @override
   String get funeral_svc_urn => 'Urna';
 
   @override
-  String get funeral_svc_ashes => 'Entrega de Cinzas';
+  String get funeral_svc_ashes => 'Cinzas';
 
   @override
   String get funeral_svc_certificate => 'Certificado';
 
   @override
-  String get funeral_action_call_emergency => 'LIGAR EMERGÊNCIA AGORA';
+  String get funeral_action_call_emergency => 'EMERGÊNCIA';
 
   @override
-  String get funeral_action_save => 'SALVAR PLANO FUNERÁRIO';
-
-  @override
-  String get funeral_save_success => 'Plano Funerário salvo com sucesso!';
+  String get funeral_action_save => 'SALVAR';
 
   @override
   String get pet_action_analyses => 'Análises';
@@ -1160,121 +1358,38 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_action_agenda => 'Agenda';
 
   @override
-  String get pet_history_button => 'Histórico de Análises';
+  String get pet_history_button => 'Histórico';
 
   @override
-  String ai_assistant_title(String name) {
-    return 'Assistente IA do $name';
+  String ai_assistant_title(Object name) {
+    return 'IA $name';
   }
 
   @override
-  String get ai_input_hint => 'Pergunte sobre seu pet...';
+  String get ai_input_hint => 'Pergunte aqui...';
 
   @override
   String get ai_listening => 'Ouvindo...';
 
   @override
-  String get ai_error_mic => 'Permissão de microfone necessária';
+  String get ai_error_mic => 'Microfone negado';
 
   @override
   String get ai_thinking => 'Pensando...';
 
   @override
-  String pet_age_years(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count anos',
-      one: '1 ano',
-      zero: '',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String pet_age_months(num count) {
+  String pet_age_months(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
       other: '$count meses',
       one: '1 mês',
-      zero: '',
     );
     return '$_temp0';
   }
 
   @override
-  String get pet_age_estimate_label => 'Idade estimada: ';
-
-  @override
-  String get pet_size_small => 'Pequeno';
-
-  @override
-  String get pet_size_medium => 'Médio';
-
-  @override
-  String get pet_size_large => 'Grande';
-
-  @override
-  String get pet_label_estimated_weight => 'Peso estimado';
-
-  @override
-  String get pet_weight_unit => 'kg';
-
-  @override
-  String get pet_clinical_title => 'Condições Clínicas Fixas';
-
-  @override
-  String get pet_label_allergies => 'Alergias conhecidas';
-
-  @override
-  String get pet_label_chronic => 'Doenças crônicas';
-
-  @override
-  String get pet_label_disabilities => 'Deficiências';
-
-  @override
-  String get pet_label_observations => 'Observações importantes';
-
-  @override
-  String get pet_id_external_title => 'Identificação Externa (opcional)';
-
-  @override
-  String get pet_label_microchip => 'Microchip';
-
-  @override
-  String get pet_label_registry => 'Registro (Pedigree/ONG)';
-
-  @override
-  String get pet_label_qrcode => 'QR Code';
-
-  @override
-  String get pet_qrcode_future => 'Em breve';
-
-  @override
-  String pet_analyses_title(Object name) {
-    return 'Análises: $name';
-  }
-
-  @override
-  String pet_profile_title_dynamic(Object name) {
-    return 'Perfil do Pet: $name';
-  }
-
-  @override
-  String pet_health_title(Object name) {
-    return 'Saúde: $name';
-  }
-
-  @override
-  String pet_health_plan_title(Object name) {
-    return 'Plano de Saúde: $name';
-  }
-
-  @override
-  String pet_funeral_plan_title(Object name) {
-    return 'Plano Funerário: $name';
-  }
+  String get pet_age_estimate_label => 'Idade estimada:';
 
   @override
   String get pet_event_type_food => 'Alimentação';
@@ -1289,65 +1404,53 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_event_type_hygiene => 'Higiene';
 
   @override
-  String get pet_event_type_activity => 'Atividade';
-
-  @override
   String get pet_event_type_other => 'Outros';
 
   @override
   String pet_agenda_coming_soon(Object name) {
-    return 'Módulo Agenda em Breve para $name';
+    return 'Módulo Agenda para $name';
   }
 
   @override
-  String get pet_medical_history_empty =>
-      'Nenhum histórico médico registrado ainda.';
+  String get pet_medical_history_empty => 'Sem histórico médico.';
 
   @override
-  String get pet_share_not_implemented =>
-      'Compartilhamento não implementado para histórico ainda';
+  String get pet_share_not_implemented => 'Em breve.';
 
   @override
-  String get pet_ai_brain_not_ready =>
-      'Cérebro da IA não está pronto. Verifique a internet ou a chave API.';
+  String get pet_ai_brain_not_ready => 'IA carregando...';
 
   @override
   String pet_ai_connection_error(Object error) {
-    return 'Erro de Conexão: $error';
+    return 'Erro IA: $error';
   }
 
   @override
-  String get pet_ai_trouble_thinking =>
-      'Estou com dificuldades para pensar agora. Por favor, tente novamente.';
+  String get pet_ai_trouble_thinking => 'Dificuldade em processar.';
 
   @override
-  String get pet_stt_not_available => 'STT não disponível';
+  String get pet_stt_not_available => 'STT indisponível';
 
   @override
   String pet_stt_error(Object error) {
-    return 'Erro STT: $error';
+    return 'STT Erro: $error';
   }
 
   @override
-  String get pet_entry_deleted => 'Entrada excluída';
+  String get pet_entry_deleted => 'Excluído';
 
   @override
-  String pet_error_history_load(String error) {
-    return 'Erro ao carregar histórico: $error';
+  String pet_error_history_load(Object error) {
+    return 'Erro Histórico: $error';
   }
 
   @override
-  String pet_ai_greeting(String name) {
-    return 'Olá! Analisei os dados de $name. Como posso ajudar?';
+  String pet_ai_greeting(Object name) {
+    return 'Olá! Sou a IA do $name.';
   }
 
   @override
-  String pet_analysis_title(String name) {
-    return 'Análise: $name';
-  }
-
-  @override
-  String get pet_event_food => 'Alimentação';
+  String get pet_event_food => 'Comida';
 
   @override
   String get pet_event_health => 'Saúde';
@@ -1359,34 +1462,34 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_event_walk => 'Passeio';
 
   @override
-  String get pet_event_hygiene => 'Higiene';
+  String get pet_event_hygiene => 'Banho';
 
   @override
   String get pet_event_behavior => 'Comportamento';
 
   @override
-  String get pet_event_medication => 'Medicação';
+  String get pet_event_medication => 'Remédio';
 
   @override
-  String get pet_event_note => 'Anotação';
+  String get pet_event_note => 'Nota';
 
   @override
-  String get pet_ai_thinking_status => 'Pensando...';
+  String get pet_ai_thinking_status => 'IA Pensando...';
 
   @override
-  String get pet_agenda_title => 'Agenda do Pet';
+  String get pet_agenda_title => 'Agenda';
 
   @override
-  String pet_agenda_title_dynamic(String petName) {
-    return 'Agenda do Pet: $petName';
+  String pet_agenda_title_dynamic(Object petName) {
+    return 'Agenda: $petName';
   }
 
   @override
-  String get pet_agenda_empty => 'Nenhum evento agendado';
+  String get pet_agenda_empty => 'Agenda vazia';
 
   @override
-  String pet_agenda_add_event_dynamic(String petName) {
-    return 'Adicionar evento: $petName';
+  String pet_agenda_add_event_dynamic(Object petName) {
+    return 'Evento para $petName';
   }
 
   @override
@@ -1396,7 +1499,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_agenda_yesterday => 'Ontem';
 
   @override
-  String get pet_agenda_select_type => 'Selecione o tipo';
+  String get pet_agenda_select_type => 'Tipo';
 
   @override
   String get pet_agenda_event_date => 'Data';
@@ -1405,96 +1508,81 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_agenda_event_time => 'Hora';
 
   @override
-  String get pet_agenda_notes_hint => 'Observações (opcional)';
+  String get pet_agenda_notes_hint => 'Notas';
 
   @override
-  String get pet_agenda_save => 'Salvar Evento';
+  String get pet_agenda_save => 'Salvar';
 
   @override
-  String pet_journal_add_event(String petName) {
-    return 'Diário de $petName';
+  String pet_journal_add_event(Object petName) {
+    return 'Diário $petName';
   }
 
   @override
-  String get pet_journal_question => 'O que aconteceu?';
+  String get pet_journal_placeholder => 'Descreva...';
 
   @override
-  String get pet_journal_placeholder => 'Descreve o que aconteceu...';
+  String get pet_journal_register => 'Registrar';
 
   @override
-  String get pet_journal_register => 'Registar Evento';
+  String get label_friend_name => 'Amigo';
 
   @override
-  String get label_friend_name => 'Nome do Amigo';
+  String get label_tutor_name => 'Tutor';
 
   @override
-  String get label_tutor_name => 'Nome do Tutor';
+  String get ai_simulating_analysis => 'Analisando...';
 
   @override
-  String get ai_simulating_analysis => 'Microscópio ativo... analisando...';
+  String get pet_journal_location_loading => 'GPS...';
 
   @override
-  String get pet_journal_location_loading => 'Obtendo GPS...';
-
-  @override
-  String get pet_journal_location_captured => 'Localização capturada';
+  String get pet_journal_location_captured => 'Local salvo';
 
   @override
   String get pet_journal_audio_recording => 'Gravando...';
 
   @override
-  String get pet_journal_audio_saved => 'Áudio salvo!';
+  String get ai_audio_analysis_cough_detected => 'Tosse detectada.';
 
   @override
-  String get ai_audio_analysis_cough_detected => 'IA detectou som de tosse.';
+  String get ai_suggest_health_category => 'Saúde?';
 
   @override
-  String get ai_suggest_health_category => 'Mudar para categoria Saúde?';
+  String get pet_journal_location_name_simulated => 'Local simulado';
 
   @override
-  String get pet_journal_location_name_simulated => 'Parque Ibirapuera, SP';
+  String get journal_guide_title => 'IA Diário';
 
   @override
-  String get journal_guide_title => 'Capacidades do Diário IA';
+  String get journal_guide_voice => 'Fale e a IA organiza.';
 
   @override
-  String get journal_guide_voice =>
-      'Conte o que aconteceu e a IA organiza para você.';
+  String get journal_guide_camera => 'Analise fotos.';
 
   @override
-  String get journal_guide_camera =>
-      'Analise na hora fotos de saúde (fezes, pele), comida ou amigos.';
+  String get journal_guide_audio => 'Grave sons clínicos.';
 
   @override
-  String get journal_guide_audio =>
-      'Grave sons de tosse ou respiração para análise clínica imediata.';
-
-  @override
-  String get journal_guide_location =>
-      'Registre onde os eventos importantes acontecem.';
+  String get journal_guide_location => 'Registre o local.';
 
   @override
   String get common_ok => 'OK';
 
   @override
-  String get pet_journal_analyzed_by_nano => 'Imagem analisada por Nano Banana';
+  String get pet_journal_analyzed_by_nano => 'Análise Nano Banana';
 
   @override
-  String get pet_journal_social_context => 'Contexto Social Detectado';
+  String get pet_journal_social_context => 'Contexto Social';
 
   @override
-  String get journal_guide_unlock_hint =>
-      'Comece contando o que houve para liberar a análise de fotos, áudio e localização.';
+  String get journal_guide_unlock_hint => 'Comece relatando.';
 
   @override
-  String get pet_journal_mic_permission_denied =>
-      'Permissão de microfone negada. Habilite nas configurações.';
+  String get pet_journal_mic_permission_denied => 'Microfone negado.';
 
   @override
   String get label_relate => 'Relatar';
-
-  @override
-  String get label_photo => 'Foto';
 
   @override
   String get label_place => 'Local';
@@ -1503,37 +1591,27 @@ class AppLocalizationsPt extends AppLocalizations {
   String get label_audio => 'Áudio';
 
   @override
-  String get label_sounds => 'Sons';
-
-  @override
   String get label_alert => 'Alerta';
 
   @override
-  String get alert_poison => 'Isca / Veneno';
+  String get alert_poison => 'Veneno';
 
   @override
   String get alert_dog_loose => 'Cão Bravo';
 
   @override
-  String get alert_risk_area => 'Perigo / Assalto';
+  String get alert_risk_area => 'Perigo';
 
   @override
-  String get alert_noise => 'Barulho Excessivo';
+  String get alert_noise => 'Barulho';
 
   @override
   String error_gps(Object error) {
-    return 'Erro GPS: $error';
+    return 'GPS: $error';
   }
 
   @override
-  String get gps_error_snack =>
-      'Não foi possível obter a localização atual. Verifique o GPS.';
-
-  @override
-  String get map_type_normal => 'Padrão';
-
-  @override
-  String get map_type_satellite => 'Satélite';
+  String get gps_error_snack => 'Erro GPS.';
 
   @override
   String get map_type_hybrid => 'Híbrido';
@@ -1542,372 +1620,277 @@ class AppLocalizationsPt extends AppLocalizations {
   String get map_type_terrain => 'Terreno';
 
   @override
-  String get label_map_type => 'Tipo de Mapa';
-
-  @override
-  String get pet_journal_hint_text => 'Descreva o evento...';
-
-  @override
-  String get pet_journal_register_button => 'Registrar Evento';
-
-  @override
-  String get pet_journal_report_action => 'Relatar';
-
-  @override
-  String get map_alert_title => 'Reportar Perigo';
+  String get label_map_type => 'Mapa';
 
   @override
   String get map_alert_dog => 'Cão Bravo';
 
   @override
-  String get map_alert_poison => 'Risco de Veneno';
+  String get map_alert_poison => 'Veneno';
 
   @override
-  String get map_alert_noise => 'Barulho Excessivo';
+  String get map_alert_noise => 'Barulho';
 
   @override
-  String get map_alert_risk => 'Área de Risco';
+  String get map_alert_risk => 'Risco';
 
   @override
-  String get map_alert_success => 'Alerta Registrado!';
+  String get map_alert_success => 'Sucesso!';
 
   @override
-  String get pet_journal_recording => 'Gravando som ambiente...';
+  String get map_alert_description_user => 'Pelo usuário';
 
   @override
-  String get pet_journal_photo_saved => 'Foto salva!';
+  String get pet_journal_gps_error => 'Erro GPS';
 
   @override
-  String get map_alert_description_user => 'Reportado pelo usuário';
+  String get pet_journal_loading_gps => 'GPS...';
 
   @override
-  String get pet_journal_gps_error => 'Erro ao obter GPS';
+  String get pet_journal_location_unknown => 'Desconhecido';
 
   @override
-  String get pet_journal_loading_gps => 'Obtendo GPS...';
+  String get pet_journal_location_approx => 'Aproximado';
 
   @override
-  String get pet_journal_location_unknown => 'Localização desconhecida';
-
-  @override
-  String get pet_journal_location_approx => 'Localização Aproximada';
-
-  @override
-  String get label_gallery => 'Galeria';
-
-  @override
-  String get label_file => 'Arquivo';
-
-  @override
-  String pet_journal_file_selected(String name) {
-    return 'Arquivo selecionado: $name';
+  String pet_journal_file_selected(Object name) {
+    return 'Arquivo: $name';
   }
 
   @override
-  String pet_journal_file_error(String error) {
-    return 'Erro ao selecionar arquivo: $error';
+  String pet_journal_file_error(Object error) {
+    return 'Erro: $error';
   }
 
   @override
-  String get pet_journal_help_title => 'Diretrizes';
+  String get pet_journal_help_title => 'Ajuda';
 
   @override
-  String get pet_journal_help_photo_title => 'Foto/Galeria';
+  String get pet_journal_help_photo_title => 'Fotos';
 
   @override
-  String get pet_journal_help_photo_desc =>
-      'Capture ou suba imagens para análise imediata da saúde ou comportamento do pet via IA.';
+  String get pet_journal_help_photo_desc => 'Envie fotos.';
 
   @override
-  String get pet_journal_help_audio_title => 'Áudio/Upload';
+  String get pet_journal_help_audio_title => 'Áudio';
 
   @override
-  String get pet_journal_help_audio_desc =>
-      'Grave sons (respiração, tosse, latido) ou suba arquivos para detecção de anomalias.';
+  String get pet_journal_help_audio_desc => 'Grave sons.';
 
   @override
-  String get pet_journal_help_map_title => 'Mapa/Endereço';
+  String get pet_journal_help_map_title => 'Mapa';
 
   @override
-  String get pet_journal_help_map_desc =>
-      'O local é capturado automaticamente. Toque no mapa se precisar ajustar o ponto do evento.';
+  String get pet_journal_help_map_desc => 'Local automático.';
 
   @override
   String get pet_journal_help_notes_title => 'Notas';
 
   @override
-  String get pet_journal_help_notes_desc =>
-      'Descreva o que aconteceu. A IA cruzará seu texto com as mídias para gerar o alerta correto.';
+  String get pet_journal_help_notes_desc => 'Descreva tudo.';
 
   @override
-  String get pet_journal_help_videos_title => 'Vídeos (Em Breve)';
+  String get pet_journal_help_videos_title => 'Vídeo';
 
   @override
-  String get pet_journal_help_videos_desc =>
-      'Focamos em foto e áudio para agilidade, mas vídeos chegarão logo!';
+  String get pet_journal_help_videos_desc => 'Em breve.';
 
   @override
-  String get pet_journal_help_ai_title => 'Inteligência Artificial';
+  String get pet_journal_help_ai_title => 'IA';
 
   @override
-  String get pet_journal_help_ai_desc =>
-      'Escreva do seu jeito. A IA cruza dados de fotos e sons para um parecer clínico.';
+  String get pet_journal_help_ai_desc => 'Parecer clínico IA.';
 
   @override
-  String get btn_got_it => 'Entendi!';
-
-  @override
-  String get help_guide_title => 'Guia de Campo do Tutor';
-
-  @override
-  String get pet_journal_searching_address => 'Buscar endereço...';
-
-  @override
-  String get pet_journal_address_not_found => 'Endereço não encontrado';
-
-  @override
-  String pet_error_ai_analysis_failed(String error) {
-    return 'Falha na análise IA: $error';
+  String pet_error_ai_analysis_failed(Object error) {
+    return 'IA Erro: $error';
   }
 
   @override
-  String pet_error_repository_failure(String status) {
-    return 'Falha no repositório: $status';
+  String pet_error_repository_failure(Object status) {
+    return 'Falha: $status';
   }
 
   @override
-  String pet_error_saving_event(String error) {
-    return 'Erro ao salvar evento: $error';
+  String pet_error_saving_event(Object error) {
+    return 'Salvar Erro: $error';
   }
 
   @override
-  String pet_agenda_summary_format(String keywords) {
-    return '$keywords';
+  String pet_agenda_summary_format(int count) {
+    return '$count eventos';
   }
-
-  @override
-  String get common_delete_confirm_title => 'Excluir Evento?';
-
-  @override
-  String get common_delete_confirm_message =>
-      'Esta ação não pode ser desfeita. Deseja realmente remover este registro?';
-
-  @override
-  String get common_cancel => 'Cancelar';
 
   @override
   String get common_delete => 'Excluir';
 
   @override
-  String get pet_error_delete_event => 'Erro ao excluir evento';
+  String get pet_error_delete_event => 'Erro ao excluir';
 
   @override
   String get pet_label_address => 'Endereço';
 
   @override
-  String get pet_label_ai_summary => 'Sumário IA';
+  String get pet_label_ai_summary => 'Resumo IA';
 
   @override
-  String get pet_analysis_data_not_found => 'Dados de análise não encontrados.';
+  String get pet_analysis_data_not_found => 'Sem dados.';
 
   @override
-  String get pet_logic_keywords_health =>
-      'vômito,diarreia,sangue,machucado,dor,febre,vacina,veterinário,remédio,cocô,fezes,amarelado,latido,uivo,chorando,tosse,engasgo,espirro,respiração,tontura,desmaio,convulsão,verme,carrapato,pulga,coceira,inchaço,vermelhidão,secreção,pus,claudicação,mancando,tremor,espasmo,andando em círculos,pressionando cabeça,gemido';
+  String get pet_logic_keywords_health => 'vômito,diarreia,tosse';
 
   @override
   String get pet_ai_language => 'pt_BR';
 
   @override
-  String get map_gps_disabled => 'O GPS está desativado. Por favor, ative-o.';
+  String get map_gps_disabled => 'Ative o GPS.';
 
   @override
-  String get map_permission_denied => 'Permissão de localização negada.';
+  String get map_permission_denied => 'Sem permissão.';
 
   @override
-  String get map_permission_denied_forever =>
-      'As permissões estão negadas permanentemente. Abra as configurações para liberar o acesso.';
+  String get map_permission_denied_forever => 'Abra configurações.';
 
   @override
-  String map_error_location(String error) {
-    return 'Erro ao obter localização: $error';
+  String map_error_location(Object error) {
+    return 'Erro: $error';
   }
 
   @override
-  String get map_title_pet_location => 'Localização do Pet';
+  String get map_title_pet_location => 'Localização';
 
   @override
-  String get action_open_settings => 'Abrir Configurações';
+  String get action_open_settings => 'Configurações';
 
   @override
-  String get map_sync_satellites => 'Sincronizando satélites GPS...';
+  String get map_sync_satellites => 'Satélites...';
 
   @override
-  String get pet_analysis_visual_title => 'Análise Visual';
+  String get pet_journal_audio_processing => 'Processando...';
 
   @override
-  String get pet_icon_pet => 'Pet';
+  String get pet_journal_audio_error_file_not_found => 'Sem áudio.';
 
   @override
-  String get pet_journal_audio_processing => 'Processando áudio...';
+  String get pet_journal_audio_error_generic => 'Sem resultado.';
 
   @override
-  String get pet_journal_audio_error_file_not_found =>
-      'Arquivo de áudio não encontrado.';
+  String get pet_journal_audio_pending => 'Pendente.';
 
   @override
-  String get pet_journal_audio_error_generic =>
-      'Sem resultado na análise de áudio.';
+  String get pet_journal_video_processing => 'Analisando...';
 
   @override
-  String get pet_journal_audio_pending => 'Áudio registrado. Análise pendente.';
+  String get pet_journal_video_error => 'Erro vídeo.';
 
   @override
-  String get pet_journal_video_saved => 'Vídeo curto salvo!';
+  String get error_video_too_long => 'Máx 60s';
 
   @override
-  String get pet_journal_video_processing => 'Analisando movimento...';
+  String get btn_scan_image => 'Escanear';
 
   @override
-  String get pet_journal_video_error => 'Erro na análise de vídeo.';
+  String get generic_analyzing => 'Analisando...';
 
   @override
-  String get label_video => 'Vídeo';
+  String get pet_error_image_not_found => 'Imagem não encontrada.';
 
   @override
-  String get label_vocal => 'Vocal';
+  String get btn_go => 'Ir';
 
   @override
-  String get error_file_too_large => 'Arquivo muito grande (Máx 30MB).';
+  String get pet_created_at_label => 'Criado em';
 
   @override
-  String get error_video_too_long => 'Vídeo muito longo (Máx 60s).';
+  String get pet_initial_assessment => 'Avaliação Inicial';
 
   @override
-  String get keywordFriend =>
-      'amigo,visitante,hóspede,outro cachorro,cachorro do vizinho';
+  String get pet_hint_select_type => 'Selecione';
 
   @override
-  String get keywordGuest => 'convidado,visitante,estranho';
+  String get pet_label_info => 'Informação';
 
   @override
-  String get pet_agenda_view_calendar => 'Ver Calendário';
+  String get pet_type_profile => 'Perfil';
 
   @override
-  String get pet_module_dentistry_programs =>
-      'Tártaro, Gengivas, Dentes Quebrados';
+  String get pet_type_posture => 'Postura';
 
   @override
-  String get pet_module_dermatology_programs =>
-      'Alopecia, Dermatite, Feridas, Parasitas';
+  String get pet_profile_title => 'Perfil do Pet';
 
   @override
-  String get pet_module_gastro_programs =>
-      'Consistência, Cor, Parasitas, Sangue';
+  String get pet_management_title => 'Gestão';
 
   @override
-  String get pet_module_ears => 'Ouvidos';
+  String get pet_label_health_plan => 'Plano de Saúde';
 
   @override
-  String get pet_module_ophthalmology_programs =>
-      'Secreção, Vermelhidão, Catarata, Manchas';
+  String get pet_label_funeral_plan => 'Plano Funerário';
 
   @override
-  String get pet_module_otology_programs => 'Cera, Coceira, Odor, Vermelhidão';
+  String get pet_label_weight => 'Peso';
 
   @override
-  String get pet_module_physique_programs =>
-      'Escore Corporal, Massa Muscular, Obesidade';
+  String get pet_label_birth_date => 'Nascimento';
 
   @override
-  String get pet_module_lab_programs => 'Hemograma, Bioquímico, Urina, Copro';
+  String get pet_btn_add_metric => 'Métrica';
 
   @override
-  String get pet_module_nutrition_programs =>
-      'Ingredientes, Níveis de Garantia, Calorias, Porção';
+  String get pet_agenda_add_event => 'Adicionar evento';
 
   @override
-  String get pet_module_vocal => 'Vocalização';
+  String get error_unexpected_title => 'Erro Inesperado';
 
   @override
-  String get pet_module_vocal_programs => 'Latidos, Tosses, Respiração, Miados';
+  String get error_unexpected_message => 'Reinicie o app.';
 
   @override
-  String get pet_module_behavior => 'Comportamento (Vídeo)';
+  String get error_try_recover => 'Recuperar';
 
   @override
-  String get pet_module_behavior_programs =>
-      'Latidos + Postura, Ansiedade, Agressividade';
+  String get pet_profile_save_success => 'Perfil atualizado';
 
   @override
-  String get pet_module_plant => 'Plantas (Toxicidade)';
+  String get pet_action_save_profile => 'SALVAR PERFIL';
 
   @override
-  String get pet_module_plant_programs =>
-      'Identificação, Toxicidade, Saúde da Planta, Cuidados';
+  String get pet_not_found => 'Pet não encontrado';
 
   @override
-  String get action_record_video_audio => 'Gravar Áudio/Vídeo';
-
-  @override
-  String get action_select_audio => 'Selecionar Áudio';
-
-  @override
-  String get action_upload_video_audio => 'Carregar Arquivo';
-
-  @override
-  String get pet_mode_my_pet => 'Meu Pet';
-
-  @override
-  String get pet_mode_friend => 'Pet Amigo';
-
-  @override
-  String get pet_label_tutor => 'Nome do Tutor';
-
-  @override
-  String get pet_hint_select_friend => 'Selecione um Amigo';
-
-  @override
-  String get pet_new_friend_option => 'Novo Amigo';
-
-  @override
-  String get pet_friend_list_label => 'Lista de Amigos';
-
-  @override
-  String get pet_error_fill_friend_fields =>
-      'Por favor, preencha todos os campos do amigo';
-
-  @override
-  String pet_result_title_my_pet(Object name) {
-    return 'Meu Pet: $name';
+  String pet_analyses_title(Object name) {
+    return 'Análises: $name';
   }
 
   @override
-  String pet_result_title_friend_pet(Object name, Object tutor) {
-    return 'Pet Amigo: $name (Tutor: $tutor)';
+  String pet_profile_title_dynamic(Object name) {
+    return 'Perfil: $name';
   }
 
   @override
-  String get pet_action_edit_friend => 'Editar Amigo';
+  String pet_health_title(Object name) {
+    return 'Saúde: $name';
+  }
 
   @override
-  String get pet_action_delete_friend => 'Excluir Amigo';
+  String pet_health_plan_title(Object name) {
+    return 'Plano Saúde: $name';
+  }
 
   @override
-  String get pet_msg_confirm_delete_friend =>
-      'Tem certeza que deseja excluir este amigo?';
+  String pet_funeral_plan_title(Object name) {
+    return 'Plano Funeral: $name';
+  }
 
   @override
-  String get pet_msg_friend_updated => 'Amigo atualizado com sucesso!';
+  String pet_analysis_title(Object name) {
+    return 'Análise: $name';
+  }
 
   @override
-  String get pet_msg_friend_deleted => 'Amigo excluído com sucesso!';
+  String get label_file => 'Arquivo';
 
   @override
-  String get pet_dialog_edit_title => 'Editar Pet Amigo';
-
-  @override
-  String get pet_plant_toxic => 'TÓXICA ⚠️';
-
-  @override
-  String get pet_plant_safe => 'SEGURA ✅';
+  String get common_cancel => 'Cancelar';
 }

@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart'; // Added for Audio Files
+import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail/video_thumbnail.dart'; // For generating video thumbnails // Added for Video Preview
 import 'package:uuid/uuid.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/core/theme/app_colors.dart'; // AppColors
@@ -49,6 +51,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
 
   final ImagePicker _picker = ImagePicker();
   String? _errorMessage; // State to track analysis errors for Retry UI
+  VideoPlayerController? _videoController; // Video Preview
 
   @override
   void initState() {
@@ -59,6 +62,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
   @override
   void dispose() {
     _clearImageCache();
+    _videoController?.dispose(); // Dispose Video Controller
     super.dispose();
   }
 
@@ -67,6 +71,8 @@ class _PetCaptureViewState extends State<PetCaptureView> {
       FileImage(File(_imagePath!)).evict();
       if (kDebugMode) debugPrint('[SCAN_NUT_MEMORY] Evicted image from cache: $_imagePath');
     }
+    _videoController?.dispose();
+    _videoController = null;
   }
 
   @override
@@ -101,44 +107,95 @@ class _PetCaptureViewState extends State<PetCaptureView> {
     }
   }
 
-  Future<void> _pickImage(ImageSource source) async {
+  // Add at top imports if not present, checking manually first.
+  
+  // Inside _PetCaptureViewState
+  Future<void> _generateThumbnail(String videoPath) async {
+    try {
+      final String? thumbPath = await VideoThumbnail.thumbnailFile(
+        video: videoPath,
+        thumbnailPath: videoPath + '.thumb.jpg',
+        imageFormat: ImageFormat.JPEG,
+        maxHeight: 256, // Smaller for list view
+        quality: 75,
+      );
+      
+      if (kDebugMode) debugPrint('[PET_CAPTURE] Thumbnail generated at: $thumbPath');
+    } catch (e) {
+      if (kDebugMode) debugPrint('[PET_CAPTURE] Error generating thumbnail: $e');
+    }
+  }
+
+  Future<void> _pickImage(ImageSource source, {bool isVideo = false}) async {
     try {
       XFile? media;
-      // [UNIVERSAL VOCAL / BEHAVIOR CHECK]
-      if (_forcedType == PetImageType.vocal || _forcedType == PetImageType.behavior) {
+      
+      // ... (Existing implementation for picking media)
+      // [BEHAVIOR LOGIC - HYBRID]
+      if (_forcedType == PetImageType.behavior) {
+          if (source == ImageSource.camera) {
+              if (isVideo) {
+                 media = await _picker.pickVideo(source: source, maxDuration: const Duration(seconds: 15));
+              } else {
+                 media = await _picker.pickImage(source: source);
+              }
+          } else {
+              FilePickerResult? result = await FilePicker.platform.pickFiles(
+                type: FileType.custom,
+                allowedExtensions: PetConstants.galleryExtensions,
+              );
+              if (result != null && result.files.single.path != null) media = XFile(result.files.single.path!);
+          }
+      } 
+      // [VOCAL LOGIC - AUDIO/VIDEO]
+      else if (_forcedType == PetImageType.vocal) {
          if (source == ImageSource.camera) {
-             // Camera: Keep using Video Picker (Records Audio+Video)
-             media = await _picker.pickVideo(
-               source: source, 
-               maxDuration: const Duration(seconds: 60),
-             );
+           media = await _picker.pickVideo(source: source, maxDuration: const Duration(seconds: 15));
          } else {
-             // Gallery/Files: Use FilePicker
-             // Behavior -> Video Only (Visual + Audio)
-             // Vocal -> Audio + Video
-             List<String> extensions = (_forcedType == PetImageType.behavior) 
-                ? PetConstants.videoExtensions 
-                : [...PetConstants.audioExtensions, ...PetConstants.videoExtensions];
-
-             FilePickerResult? result = await FilePicker.platform.pickFiles(
-               type: FileType.custom,
-               allowedExtensions: extensions,
-             );
-             
-             if (result != null && result.files.single.path != null) {
-                media = XFile(result.files.single.path!);
-             }
+             List<String> extensions = [...PetConstants.audioExtensions, ...PetConstants.videoExtensions];
+             FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: extensions);
+             if (result != null && result.files.single.path != null) media = XFile(result.files.single.path!);
          }
-      } else {
+      } 
+      // [STANDARD LOGIC - PHOTO ONLY]
+      else {
          media = await _picker.pickImage(source: source);
       }
 
       if (media != null) {
-        // Clear previous image from memory before setting new one
-        _clearImageCache();
+      // [SIZE CHECK] Enforce 20MB Limit for Gemini Inline
+      final file = File(media.path);
+      final sizeInBytes = await file.length();
+      final sizeInMb = sizeInBytes / (1024 * 1024);
+
+      if (sizeInMb > 20.0) {
+         if (mounted) {
+           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.error_file_too_large), backgroundColor: Colors.red));
+         }
+         return; // ABORT
+      }
+
+      // Clear previous image from memory before setting new one
+      _clearImageCache();
         
+        final path = media.path;
+        final ext = path.split('.').last.toLowerCase();
+        final isVideoFile = isVideo || PetConstants.videoExtensions.contains(ext);
+
+        if (isVideoFile) {
+           // Generate Thumbnail in Background
+           _generateThumbnail(path);
+           
+           _videoController = VideoPlayerController.file(File(path))
+             ..initialize().then((_) {
+               if (mounted) setState(() {}); // Refresh to show video
+               _videoController!.setLooping(true);
+               _videoController!.play();
+             });
+        }
+
         setState(() {
-          _imagePath = media!.path;
+          _imagePath = path;
         });
         _autoSave();
       }
@@ -188,13 +245,17 @@ class _PetCaptureViewState extends State<PetCaptureView> {
 
         // [UNIVERSAL OCR SWITCH - 2026]
         // Dedicated Engine for Documents (Lab Exams, Prescriptions, Food Labels)
-        if (type == PetImageType.lab || type == PetImageType.label) {
-             debugPrint('[UNIVERSAL_OCR_TRACE] Step 1: Document/Label Detected. Selecting OCR Engine.');
+        // [UNIVERSAL OCR SWITCH - 2026]
+        // Dedicated Engine for Documents (Lab Exams, Prescriptions, Food Labels) AND PLANT MODE (Botanical)
+        if (type == PetImageType.lab || type == PetImageType.label || type == PetImageType.plantCheck) {
+             debugPrint('[UNIVERSAL_OCR_TRACE] Step 1: Document/Label/Plant Detected. Selecting OCR Engine.');
              
              final ocrService = UniversalOcrService();
-             final expertise = type == PetImageType.label 
-                ? 'Veterinary Nutritionist' 
-                : 'Veterinary Clinical Pathologist';
+             String expertise = '';
+             
+             if (type == PetImageType.label) expertise = 'Veterinary Nutritionist';
+             else if (type == PetImageType.lab) expertise = 'Veterinary Clinical Pathologist';
+             else if (type == PetImageType.plantCheck) expertise = 'Veterinary Toxicologist & Botanist';
 
              debugPrint('[UNIVERSAL_OCR_TRACE] Step 2: Calling UniversalOcrService with expertise: $expertise');
              
@@ -206,6 +267,33 @@ class _PetCaptureViewState extends State<PetCaptureView> {
              );
              
              debugPrint('[UNIVERSAL_OCR_TRACE] Step 3: OCR Analysis Complete. Length: ${result.length}');
+
+             // [AUTO-SAVE] Save to History (Critical Fix 2026)
+             try {
+                final repo = PetRepository();
+                // Basic extraction of sources for metadata (robustness)
+                List<String> extractedSources = [];
+                if (result.contains('[SOURCES]')) {
+                   final sourceBlock = result.split('[SOURCES]').last.trim();
+                   extractedSources = sourceBlock.split('\n').where((s) => s.length > 5).toList();
+                }
+
+                await repo.saveAnalysis(
+                  petUuid: uuidToUse,
+                  petName: nameToUse,
+                  analysisResult: result, // Save the FULL raw result including [SOURCES]
+                  sources: extractedSources,
+                  imagePath: _imagePath!,
+                  breed: breedToUse,
+                  analysisType: type == PetImageType.label 
+                      ? PetConstants.typeLabel 
+                      : (type == PetImageType.plantCheck ? PetConstants.valPlantCheck : PetConstants.typeLab),
+                  tutorName: _tutorName,
+                );
+                debugPrint('[UNIVERSAL_OCR_TRACE] Step 3.1: Analysis saved to History.');
+             } catch (e) {
+                debugPrint('[UNIVERSAL_OCR_ERROR] Failed to save history: $e');
+             }
 
              if (!mounted) return;
 
@@ -228,9 +316,9 @@ class _PetCaptureViewState extends State<PetCaptureView> {
 
         // [UNIVERSAL AI SWITCH - 2026]
         // Updated to include Dentist, Dermatology, Gastro, Ophthalmology, Otology, Posture & Vocal Modules
-        if (type == PetImageType.newProfile || _isAddingNewPet || type == PetImageType.mouth || type == PetImageType.skin || type == PetImageType.stool || type == PetImageType.eyes || type == PetImageType.ears || type == PetImageType.posture || type == PetImageType.vocal) {
-            String expertise = 'Veterinary Generalist';
-            String aiContext = 'New Pet Registration. Identify breed and basic health status.';
+        if (type == PetImageType.newProfile || _isAddingNewPet || type == PetImageType.mouth || type == PetImageType.skin || type == PetImageType.stool || type == PetImageType.eyes || type == PetImageType.ears || type == PetImageType.posture || type == PetImageType.vocal || type == PetImageType.foodBowl || type == PetImageType.behavior || type == PetImageType.general) {
+            String expertise = 'Veterinary Generalist & Geneticist';
+            String aiContext = 'Visual Breed & Health Analysis: 1. BREED & GENETICS: Identify breed/mix and potential genetic predispositions (e.g. hip dysplasia, heart issues). 2. STRUCTURE: Evaluate posture and body condition score (nutritional impact). 3. ENERGY/METABOLISM: Assess energy level needs based on breed (e.g. Border Collie vs Pug). 4. BEHAVIOR: Observe posture/expression for signs of anxiety or pain.';
             
             debugPrint('[UNIVERSAL_FLOW_TRACE] Step 1: Selecting Engine for Type: $type');
 
@@ -264,17 +352,21 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                 aiContext = 'Audio Analysis: Listen for coughs, breathing, barks. Identify distress.';
                 debugPrint('[VOCAL_FLOW_TRACE] Context Injected: $aiContext');
             } else if (type == PetImageType.behavior) {
-                expertise = 'Veterinary Neurologist & Behaviorist';
-                aiContext = 'Behavioral Analysis (Video): Observe gait, posture, circling, head pressing, AND listen to vocalizations (barks/whines). Correlate movement with sound.';
-                debugPrint('[BEHAVIOR_FLOW_TRACE] Context Injected: $aiContext');
+                expertise = 'Veterinary Neurologist & Behaviorist & Geneticist';
+                aiContext = 'Behavioral & Breed Analysis (Visual/Video): 1. BREED & GENETICS: Identify breed/mix and potential genetic predispositions (e.g. hip dysplasia, heart issues). 2. STRUCTURE: Evaluate gait, posture, and body condition score (nutritional impact). 3. ENERGY/METABOLISM: Assess energy level needs based on breed (e.g. Border Collie vs Pug). 4. BEHAVIOR: Observe circling, head pressing, anxiety, or neurological signs. If video, analyze vocalizations.';
+                debugPrint('[BEHAVIOR_FLOW_TRACE] Context Injected (Enriched): $aiContext');
             } else if (type == PetImageType.plantCheck) {
                 expertise = 'Veterinary Toxicologist & Botanist';
                 aiContext = 'Plant Analysis. Strict Output Format: Card 1 TITLE must be the **Common Non-Scientific Name** of the plant. Card 1 ICON must be "warning" if Toxic, or "check_circle" if Safe.';
                 debugPrint('[PLANT_FLOW_TRACE] Context Injected: $aiContext');
+            } else if (type == PetImageType.foodBowl) {
+                expertise = 'Veterinary Nutritionist';
+                aiContext = 'Visual Food Analysis (Kibble/Homemade). Analyze quality, texture, color, and ingredients. Estimate nutritional balance. Look for foreign objects or mold. Ignore label text, focus on food appearance.';
+                debugPrint('[FOOD_BOWL_FLOW_TRACE] Context Injected: $aiContext');
             } else {
                 debugPrint('[UNIVERSAL_AI] Iniciando análise de NOVO PET com engine v2...');
             }
-
+            
             debugPrint('[UNIVERSAL_FLOW_TRACE] Step 3: Calling UniversalAiService...');
             final universalService = UniversalAiService();
             result = await universalService.analyze(
@@ -382,7 +474,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
         
         if (!mounted) return;
 
-        if (type == PetImageType.newProfile || _isAddingNewPet || type == PetImageType.behavior || type == PetImageType.plantCheck || type == PetImageType.mouth || type == PetImageType.skin || type == PetImageType.stool || type == PetImageType.eyes || type == PetImageType.ears || type == PetImageType.posture) {
+        if (type == PetImageType.newProfile || _isAddingNewPet || type == PetImageType.behavior || type == PetImageType.plantCheck || type == PetImageType.mouth || type == PetImageType.skin || type == PetImageType.stool || type == PetImageType.eyes || type == PetImageType.ears || type == PetImageType.posture || type == PetImageType.foodBowl) {
             // [UNIVERSAL RESULT VIEW]
              Navigator.pushReplacement(
               context,
@@ -717,35 +809,73 @@ class _PetCaptureViewState extends State<PetCaptureView> {
 
                       _buildCapabilitiesCard(context),
 
-                      if (_forcedType != PetImageType.vocal && _forcedType != PetImageType.behavior)
+                      // 1. PHOTO BUTTON (Camera)
+                      // Visible for ALL types except Vocal (Audio only)
+                      if (_forcedType != PetImageType.vocal)
                       _buildCaptureButton(
                         context,
                         icon: Icons.camera_alt_outlined,
                         label: l10n.action_take_photo,
                         onTap: () => _pickImage(ImageSource.camera),
                       ),
+                      
                       const SizedBox(height: 24),
+
+                      // 2. VIDEO BUTTON (Camera) - BEHAVIOR & VOCAL
+                      if (_forcedType == PetImageType.behavior || _forcedType == PetImageType.vocal) ...[
+                         _buildCaptureButton(
+                           context,
+                           icon: Icons.videocam,
+                           label: l10n.action_record_video_audio, // "Gravar"
+                           onTap: () => _pickImage(ImageSource.camera, isVideo: true),
+                         ),
+                         const SizedBox(height: 24),
+                      ],
+
+                      // 3. GALLERY / UPLOAD BUTTON
+                      // Visible for ALL types
                       _buildCaptureButton(
                         context,
-                        icon: (_forcedType == PetImageType.vocal || _forcedType == PetImageType.behavior) 
-                              ? (_forcedType == PetImageType.behavior ? Icons.videocam : Icons.audio_file)
-                              : Icons.photo_library_outlined,
+                        icon: (_forcedType == PetImageType.vocal) 
+                               ? Icons.perm_media // Changed to Media to imply multi-format
+                               : Icons.photo_library_outlined, 
                         label: (_forcedType == PetImageType.vocal) 
-                               ? l10n.action_select_audio 
-                               : (_forcedType == PetImageType.behavior ? l10n.action_upload_video_audio : l10n.action_upload_gallery),
+                               ? l10n.action_upload_video_audio // "Carregar" (or generic upload) - checking arb
+                               : l10n.action_upload_gallery, 
                         onTap: () => _pickImage(ImageSource.gallery),
                       ),
                     ] else ...[
                       // Image Preview
+                      // Media Preview (Image or Video)
                       Container(
                         height: 300,
+                        width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: AppColors.petPrimary, width: 2), // Pink Border
-                          image: DecorationImage(
-                            image: FileImage(File(_imagePath!)),
-                            fit: BoxFit.cover,
-                          ),
+                          color: Colors.black, // Background for video
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(14), // Inner radius
+                          child: _videoController != null && _videoController!.value.isInitialized
+                              ? Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                     AspectRatio(
+                                       aspectRatio: _videoController!.value.aspectRatio,
+                                       child: VideoPlayer(_videoController!),
+                                     ),
+                                     // Optional: Play Icon overlay if needed, but we auto-play
+                                  ],
+                                )
+                              : Image.file(
+                                  File(_imagePath!),
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                     // Fallback if image load fails (e.g. video without controller yet)
+                                     return const Center(child: Icon(Icons.videocam, color: Colors.white, size: 50)); 
+                                  },
+                                ),
                         ),
                       ),
                       const SizedBox(height: 24),

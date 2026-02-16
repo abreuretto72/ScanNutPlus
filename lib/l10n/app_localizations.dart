@@ -767,7 +767,7 @@ abstract class AppLocalizations {
   /// No description provided for @type_label.
   ///
   /// In en, this message translates to:
-  /// **'Label'**
+  /// **'Food'**
   String get type_label;
 
   /// No description provided for @pet_saved_success.
@@ -1175,7 +1175,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_section_ears.
   ///
   /// In en, this message translates to:
-  /// **'Ear Health'**
+  /// **'Ears'**
   String get pet_section_ears;
 
   /// No description provided for @pet_section_nose.
@@ -1265,13 +1265,13 @@ abstract class AppLocalizations {
   /// No description provided for @category_feces.
   ///
   /// In en, this message translates to:
-  /// **'Feces'**
+  /// **'Stool'**
   String get category_feces;
 
   /// No description provided for @category_food_label.
   ///
   /// In en, this message translates to:
-  /// **'Label'**
+  /// **'Food Label'**
   String get category_food_label;
 
   /// No description provided for @pet_type_general.
@@ -1361,7 +1361,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_type_label.
   ///
   /// In en, this message translates to:
-  /// **'Label'**
+  /// **'Food'**
   String get pet_type_label;
 
   /// No description provided for @pet_type_wound.
@@ -1379,7 +1379,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_type_mouth.
   ///
   /// In en, this message translates to:
-  /// **'Mouth/Teeth'**
+  /// **'Mouth'**
   String get pet_type_mouth;
 
   /// No description provided for @pet_type_eyes.
@@ -1391,13 +1391,13 @@ abstract class AppLocalizations {
   /// No description provided for @pet_type_skin.
   ///
   /// In en, this message translates to:
-  /// **'Skin/Coat'**
+  /// **'Skin'**
   String get pet_type_skin;
 
   /// No description provided for @pet_type_lab.
   ///
   /// In en, this message translates to:
-  /// **'Lab Exam'**
+  /// **'Lab Results'**
   String get pet_type_lab;
 
   /// No description provided for @pet_select_context.
@@ -1523,7 +1523,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_unknown_name.
   ///
   /// In en, this message translates to:
-  /// **'Unknown Name'**
+  /// **'Unnamed'**
   String get pet_unknown_name;
 
   /// No description provided for @pet_footer_brand.
@@ -1547,7 +1547,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_breed_unknown.
   ///
   /// In en, this message translates to:
-  /// **'Breed not informed'**
+  /// **'Unknown Breed'**
   String get pet_breed_unknown;
 
   /// No description provided for @pet_label_breed.
@@ -1739,7 +1739,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_module_gastro.
   ///
   /// In en, this message translates to:
-  /// **'Stool & Digestion Analysis'**
+  /// **'Stool & Digestion'**
   String get pet_module_gastro;
 
   /// No description provided for @pet_module_lab.
@@ -1751,7 +1751,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_module_nutrition.
   ///
   /// In en, this message translates to:
-  /// **'Nutrition & Label Analysis'**
+  /// **'Labels'**
   String get pet_module_nutrition;
 
   /// No description provided for @pet_module_ophthalmology.
@@ -1766,1745 +1766,53 @@ abstract class AppLocalizations {
   /// **'Body Condition & Weight'**
   String get pet_module_physique;
 
-  /// No description provided for @btn_scan_image.
-  ///
-  /// In en, this message translates to:
-  /// **'Scan Image'**
-  String get btn_scan_image;
-
-  /// No description provided for @generic_analyzing.
-  ///
-  /// In en, this message translates to:
-  /// **'Analyzing image...'**
-  String get generic_analyzing;
-
-  /// No description provided for @pet_error_image_not_found.
-  ///
-  /// In en, this message translates to:
-  /// **'Error: Original image not found.'**
-  String get pet_error_image_not_found;
-
-  /// No description provided for @btn_go.
-  ///
-  /// In en, this message translates to:
-  /// **'Go'**
-  String get btn_go;
-
-  /// No description provided for @pet_created_at_label.
-  ///
-  /// In en, this message translates to:
-  /// **'Created at:'**
-  String get pet_created_at_label;
-
-  /// No description provided for @pet_initial_assessment.
-  ///
-  /// In en, this message translates to:
-  /// **'Initial Assessment'**
-  String get pet_initial_assessment;
-
-  /// No description provided for @pet_hint_select_type.
-  ///
-  /// In en, this message translates to:
-  /// **'<Select type>'**
-  String get pet_hint_select_type;
-
-  /// No description provided for @pet_label_info.
-  ///
-  /// In en, this message translates to:
-  /// **'Info'**
-  String get pet_label_info;
-
-  /// No description provided for @pet_type_profile.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile Analysis'**
-  String get pet_type_profile;
-
-  /// No description provided for @pet_type_posture.
-  ///
-  /// In en, this message translates to:
-  /// **'Posture Analysis'**
-  String get pet_type_posture;
-
-  /// No description provided for @pet_profile_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Pet Profile'**
-  String get pet_profile_title;
-
-  /// No description provided for @pet_management_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Pet Management'**
-  String get pet_management_title;
-
-  /// No description provided for @pet_label_health_plan.
-  ///
-  /// In en, this message translates to:
-  /// **'Health Plan'**
-  String get pet_label_health_plan;
-
-  /// No description provided for @pet_label_funeral_plan.
-  ///
-  /// In en, this message translates to:
-  /// **'Funeral Plan'**
-  String get pet_label_funeral_plan;
-
-  /// No description provided for @pet_label_weight.
-  ///
-  /// In en, this message translates to:
-  /// **'Weight'**
-  String get pet_label_weight;
-
-  /// No description provided for @pet_label_size.
-  ///
-  /// In en, this message translates to:
-  /// **'Size'**
-  String get pet_label_size;
-
-  /// No description provided for @pet_label_neutered.
-  ///
-  /// In en, this message translates to:
-  /// **'Neutered Status'**
-  String get pet_label_neutered;
-
-  /// No description provided for @pet_label_birth_date.
-  ///
-  /// In en, this message translates to:
-  /// **'Date of Birth'**
-  String get pet_label_birth_date;
-
-  /// No description provided for @pet_agenda_add_event.
-  ///
-  /// In en, this message translates to:
-  /// **'Add event'**
-  String get pet_agenda_add_event;
-
-  /// No description provided for @error_unexpected_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Oops! Something unexpected happened.'**
-  String get error_unexpected_title;
-
-  /// No description provided for @error_unexpected_message.
-  ///
-  /// In en, this message translates to:
-  /// **'Our team has been notified. Please restart the app.'**
-  String get error_unexpected_message;
-
-  /// No description provided for @error_try_recover.
-  ///
-  /// In en, this message translates to:
-  /// **'Try to Recover'**
-  String get error_try_recover;
-
-  /// No description provided for @pet_btn_add_metric.
-  ///
-  /// In en, this message translates to:
-  /// **'Add Metric'**
-  String get pet_btn_add_metric;
-
-  /// No description provided for @pet_profile_save_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile updated successfully'**
-  String get pet_profile_save_success;
-
-  /// No description provided for @pet_action_save_profile.
-  ///
-  /// In en, this message translates to:
-  /// **'SAVE PET PROFILE'**
-  String get pet_action_save_profile;
-
-  /// No description provided for @pet_not_found.
-  ///
-  /// In en, this message translates to:
-  /// **'Pet not found'**
-  String get pet_not_found;
-
-  /// No description provided for @pet_plans_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Plans'**
-  String get pet_plans_title;
-
-  /// No description provided for @pet_action_manage_health_plan.
-  ///
-  /// In en, this message translates to:
-  /// **'Manage Health Plan'**
-  String get pet_action_manage_health_plan;
-
-  /// No description provided for @health_plan_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Health Plan Management'**
-  String get health_plan_title;
-
-  /// No description provided for @health_plan_section_identification.
-  ///
-  /// In en, this message translates to:
-  /// **'1. Identification'**
-  String get health_plan_section_identification;
-
-  /// No description provided for @health_plan_section_coverages.
-  ///
-  /// In en, this message translates to:
-  /// **'2. Coverages'**
-  String get health_plan_section_coverages;
-
-  /// No description provided for @health_plan_section_limits.
-  ///
-  /// In en, this message translates to:
-  /// **'3. Limits & Rules'**
-  String get health_plan_section_limits;
-
-  /// No description provided for @health_plan_section_support.
-  ///
-  /// In en, this message translates to:
-  /// **'4. Network & Support'**
-  String get health_plan_section_support;
-
-  /// No description provided for @health_plan_saved_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Health Plan Saved Successfully!'**
-  String get health_plan_saved_success;
-
-  /// No description provided for @health_plan_action_save.
-  ///
-  /// In en, this message translates to:
-  /// **'SAVE HEALTH PLAN'**
-  String get health_plan_action_save;
-
-  /// No description provided for @health_plan_label_operator.
-  ///
-  /// In en, this message translates to:
-  /// **'Operator Name'**
-  String get health_plan_label_operator;
-
-  /// No description provided for @health_plan_label_plan_name.
-  ///
-  /// In en, this message translates to:
-  /// **'Plan Name'**
-  String get health_plan_label_plan_name;
-
-  /// No description provided for @health_plan_label_card_number.
-  ///
-  /// In en, this message translates to:
-  /// **'Card Number'**
-  String get health_plan_label_card_number;
-
-  /// No description provided for @health_plan_label_holder_name.
-  ///
-  /// In en, this message translates to:
-  /// **'Holder Name'**
-  String get health_plan_label_holder_name;
-
-  /// No description provided for @health_plan_label_grace_period.
-  ///
-  /// In en, this message translates to:
-  /// **'Grace (Days)'**
-  String get health_plan_label_grace_period;
-
-  /// No description provided for @health_plan_label_annual_limit.
-  ///
-  /// In en, this message translates to:
-  /// **'Annual Limit'**
-  String get health_plan_label_annual_limit;
-
-  /// No description provided for @health_plan_label_copay.
-  ///
-  /// In en, this message translates to:
-  /// **'Copay %'**
-  String get health_plan_label_copay;
-
-  /// No description provided for @health_plan_label_reimburse.
-  ///
-  /// In en, this message translates to:
-  /// **'Reimburse %'**
-  String get health_plan_label_reimburse;
-
-  /// No description provided for @health_plan_label_deductible.
-  ///
-  /// In en, this message translates to:
-  /// **'Deductible'**
-  String get health_plan_label_deductible;
-
-  /// No description provided for @health_plan_label_main_clinic.
-  ///
-  /// In en, this message translates to:
-  /// **'Main Clinic'**
-  String get health_plan_label_main_clinic;
-
-  /// No description provided for @health_plan_label_city.
-  ///
-  /// In en, this message translates to:
-  /// **'City'**
-  String get health_plan_label_city;
-
-  /// No description provided for @health_plan_label_24h.
-  ///
-  /// In en, this message translates to:
-  /// **'24h Service'**
-  String get health_plan_label_24h;
-
-  /// No description provided for @health_plan_label_phone.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone'**
-  String get health_plan_label_phone;
-
-  /// No description provided for @health_plan_label_whatsapp.
-  ///
-  /// In en, this message translates to:
-  /// **'WhatsApp'**
-  String get health_plan_label_whatsapp;
-
-  /// No description provided for @health_plan_label_email.
-  ///
-  /// In en, this message translates to:
-  /// **'Support Email'**
-  String get health_plan_label_email;
-
-  /// No description provided for @health_cov_consultations.
-  ///
-  /// In en, this message translates to:
-  /// **'Consultations'**
-  String get health_cov_consultations;
-
-  /// No description provided for @health_cov_vaccines.
-  ///
-  /// In en, this message translates to:
-  /// **'Vaccines'**
-  String get health_cov_vaccines;
-
-  /// No description provided for @health_cov_lab_exams.
-  ///
-  /// In en, this message translates to:
-  /// **'Lab Exams'**
-  String get health_cov_lab_exams;
-
-  /// No description provided for @health_cov_imaging.
-  ///
-  /// In en, this message translates to:
-  /// **'Imaging'**
-  String get health_cov_imaging;
-
-  /// No description provided for @health_cov_surgery.
-  ///
-  /// In en, this message translates to:
-  /// **'Surgery'**
-  String get health_cov_surgery;
-
-  /// No description provided for @health_cov_hospitalization.
-  ///
-  /// In en, this message translates to:
-  /// **'Hospitalization'**
-  String get health_cov_hospitalization;
-
-  /// No description provided for @health_cov_emergency.
-  ///
-  /// In en, this message translates to:
-  /// **'Emergency'**
-  String get health_cov_emergency;
-
-  /// No description provided for @health_cov_pre_existing.
-  ///
-  /// In en, this message translates to:
-  /// **'Pre-existing'**
-  String get health_cov_pre_existing;
-
-  /// No description provided for @health_cov_dentistry.
-  ///
-  /// In en, this message translates to:
-  /// **'Dentistry'**
-  String get health_cov_dentistry;
-
-  /// No description provided for @health_cov_physiotherapy.
-  ///
-  /// In en, this message translates to:
-  /// **'Physiotherapy'**
-  String get health_cov_physiotherapy;
-
-  /// No description provided for @pet_db_sync_error.
-  ///
-  /// In en, this message translates to:
-  /// **'Database Sync Error - Please restart the app'**
-  String get pet_db_sync_error;
-
-  /// No description provided for @pet_action_manage_funeral_plan.
-  ///
-  /// In en, this message translates to:
-  /// **'Manage Funeral Plan'**
-  String get pet_action_manage_funeral_plan;
-
-  /// No description provided for @funeral_plan_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Funeral Plan Management'**
-  String get funeral_plan_title;
-
-  /// No description provided for @funeral_section_identity.
-  ///
-  /// In en, this message translates to:
-  /// **'1. Identity'**
-  String get funeral_section_identity;
-
-  /// No description provided for @funeral_section_services.
-  ///
-  /// In en, this message translates to:
-  /// **'2. Included Services'**
-  String get funeral_section_services;
-
-  /// No description provided for @funeral_section_rules.
-  ///
-  /// In en, this message translates to:
-  /// **'3. Rules'**
-  String get funeral_section_rules;
-
-  /// No description provided for @funeral_section_emergency.
-  ///
-  /// In en, this message translates to:
-  /// **'4. EMERGENCY'**
-  String get funeral_section_emergency;
-
-  /// No description provided for @funeral_label_company.
-  ///
-  /// In en, this message translates to:
-  /// **'Funeral Company'**
-  String get funeral_label_company;
-
-  /// No description provided for @funeral_label_plan_name.
-  ///
-  /// In en, this message translates to:
-  /// **'Plan Name'**
-  String get funeral_label_plan_name;
-
-  /// No description provided for @funeral_label_contract.
-  ///
-  /// In en, this message translates to:
-  /// **'Contract Number'**
-  String get funeral_label_contract;
-
-  /// No description provided for @funeral_label_start_date.
-  ///
-  /// In en, this message translates to:
-  /// **'Start Date'**
-  String get funeral_label_start_date;
-
-  /// No description provided for @funeral_label_status.
-  ///
-  /// In en, this message translates to:
-  /// **'Status'**
-  String get funeral_label_status;
-
-  /// No description provided for @funeral_label_grace_period.
-  ///
-  /// In en, this message translates to:
-  /// **'Grace (Days)'**
-  String get funeral_label_grace_period;
-
-  /// No description provided for @funeral_label_max_weight.
-  ///
-  /// In en, this message translates to:
-  /// **'Max Weight (kg)'**
-  String get funeral_label_max_weight;
-
-  /// No description provided for @funeral_label_24h.
-  ///
-  /// In en, this message translates to:
-  /// **'24h Service'**
-  String get funeral_label_24h;
-
-  /// No description provided for @funeral_label_phone.
-  ///
-  /// In en, this message translates to:
-  /// **'24h Phone'**
-  String get funeral_label_phone;
-
-  /// No description provided for @funeral_label_whatsapp.
-  ///
-  /// In en, this message translates to:
-  /// **'WhatsApp'**
-  String get funeral_label_whatsapp;
-
-  /// No description provided for @funeral_label_value.
-  ///
-  /// In en, this message translates to:
-  /// **'Plan Value'**
-  String get funeral_label_value;
-
-  /// No description provided for @funeral_label_extra_fees.
-  ///
-  /// In en, this message translates to:
-  /// **'Extra Fees'**
-  String get funeral_label_extra_fees;
-
-  /// No description provided for @funeral_svc_removal.
-  ///
-  /// In en, this message translates to:
-  /// **'Removal 24h'**
-  String get funeral_svc_removal;
-
-  /// No description provided for @funeral_svc_viewing.
-  ///
-  /// In en, this message translates to:
-  /// **'Viewing/Wake'**
-  String get funeral_svc_viewing;
-
-  /// No description provided for @funeral_svc_cremation_ind.
-  ///
-  /// In en, this message translates to:
-  /// **'Individual Cremation'**
-  String get funeral_svc_cremation_ind;
-
-  /// No description provided for @funeral_svc_cremation_col.
-  ///
-  /// In en, this message translates to:
-  /// **'Collective Cremation'**
-  String get funeral_svc_cremation_col;
-
-  /// No description provided for @funeral_svc_burial.
-  ///
-  /// In en, this message translates to:
-  /// **'Burial'**
-  String get funeral_svc_burial;
-
-  /// No description provided for @funeral_svc_urn.
-  ///
-  /// In en, this message translates to:
-  /// **'Urn'**
-  String get funeral_svc_urn;
-
-  /// No description provided for @funeral_svc_ashes.
-  ///
-  /// In en, this message translates to:
-  /// **'Ashes Delivery'**
-  String get funeral_svc_ashes;
-
-  /// No description provided for @funeral_svc_certificate.
-  ///
-  /// In en, this message translates to:
-  /// **'Certificate'**
-  String get funeral_svc_certificate;
-
-  /// No description provided for @funeral_action_call_emergency.
-  ///
-  /// In en, this message translates to:
-  /// **'CALL EMERGENCY NOW'**
-  String get funeral_action_call_emergency;
-
-  /// No description provided for @funeral_action_save.
-  ///
-  /// In en, this message translates to:
-  /// **'SAVE FUNERAL PLAN'**
-  String get funeral_action_save;
-
-  /// No description provided for @funeral_save_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Funeral Plan Saved Successfully!'**
-  String get funeral_save_success;
-
-  /// No description provided for @pet_action_analyses.
-  ///
-  /// In en, this message translates to:
-  /// **'Analyses'**
-  String get pet_action_analyses;
-
-  /// No description provided for @pet_action_health.
-  ///
-  /// In en, this message translates to:
-  /// **'Health'**
-  String get pet_action_health;
-
-  /// No description provided for @pet_action_agenda.
-  ///
-  /// In en, this message translates to:
-  /// **'Agenda'**
-  String get pet_action_agenda;
-
-  /// No description provided for @pet_history_button.
-  ///
-  /// In en, this message translates to:
-  /// **'Analysis History'**
-  String get pet_history_button;
-
-  /// No description provided for @ai_assistant_title.
-  ///
-  /// In en, this message translates to:
-  /// **'AI Assistant of {name}'**
-  String ai_assistant_title(String name);
-
-  /// No description provided for @ai_input_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Ask about your pet...'**
-  String get ai_input_hint;
-
-  /// No description provided for @ai_listening.
-  ///
-  /// In en, this message translates to:
-  /// **'Listening...'**
-  String get ai_listening;
-
-  /// No description provided for @ai_error_mic.
-  ///
-  /// In en, this message translates to:
-  /// **'Microphone permission required'**
-  String get ai_error_mic;
-
-  /// No description provided for @ai_thinking.
-  ///
-  /// In en, this message translates to:
-  /// **'Thinking...'**
-  String get ai_thinking;
-
-  /// No description provided for @pet_age_years.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =0{} =1{1 year} other{{count} years}}'**
-  String pet_age_years(num count);
-
-  /// No description provided for @pet_age_months.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =0{} =1{1 month} other{{count} months}}'**
-  String pet_age_months(num count);
-
-  /// No description provided for @pet_age_estimate_label.
-  ///
-  /// In en, this message translates to:
-  /// **'Estimated age: '**
-  String get pet_age_estimate_label;
-
-  /// No description provided for @pet_size_small.
-  ///
-  /// In en, this message translates to:
-  /// **'Small'**
-  String get pet_size_small;
-
-  /// No description provided for @pet_size_medium.
-  ///
-  /// In en, this message translates to:
-  /// **'Medium'**
-  String get pet_size_medium;
-
-  /// No description provided for @pet_size_large.
-  ///
-  /// In en, this message translates to:
-  /// **'Large'**
-  String get pet_size_large;
-
-  /// No description provided for @pet_label_estimated_weight.
-  ///
-  /// In en, this message translates to:
-  /// **'Estimated weight'**
-  String get pet_label_estimated_weight;
-
-  /// No description provided for @pet_weight_unit.
-  ///
-  /// In en, this message translates to:
-  /// **'kg'**
-  String get pet_weight_unit;
-
-  /// No description provided for @pet_clinical_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Clinical Conditions'**
-  String get pet_clinical_title;
-
-  /// No description provided for @pet_label_allergies.
-  ///
-  /// In en, this message translates to:
-  /// **'Known allergies'**
-  String get pet_label_allergies;
-
-  /// No description provided for @pet_label_chronic.
-  ///
-  /// In en, this message translates to:
-  /// **'Chronic diseases'**
-  String get pet_label_chronic;
-
-  /// No description provided for @pet_label_disabilities.
-  ///
-  /// In en, this message translates to:
-  /// **'Disabilities'**
-  String get pet_label_disabilities;
-
-  /// No description provided for @pet_label_observations.
-  ///
-  /// In en, this message translates to:
-  /// **'Important observations'**
-  String get pet_label_observations;
-
-  /// No description provided for @pet_id_external_title.
-  ///
-  /// In en, this message translates to:
-  /// **'External Identification (optional)'**
-  String get pet_id_external_title;
-
-  /// No description provided for @pet_label_microchip.
-  ///
-  /// In en, this message translates to:
-  /// **'Microchip'**
-  String get pet_label_microchip;
-
-  /// No description provided for @pet_label_registry.
-  ///
-  /// In en, this message translates to:
-  /// **'Registry (Pedigree/NGO)'**
-  String get pet_label_registry;
-
-  /// No description provided for @pet_label_qrcode.
-  ///
-  /// In en, this message translates to:
-  /// **'QR Code'**
-  String get pet_label_qrcode;
-
-  /// No description provided for @pet_qrcode_future.
-  ///
-  /// In en, this message translates to:
-  /// **'Coming soon'**
-  String get pet_qrcode_future;
-
-  /// No description provided for @pet_analyses_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Analyses: {name}'**
-  String pet_analyses_title(Object name);
-
-  /// No description provided for @pet_profile_title_dynamic.
-  ///
-  /// In en, this message translates to:
-  /// **'Pet Profile: {name}'**
-  String pet_profile_title_dynamic(Object name);
-
-  /// No description provided for @pet_health_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Health: {name}'**
-  String pet_health_title(Object name);
-
-  /// No description provided for @pet_health_plan_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Health Plan: {name}'**
-  String pet_health_plan_title(Object name);
-
-  /// No description provided for @pet_funeral_plan_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Funeral Plan: {name}'**
-  String pet_funeral_plan_title(Object name);
-
-  /// No description provided for @pet_event_type_food.
-  ///
-  /// In en, this message translates to:
-  /// **'Food'**
-  String get pet_event_type_food;
-
-  /// No description provided for @pet_event_type_health.
-  ///
-  /// In en, this message translates to:
-  /// **'Health'**
-  String get pet_event_type_health;
-
-  /// No description provided for @pet_event_type_weight.
-  ///
-  /// In en, this message translates to:
-  /// **'Weight'**
-  String get pet_event_type_weight;
-
-  /// No description provided for @pet_event_type_hygiene.
-  ///
-  /// In en, this message translates to:
-  /// **'Hygiene'**
-  String get pet_event_type_hygiene;
-
-  /// No description provided for @pet_event_type_activity.
-  ///
-  /// In en, this message translates to:
-  /// **'Activity'**
-  String get pet_event_type_activity;
-
-  /// No description provided for @pet_event_type_other.
-  ///
-  /// In en, this message translates to:
-  /// **'Other'**
-  String get pet_event_type_other;
-
-  /// No description provided for @pet_agenda_coming_soon.
-  ///
-  /// In en, this message translates to:
-  /// **'Agenda Module Coming Soon for {name}'**
-  String pet_agenda_coming_soon(Object name);
-
-  /// No description provided for @pet_medical_history_empty.
-  ///
-  /// In en, this message translates to:
-  /// **'No medical history recorded yet.'**
-  String get pet_medical_history_empty;
-
-  /// No description provided for @pet_share_not_implemented.
-  ///
-  /// In en, this message translates to:
-  /// **'Share not implemented for history yet'**
-  String get pet_share_not_implemented;
-
-  /// No description provided for @pet_ai_brain_not_ready.
-  ///
-  /// In en, this message translates to:
-  /// **'AI Brain not ready. Check Internet or API Key.'**
-  String get pet_ai_brain_not_ready;
-
-  /// No description provided for @pet_ai_connection_error.
-  ///
-  /// In en, this message translates to:
-  /// **'Connection Error: {error}'**
-  String pet_ai_connection_error(Object error);
-
-  /// No description provided for @pet_ai_trouble_thinking.
-  ///
-  /// In en, this message translates to:
-  /// **'I am having trouble thinking right now. Please try again.'**
-  String get pet_ai_trouble_thinking;
-
-  /// No description provided for @pet_stt_not_available.
-  ///
-  /// In en, this message translates to:
-  /// **'STT not available'**
-  String get pet_stt_not_available;
-
-  /// No description provided for @pet_stt_error.
-  ///
-  /// In en, this message translates to:
-  /// **'STT Error: {error}'**
-  String pet_stt_error(Object error);
-
-  /// No description provided for @pet_entry_deleted.
-  ///
-  /// In en, this message translates to:
-  /// **'Entry deleted'**
-  String get pet_entry_deleted;
-
-  /// No description provided for @pet_error_history_load.
-  ///
-  /// In en, this message translates to:
-  /// **'Error loading history: {error}'**
-  String pet_error_history_load(String error);
-
-  /// No description provided for @pet_ai_greeting.
-  ///
-  /// In en, this message translates to:
-  /// **'Hello! I have analyzed {name}\'s data. How can I help?'**
-  String pet_ai_greeting(String name);
-
-  /// No description provided for @pet_analysis_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Analysis: {name}'**
-  String pet_analysis_title(String name);
-
-  /// No description provided for @pet_event_food.
-  ///
-  /// In en, this message translates to:
-  /// **'Food'**
-  String get pet_event_food;
-
-  /// No description provided for @pet_event_health.
-  ///
-  /// In en, this message translates to:
-  /// **'Health'**
-  String get pet_event_health;
-
-  /// No description provided for @pet_event_weight.
-  ///
-  /// In en, this message translates to:
-  /// **'Weight'**
-  String get pet_event_weight;
-
-  /// No description provided for @pet_event_walk.
-  ///
-  /// In en, this message translates to:
-  /// **'Walk'**
-  String get pet_event_walk;
-
-  /// No description provided for @pet_event_hygiene.
-  ///
-  /// In en, this message translates to:
-  /// **'Hygiene'**
-  String get pet_event_hygiene;
-
-  /// No description provided for @pet_event_behavior.
-  ///
-  /// In en, this message translates to:
-  /// **'Behavior'**
-  String get pet_event_behavior;
-
-  /// No description provided for @pet_event_medication.
-  ///
-  /// In en, this message translates to:
-  /// **'Medication'**
-  String get pet_event_medication;
-
-  /// No description provided for @pet_event_note.
-  ///
-  /// In en, this message translates to:
-  /// **'Note'**
-  String get pet_event_note;
-
-  /// No description provided for @pet_ai_thinking_status.
-  ///
-  /// In en, this message translates to:
-  /// **'Thinking...'**
-  String get pet_ai_thinking_status;
-
-  /// No description provided for @pet_agenda_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Pet Agenda'**
-  String get pet_agenda_title;
-
-  /// No description provided for @pet_agenda_title_dynamic.
-  ///
-  /// In en, this message translates to:
-  /// **'Pet Agenda: {petName}'**
-  String pet_agenda_title_dynamic(String petName);
-
-  /// No description provided for @pet_agenda_empty.
-  ///
-  /// In en, this message translates to:
-  /// **'No events scheduled'**
-  String get pet_agenda_empty;
-
-  /// No description provided for @pet_agenda_add_event_dynamic.
-  ///
-  /// In en, this message translates to:
-  /// **'Add event: {petName}'**
-  String pet_agenda_add_event_dynamic(String petName);
-
-  /// No description provided for @pet_agenda_today.
-  ///
-  /// In en, this message translates to:
-  /// **'Today'**
-  String get pet_agenda_today;
-
-  /// No description provided for @pet_agenda_yesterday.
-  ///
-  /// In en, this message translates to:
-  /// **'Yesterday'**
-  String get pet_agenda_yesterday;
-
-  /// No description provided for @pet_agenda_select_type.
-  ///
-  /// In en, this message translates to:
-  /// **'Select type'**
-  String get pet_agenda_select_type;
-
-  /// No description provided for @pet_agenda_event_date.
-  ///
-  /// In en, this message translates to:
-  /// **'Date'**
-  String get pet_agenda_event_date;
-
-  /// No description provided for @pet_agenda_event_time.
-  ///
-  /// In en, this message translates to:
-  /// **'Time'**
-  String get pet_agenda_event_time;
-
-  /// No description provided for @pet_agenda_notes_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Notes (optional)'**
-  String get pet_agenda_notes_hint;
-
-  /// No description provided for @pet_agenda_save.
-  ///
-  /// In en, this message translates to:
-  /// **'Save Event'**
-  String get pet_agenda_save;
-
-  /// No description provided for @pet_journal_add_event.
-  ///
-  /// In en, this message translates to:
-  /// **'{petName}\'s Journal'**
-  String pet_journal_add_event(String petName);
-
-  /// No description provided for @pet_journal_question.
-  ///
-  /// In en, this message translates to:
-  /// **'What happened?'**
-  String get pet_journal_question;
-
-  /// No description provided for @pet_journal_placeholder.
-  ///
-  /// In en, this message translates to:
-  /// **'Describe what happened...'**
-  String get pet_journal_placeholder;
-
-  /// No description provided for @pet_journal_register.
-  ///
-  /// In en, this message translates to:
-  /// **'Register Event'**
-  String get pet_journal_register;
-
-  /// No description provided for @label_friend_name.
-  ///
-  /// In en, this message translates to:
-  /// **'Friend Name'**
-  String get label_friend_name;
-
-  /// No description provided for @label_tutor_name.
-  ///
-  /// In en, this message translates to:
-  /// **'Tutor Name'**
-  String get label_tutor_name;
-
-  /// No description provided for @ai_simulating_analysis.
-  ///
-  /// In en, this message translates to:
-  /// **'Microscope active... analyzing...'**
-  String get ai_simulating_analysis;
-
-  /// No description provided for @pet_journal_location_loading.
-  ///
-  /// In en, this message translates to:
-  /// **'Getting GPS...'**
-  String get pet_journal_location_loading;
-
-  /// No description provided for @pet_journal_location_captured.
-  ///
-  /// In en, this message translates to:
-  /// **'Location captured'**
-  String get pet_journal_location_captured;
-
-  /// No description provided for @pet_journal_audio_recording.
-  ///
-  /// In en, this message translates to:
-  /// **'Recording...'**
-  String get pet_journal_audio_recording;
-
-  /// No description provided for @pet_journal_audio_saved.
-  ///
-  /// In en, this message translates to:
-  /// **'Audio saved!'**
-  String get pet_journal_audio_saved;
-
-  /// No description provided for @ai_audio_analysis_cough_detected.
-  ///
-  /// In en, this message translates to:
-  /// **'AI detected coughing sound.'**
-  String get ai_audio_analysis_cough_detected;
-
-  /// No description provided for @ai_suggest_health_category.
-  ///
-  /// In en, this message translates to:
-  /// **'Switch to Health category?'**
-  String get ai_suggest_health_category;
-
-  /// No description provided for @pet_journal_location_name_simulated.
-  ///
-  /// In en, this message translates to:
-  /// **'Ibirapuera Park, SP'**
-  String get pet_journal_location_name_simulated;
-
-  /// No description provided for @journal_guide_title.
-  ///
-  /// In en, this message translates to:
-  /// **'AI Journal Capabilities'**
-  String get journal_guide_title;
-
-  /// No description provided for @journal_guide_voice.
-  ///
-  /// In en, this message translates to:
-  /// **'Tell what happened and AI organizes it for you.'**
-  String get journal_guide_voice;
-
-  /// No description provided for @journal_guide_camera.
-  ///
-  /// In en, this message translates to:
-  /// **'Analyze health photos (stool, skin), food, or friends instantly.'**
-  String get journal_guide_camera;
-
-  /// No description provided for @journal_guide_audio.
-  ///
-  /// In en, this message translates to:
-  /// **'Record cough or breathing sounds for immediate clinical analysis.'**
-  String get journal_guide_audio;
-
-  /// No description provided for @journal_guide_location.
-  ///
-  /// In en, this message translates to:
-  /// **'Register where important events happen.'**
-  String get journal_guide_location;
-
-  /// No description provided for @common_ok.
-  ///
-  /// In en, this message translates to:
-  /// **'OK'**
-  String get common_ok;
-
-  /// No description provided for @pet_journal_analyzed_by_nano.
-  ///
-  /// In en, this message translates to:
-  /// **'Image analyzed by Nano Banana'**
-  String get pet_journal_analyzed_by_nano;
-
-  /// No description provided for @pet_journal_social_context.
-  ///
-  /// In en, this message translates to:
-  /// **'Social Context Detected'**
-  String get pet_journal_social_context;
-
-  /// No description provided for @journal_guide_unlock_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Start by telling what happened to unlock photo, audio, and location analysis.'**
-  String get journal_guide_unlock_hint;
-
-  /// No description provided for @pet_journal_mic_permission_denied.
-  ///
-  /// In en, this message translates to:
-  /// **'Microphone permission denied. Enable in settings.'**
-  String get pet_journal_mic_permission_denied;
-
-  /// No description provided for @label_relate.
-  ///
-  /// In en, this message translates to:
-  /// **'Relate'**
-  String get label_relate;
-
-  /// No description provided for @label_photo.
-  ///
-  /// In en, this message translates to:
-  /// **'Photo'**
-  String get label_photo;
-
-  /// No description provided for @label_place.
-  ///
-  /// In en, this message translates to:
-  /// **'Place'**
-  String get label_place;
-
-  /// No description provided for @label_audio.
-  ///
-  /// In en, this message translates to:
-  /// **'Audio'**
-  String get label_audio;
-
-  /// No description provided for @label_sounds.
-  ///
-  /// In en, this message translates to:
-  /// **'Sounds'**
-  String get label_sounds;
-
-  /// No description provided for @label_alert.
-  ///
-  /// In en, this message translates to:
-  /// **'Alert'**
-  String get label_alert;
-
-  /// No description provided for @alert_poison.
-  ///
-  /// In en, this message translates to:
-  /// **'Poison / Bait'**
-  String get alert_poison;
-
-  /// No description provided for @alert_dog_loose.
-  ///
-  /// In en, this message translates to:
-  /// **'Hostile Dog'**
-  String get alert_dog_loose;
-
-  /// No description provided for @alert_risk_area.
-  ///
-  /// In en, this message translates to:
-  /// **'Danger Area'**
-  String get alert_risk_area;
-
-  /// No description provided for @alert_noise.
-  ///
-  /// In en, this message translates to:
-  /// **'Loud Noise'**
-  String get alert_noise;
-
-  /// No description provided for @error_gps.
-  ///
-  /// In en, this message translates to:
-  /// **'GPS Error: {error}'**
-  String error_gps(Object error);
-
-  /// No description provided for @gps_error_snack.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not get current location. GPS might be disabled.'**
-  String get gps_error_snack;
-
-  /// No description provided for @map_type_normal.
-  ///
-  /// In en, this message translates to:
-  /// **'Default'**
-  String get map_type_normal;
-
-  /// No description provided for @map_type_satellite.
-  ///
-  /// In en, this message translates to:
-  /// **'Satellite'**
-  String get map_type_satellite;
-
-  /// No description provided for @map_type_hybrid.
-  ///
-  /// In en, this message translates to:
-  /// **'Hybrid'**
-  String get map_type_hybrid;
-
-  /// No description provided for @map_type_terrain.
-  ///
-  /// In en, this message translates to:
-  /// **'Terrain'**
-  String get map_type_terrain;
-
-  /// No description provided for @label_map_type.
-  ///
-  /// In en, this message translates to:
-  /// **'Map Type'**
-  String get label_map_type;
-
-  /// No description provided for @pet_journal_hint_text.
-  ///
-  /// In en, this message translates to:
-  /// **'Describe the event...'**
-  String get pet_journal_hint_text;
-
-  /// No description provided for @pet_journal_register_button.
-  ///
-  /// In en, this message translates to:
-  /// **'Register Event'**
-  String get pet_journal_register_button;
-
-  /// No description provided for @pet_journal_report_action.
-  ///
-  /// In en, this message translates to:
-  /// **'Report'**
-  String get pet_journal_report_action;
-
-  /// No description provided for @map_alert_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Report Danger'**
-  String get map_alert_title;
-
-  /// No description provided for @map_alert_dog.
-  ///
-  /// In en, this message translates to:
-  /// **'Loose Dog'**
-  String get map_alert_dog;
-
-  /// No description provided for @map_alert_poison.
-  ///
-  /// In en, this message translates to:
-  /// **'Poison Risk'**
-  String get map_alert_poison;
-
-  /// No description provided for @map_alert_noise.
-  ///
-  /// In en, this message translates to:
-  /// **'Loud Noise'**
-  String get map_alert_noise;
-
-  /// No description provided for @map_alert_risk.
-  ///
-  /// In en, this message translates to:
-  /// **'Risk Area'**
-  String get map_alert_risk;
-
-  /// No description provided for @map_alert_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Alert Registered!'**
-  String get map_alert_success;
-
-  /// No description provided for @pet_journal_recording.
-  ///
-  /// In en, this message translates to:
-  /// **'Recording ambient sound...'**
-  String get pet_journal_recording;
-
-  /// No description provided for @pet_journal_photo_saved.
-  ///
-  /// In en, this message translates to:
-  /// **'Photo saved!'**
-  String get pet_journal_photo_saved;
-
-  /// No description provided for @map_alert_description_user.
-  ///
-  /// In en, this message translates to:
-  /// **'Reported by user'**
-  String get map_alert_description_user;
-
-  /// No description provided for @pet_journal_gps_error.
-  ///
-  /// In en, this message translates to:
-  /// **'Error getting GPS'**
-  String get pet_journal_gps_error;
-
-  /// No description provided for @pet_journal_loading_gps.
-  ///
-  /// In en, this message translates to:
-  /// **'Getting GPS...'**
-  String get pet_journal_loading_gps;
-
-  /// No description provided for @pet_journal_location_unknown.
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown Location'**
-  String get pet_journal_location_unknown;
-
-  /// No description provided for @pet_journal_location_approx.
-  ///
-  /// In en, this message translates to:
-  /// **'Approximate Location'**
-  String get pet_journal_location_approx;
-
-  /// No description provided for @label_gallery.
-  ///
-  /// In en, this message translates to:
-  /// **'Gallery'**
-  String get label_gallery;
-
-  /// No description provided for @label_file.
-  ///
-  /// In en, this message translates to:
-  /// **'File'**
-  String get label_file;
-
-  /// No description provided for @pet_journal_file_selected.
-  ///
-  /// In en, this message translates to:
-  /// **'File selected: {name}'**
-  String pet_journal_file_selected(String name);
-
-  /// No description provided for @pet_journal_file_error.
-  ///
-  /// In en, this message translates to:
-  /// **'Error selecting file: {error}'**
-  String pet_journal_file_error(String error);
-
-  /// No description provided for @pet_journal_help_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Guidelines'**
-  String get pet_journal_help_title;
-
-  /// No description provided for @pet_journal_help_photo_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Photo/Gallery'**
-  String get pet_journal_help_photo_title;
-
-  /// No description provided for @pet_journal_help_photo_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'Capture or upload images for immediate AI health or behavior analysis.'**
-  String get pet_journal_help_photo_desc;
-
-  /// No description provided for @pet_journal_help_audio_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Audio/Upload'**
-  String get pet_journal_help_audio_title;
-
-  /// No description provided for @pet_journal_help_audio_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'Record sounds (breathing, coughing, barking) or upload files for anomaly detection.'**
-  String get pet_journal_help_audio_desc;
-
-  /// No description provided for @pet_journal_help_map_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Map/Address'**
-  String get pet_journal_help_map_title;
-
-  /// No description provided for @pet_journal_help_map_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'Location is captured automatically. Tap the map if you need to adjust the event point.'**
-  String get pet_journal_help_map_desc;
-
-  /// No description provided for @pet_journal_help_notes_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Notes'**
-  String get pet_journal_help_notes_title;
-
-  /// No description provided for @pet_journal_help_notes_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'Describe what happened. AI will cross-reference your text with media to generate the correct alert.'**
-  String get pet_journal_help_notes_desc;
-
-  /// No description provided for @pet_journal_help_videos_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Videos (Coming Soon)'**
-  String get pet_journal_help_videos_title;
-
-  /// No description provided for @pet_journal_help_videos_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'We focus on photo & audio for speed, but videos are coming!'**
-  String get pet_journal_help_videos_desc;
-
-  /// No description provided for @pet_journal_help_ai_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Artificial Intelligence'**
-  String get pet_journal_help_ai_title;
-
-  /// No description provided for @pet_journal_help_ai_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'Write freely. AI crosses photo and audio data for clinical insights.'**
-  String get pet_journal_help_ai_desc;
-
-  /// No description provided for @btn_got_it.
-  ///
-  /// In en, this message translates to:
-  /// **'Got it!'**
-  String get btn_got_it;
-
-  /// No description provided for @help_guide_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Tutor Field Guide'**
-  String get help_guide_title;
-
-  /// No description provided for @pet_journal_searching_address.
-  ///
-  /// In en, this message translates to:
-  /// **'Searching address...'**
-  String get pet_journal_searching_address;
-
-  /// No description provided for @pet_journal_address_not_found.
-  ///
-  /// In en, this message translates to:
-  /// **'Address not found'**
-  String get pet_journal_address_not_found;
-
-  /// No description provided for @pet_error_ai_analysis_failed.
-  ///
-  /// In en, this message translates to:
-  /// **'AI Analysis failed: {error}'**
-  String pet_error_ai_analysis_failed(String error);
-
-  /// No description provided for @pet_error_repository_failure.
-  ///
-  /// In en, this message translates to:
-  /// **'Repository failure: {status}'**
-  String pet_error_repository_failure(String status);
-
-  /// No description provided for @pet_error_saving_event.
-  ///
-  /// In en, this message translates to:
-  /// **'Error saving event: {error}'**
-  String pet_error_saving_event(String error);
-
-  /// No description provided for @pet_agenda_summary_format.
-  ///
-  /// In en, this message translates to:
-  /// **'{keywords}'**
-  String pet_agenda_summary_format(String keywords);
-
-  /// No description provided for @common_delete_confirm_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete Event?'**
-  String get common_delete_confirm_title;
-
-  /// No description provided for @common_delete_confirm_message.
-  ///
-  /// In en, this message translates to:
-  /// **'This action cannot be undone. Do you really want to remove this record?'**
-  String get common_delete_confirm_message;
-
-  /// No description provided for @common_cancel.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get common_cancel;
-
-  /// No description provided for @common_delete.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete'**
-  String get common_delete;
-
-  /// No description provided for @pet_error_delete_event.
-  ///
-  /// In en, this message translates to:
-  /// **'Error deleting event'**
-  String get pet_error_delete_event;
-
-  /// No description provided for @pet_label_address.
-  ///
-  /// In en, this message translates to:
-  /// **'Address'**
-  String get pet_label_address;
-
-  /// No description provided for @pet_label_ai_summary.
-  ///
-  /// In en, this message translates to:
-  /// **'AI Summary'**
-  String get pet_label_ai_summary;
-
-  /// No description provided for @pet_analysis_data_not_found.
-  ///
-  /// In en, this message translates to:
-  /// **'Analysis data not found.'**
-  String get pet_analysis_data_not_found;
-
-  /// No description provided for @pet_logic_keywords_health.
-  ///
-  /// In en, this message translates to:
-  /// **'vomit,diarrhea,blood,wound,hurt,pain,fever,vaccine,vet,medication,poop,feces,yellow,bark,howl,crying,cough,choke,sneeze,breathing,dizziness,fainting,seizure,worm,tick,flea,itch,swelling,redness,discharge,pus,limping,lameness,tremor,spasm,circling,head pressing,moan'**
-  String get pet_logic_keywords_health;
-
-  /// No description provided for @pet_ai_language.
-  ///
-  /// In en, this message translates to:
-  /// **'en_US'**
-  String get pet_ai_language;
-
-  /// No description provided for @map_gps_disabled.
-  ///
-  /// In en, this message translates to:
-  /// **'GPS is disabled. Please enable it.'**
-  String get map_gps_disabled;
-
-  /// No description provided for @map_permission_denied.
-  ///
-  /// In en, this message translates to:
-  /// **'Location permission denied.'**
-  String get map_permission_denied;
-
-  /// No description provided for @map_permission_denied_forever.
-  ///
-  /// In en, this message translates to:
-  /// **'Permissions are permanently denied. Open settings to allow access.'**
-  String get map_permission_denied_forever;
-
-  /// No description provided for @map_error_location.
-  ///
-  /// In en, this message translates to:
-  /// **'Error getting location: {error}'**
-  String map_error_location(String error);
-
-  /// No description provided for @map_title_pet_location.
-  ///
-  /// In en, this message translates to:
-  /// **'Pet Location'**
-  String get map_title_pet_location;
-
-  /// No description provided for @action_open_settings.
-  ///
-  /// In en, this message translates to:
-  /// **'Open Settings'**
-  String get action_open_settings;
-
-  /// No description provided for @map_sync_satellites.
-  ///
-  /// In en, this message translates to:
-  /// **'Syncing GPS satellites...'**
-  String get map_sync_satellites;
-
-  /// No description provided for @pet_analysis_visual_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Visual Analysis'**
-  String get pet_analysis_visual_title;
-
-  /// No description provided for @pet_icon_pet.
-  ///
-  /// In en, this message translates to:
-  /// **'Pet'**
-  String get pet_icon_pet;
-
-  /// No description provided for @pet_journal_audio_processing.
-  ///
-  /// In en, this message translates to:
-  /// **'Processing audio...'**
-  String get pet_journal_audio_processing;
-
-  /// No description provided for @pet_journal_audio_error_file_not_found.
-  ///
-  /// In en, this message translates to:
-  /// **'Audio file not found.'**
-  String get pet_journal_audio_error_file_not_found;
-
-  /// No description provided for @pet_journal_audio_error_generic.
-  ///
-  /// In en, this message translates to:
-  /// **'No audio analysis result.'**
-  String get pet_journal_audio_error_generic;
-
-  /// No description provided for @pet_journal_audio_pending.
-  ///
-  /// In en, this message translates to:
-  /// **'Audio registered. Analysis pending.'**
-  String get pet_journal_audio_pending;
-
-  /// No description provided for @pet_journal_video_saved.
-  ///
-  /// In en, this message translates to:
-  /// **'Short video saved!'**
-  String get pet_journal_video_saved;
-
-  /// No description provided for @pet_journal_video_processing.
-  ///
-  /// In en, this message translates to:
-  /// **'Analyzing movement...'**
-  String get pet_journal_video_processing;
-
-  /// No description provided for @pet_journal_video_error.
-  ///
-  /// In en, this message translates to:
-  /// **'Video analysis error.'**
-  String get pet_journal_video_error;
-
-  /// No description provided for @label_video.
-  ///
-  /// In en, this message translates to:
-  /// **'Video'**
-  String get label_video;
-
-  /// No description provided for @label_vocal.
-  ///
-  /// In en, this message translates to:
-  /// **'Vocal'**
-  String get label_vocal;
-
-  /// No description provided for @error_file_too_large.
-  ///
-  /// In en, this message translates to:
-  /// **'File too large (Max 30MB).'**
-  String get error_file_too_large;
-
-  /// No description provided for @error_video_too_long.
-  ///
-  /// In en, this message translates to:
-  /// **'Video too long (Max 60s).'**
-  String get error_video_too_long;
-
-  /// No description provided for @keywordFriend.
-  ///
-  /// In en, this message translates to:
-  /// **'friend,visitor,guest,other dog,neighbor\'s dog'**
-  String get keywordFriend;
-
-  /// No description provided for @keywordGuest.
-  ///
-  /// In en, this message translates to:
-  /// **'guest,visitor,stranger'**
-  String get keywordGuest;
-
-  /// No description provided for @pet_agenda_view_calendar.
-  ///
-  /// In en, this message translates to:
-  /// **'View Calendar'**
-  String get pet_agenda_view_calendar;
-
-  /// No description provided for @pet_module_dentistry_programs.
-  ///
-  /// In en, this message translates to:
-  /// **'Tartar, Gums, Broken Teeth'**
-  String get pet_module_dentistry_programs;
-
-  /// No description provided for @pet_module_dermatology_programs.
-  ///
-  /// In en, this message translates to:
-  /// **'Alopecia, Dermatitis, Wounds, Parasites'**
-  String get pet_module_dermatology_programs;
-
-  /// No description provided for @pet_module_gastro_programs.
-  ///
-  /// In en, this message translates to:
-  /// **'Consistency, Color, Parasites, Blood'**
-  String get pet_module_gastro_programs;
-
-  /// No description provided for @pet_module_ears.
-  ///
-  /// In en, this message translates to:
-  /// **'Ears'**
-  String get pet_module_ears;
-
-  /// No description provided for @pet_module_ophthalmology_programs.
-  ///
-  /// In en, this message translates to:
-  /// **'Discharge, Redness, Cataracts, Spots'**
-  String get pet_module_ophthalmology_programs;
-
-  /// No description provided for @pet_module_otology_programs.
-  ///
-  /// In en, this message translates to:
-  /// **'Wax, Itching, Odor, Redness'**
-  String get pet_module_otology_programs;
-
-  /// No description provided for @pet_module_physique_programs.
-  ///
-  /// In en, this message translates to:
-  /// **'Body Condition Score, Muscle Mass, Obesity'**
-  String get pet_module_physique_programs;
-
-  /// No description provided for @pet_module_lab_programs.
-  ///
-  /// In en, this message translates to:
-  /// **'Blood Count, Biochemistry, Urine, Stool'**
-  String get pet_module_lab_programs;
-
   /// No description provided for @pet_module_nutrition_programs.
   ///
   /// In en, this message translates to:
-  /// **'Ingredients, Guaranteed Analysis, Calories, Serving Size'**
+  /// **'Label Analysis, Nutritional Table'**
   String get pet_module_nutrition_programs;
 
   /// No description provided for @pet_module_vocal.
   ///
   /// In en, this message translates to:
-  /// **'Vocalization'**
+  /// **'Vocal'**
   String get pet_module_vocal;
 
   /// No description provided for @pet_module_vocal_programs.
   ///
   /// In en, this message translates to:
-  /// **'Barks, Coughs, Panting, Meows'**
+  /// **'Barks, Meows, Coughs, Breathing'**
   String get pet_module_vocal_programs;
 
   /// No description provided for @pet_module_behavior.
   ///
   /// In en, this message translates to:
-  /// **'Behavior (Video)'**
+  /// **'Behavior'**
   String get pet_module_behavior;
 
   /// No description provided for @pet_module_behavior_programs.
   ///
   /// In en, this message translates to:
-  /// **'Barking + Posture, Anxiety, Aggression'**
+  /// **'Breed, Posture, Anxiety, Tremors'**
   String get pet_module_behavior_programs;
 
   /// No description provided for @pet_module_plant.
   ///
   /// In en, this message translates to:
-  /// **'Plants (Toxicity)'**
+  /// **'Plants'**
   String get pet_module_plant;
 
   /// No description provided for @pet_module_plant_programs.
   ///
   /// In en, this message translates to:
-  /// **'Identification, Toxicity, Plant Health, Care Tips'**
+  /// **'Toxic Plant Identification'**
   String get pet_module_plant_programs;
+
+  /// No description provided for @pet_module_food_bowl.
+  ///
+  /// In en, this message translates to:
+  /// **'Food Bowl'**
+  String get pet_module_food_bowl;
 
   /// No description provided for @action_record_video_audio.
   ///
@@ -3545,7 +1853,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_hint_select_friend.
   ///
   /// In en, this message translates to:
-  /// **'Select a Friend'**
+  /// **'Select'**
   String get pet_hint_select_friend;
 
   /// No description provided for @pet_new_friend_option.
@@ -3563,7 +1871,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_error_fill_friend_fields.
   ///
   /// In en, this message translates to:
-  /// **'Please fill all Friend fields'**
+  /// **'Fill all.'**
   String get pet_error_fill_friend_fields;
 
   /// No description provided for @pet_result_title_my_pet.
@@ -3625,6 +1933,1758 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SAFE ✅'**
   String get pet_plant_safe;
+
+  /// No description provided for @pet_msg_confirm_delete_entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this analysis?'**
+  String get pet_msg_confirm_delete_entry;
+
+  /// No description provided for @pet_event_type_activity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get pet_event_type_activity;
+
+  /// No description provided for @health_plan_label_card_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Card Number'**
+  String get health_plan_label_card_number;
+
+  /// No description provided for @pet_analysis_visual_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Visual Analysis'**
+  String get pet_analysis_visual_title;
+
+  /// No description provided for @pet_label_whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get pet_label_whatsapp;
+
+  /// No description provided for @label_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get label_photo;
+
+  /// No description provided for @label_gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get label_gallery;
+
+  /// No description provided for @label_video.
+  ///
+  /// In en, this message translates to:
+  /// **'Video'**
+  String get label_video;
+
+  /// No description provided for @label_sounds.
+  ///
+  /// In en, this message translates to:
+  /// **'Sounds'**
+  String get label_sounds;
+
+  /// No description provided for @label_vocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Vocalization'**
+  String get label_vocal;
+
+  /// No description provided for @pet_journal_recording.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording journal...'**
+  String get pet_journal_recording;
+
+  /// No description provided for @pet_journal_audio_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio saved successfully'**
+  String get pet_journal_audio_saved;
+
+  /// No description provided for @pet_journal_photo_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo saved successfully'**
+  String get pet_journal_photo_saved;
+
+  /// No description provided for @pet_journal_video_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Video saved successfully'**
+  String get pet_journal_video_saved;
+
+  /// No description provided for @error_file_too_large.
+  ///
+  /// In en, this message translates to:
+  /// **'File too large'**
+  String get error_file_too_large;
+
+  /// No description provided for @pet_journal_searching_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching address...'**
+  String get pet_journal_searching_address;
+
+  /// No description provided for @pet_journal_address_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Address not found'**
+  String get pet_journal_address_not_found;
+
+  /// No description provided for @pet_journal_report_action.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get pet_journal_report_action;
+
+  /// No description provided for @pet_journal_question.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened?'**
+  String get pet_journal_question;
+
+  /// No description provided for @pet_journal_hint_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Write here...'**
+  String get pet_journal_hint_text;
+
+  /// No description provided for @pet_journal_register_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get pet_journal_register_button;
+
+  /// No description provided for @help_guide_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Guide'**
+  String get help_guide_title;
+
+  /// No description provided for @btn_got_it.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get btn_got_it;
+
+  /// No description provided for @map_alert_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Map Alert'**
+  String get map_alert_title;
+
+  /// No description provided for @map_type_normal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get map_type_normal;
+
+  /// No description provided for @map_type_satellite.
+  ///
+  /// In en, this message translates to:
+  /// **'Satellite'**
+  String get map_type_satellite;
+
+  /// No description provided for @common_delete_confirm_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Delete'**
+  String get common_delete_confirm_title;
+
+  /// No description provided for @common_delete_confirm_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete?'**
+  String get common_delete_confirm_message;
+
+  /// No description provided for @pet_profile_title_simple.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get pet_profile_title_simple;
+
+  /// No description provided for @pet_action_save_profile_simple.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get pet_action_save_profile_simple;
+
+  /// No description provided for @funeral_save_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved!'**
+  String get funeral_save_success;
+
+  /// No description provided for @health_plan_saved_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Health plan saved!'**
+  String get health_plan_saved_success;
+
+  /// No description provided for @pet_age_years.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 year} other{{count} years}}'**
+  String pet_age_years(int count);
+
+  /// No description provided for @keywordFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend'**
+  String get keywordFriend;
+
+  /// No description provided for @keywordGuest.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get keywordGuest;
+
+  /// No description provided for @pet_agenda_view_calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'View Calendar'**
+  String get pet_agenda_view_calendar;
+
+  /// No description provided for @pet_module_dentistry_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Tartar, Gingivitis, Broken Teeth'**
+  String get pet_module_dentistry_programs;
+
+  /// No description provided for @pet_module_dermatology_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Alopecia, Dermatitis, Wounds, Parasites'**
+  String get pet_module_dermatology_programs;
+
+  /// No description provided for @pet_module_gastro_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency, Color, Parasites, Blood'**
+  String get pet_module_gastro_programs;
+
+  /// No description provided for @pet_module_ophthalmology_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Secretion, Redness, Cataracts, Spots'**
+  String get pet_module_ophthalmology_programs;
+
+  /// No description provided for @pet_module_otology_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Wax, Itching, Odor, Redness'**
+  String get pet_module_otology_programs;
+
+  /// No description provided for @pet_module_physique_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Score, Muscle Mass, Obesity'**
+  String get pet_module_physique_programs;
+
+  /// No description provided for @pet_module_lab_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'CBC, Biochemistry, Urine, Stool'**
+  String get pet_module_lab_programs;
+
+  /// No description provided for @pet_module_food_bowl_programs.
+  ///
+  /// In en, this message translates to:
+  /// **'Kibble Quality, Natural Food'**
+  String get pet_module_food_bowl_programs;
+
+  /// No description provided for @pet_journal_audio_saved_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio saved!'**
+  String get pet_journal_audio_saved_success;
+
+  /// No description provided for @pet_journal_photo_saved_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo saved!'**
+  String get pet_journal_photo_saved_success;
+
+  /// No description provided for @pet_journal_video_saved_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Video saved!'**
+  String get pet_journal_video_saved_success;
+
+  /// No description provided for @funeral_save_success_simple.
+  ///
+  /// In en, this message translates to:
+  /// **'Funeral saved!'**
+  String get funeral_save_success_simple;
+
+  /// No description provided for @health_plan_saved_success_simple.
+  ///
+  /// In en, this message translates to:
+  /// **'Health plan saved!'**
+  String get health_plan_saved_success_simple;
+
+  /// No description provided for @pet_module_ears.
+  ///
+  /// In en, this message translates to:
+  /// **'Ears'**
+  String get pet_module_ears;
+
+  /// No description provided for @pet_label_size.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get pet_label_size;
+
+  /// No description provided for @pet_size_small.
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get pet_size_small;
+
+  /// No description provided for @pet_size_medium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get pet_size_medium;
+
+  /// No description provided for @pet_size_large.
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get pet_size_large;
+
+  /// No description provided for @pet_label_estimated_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Est. Weight'**
+  String get pet_label_estimated_weight;
+
+  /// No description provided for @pet_weight_unit.
+  ///
+  /// In en, this message translates to:
+  /// **'kg'**
+  String get pet_weight_unit;
+
+  /// No description provided for @pet_label_neutered.
+  ///
+  /// In en, this message translates to:
+  /// **'Neutered'**
+  String get pet_label_neutered;
+
+  /// No description provided for @pet_clinical_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinical Conditions'**
+  String get pet_clinical_title;
+
+  /// No description provided for @pet_label_allergies.
+  ///
+  /// In en, this message translates to:
+  /// **'Allergies'**
+  String get pet_label_allergies;
+
+  /// No description provided for @pet_label_chronic.
+  ///
+  /// In en, this message translates to:
+  /// **'Chronic Conditions'**
+  String get pet_label_chronic;
+
+  /// No description provided for @pet_label_disabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabilities'**
+  String get pet_label_disabilities;
+
+  /// No description provided for @pet_label_observations.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get pet_label_observations;
+
+  /// No description provided for @pet_id_external_title.
+  ///
+  /// In en, this message translates to:
+  /// **'External ID'**
+  String get pet_id_external_title;
+
+  /// No description provided for @pet_label_microchip.
+  ///
+  /// In en, this message translates to:
+  /// **'Microchip'**
+  String get pet_label_microchip;
+
+  /// No description provided for @pet_label_registry.
+  ///
+  /// In en, this message translates to:
+  /// **'Registry ID'**
+  String get pet_label_registry;
+
+  /// No description provided for @pet_label_qrcode.
+  ///
+  /// In en, this message translates to:
+  /// **'QR Code'**
+  String get pet_label_qrcode;
+
+  /// No description provided for @pet_qrcode_future.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon'**
+  String get pet_qrcode_future;
+
+  /// No description provided for @pet_plans_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get pet_plans_title;
+
+  /// No description provided for @pet_action_manage_health_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Health Plan'**
+  String get pet_action_manage_health_plan;
+
+  /// No description provided for @health_plan_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Plan'**
+  String get health_plan_title;
+
+  /// No description provided for @health_plan_section_identification.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Identification'**
+  String get health_plan_section_identification;
+
+  /// No description provided for @health_plan_section_coverages.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Coverages'**
+  String get health_plan_section_coverages;
+
+  /// No description provided for @health_plan_section_limits.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Rules'**
+  String get health_plan_section_limits;
+
+  /// No description provided for @health_plan_section_support.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Support'**
+  String get health_plan_section_support;
+
+  /// No description provided for @health_plan_action_save.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE'**
+  String get health_plan_action_save;
+
+  /// No description provided for @health_plan_label_operator.
+  ///
+  /// In en, this message translates to:
+  /// **'Operator'**
+  String get health_plan_label_operator;
+
+  /// No description provided for @health_plan_label_plan_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get health_plan_label_plan_name;
+
+  /// No description provided for @health_plan_label_holder_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Holder'**
+  String get health_plan_label_holder_name;
+
+  /// No description provided for @health_plan_label_grace_period.
+  ///
+  /// In en, this message translates to:
+  /// **'Grace Period'**
+  String get health_plan_label_grace_period;
+
+  /// No description provided for @health_plan_label_annual_limit.
+  ///
+  /// In en, this message translates to:
+  /// **'Limit'**
+  String get health_plan_label_annual_limit;
+
+  /// No description provided for @health_plan_label_copay.
+  ///
+  /// In en, this message translates to:
+  /// **'Copay'**
+  String get health_plan_label_copay;
+
+  /// No description provided for @health_plan_label_reimburse.
+  ///
+  /// In en, this message translates to:
+  /// **'Reimburse'**
+  String get health_plan_label_reimburse;
+
+  /// No description provided for @health_plan_label_deductible.
+  ///
+  /// In en, this message translates to:
+  /// **'Deductible'**
+  String get health_plan_label_deductible;
+
+  /// No description provided for @health_plan_label_main_clinic.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic'**
+  String get health_plan_label_main_clinic;
+
+  /// No description provided for @health_plan_label_city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get health_plan_label_city;
+
+  /// No description provided for @health_plan_label_24h.
+  ///
+  /// In en, this message translates to:
+  /// **'24h'**
+  String get health_plan_label_24h;
+
+  /// No description provided for @health_plan_label_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get health_plan_label_phone;
+
+  /// No description provided for @health_plan_label_whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get health_plan_label_whatsapp;
+
+  /// No description provided for @health_plan_label_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get health_plan_label_email;
+
+  /// No description provided for @health_cov_consultations.
+  ///
+  /// In en, this message translates to:
+  /// **'Consultations'**
+  String get health_cov_consultations;
+
+  /// No description provided for @health_cov_vaccines.
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccines'**
+  String get health_cov_vaccines;
+
+  /// No description provided for @health_cov_lab_exams.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Exams'**
+  String get health_cov_lab_exams;
+
+  /// No description provided for @health_cov_imaging.
+  ///
+  /// In en, this message translates to:
+  /// **'Imaging'**
+  String get health_cov_imaging;
+
+  /// No description provided for @health_cov_surgery.
+  ///
+  /// In en, this message translates to:
+  /// **'Surgery'**
+  String get health_cov_surgery;
+
+  /// No description provided for @health_cov_hospitalization.
+  ///
+  /// In en, this message translates to:
+  /// **'Hospitalization'**
+  String get health_cov_hospitalization;
+
+  /// No description provided for @health_cov_emergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get health_cov_emergency;
+
+  /// No description provided for @health_cov_pre_existing.
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-existing'**
+  String get health_cov_pre_existing;
+
+  /// No description provided for @health_cov_dentistry.
+  ///
+  /// In en, this message translates to:
+  /// **'Dentistry'**
+  String get health_cov_dentistry;
+
+  /// No description provided for @health_cov_physiotherapy.
+  ///
+  /// In en, this message translates to:
+  /// **'Physio'**
+  String get health_cov_physiotherapy;
+
+  /// No description provided for @pet_db_sync_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Error'**
+  String get pet_db_sync_error;
+
+  /// No description provided for @pet_action_manage_funeral_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Funeral'**
+  String get pet_action_manage_funeral_plan;
+
+  /// No description provided for @funeral_plan_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Funeral Plan'**
+  String get funeral_plan_title;
+
+  /// No description provided for @funeral_section_identity.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Identification'**
+  String get funeral_section_identity;
+
+  /// No description provided for @funeral_section_services.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Services'**
+  String get funeral_section_services;
+
+  /// No description provided for @funeral_section_rules.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Rules'**
+  String get funeral_section_rules;
+
+  /// No description provided for @funeral_section_emergency.
+  ///
+  /// In en, this message translates to:
+  /// **'4. EMERGENCY'**
+  String get funeral_section_emergency;
+
+  /// No description provided for @funeral_label_company.
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get funeral_label_company;
+
+  /// No description provided for @funeral_label_plan_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get funeral_label_plan_name;
+
+  /// No description provided for @funeral_label_contract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contract'**
+  String get funeral_label_contract;
+
+  /// No description provided for @funeral_label_start_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get funeral_label_start_date;
+
+  /// No description provided for @funeral_label_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get funeral_label_status;
+
+  /// No description provided for @funeral_label_grace_period.
+  ///
+  /// In en, this message translates to:
+  /// **'Grace Period'**
+  String get funeral_label_grace_period;
+
+  /// No description provided for @funeral_label_max_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Max Weight'**
+  String get funeral_label_max_weight;
+
+  /// No description provided for @funeral_label_24h.
+  ///
+  /// In en, this message translates to:
+  /// **'24h'**
+  String get funeral_label_24h;
+
+  /// No description provided for @funeral_label_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get funeral_label_phone;
+
+  /// No description provided for @funeral_label_whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get funeral_label_whatsapp;
+
+  /// No description provided for @funeral_label_value.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get funeral_label_value;
+
+  /// No description provided for @funeral_label_extra_fees.
+  ///
+  /// In en, this message translates to:
+  /// **'Fees'**
+  String get funeral_label_extra_fees;
+
+  /// No description provided for @funeral_svc_removal.
+  ///
+  /// In en, this message translates to:
+  /// **'Removal'**
+  String get funeral_svc_removal;
+
+  /// No description provided for @funeral_svc_viewing.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewing'**
+  String get funeral_svc_viewing;
+
+  /// No description provided for @funeral_svc_cremation_ind.
+  ///
+  /// In en, this message translates to:
+  /// **'Cremation Ind.'**
+  String get funeral_svc_cremation_ind;
+
+  /// No description provided for @funeral_svc_cremation_col.
+  ///
+  /// In en, this message translates to:
+  /// **'Cremation Col.'**
+  String get funeral_svc_cremation_col;
+
+  /// No description provided for @funeral_svc_burial.
+  ///
+  /// In en, this message translates to:
+  /// **'Burial'**
+  String get funeral_svc_burial;
+
+  /// No description provided for @funeral_svc_urn.
+  ///
+  /// In en, this message translates to:
+  /// **'Urn'**
+  String get funeral_svc_urn;
+
+  /// No description provided for @funeral_svc_ashes.
+  ///
+  /// In en, this message translates to:
+  /// **'Ashes'**
+  String get funeral_svc_ashes;
+
+  /// No description provided for @funeral_svc_certificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate'**
+  String get funeral_svc_certificate;
+
+  /// No description provided for @funeral_action_call_emergency.
+  ///
+  /// In en, this message translates to:
+  /// **'EMERGENCY'**
+  String get funeral_action_call_emergency;
+
+  /// No description provided for @funeral_action_save.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE'**
+  String get funeral_action_save;
+
+  /// No description provided for @pet_action_analyses.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyses'**
+  String get pet_action_analyses;
+
+  /// No description provided for @pet_action_health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get pet_action_health;
+
+  /// No description provided for @pet_action_agenda.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda'**
+  String get pet_action_agenda;
+
+  /// No description provided for @pet_history_button.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get pet_history_button;
+
+  /// No description provided for @ai_assistant_title.
+  ///
+  /// In en, this message translates to:
+  /// **'AI {name}'**
+  String ai_assistant_title(Object name);
+
+  /// No description provided for @ai_input_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask here...'**
+  String get ai_input_hint;
+
+  /// No description provided for @ai_listening.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening...'**
+  String get ai_listening;
+
+  /// No description provided for @ai_error_mic.
+  ///
+  /// In en, this message translates to:
+  /// **'Mic denied'**
+  String get ai_error_mic;
+
+  /// No description provided for @ai_thinking.
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking...'**
+  String get ai_thinking;
+
+  /// No description provided for @pet_age_months.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 month} other{{count} months}}'**
+  String pet_age_months(int count);
+
+  /// No description provided for @pet_age_estimate_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Est. Age:'**
+  String get pet_age_estimate_label;
+
+  /// No description provided for @pet_event_type_food.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get pet_event_type_food;
+
+  /// No description provided for @pet_event_type_health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get pet_event_type_health;
+
+  /// No description provided for @pet_event_type_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get pet_event_type_weight;
+
+  /// No description provided for @pet_event_type_hygiene.
+  ///
+  /// In en, this message translates to:
+  /// **'Hygiene'**
+  String get pet_event_type_hygiene;
+
+  /// No description provided for @pet_event_type_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get pet_event_type_other;
+
+  /// No description provided for @pet_agenda_coming_soon.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda Module for {name}'**
+  String pet_agenda_coming_soon(Object name);
+
+  /// No description provided for @pet_medical_history_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No medical history.'**
+  String get pet_medical_history_empty;
+
+  /// No description provided for @pet_share_not_implemented.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon.'**
+  String get pet_share_not_implemented;
+
+  /// No description provided for @pet_ai_brain_not_ready.
+  ///
+  /// In en, this message translates to:
+  /// **'AI loading...'**
+  String get pet_ai_brain_not_ready;
+
+  /// No description provided for @pet_ai_connection_error.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Error: {error}'**
+  String pet_ai_connection_error(Object error);
+
+  /// No description provided for @pet_ai_trouble_thinking.
+  ///
+  /// In en, this message translates to:
+  /// **'Trouble processing.'**
+  String get pet_ai_trouble_thinking;
+
+  /// No description provided for @pet_stt_not_available.
+  ///
+  /// In en, this message translates to:
+  /// **'STT unavailable'**
+  String get pet_stt_not_available;
+
+  /// No description provided for @pet_stt_error.
+  ///
+  /// In en, this message translates to:
+  /// **'STT Error: {error}'**
+  String pet_stt_error(Object error);
+
+  /// No description provided for @pet_entry_deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted'**
+  String get pet_entry_deleted;
+
+  /// No description provided for @pet_error_history_load.
+  ///
+  /// In en, this message translates to:
+  /// **'History Error: {error}'**
+  String pet_error_history_load(Object error);
+
+  /// No description provided for @pet_ai_greeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi! I am {name}\'s AI.'**
+  String pet_ai_greeting(Object name);
+
+  /// No description provided for @pet_event_food.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get pet_event_food;
+
+  /// No description provided for @pet_event_health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get pet_event_health;
+
+  /// No description provided for @pet_event_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get pet_event_weight;
+
+  /// No description provided for @pet_event_walk.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk'**
+  String get pet_event_walk;
+
+  /// No description provided for @pet_event_hygiene.
+  ///
+  /// In en, this message translates to:
+  /// **'Bath'**
+  String get pet_event_hygiene;
+
+  /// No description provided for @pet_event_behavior.
+  ///
+  /// In en, this message translates to:
+  /// **'Behavior'**
+  String get pet_event_behavior;
+
+  /// No description provided for @pet_event_medication.
+  ///
+  /// In en, this message translates to:
+  /// **'Meds'**
+  String get pet_event_medication;
+
+  /// No description provided for @pet_event_note.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get pet_event_note;
+
+  /// No description provided for @pet_ai_thinking_status.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Thinking...'**
+  String get pet_ai_thinking_status;
+
+  /// No description provided for @pet_agenda_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda'**
+  String get pet_agenda_title;
+
+  /// No description provided for @pet_agenda_title_dynamic.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda: {petName}'**
+  String pet_agenda_title_dynamic(Object petName);
+
+  /// No description provided for @pet_agenda_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty Agenda'**
+  String get pet_agenda_empty;
+
+  /// No description provided for @pet_agenda_add_event_dynamic.
+  ///
+  /// In en, this message translates to:
+  /// **'Event for {petName}'**
+  String pet_agenda_add_event_dynamic(Object petName);
+
+  /// No description provided for @pet_agenda_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get pet_agenda_today;
+
+  /// No description provided for @pet_agenda_yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get pet_agenda_yesterday;
+
+  /// No description provided for @pet_agenda_select_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get pet_agenda_select_type;
+
+  /// No description provided for @pet_agenda_event_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get pet_agenda_event_date;
+
+  /// No description provided for @pet_agenda_event_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get pet_agenda_event_time;
+
+  /// No description provided for @pet_agenda_notes_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get pet_agenda_notes_hint;
+
+  /// No description provided for @pet_agenda_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get pet_agenda_save;
+
+  /// No description provided for @pet_journal_add_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal {petName}'**
+  String pet_journal_add_event(Object petName);
+
+  /// No description provided for @pet_journal_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe...'**
+  String get pet_journal_placeholder;
+
+  /// No description provided for @pet_journal_register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get pet_journal_register;
+
+  /// No description provided for @label_friend_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend'**
+  String get label_friend_name;
+
+  /// No description provided for @label_tutor_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutor'**
+  String get label_tutor_name;
+
+  /// No description provided for @ai_simulating_analysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing...'**
+  String get ai_simulating_analysis;
+
+  /// No description provided for @pet_journal_location_loading.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS...'**
+  String get pet_journal_location_loading;
+
+  /// No description provided for @pet_journal_location_captured.
+  ///
+  /// In en, this message translates to:
+  /// **'Location saved'**
+  String get pet_journal_location_captured;
+
+  /// No description provided for @pet_journal_audio_recording.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording...'**
+  String get pet_journal_audio_recording;
+
+  /// No description provided for @ai_audio_analysis_cough_detected.
+  ///
+  /// In en, this message translates to:
+  /// **'Cough detected.'**
+  String get ai_audio_analysis_cough_detected;
+
+  /// No description provided for @ai_suggest_health_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Health?'**
+  String get ai_suggest_health_category;
+
+  /// No description provided for @pet_journal_location_name_simulated.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulated Loc'**
+  String get pet_journal_location_name_simulated;
+
+  /// No description provided for @journal_guide_title.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Journal'**
+  String get journal_guide_title;
+
+  /// No description provided for @journal_guide_voice.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak and AI organizes.'**
+  String get journal_guide_voice;
+
+  /// No description provided for @journal_guide_camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze photos.'**
+  String get journal_guide_camera;
+
+  /// No description provided for @journal_guide_audio.
+  ///
+  /// In en, this message translates to:
+  /// **'Record clinical sounds.'**
+  String get journal_guide_audio;
+
+  /// No description provided for @journal_guide_location.
+  ///
+  /// In en, this message translates to:
+  /// **'Log location.'**
+  String get journal_guide_location;
+
+  /// No description provided for @common_ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get common_ok;
+
+  /// No description provided for @pet_journal_analyzed_by_nano.
+  ///
+  /// In en, this message translates to:
+  /// **'Nano Banana Analysis'**
+  String get pet_journal_analyzed_by_nano;
+
+  /// No description provided for @pet_journal_social_context.
+  ///
+  /// In en, this message translates to:
+  /// **'Social Context'**
+  String get pet_journal_social_context;
+
+  /// No description provided for @journal_guide_unlock_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Start reporting.'**
+  String get journal_guide_unlock_hint;
+
+  /// No description provided for @pet_journal_mic_permission_denied.
+  ///
+  /// In en, this message translates to:
+  /// **'Mic denied.'**
+  String get pet_journal_mic_permission_denied;
+
+  /// No description provided for @label_relate.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get label_relate;
+
+  /// No description provided for @label_place.
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get label_place;
+
+  /// No description provided for @label_audio.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio'**
+  String get label_audio;
+
+  /// No description provided for @label_alert.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert'**
+  String get label_alert;
+
+  /// No description provided for @alert_poison.
+  ///
+  /// In en, this message translates to:
+  /// **'Poison'**
+  String get alert_poison;
+
+  /// No description provided for @alert_dog_loose.
+  ///
+  /// In en, this message translates to:
+  /// **'Angry Dog'**
+  String get alert_dog_loose;
+
+  /// No description provided for @alert_risk_area.
+  ///
+  /// In en, this message translates to:
+  /// **'Danger'**
+  String get alert_risk_area;
+
+  /// No description provided for @alert_noise.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise'**
+  String get alert_noise;
+
+  /// No description provided for @error_gps.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS: {error}'**
+  String error_gps(Object error);
+
+  /// No description provided for @gps_error_snack.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS Error.'**
+  String get gps_error_snack;
+
+  /// No description provided for @map_type_hybrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid'**
+  String get map_type_hybrid;
+
+  /// No description provided for @map_type_terrain.
+  ///
+  /// In en, this message translates to:
+  /// **'Terrain'**
+  String get map_type_terrain;
+
+  /// No description provided for @label_map_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get label_map_type;
+
+  /// No description provided for @map_alert_dog.
+  ///
+  /// In en, this message translates to:
+  /// **'Angry Dog'**
+  String get map_alert_dog;
+
+  /// No description provided for @map_alert_poison.
+  ///
+  /// In en, this message translates to:
+  /// **'Poison'**
+  String get map_alert_poison;
+
+  /// No description provided for @map_alert_noise.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise'**
+  String get map_alert_noise;
+
+  /// No description provided for @map_alert_risk.
+  ///
+  /// In en, this message translates to:
+  /// **'Risk'**
+  String get map_alert_risk;
+
+  /// No description provided for @map_alert_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Success!'**
+  String get map_alert_success;
+
+  /// No description provided for @map_alert_description_user.
+  ///
+  /// In en, this message translates to:
+  /// **'By user'**
+  String get map_alert_description_user;
+
+  /// No description provided for @pet_journal_gps_error.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS Error'**
+  String get pet_journal_gps_error;
+
+  /// No description provided for @pet_journal_loading_gps.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS...'**
+  String get pet_journal_loading_gps;
+
+  /// No description provided for @pet_journal_location_unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get pet_journal_location_unknown;
+
+  /// No description provided for @pet_journal_location_approx.
+  ///
+  /// In en, this message translates to:
+  /// **'Approximate'**
+  String get pet_journal_location_approx;
+
+  /// No description provided for @pet_journal_file_selected.
+  ///
+  /// In en, this message translates to:
+  /// **'File: {name}'**
+  String pet_journal_file_selected(Object name);
+
+  /// No description provided for @pet_journal_file_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String pet_journal_file_error(Object error);
+
+  /// No description provided for @pet_journal_help_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get pet_journal_help_title;
+
+  /// No description provided for @pet_journal_help_photo_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get pet_journal_help_photo_title;
+
+  /// No description provided for @pet_journal_help_photo_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Send photos.'**
+  String get pet_journal_help_photo_desc;
+
+  /// No description provided for @pet_journal_help_audio_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio'**
+  String get pet_journal_help_audio_title;
+
+  /// No description provided for @pet_journal_help_audio_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Record sounds.'**
+  String get pet_journal_help_audio_desc;
+
+  /// No description provided for @pet_journal_help_map_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get pet_journal_help_map_title;
+
+  /// No description provided for @pet_journal_help_map_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto location.'**
+  String get pet_journal_help_map_desc;
+
+  /// No description provided for @pet_journal_help_notes_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get pet_journal_help_notes_title;
+
+  /// No description provided for @pet_journal_help_notes_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe everything.'**
+  String get pet_journal_help_notes_desc;
+
+  /// No description provided for @pet_journal_help_videos_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Video'**
+  String get pet_journal_help_videos_title;
+
+  /// No description provided for @pet_journal_help_videos_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon.'**
+  String get pet_journal_help_videos_desc;
+
+  /// No description provided for @pet_journal_help_ai_title.
+  ///
+  /// In en, this message translates to:
+  /// **'AI'**
+  String get pet_journal_help_ai_title;
+
+  /// No description provided for @pet_journal_help_ai_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Clinical Opinion.'**
+  String get pet_journal_help_ai_desc;
+
+  /// No description provided for @pet_error_ai_analysis_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Error: {error}'**
+  String pet_error_ai_analysis_failed(Object error);
+
+  /// No description provided for @pet_error_repository_failure.
+  ///
+  /// In en, this message translates to:
+  /// **'Failure: {status}'**
+  String pet_error_repository_failure(Object status);
+
+  /// No description provided for @pet_error_saving_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Error: {error}'**
+  String pet_error_saving_event(Object error);
+
+  /// No description provided for @pet_agenda_summary_format.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} events'**
+  String pet_agenda_summary_format(int count);
+
+  /// No description provided for @common_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get common_delete;
+
+  /// No description provided for @pet_error_delete_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Error'**
+  String get pet_error_delete_event;
+
+  /// No description provided for @pet_label_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get pet_label_address;
+
+  /// No description provided for @pet_label_ai_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Summary'**
+  String get pet_label_ai_summary;
+
+  /// No description provided for @pet_analysis_data_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No data.'**
+  String get pet_analysis_data_not_found;
+
+  /// No description provided for @pet_logic_keywords_health.
+  ///
+  /// In en, this message translates to:
+  /// **'vomit,diarrhea,cough'**
+  String get pet_logic_keywords_health;
+
+  /// No description provided for @pet_ai_language.
+  ///
+  /// In en, this message translates to:
+  /// **'en_US'**
+  String get pet_ai_language;
+
+  /// No description provided for @map_gps_disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable GPS.'**
+  String get map_gps_disabled;
+
+  /// No description provided for @map_permission_denied.
+  ///
+  /// In en, this message translates to:
+  /// **'No permission.'**
+  String get map_permission_denied;
+
+  /// No description provided for @map_permission_denied_forever.
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings.'**
+  String get map_permission_denied_forever;
+
+  /// No description provided for @map_error_location.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String map_error_location(Object error);
+
+  /// No description provided for @map_title_pet_location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get map_title_pet_location;
+
+  /// No description provided for @action_open_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get action_open_settings;
+
+  /// No description provided for @map_sync_satellites.
+  ///
+  /// In en, this message translates to:
+  /// **'Satellites...'**
+  String get map_sync_satellites;
+
+  /// No description provided for @pet_journal_audio_processing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing...'**
+  String get pet_journal_audio_processing;
+
+  /// No description provided for @pet_journal_audio_error_file_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No audio.'**
+  String get pet_journal_audio_error_file_not_found;
+
+  /// No description provided for @pet_journal_audio_error_generic.
+  ///
+  /// In en, this message translates to:
+  /// **'No result.'**
+  String get pet_journal_audio_error_generic;
+
+  /// No description provided for @pet_journal_audio_pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending.'**
+  String get pet_journal_audio_pending;
+
+  /// No description provided for @pet_journal_video_processing.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing...'**
+  String get pet_journal_video_processing;
+
+  /// No description provided for @pet_journal_video_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Video Error.'**
+  String get pet_journal_video_error;
+
+  /// No description provided for @error_video_too_long.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 60s'**
+  String get error_video_too_long;
+
+  /// No description provided for @btn_scan_image.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Image'**
+  String get btn_scan_image;
+
+  /// No description provided for @generic_analyzing.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing...'**
+  String get generic_analyzing;
+
+  /// No description provided for @pet_error_image_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Image not found.'**
+  String get pet_error_image_not_found;
+
+  /// No description provided for @btn_go.
+  ///
+  /// In en, this message translates to:
+  /// **'Go'**
+  String get btn_go;
+
+  /// No description provided for @pet_created_at_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Created at'**
+  String get pet_created_at_label;
+
+  /// No description provided for @pet_initial_assessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Initial Assessment'**
+  String get pet_initial_assessment;
+
+  /// No description provided for @pet_hint_select_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Type'**
+  String get pet_hint_select_type;
+
+  /// No description provided for @pet_label_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get pet_label_info;
+
+  /// No description provided for @pet_type_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get pet_type_profile;
+
+  /// No description provided for @pet_type_posture.
+  ///
+  /// In en, this message translates to:
+  /// **'Posture'**
+  String get pet_type_posture;
+
+  /// No description provided for @pet_profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Profile'**
+  String get pet_profile_title;
+
+  /// No description provided for @pet_management_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Management'**
+  String get pet_management_title;
+
+  /// No description provided for @pet_label_health_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Plan'**
+  String get pet_label_health_plan;
+
+  /// No description provided for @pet_label_funeral_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Funeral Plan'**
+  String get pet_label_funeral_plan;
+
+  /// No description provided for @pet_label_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get pet_label_weight;
+
+  /// No description provided for @pet_label_birth_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Birth Date'**
+  String get pet_label_birth_date;
+
+  /// No description provided for @pet_btn_add_metric.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Metric'**
+  String get pet_btn_add_metric;
+
+  /// No description provided for @pet_agenda_add_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Event'**
+  String get pet_agenda_add_event;
+
+  /// No description provided for @error_unexpected_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Unexpected Error'**
+  String get error_unexpected_title;
+
+  /// No description provided for @error_unexpected_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart the app.'**
+  String get error_unexpected_message;
+
+  /// No description provided for @error_try_recover.
+  ///
+  /// In en, this message translates to:
+  /// **'Recover'**
+  String get error_try_recover;
+
+  /// No description provided for @pet_profile_save_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile saved'**
+  String get pet_profile_save_success;
+
+  /// No description provided for @pet_action_save_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE PROFILE'**
+  String get pet_action_save_profile;
+
+  /// No description provided for @pet_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet not found'**
+  String get pet_not_found;
+
+  /// No description provided for @pet_analyses_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyses: {name}'**
+  String pet_analyses_title(Object name);
+
+  /// No description provided for @pet_profile_title_dynamic.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile: {name}'**
+  String pet_profile_title_dynamic(Object name);
+
+  /// No description provided for @pet_health_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Health: {name}'**
+  String pet_health_title(Object name);
+
+  /// No description provided for @pet_health_plan_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Plan: {name}'**
+  String pet_health_plan_title(Object name);
+
+  /// No description provided for @pet_funeral_plan_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Funeral Plan: {name}'**
+  String pet_funeral_plan_title(Object name);
+
+  /// No description provided for @pet_analysis_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis: {name}'**
+  String pet_analysis_title(Object name);
+
+  /// No description provided for @label_file.
+  ///
+  /// In en, this message translates to:
+  /// **'File'**
+  String get label_file;
+
+  /// No description provided for @common_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get common_cancel;
 }
 
 class _AppLocalizationsDelegate

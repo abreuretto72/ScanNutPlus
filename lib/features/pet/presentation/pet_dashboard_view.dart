@@ -261,17 +261,18 @@ class _PetDashboardViewState extends State<PetDashboardView> {
                     icon: const Icon(Icons.arrow_drop_down, color: Colors.black), // Black Icon
                     style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold), // Black Text
                     items: [
-                       _buildDropdownItem(context, PetImageType.mouth, l10n.pet_module_dentistry, Icons.health_and_safety, subtitle: l10n.pet_module_dentistry_programs),
-                       _buildDropdownItem(context, PetImageType.skin, l10n.pet_module_dermatology, Icons.bug_report, subtitle: l10n.pet_module_dermatology_programs),
-                       _buildDropdownItem(context, PetImageType.stool, l10n.pet_module_gastro, Icons.medical_services, subtitle: l10n.pet_module_gastro_programs),
-                       _buildDropdownItem(context, PetImageType.eyes, l10n.pet_module_ophthalmology, Icons.visibility, subtitle: l10n.pet_module_ophthalmology_programs),
-                       _buildDropdownItem(context, PetImageType.ears, l10n.pet_module_ears, Icons.hearing, subtitle: l10n.pet_module_otology_programs),
-                       _buildDropdownItem(context, PetImageType.posture, l10n.pet_module_physique, Icons.accessibility, subtitle: l10n.pet_module_physique_programs),
-                       _buildDropdownItem(context, PetImageType.lab, l10n.pet_module_lab, Icons.science, subtitle: l10n.pet_module_lab_programs),
-                       _buildDropdownItem(context, PetImageType.label, l10n.pet_module_nutrition, Icons.restaurant_menu, subtitle: l10n.pet_module_nutrition_programs),
-                       _buildDropdownItem(context, PetImageType.vocal, l10n.pet_module_vocal, Icons.mic, subtitle: l10n.pet_module_vocal_programs),
                        _buildDropdownItem(context, PetImageType.behavior, l10n.pet_module_behavior, Icons.psychology, subtitle: l10n.pet_module_behavior_programs),
-                       _buildDropdownItem(context, PetImageType.plantCheck, l10n.pet_module_plant, Icons.local_florist, subtitle: l10n.pet_module_plant_programs),
+                   _buildDropdownItem(context, PetImageType.posture, l10n.pet_module_physique, Icons.accessibility, subtitle: l10n.pet_module_physique_programs),
+                   _buildDropdownItem(context, PetImageType.lab, l10n.pet_module_lab, Icons.science, subtitle: l10n.pet_module_lab_programs),
+                   _buildDropdownItem(context, PetImageType.stool, l10n.pet_module_gastro, Icons.medical_services, subtitle: l10n.pet_module_gastro_programs),
+                   _buildDropdownItem(context, PetImageType.eyes, l10n.pet_module_ophthalmology, Icons.visibility, subtitle: l10n.pet_module_ophthalmology_programs),
+                   _buildDropdownItem(context, PetImageType.ears, l10n.pet_module_ears, Icons.hearing, subtitle: l10n.pet_module_otology_programs),
+                   _buildDropdownItem(context, PetImageType.skin, l10n.pet_module_dermatology, Icons.bug_report, subtitle: l10n.pet_module_dermatology_programs),
+                   _buildDropdownItem(context, PetImageType.plantCheck, l10n.pet_module_plant, Icons.local_florist, subtitle: l10n.pet_module_plant_programs),
+                   _buildDropdownItem(context, PetImageType.foodBowl, l10n.pet_module_food_bowl, Icons.rice_bowl, subtitle: l10n.pet_module_food_bowl_programs),
+                   _buildDropdownItem(context, PetImageType.label, l10n.pet_module_nutrition, Icons.restaurant_menu, subtitle: l10n.pet_module_nutrition_programs),
+                   _buildDropdownItem(context, PetImageType.mouth, l10n.pet_module_dentistry, Icons.health_and_safety, subtitle: l10n.pet_module_dentistry_programs),
+                   _buildDropdownItem(context, PetImageType.vocal, l10n.pet_module_vocal, Icons.mic, subtitle: l10n.pet_module_vocal_programs),
                     ], 
                     onChanged: (PetImageType? newValue) {
                       setState(() => _selectedType = newValue);

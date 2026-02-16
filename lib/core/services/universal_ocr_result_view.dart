@@ -86,24 +86,56 @@ class UniversalOcrResultView extends StatelessWidget {
 
   List<_OcrBlock> _parseOcrCards(String rawResponse) {
     List<_OcrBlock> blocks = [];
-    // Regex para pegar os cards interpretativos do OCR
-    final blockRegex = RegExp(r'\[CARD_START\](.*?)\[CARD_END\]', dotAll: true);
+    Set<String> seenTitles = {}; // DEDUPLICATION ENFORCED
+
+    final blockRegex = RegExp(PetConstants.regexCardStart, dotAll: true);
     final matches = blockRegex.allMatches(rawResponse);
 
     for (var match in matches) {
       final body = match.group(1) ?? '';
-      final title = RegExp(r'TITLE:\s*(.*)').firstMatch(body)?.group(1) ?? 'Dado Extraído';
-      final content = RegExp(r'CONTENT:\s*(.*)', dotAll: true).firstMatch(body)?.group(1) ?? '';
-      final iconName = RegExp(r'ICON:\s*(.*)').firstMatch(body)?.group(1) ?? 'description';
+      // Use Polyglot Regex
+      final title = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(body)?.group(1)?.trim() ?? 'Dado Extraído';
+      
+      // STRICT DEDUPLICATION
+      if (seenTitles.contains(title.toLowerCase())) continue;
+      seenTitles.add(title.toLowerCase());
 
-      blocks.add(_OcrBlock(
-        title: title.trim(),
-        content: content.trim(),
-        icon: _getOcrIcon(iconName.trim()),
-      ));
+      final content = RegExp(PetConstants.regexContent, dotAll: true, caseSensitive: false).firstMatch(body)?.group(1) ?? '';
+      
+      // Clean up potential tags in content
+      final cleanContent = content.replaceAll(RegExp(r'(?:ICON|ÍCONE|ICONE|Ícone|Icone):|(?:CONTENT|CONTEÚDO|CONTEUDO|Conteúdo|Conteudo):', caseSensitive: false), '').trim();
+      
+      final iconName = RegExp(PetConstants.regexIcon, caseSensitive: false).firstMatch(body)?.group(1) ?? 'description';
+
+      if (cleanContent.isNotEmpty) {
+        blocks.add(_OcrBlock(
+          title: title,
+          content: cleanContent,
+          icon: _getOcrIcon(iconName.trim()),
+        ));
+      } else {
+         // NUCLEAR FALLBACK
+         final fallback = body.replaceAll(RegExp(r'(?:TITLE|TITULO|TÍTULO|Título|Titulo):|(?:ICON|ÍCONE|ICONE|Ícone|Icone):|(?:CONTENT|CONTEÚDO|CONTEUDO|Conteúdo|Conteudo):', caseSensitive: false), '').trim();
+         if (fallback.length > 5) {
+             debugPrint('[SCAN_NUT_TRACE] OCR Fallback Triggered. Content: ${fallback.substring(0, 10)}...');
+             blocks.add(_OcrBlock(
+                title: title,
+                content: fallback,
+                icon: _getOcrIcon(iconName.trim()),
+             ));
+         }
+      }
+      debugPrint('[SCAN_NUT_TRACE] OCR Card Parsed -> Title: $title | Icon: $iconName | ContentLen: ${content.length}');
     }
+    
+    if (blocks.isEmpty) {
+       debugPrint('[SCAN_NUT_WARN] No OCR Cards found via Regex. Raw Response Dump: $rawResponse');
+    }
+    
     return blocks;
   }
+  
+  // ... (Methods skipped for brevity)
 
   IconData _getOcrIcon(String icon) {
     if (icon.contains('🔬') || icon.contains('lab')) return Icons.biotech;
@@ -127,7 +159,13 @@ class UniversalOcrResultView extends StatelessWidget {
             children: [
               Icon(block.icon, color: AppColors.petPrimary, size: 20),
               const SizedBox(width: 10),
-              Text(block.title, style: const TextStyle(color: AppColors.petPrimary, fontWeight: FontWeight.bold)),
+              Expanded(
+                child: Text(block.title, 
+                  style: const TextStyle(color: AppColors.petPrimary, fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
             ],
           ),
           const Divider(color: Colors.white10, height: 20),
@@ -163,22 +201,65 @@ class UniversalOcrResultView extends StatelessWidget {
   }
 
   List<String> _extractSources(String response) {
-    if (!response.contains('[SOURCES]')) return [];
-    return response.split('[SOURCES]').last.trim().split('\n').where((s) => s.length > 5).toList();
+    // Robust Regex to find [SOURCES], **[SOURCES]**, [SOURCES]: etc.
+    final match = RegExp(r'\[SOURCES\]', caseSensitive: false).firstMatch(response);
+    
+    if (match == null) {
+        debugPrint('[SCAN_NUT_WARN] No [SOURCES] block found. Using DEFAULT FALLBACK.');
+        return PetConstants.defaultVerificationSources; // FIX: Returns defaults instead of empty
+    }
+    
+    // Split from the start of the match
+    final sourceText = response.substring(match.end).trim();
+    
+    // Split by newlines and clean up bullets
+    final sources = sourceText.split('\n')
+        .where((s) => s.trim().length > 5) // Filter empty lines
+        .map((s) => s.replaceAll(RegExp(r'^[-*]\s*'), '').trim()) // Remove leading bullets
+        .toList();
+    
+    debugPrint('[SCAN_NUT_TRACE] Extracted ${sources.length} sources.');
+    return sources.isNotEmpty ? sources : PetConstants.defaultVerificationSources; // FALLBACK
   }
 
   Widget _buildSourcesCard(BuildContext context, List<String> sources) {
     if (sources.isEmpty) return const SizedBox.shrink();
+    
+    // Helper to map keys to text if they are keys
+    String getSourceText(String s) {
+        if (s == PetConstants.keySourceMerck) return "Merck Veterinary Manual";
+        if (s == PetConstants.keySourceAaha) return "AAHA Nutritional Guidelines";
+        if (s == PetConstants.keySourceScanNut) return "ScanNut Validation Database";
+        return s;
+    }
+
     return Container(
       margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(
+        color: Colors.black45, // Slightly darker for footer feel
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white12),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Referências de Valores", style: TextStyle(color: Colors.white54, fontSize: 12, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          ...sources.map((s) => Text(s, style: const TextStyle(color: Colors.white38, fontSize: 11))),
+          Row(children: [
+             Icon(Icons.menu_book, color: Colors.white54, size: 16),
+             SizedBox(width: 8),
+             Text("Fontes Científicas & Regulatórias", style: TextStyle(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.bold)),
+          ]),
+          const SizedBox(height: 12),
+          ...sources.map((s) => Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("• ", style: TextStyle(color: AppColors.petPrimary)),
+                Expanded(child: Text(getSourceText(s), style: const TextStyle(color: Colors.white60, fontSize: 12, height: 1.3))),
+              ],
+            ),
+          )),
         ],
       ),
     );

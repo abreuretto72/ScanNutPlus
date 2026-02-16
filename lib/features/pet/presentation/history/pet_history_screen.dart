@@ -8,6 +8,7 @@ import 'package:scannutplus/objectbox.g.dart';
 
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/presentation/pet_analysis_result_view.dart';
+import 'package:scannutplus/core/services/universal_result_view.dart'; // Universal Video/Image Viewer
 
 import 'package:scannutplus/features/pet/presentation/pet_capture_view.dart';
 import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
@@ -111,12 +112,40 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                   margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: ListTile(
                     leading: pet.imagePath.isNotEmpty 
-                        ? CircleAvatar(
-                            radius: 25,
-                            backgroundImage: FileImage(File(pet.imagePath)),
-                            onBackgroundImageError: (_, __) {},
-                            child: const Icon(Icons.pets, color: Colors.transparent), 
-                          )
+                        ? (() {
+                            final imageFile = File(pet.imagePath);
+                            // Check if video and has thumbnail
+                            final ext = pet.imagePath.split('.').last.toLowerCase();
+                            final isVideo = PetConstants.videoExtensions.contains(ext);
+                            
+                            File? displayImage = imageFile;
+                            if (isVideo) {
+                               final thumbFile = File('${pet.imagePath}.thumb.jpg');
+                               if (thumbFile.existsSync()) {
+                                  displayImage = thumbFile;
+                               } else {
+                                  // Fallback: If video but no thumbnail, check if original path is actually image (legacy mix)
+                                  // or return null to show icon
+                                  displayImage = null; 
+                               }
+                            }
+
+                            if (displayImage != null) {
+                               return CircleAvatar(
+                                radius: 25,
+                                backgroundImage: FileImage(displayImage),
+                                onBackgroundImageError: (_, __) {},
+                                child: isVideo ? const Icon(Icons.play_circle_fill, color: Colors.white54) : null,
+                              );
+                            } else {
+                              // Video without thumbnail or invalid path
+                              return CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.black12,
+                                child: Icon(isVideo ? Icons.videocam : Icons.broken_image, color: Colors.black54),
+                              );
+                            }
+                        })()
                         : const CircleAvatar(
                             radius: 25,
                             backgroundColor: Colors.black12,
@@ -132,10 +161,7 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                     ),
                     trailing: IconButton(
                        icon: const Icon(Icons.delete, color: Colors.redAccent),
-                       onPressed: () {
-                         _historyBox.remove(pet.id);
-                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_entry_deleted)));
-                       }, 
+                       onPressed: () => _confirmDelete(context, pet.id), 
                     ),
                    onTap: () {
                        // Extract Breed from rawJson (Logic restoration from main flow)
@@ -168,22 +194,48 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                            }
                        }
 
-                       Navigator.of(context).push(
-                         MaterialPageRoute(
-                           builder: (_) => PetAnalysisResultView(
-                             imagePath: pet.imagePath,
-                             analysisResult: pet.rawJson,
-                             petDetails: {
-                                 PetConstants.fieldName: pet.petName, // Correct Key: pet_name
-                                 PetConstants.fieldBreed: breed,      // Pass Extracted Breed
-                             },
-                             onRetake: () => Navigator.of(context).pop(), 
-                             onShare: () {
-                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_share_not_implemented)));
-                             },
-                           ),
-                         ),
-                       );
+                       final ext = pet.imagePath.split('.').last.toLowerCase();
+                       final isVideo = PetConstants.videoExtensions.contains(ext);
+
+                       if (isVideo) {
+                           // Use UniversalResultView for Video Playback
+                           Navigator.of(context).push(
+                             MaterialPageRoute(
+                               builder: (_) => UniversalResultView(
+                                 filePath: pet.imagePath,
+                                 analysisResult: pet.rawJson,
+                                 petDetails: {
+                                    PetConstants.fieldName: pet.petName,
+                                    PetConstants.fieldBreed: breed,
+                                    PetConstants.keyIsFriend: 'false', // History assumes own pets? Or check category
+                                    PetConstants.keyTutorName: '',
+                                 },
+                                 onRetake: () => Navigator.of(context).pop(), 
+                                 onShare: () {
+                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_share_not_implemented)));
+                                 },
+                               ),
+                             ),
+                           );
+                       } else {
+                           // Use Standard Result View for Images
+                           Navigator.of(context).push(
+                             MaterialPageRoute(
+                               builder: (_) => PetAnalysisResultView(
+                                 imagePath: pet.imagePath,
+                                 analysisResult: pet.rawJson,
+                                 petDetails: {
+                                     PetConstants.fieldName: pet.petName, 
+                                     PetConstants.fieldBreed: breed,      
+                                 },
+                                 onRetake: () => Navigator.of(context).pop(), 
+                                 onShare: () {
+                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_share_not_implemented)));
+                                 },
+                               ),
+                             ),
+                           );
+                       }
                     },
                   ),
                 );
@@ -193,6 +245,34 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
         },
       ),
 
+    );
+  }
+
+
+  Future<void> _confirmDelete(BuildContext context, int id) async {
+    final l10n = AppLocalizations.of(context)!;
+    return showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.pet_delete_title),
+        content: Text(l10n.pet_msg_confirm_delete_entry),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(l10n.common_cancel),
+          ),
+          TextButton(
+            onPressed: () {
+              _historyBox.remove(id);
+              Navigator.of(ctx).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(l10n.pet_entry_deleted)),
+              );
+            },
+            child: Text(l10n.common_delete, style: const TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
     );
   }
 }

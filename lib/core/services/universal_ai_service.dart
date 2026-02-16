@@ -28,7 +28,7 @@ class UniversalAiService {
       // Sincroniza configuração com o servidor de controle
       await _syncConfigFromServer();
       
-      final targetModel = _activeModelName ?? 'gemini-2.5-pro';
+      final targetModel = _activeModelName ?? 'gemini-1.5-flash'; // Reverted to Flash (fast & default)
 
       // Log de rastreio para o fluxo de análise
       debugPrint('[AI_FLOW_TRACE] Expertise: $expertise | Language: $languageCode');
@@ -52,7 +52,9 @@ class UniversalAiService {
       String mediaTypeTask = 'IMAGE. Observe clinical signs, lesions, or physical characteristics.';
 
       if (['.mp4', '.mov', '.avi', '.wmv'].contains(extension)) {
-        mimeType = (extension == '.mov') ? 'video/quicktime' : 'video/mp4';
+        if (extension == '.mov') mimeType = 'video/quicktime';
+        else if (extension == '.avi') mimeType = 'video/x-msvideo';
+        else mimeType = 'video/mp4';
         
         // [SMART DETECT]
         if (context.contains('Behavior') || context.contains('Comportamento')) {
@@ -64,7 +66,8 @@ class UniversalAiService {
         }
       } else if (['.mp3', '.wav', '.m4a', '.aac', '.ogg'].contains(extension)) {
         if (extension == '.wav') mimeType = 'audio/wav';
-        else if (extension == '.m4a') mimeType = 'audio/mp4';
+        else if (extension == '.m4a') mimeType = 'audio/mp4'; // m4a is audio/mp4 often accepted
+        else if (extension == '.ogg') mimeType = 'audio/ogg';
         else mimeType = 'audio/mpeg';
         mediaTypeTask = 'AUDIO/VOCALIZATION. Listen carefully to coughs, breathing patterns, barks, or meows. Identify frequency and clinical respiratory sounds.';
       }
@@ -98,6 +101,19 @@ class UniversalAiService {
       ''';
 
       final fileBytes = await file.readAsBytes();
+      final fileSizeMb = fileBytes.lengthInBytes / (1024 * 1024);
+
+      debugPrint('[AI_DEBUG] ----------------------------------------------------------------');
+      debugPrint('[AI_DEBUG] Analyzing File: ${file.path}');
+      debugPrint('[AI_DEBUG] Size: ${fileSizeMb.toStringAsFixed(2)} MB');
+      debugPrint('[AI_DEBUG] MimeType sent to API: $mimeType');
+      debugPrint('[AI_DEBUG] Model Info: $_activeModelName (Target: $targetModel)');
+      debugPrint('[AI_DEBUG] ----------------------------------------------------------------');
+
+      if (fileSizeMb > 20.0) {
+         debugPrint('[AI_WARNING] File size > 20MB. API might reject inline data.');
+      }
+
       final content = [Content.multi([TextPart(systemPrompt), DataPart(mimeType, fileBytes)])];
 
       // Chamada com Log de Resposta Raw para Debug

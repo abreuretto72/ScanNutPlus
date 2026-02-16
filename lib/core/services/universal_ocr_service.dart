@@ -28,7 +28,7 @@ class UniversalOcrService {
       // 1. Sincroniza modelo com o servidor
       await _syncConfigFromServer();
 
-      final targetModel = _activeModelName ?? 'gemini-1.5-flash';
+      final targetModel = _activeModelName ?? 'gemini-2.5-pro';
       debugPrint('[UNIVERSAL_OCR_LOG] Active Model: $targetModel');
       
       // 2. Inicializa o motor Gemini 2.5 Pro (Temperature 0.0 para precisão total)
@@ -44,37 +44,93 @@ class UniversalOcrService {
         _lastUsedModel = targetModel;
       }
 
-      // 3. PROMPT DE OCR INTERNACIONALIZADO
-      final String systemPrompt = '''
-        ROLE: You are an expert in Veterinary Medical Document Digitization and Analysis ($expertise).
-        TASK: Extract all technical data from the image with 100% fidelity.
+      // 3. PROMPT DE OCR INTERNACIONALIZADO (PROTOCOLO MASTER 2026)
+      // 3. PROMPT DE OCR INTERNACIONALIZADO (PROTOCOLO MASTER 2026)
+      String systemPrompt;
 
-        STRICT EXTRACTION RULES:
-        1. DATA FIDELITY: Transcribe values, units (mg/dL, UI/L), and notes exactly as printed.
-        2. REFERENCE VALUES: For each parameter, extract the 'Measured Value' and the 'Reference Range' (Min/Max).
-        3. SCIENTIFIC TRUTH: Do not invent data. If a value is unreadable, mark it as "UNREADABLE".
-        
-        STRUCTURE:
-        PART 1: VISUAL SUMMARY (Mandatory for User UI)
-        - Generate exactly 3 to 5 interpretive cards using these markers:
-          [CARD_START]
-          TITLE: (Exam Name/Category, e.g., "Hemograma")
-          ICON: (Related Emoji)
-          CONTENT: (Brief summary of key findings, e.g., "Hemácias normal, Leucócitos elevados.")
-          [CARD_END]
+      if (expertise.contains('Botanist')) {
+         // --- MODO BOTÂNICO (PLANTS) ---
+         systemPrompt = '''
+          PROTOCOLO MASTER SCANNUT - MODO BOTÂNICO 2026
+          OBJETIVO: Identificação de espécie e diagnóstico de saúde vegetal via imagem.
+          EXPERTISE: $expertise
 
-        PART 2: RAW DATA (For Database)
-        - Format the technical data in a clean JSON object.
-        
-        [SOURCES]
-        (Cite scientific sources that validate these reference ranges, e.g., Merck Manual).
+          DIRETRIZES DE ANÁLISE:
+          1. IDENTIFICAÇÃO: Nome científico, nome popular e família botânica.
+          2. SAÚDE: Analisar manchas, bordas secas ou pragas (Cochonilha, Ácaro, Fungos).
+          3. TOXICIDADE: Verificar obrigatoriamente se a planta é tóxica para PETS (Cães/Gatos) ou CRIANÇAS.
+          4. MANUTENÇÃO: Necessidade de luz (Sol/Sombra), frequência de rega e tipo de solo.
 
-        IMPORTANT:
-        - Your entire response and JSON keys must be generated in: $languageCode.
-        - No Markdown code blocks. No 'ICON:' or 'CONTENT:' tags inside the CONTENT block.
+          SAÍDA OBRIGATÓRIA:
+          
+          PART 1: MOBILE CARDS (UI OPTIMIZED)
+          - Generate exactly 3 to 6 interpretive cards using these markers:
+            [CARD_START]
+            TITLE: [Name in $languageCode]
+            ICON: [Emoji or 'local_florist'/'warning']
+            CONTENT: [Summary using 🟢 (Seguro/Saudável) or 🔴 (Tóxico/Doente). Keep it direct.]
+            [CARD_END]
 
-        FINAL COMMAND: Output strictly in $languageCode.
-      ''';
+          PART 2: RAW DATA
+          - Format the technical data in a clean JSON object.
+
+          [SOURCES]
+          - MANDATORY: Generate a list of sources using exactly this structure:
+            1. "Base Botânica ScanNut": Cruzamento com catálogo técnico.
+            2. "Análise Visual": Diagnóstico morfologico.
+          - Format: Use bullet points.
+          
+          IMPORTANT STRUCTURE RULES:
+          - DO NOT TRANSLATE THE KEYS: 'TITLE', 'ICON', 'CONTENT'. 
+          - KEEP THEM EXACTLY AS SHOWN IN ENGLISH.
+          - ONLY TRANSLATE THE VALUES.
+          - No Markdown code blocks explicitly around the cards (just text).
+          
+          FINAL COMMAND: Output strictly in $languageCode.
+        ''';
+      } else {
+         // --- MODO PADRÃO (LABELS / EXAMS) ---
+         systemPrompt = '''
+          PROTOCOLO MASTER SCANNUT - MODO MULTIMODAL 2026
+          OBJETIVO: Extração técnica de dados de Rótulos de Nutrição ou Exames Laboratoriais.
+          EXPERTISE: $expertise
+
+          DIRETRIZES DE EXTRAÇÃO (RULES):
+          1. SE RÓTULO (LABEL): Extrair Proteína, Gordura, Cálcio, Fósforo, Kcal/kg e Tabela de Consumo (g/dia).
+          2. SE EXAME (LAB): Extrair Analito, Valor Encontrado, Unidade de Medida e Valor de Referência.
+          3. IDENTIFICAÇÃO: Localizar nome do fabricante/marca ou nome do paciente/laboratório.
+          4. ALERTAS: Destacar componentes fora do padrão (ex: excesso de fósforo em ração ou valores alterados em exames).
+          5. SCIENTIFIC TRUTH: Do not invent data. If a value is unreadable, mark it as "UNREADABLE".
+
+          STRUCTURE (MANDATORY OUTPUT):
+          
+          PART 1: MOBILE CARDS (UI OPTIMIZED)
+          - Generate exactly 3 to 6 interpretive cards using these markers:
+            [CARD_START]
+            TITLE: [Name in $languageCode]
+            ICON: [Emoji or 'biotech'/'description']
+            CONTENT: [Summary using 🟢 for normal/success and 🔴 for alerts/errors. Keep it direct.]
+            [CARD_END]
+
+          PART 2: RAW DATA
+          - Format the technical data in a clean JSON object.
+
+          [SOURCES]
+          - MANDATORY: Generate a list of sources using exactly this structure:
+            1. "Dados Primários (Rótulo/Laudo)": Leitura direta dos níveis de garantia/analitos.
+            2. "Base de Dados ScanNut": Cruzamento com catálogo técnico e literatura veterinária.
+            3. "Regulação Internacional": Conformidade com diretrizes da FEDIAF e AAFCO.
+          - Format: Use bullet points.
+          
+          IMPORTANT STRUCTURE RULES:
+          - DO NOT TRANSLATE THE KEYS: 'TITLE', 'ICON', 'CONTENT'. 
+          - KEEP THEM EXACTLY AS SHOWN IN ENGLISH.
+          - ONLY TRANSLATE THE VALUES.
+          - No Markdown code blocks explicitly around the cards (just text).
+          
+          FINAL COMMAND: Output strictly in $languageCode.
+        ''';
+      }
 
       final imageBytes = await documentImage.readAsBytes();
       final content = [
@@ -85,7 +141,33 @@ class UniversalOcrService {
       ];
 
       final response = await _model!.generateContent(content);
-      return _sanitizeOutput(response.text ?? "{}");
+      
+      // [FIX SDK ERROR]: Safely extract text avoiding 'Unhandled format' exception
+      String extractedText;
+      try {
+        if (response.candidates.isNotEmpty && 
+            response.candidates.first.content.parts.isNotEmpty) {
+           final part = response.candidates.first.content.parts.first;
+           if (part is TextPart) {
+              extractedText = part.text;
+           } else {
+              extractedText = response.text ?? ""; 
+           }
+        } else {
+           extractedText = response.text ?? "";
+        }
+      } catch (e) {
+         debugPrint('[UNIVERSAL_OCR_WARN] SDK .text access failed: $e. Using fallback.');
+         // Fallback: Dump candidates to see what's happening
+         extractedText = response.candidates.map((c) => c.content.parts.map((p) => p is TextPart ? p.text : '').join()).join('\n');
+      }
+
+      if (extractedText.isEmpty) {
+         debugPrint('[UNIVERSAL_OCR_ERROR] Empty response from Gemini.');
+         return "{}";
+      }
+
+      return _sanitizeOutput(extractedText);
 
     } catch (e) {
       debugPrint('[UNIVERSAL_OCR_ERROR]: $e');
@@ -98,6 +180,8 @@ class UniversalOcrService {
     return text
         .replaceAll('```json', '')
         .replaceAll('```', '')
+        .replaceAll(RegExp(r'(?:ICON|ÍCONE|ICONE|Ícone|Icone):'), '')
+        .replaceAll(RegExp(r'(?:CONTENT|CONTEÚDO|CONTEUDO|Conteúdo|Conteudo):'), '')
         .trim();
   }
 

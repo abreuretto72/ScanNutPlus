@@ -278,7 +278,7 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                                     if (keywords.isEmpty) return const SizedBox.shrink();
 
                                     return Text(
-                                      l10n.pet_agenda_summary_format(keywords),
+                                      keywords,
                                       style: TextStyle(
                                         fontSize: 12, 
                                         color: Colors.orange[800], 
