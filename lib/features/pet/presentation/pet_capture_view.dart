@@ -130,9 +130,28 @@ class _PetCaptureViewState extends State<PetCaptureView> {
     try {
       XFile? media;
       
-      // ... (Existing implementation for picking media)
-      // [BEHAVIOR LOGIC - HYBRID]
-      if (_forcedType == PetImageType.behavior) {
+      // [VOCAL LOGIC - AUDIO/VIDEO SPECIAL CASE]
+      if (_forcedType == PetImageType.vocal) {
+         if (source == ImageSource.camera) {
+           media = await _picker.pickVideo(source: source, maxDuration: const Duration(seconds: 15));
+         } else {
+             List<String> extensions = [...PetConstants.audioExtensions, ...PetConstants.videoExtensions];
+             FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: extensions);
+             if (result != null && result.files.single.path != null) media = XFile(result.files.single.path!);
+         }
+      } 
+      // [STRICT IMAGE ONLY LOGIC - LAB & LABEL (OCR)]
+      else if (_forcedType == PetImageType.lab || _forcedType == PetImageType.label) {
+          if (source == ImageSource.camera) {
+              media = await _picker.pickImage(source: source);
+          } else {
+              // Standard Image Picker for Gallery (System Default)
+              media = await _picker.pickImage(source: source);
+          }
+      }
+      // [HYBRID LOGIC - ALL OTHER TYPES (BEHAVIOR, POSTURE, GENERAL, ETC.)]
+      // Allows both Video and Image
+      else {
           if (source == ImageSource.camera) {
               if (isVideo) {
                  media = await _picker.pickVideo(source: source, maxDuration: const Duration(seconds: 15));
@@ -146,20 +165,6 @@ class _PetCaptureViewState extends State<PetCaptureView> {
               );
               if (result != null && result.files.single.path != null) media = XFile(result.files.single.path!);
           }
-      } 
-      // [VOCAL LOGIC - AUDIO/VIDEO]
-      else if (_forcedType == PetImageType.vocal) {
-         if (source == ImageSource.camera) {
-           media = await _picker.pickVideo(source: source, maxDuration: const Duration(seconds: 15));
-         } else {
-             List<String> extensions = [...PetConstants.audioExtensions, ...PetConstants.videoExtensions];
-             FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: extensions);
-             if (result != null && result.files.single.path != null) media = XFile(result.files.single.path!);
-         }
-      } 
-      // [STANDARD LOGIC - PHOTO ONLY]
-      else {
-         media = await _picker.pickImage(source: source);
       }
 
       if (media != null) {
@@ -246,16 +251,16 @@ class _PetCaptureViewState extends State<PetCaptureView> {
         // [UNIVERSAL OCR SWITCH - 2026]
         // Dedicated Engine for Documents (Lab Exams, Prescriptions, Food Labels)
         // [UNIVERSAL OCR SWITCH - 2026]
-        // Dedicated Engine for Documents (Lab Exams, Prescriptions, Food Labels) AND PLANT MODE (Botanical)
-        if (type == PetImageType.lab || type == PetImageType.label || type == PetImageType.plantCheck) {
-             debugPrint('[UNIVERSAL_OCR_TRACE] Step 1: Document/Label/Plant Detected. Selecting OCR Engine.');
+        // Dedicated Engine for Documents (Lab Exams, Prescriptions, Food Labels)
+        // REMOVED: Plant Mode from OCR (Moved to Universal AI for Visual Analysis)
+        if (type == PetImageType.lab || type == PetImageType.label) {
+             debugPrint('[UNIVERSAL_OCR_TRACE] Step 1: Document/Label Detected. Selecting OCR Engine.');
              
              final ocrService = UniversalOcrService();
              String expertise = '';
              
              if (type == PetImageType.label) expertise = 'Veterinary Nutritionist';
              else if (type == PetImageType.lab) expertise = 'Veterinary Clinical Pathologist';
-             else if (type == PetImageType.plantCheck) expertise = 'Veterinary Toxicologist & Botanist';
 
              debugPrint('[UNIVERSAL_OCR_TRACE] Step 2: Calling UniversalOcrService with expertise: $expertise');
              
@@ -285,9 +290,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                   sources: extractedSources,
                   imagePath: _imagePath!,
                   breed: breedToUse,
-                  analysisType: type == PetImageType.label 
-                      ? PetConstants.typeLabel 
-                      : (type == PetImageType.plantCheck ? PetConstants.valPlantCheck : PetConstants.typeLab),
+                  analysisType: type == PetImageType.label ? PetConstants.typeLabel : PetConstants.typeLab,
                   tutorName: _tutorName,
                 );
                 debugPrint('[UNIVERSAL_OCR_TRACE] Step 3.1: Analysis saved to History.');
@@ -316,7 +319,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
 
         // [UNIVERSAL AI SWITCH - 2026]
         // Updated to include Dentist, Dermatology, Gastro, Ophthalmology, Otology, Posture & Vocal Modules
-        if (type == PetImageType.newProfile || _isAddingNewPet || type == PetImageType.mouth || type == PetImageType.skin || type == PetImageType.stool || type == PetImageType.eyes || type == PetImageType.ears || type == PetImageType.posture || type == PetImageType.vocal || type == PetImageType.foodBowl || type == PetImageType.behavior || type == PetImageType.general) {
+        if (type == PetImageType.newProfile || _isAddingNewPet || type == PetImageType.mouth || type == PetImageType.skin || type == PetImageType.stool || type == PetImageType.eyes || type == PetImageType.ears || type == PetImageType.posture || type == PetImageType.vocal || type == PetImageType.foodBowl || type == PetImageType.behavior || type == PetImageType.general || type == PetImageType.plantCheck) {
             String expertise = 'Veterinary Generalist & Geneticist';
             String aiContext = 'Visual Breed & Health Analysis: 1. BREED & GENETICS: Identify breed/mix and potential genetic predispositions (e.g. hip dysplasia, heart issues). 2. STRUCTURE: Evaluate posture and body condition score (nutritional impact). 3. ENERGY/METABOLISM: Assess energy level needs based on breed (e.g. Border Collie vs Pug). 4. BEHAVIOR: Observe posture/expression for signs of anxiety or pain.';
             
@@ -357,8 +360,56 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                 debugPrint('[BEHAVIOR_FLOW_TRACE] Context Injected (Enriched): $aiContext');
             } else if (type == PetImageType.plantCheck) {
                 expertise = 'Veterinary Toxicologist & Botanist';
-                aiContext = 'Plant Analysis. Strict Output Format: Card 1 TITLE must be the **Common Non-Scientific Name** of the plant. Card 1 ICON must be "warning" if Toxic, or "check_circle" if Safe.';
-                debugPrint('[PLANT_FLOW_TRACE] Context Injected: $aiContext');
+                aiContext = '''
+Act as a Specialist in Botany, Phytopathology, and Agronomic Engineering.
+Task: Perform an exhaustive visual inspection of the plant and provide the data below structured for the ScanNut+ Card System using the STANDARD [CARD_START] FORMAT.
+
+1. Technical Identification: Scientific name (genus/species), common names, family, origin.
+2. Biological Safety (Pet Focus): Toxicity Level (0-4), Toxic Principles, Clinical Signs.
+3. Soil & Substrate: Texture, pH, Drainage.
+4. Precision Nutrition: Lighting (Lux/PAR), NPK Schedule, Watering.
+5. Visual Diagnosis: Pathogens, Pests, Deficiencies.
+6. Action Plan: Recovery or Safe Positioning.
+
+REQUIRED OUTPUT STRUCTURE (Strictly follow [CARD_START] ... [CARD_END]):
+
+[CARD_START]
+TITLE: [Scientific Name]
+ICON: [If Toxic: "warning" | If Safe: "check_circle"]
+CONTENT: [Common Names] | Family: [Family] | Origin: [Origin] | [Toxic/Safe Status Summary]
+[CARD_END]
+
+[CARD_START]
+TITLE: Safety & Toxicity
+ICON: health_and_safety
+CONTENT: Level: [0-4] | Active Principles: [List] | Clinical Signs: [Symptoms] | First Aid: [Measures]
+[CARD_END]
+
+[CARD_START]
+TITLE: Soil & Care
+ICON: eco
+CONTENT: Soil: [Texture/pH] | Light: [Lux/PAR] | Water: [Method] | NPK: [Schedule]
+[CARD_END]
+
+[CARD_START]
+TITLE: Plant Health Diagnosis
+ICON: local_florist
+CONTENT: Pathogens: [Fungi/Bacteria] | Pests: [Mites/Insects] | Nutrition: [Chlorosis/Necrosis]
+[CARD_END]
+
+[CARD_START]
+TITLE: Action Plan
+ICON: info
+CONTENT: [Step-by-step recovery guide or positioning suggestion]
+[CARD_END]
+
+REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa, USDA) used for this analysis in the following format:
+[SOURCES]
+- Short Citation 1
+- Short Citation 2
+- Short Citation 3
+''';
+                debugPrint('[PLANT_FLOW_TRACE] Context Injected: Deep Botanical Protocol (Standard Format)');
             } else if (type == PetImageType.foodBowl) {
                 expertise = 'Veterinary Nutritionist';
                 aiContext = 'Visual Food Analysis (Kibble/Homemade). Analyze quality, texture, color, and ingredients. Estimate nutritional balance. Look for foreign objects or mold. Ignore label text, focus on food appearance.';
@@ -489,6 +540,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                     PetConstants.fieldBreed: finalBreed,
                     PetConstants.keyIsFriend: _isFriend.toString(),
                     PetConstants.keyTutorName: _tutorName ?? '',
+                    PetConstants.keyPageTitle: _getAnalysisTitle(type, AppLocalizations.of(context)!),
                   },
                 ),
               ),
@@ -502,7 +554,15 @@ class _PetCaptureViewState extends State<PetCaptureView> {
              PetConstants.argType: type,
              PetConstants.argImagePath: _imagePath!,
              PetConstants.argResult: cleanResult,
+             PetConstants.argResult: cleanResult,
              PetConstants.argBreed: finalBreed, // Explicitly passing breed to Result View
+             PetConstants.argPetDetails: {
+                PetConstants.fieldName: foundName.isNotEmpty ? foundName : nameToUse,
+                PetConstants.fieldBreed: finalBreed,
+                PetConstants.keyIsFriend: _isFriend.toString(),
+                PetConstants.keyTutorName: _tutorName ?? '',
+                PetConstants.keyPageTitle: _getAnalysisTitle(type, AppLocalizations.of(context)!),
+             }
            },
         ).then((_) {
            // [STATE RESET] Force reset to 'Existing Pet' mode after return
@@ -571,7 +631,9 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                     PetConstants.fieldName: name,
                     PetConstants.fieldBreed: PetConstants.valueUnknown,
                     PetConstants.keyIsFriend: _isFriend.toString(),
+                    PetConstants.keyIsFriend: _isFriend.toString(),
                     PetConstants.keyTutorName: _tutorName ?? '',
+                    PetConstants.keyPageTitle: _getAnalysisTitle(type, AppLocalizations.of(context)!),
                  }
               }
             );
@@ -821,8 +883,8 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                       
                       const SizedBox(height: 24),
 
-                      // 2. VIDEO BUTTON (Camera) - BEHAVIOR & VOCAL
-                      if (_forcedType == PetImageType.behavior || _forcedType == PetImageType.vocal) ...[
+                      // 2. VIDEO BUTTON (Camera) - UNIVERSAL SUPPORT (EXCEPT LAB/LABEL)
+                      if (_forcedType != PetImageType.lab && _forcedType != PetImageType.label) ...[
                          _buildCaptureButton(
                            context,
                            icon: Icons.videocam,
@@ -1087,6 +1149,37 @@ class _PetCaptureViewState extends State<PetCaptureView> {
         ),
       ),
     );
+  }
+
+  String _getAnalysisTitle(PetImageType type, AppLocalizations l10n) {
+    switch (type) {
+      case PetImageType.mouth:
+        return l10n.pet_module_dentistry;
+      case PetImageType.skin:
+        return l10n.pet_module_dermatology;
+      case PetImageType.stool:
+        return l10n.pet_module_gastro;
+      case PetImageType.eyes:
+        return l10n.pet_module_ophthalmology;
+      case PetImageType.ears:
+        return l10n.pet_module_ears;
+      case PetImageType.posture:
+        return l10n.pet_module_physique;
+      case PetImageType.vocal:
+        return l10n.pet_module_vocal;
+      case PetImageType.behavior:
+        return l10n.pet_module_behavior;
+      case PetImageType.plantCheck:
+        return l10n.pet_module_plant;
+      case PetImageType.foodBowl:
+        return l10n.pet_module_food_bowl;
+      case PetImageType.lab:
+        return l10n.pet_module_lab;
+      case PetImageType.label:
+        return l10n.pet_module_nutrition;
+      default:
+        return l10n.pet_analysis_title(_existingName ?? l10n.pet_label_pet);
+    }
   }
 
   Widget _buildSpeciesChip(

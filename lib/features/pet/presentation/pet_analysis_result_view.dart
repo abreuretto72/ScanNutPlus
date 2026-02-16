@@ -6,6 +6,7 @@ import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart'; // Import PDF Preview
 
 class PetAnalysisResultView extends StatelessWidget {
   final String imagePath;
@@ -83,6 +84,29 @@ class PetAnalysisResultView extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf, color: AppColors.petPrimary), // Pink Icon
+            tooltip: 'Gerar PDF',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UniversalPdfPreviewScreen(
+                    filePath: imagePath,
+                    analysisResult: analysisResult,
+                    petDetails: {
+                       PetConstants.fieldName: displayPetName,
+                       PetConstants.fieldBreed: displayBreed,
+                       PetConstants.keyTutorName: tutorName,
+                       PetConstants.keyPageTitle: petDetails?[PetConstants.keyPageTitle] ?? titleText, // Use calculated title fallback
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView( // Ergonomia SM A256E
         physics: const BouncingScrollPhysics(), // Scroll Elastico (Samsung OneUI feel)
@@ -112,6 +136,23 @@ class PetAnalysisResultView extends StatelessWidget {
                 ],
               ),
             ),
+
+            // [ANALYSIS TYPE LABEL] (Protocol 2026)
+            if (petDetails?[PetConstants.keyPageTitle] != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 12, bottom: 4),
+                child: Center(
+                  child: Text(
+                    petDetails![PetConstants.keyPageTitle]!.toUpperCase(),
+                    style: const TextStyle(
+                      color: AppColors.petPrimary, // ScanNut Pink
+                      fontSize: 14, 
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ),
+              ),
             
             // IDENTITY BADGE (Protocol 2026 - Layout Fix)
             // Moved below image to prevent overflow and allow multi-line breed text

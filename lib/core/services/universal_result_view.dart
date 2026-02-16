@@ -6,6 +6,8 @@ import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:video_player/video_player.dart'; // Necessário para o preview de vídeo
 import 'package:path/path.dart' as p;
+import 'package:scannutplus/core/services/universal_pdf_service.dart';
+import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 
 class UniversalResultView extends StatefulWidget {
   final String filePath; // Pode ser imagem ou vídeo
@@ -108,6 +110,29 @@ class _UniversalResultViewState extends State<UniversalResultView> {
         elevation: 0,
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf, color: AppColors.petPrimary),
+            tooltip: 'Gerar PDF',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UniversalPdfPreviewScreen(
+                    filePath: widget.filePath,
+                    analysisResult: widget.analysisResult,
+                    petDetails: {
+                       PetConstants.fieldName: displayPetName,
+                       PetConstants.fieldBreed: displayBreed,
+                       PetConstants.keyTutorName: tutorName,
+                       PetConstants.keyPageTitle: widget.petDetails?[PetConstants.keyPageTitle] ?? displayTitle, // Use calculated title fallback
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -117,6 +142,23 @@ class _UniversalResultViewState extends State<UniversalResultView> {
           children: [
             // Header: Imagem ou Vídeo
             _buildMediaHeader(),
+            
+            // [ANALYSIS TYPE LABEL]
+            if (widget.petDetails?[PetConstants.keyPageTitle] != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 12, bottom: 4),
+                child: Center(
+                  child: Text(
+                    widget.petDetails![PetConstants.keyPageTitle]!.toUpperCase(),
+                    style: const TextStyle(
+                      color: AppColors.petPrimary, // ScanNut Pink
+                      fontSize: 14, 
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ),
+              ),
             
             // Badge de Identidade (Rosa Pastel + Texto Preto)
             Padding(

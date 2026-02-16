@@ -27,3 +27,5 @@ git tag -a v1.1.4 -m "Analysis Dropdown Refined (A-Z) & Plant Analysis (Botanica
 git push origin v1.1.4
 git tag -a v1.1.5 -m "Video Analysis Engine (Thumbnails, Controls & AI Depth), History Fixes & Performance Guardrails"
 git push origin v1.1.5
+git tag -a v1.1.6 -m "Dynamic PDF Titles, Analysis Labels (Result Screen), Existing Pet PDF Fix & Video/Plant Enhancements"
+git push origin v1.1.6

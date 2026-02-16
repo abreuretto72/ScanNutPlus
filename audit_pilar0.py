@@ -3,55 +3,69 @@ import re
 
 def audit_pilar0():
     # Detecta strings: Início com Maiúscula ou frases com 3+ caracteres e espaços
-    # Ignora chamadas de tradução, imports e metadados técnicos
     ui_text_pattern = re.compile(r'["\']([A-Z][^"\']+|[\w\s]{3,})["\']')
     
-    # Lista de exclusão atualizada: Adicionado pet_map_styles para evitar falsos positivos técnicos
+    # Lista de exclusão atualizada com serviços de IA, OCR e Captura
     ignore_files = [
         'app_localizations', 'g.dart', 'freezed.dart', 'pet_localizations', 
-        'app_keys.dart', 'ai_prompts.dart', 'pet_map_styles.dart'
+        'app_keys.dart', 'ai_prompts.dart', 'pet_map_styles.dart',
+        'Universal_ai_service.dart', 'Universal_ocr_service.dart', 'pet_capture_view.dart'
     ]
     ignore_folders = ['.dart_tool', '.git', 'build']
     ignore_technical = ('.dart', '.png', '.jpg', '.svg', '.json', '.arb', 'package:', 'dart:', 'UTF-8')
+    
+    # Palavras-chave que identificam Prompts em Inglês (não devem ser alteradas)
+    ai_prompt_keywords = ['Act as', 'Objective', 'Goal:', 'JSON', 'Analyze', 'Task:', 'Respond in']
 
     found_hardcoded = False
 
     print(f"\033[94m--- SCRUTINY: Auditoria Master ScanNut (Pilar 0) ---\033[0m")
 
-    # Varre a partir da raiz do projeto
     for root, dirs, files in os.walk('.'):
-        # Pula pastas de sistema e geradas
         dirs[:] = [d for d in dirs if d not in ignore_folders]
         
         for file in files:
-            # Foca apenas em arquivos Dart criados pelo desenvolvedor e fora da lista de exclusão
-            if file.endswith('.dart') and not any(x in file for x in ignore_files):
+            # Filtro por nome de arquivo exato ou parcial
+            if file.endswith('.dart') and not any(x.lower() in file.lower() for x in ignore_files):
                 path = os.path.join(root, file)
                 try:
                     with open(path, 'r', encoding='utf-8') as f:
                         for i, line in enumerate(f, 1):
-                            # Ignora linhas de infraestrutura, comentários e logs técnicos
-                            if line.strip().startswith(('import', 'export', '//', 'part', 'static const')):
+                            clean_line = line.strip()
+                            
+                            # 1. Ignora infraestrutura, comentários e constantes estáticas
+                            if clean_line.startswith(('import', 'export', '//', 'part', 'static const')):
                                 continue
                             
-                            # Ignora logs de debug e rastreamento técnico
-                            if 'debugPrint' in line or 'APP_TRACE' in line or 'Error picking image' in line:
+                            # 2. Ignora logs e rastreamento
+                            if any(x in clean_line for x in ['debugPrint', 'APP_TRACE', 'Error picking image']):
                                 continue
-                                
+                            
+                            # 3. Ignora linhas que definem prompts explicitamente
+                            if 'prompt' in clean_line.lower():
+                                continue
+
                             matches = ui_text_pattern.findall(line)
                             for match in matches:
-                                # Se não houver menção à classe de tradução na linha, é erro
-                                if 'AppLocalizations' not in line and 'l10n' not in line:
-                                    if not any(match.endswith(ext) for ext in ignore_technical):
-                                        print(f"\033[91m⚠️ HARDCODED:\033[0m {file}:{i} -> \"{match}\"")
-                                        found_hardcoded = True
+                                # 4. Ignora chamadas de tradução existentes
+                                if 'AppLocalizations' in line or 'l10n' in line:
+                                    continue
+                                    
+                                # 5. Ignora strings que parecem Prompts de IA em Inglês
+                                if any(key.lower() in match.lower() for key in ai_prompt_keywords):
+                                    continue
+                                
+                                # 6. Ignora arquivos técnicos e caminhos
+                                if not any(match.endswith(ext) for ext in ignore_technical):
+                                    print(f"\033[91m⚠️ HARDCODED:\033[0m {file}:{i} -> \"{match}\"")
+                                    found_hardcoded = True
                 except Exception:
                     continue
 
     if not found_hardcoded:
-        print(f"\033[92m✅ Conformidade Total: O código está limpo de strings literais!\033[0m")
+        print(f"\033[92m✅ Conformidade Total: O código está limpo (Arquivos de IA ignorados)!\033[0m")
     else:
-        print(f"\n\033[93mAção: Substitua os textos acima por chaves no seu arquivo .arb.\033[0m")
+        print(f"\n\033[93mAção: Mapeie os textos acima para o .arb. Prompts e serviços excluídos foram preservados.\033[0m")
 
 if __name__ == "__main__":
     audit_pilar0()

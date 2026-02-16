@@ -46,6 +46,7 @@ class PetConstants {
   static const String keyIcon = 'icon';
   // --- CARD PARSING KEYS ---
   static const String keyCardTitle = 'title';
+  static const String keyPageTitle = 'page_title'; // Added for PDF Title Transport
   static const String keyCardIcon = 'icon';
   static const String keyCardContent = 'content';
   static const String valIconInfo = 'info';
