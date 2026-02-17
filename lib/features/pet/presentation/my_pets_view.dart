@@ -12,11 +12,16 @@ import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/p
 import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_profile_button.dart';
 import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_health_button.dart';
 import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_agenda_button.dart';
+import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_walk_button.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_agenda_screen.dart';
+import 'package:scannutplus/features/pet/agenda/presentation/pet_walk_events_screen.dart'; // Correct Import Placement
+import 'package:scannutplus/features/pet/agenda/presentation/pet_appointment_screen.dart'; // Added Appointment Screen
 
 import 'package:scannutplus/features/pet/presentation/pet_profile_view.dart';
-import 'package:scannutplus/features/pet/presentation/placeholder_health_view.dart';
+import 'package:scannutplus/features/pet/presentation/health/pet_health_screen.dart';
 import 'package:scannutplus/features/pet/presentation/pet_ai_chat_view.dart'; // Import AI View
+import 'package:scannutplus/features/pet/presentation/history/pet_history_screen.dart'; // Import History Screen
+import 'package:scannutplus/features/home/presentation/widgets/app_drawer.dart'; // Menu Drawer
 
 class MyPetsView extends StatefulWidget {
   const MyPetsView({super.key});
@@ -54,7 +59,16 @@ class _MyPetsViewState extends State<MyPetsView> {
 
     return Scaffold(
       backgroundColor: AppColors.petBackgroundDark,
+      // 1. ADD DRAWER (Menu Requirements)
+      drawer: const AppDrawer(),
       appBar: AppBar(
+        // 2. MENU ICON: Uses Builder to get Scaffod context
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.notes_rounded, color: Colors.white), // Menu Icon
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         title: Text(
           appL10n.pet_my_pets_title, 
           style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)
@@ -462,75 +476,107 @@ class _MyPetsViewState extends State<MyPetsView> {
               Divider(color: AppColors.petText.withValues(alpha: 0.2), height: 1),
               const SizedBox(height: 8),
 
-              // ACTION BUTTONS ROW
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                   // 1. Analyses (Implemented)
-                   PetAnalysisButton(
-                     label: appL10n.pet_action_analyses,
-                     onTap: () {
-                        Navigator.pushNamed(
-                          context, 
-                          '/pet_dashboard', 
-                          arguments: {
-                            PetConstants.argUuid: uuid,
-                            PetConstants.argName: name,
-                            PetConstants.argBreed: displayBreed, 
-                            PetConstants.argImagePath: imagePath,
-                          },
-                        ).then((_) => setState(() {})); 
-                     }
-                   ),
-                   
-                   // 2. Profile (Implemented)
-                   PetProfileButton(
-                     label: appL10n.pet_profile_title,
-                     onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PetProfileView(petUuid: uuid),
-                          ),
-                        ).then((_) => setState(() {}));
-                     },
-                   ),
+              // ACTION BUTTONS ROW (Refactored for 5 Actions - Fixed Width)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                     // 1. Analyses
+                     Expanded(
+                       child: PetAnalysisButton(
+                         label: appL10n.pet_action_analyses,
+                         onTap: () {
+                            // Navigate to History Screen instead of Dashboard
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PetHistoryScreen(
+                                  petUuid: uuid,
+                                  petName: name,
+                                  petBreed: displayBreed,
+                                  petImagePath: imagePath,
+                                ),
+                              ),
+                            ).then((_) => setState(() {})); 
+                         }
+                       ),
+                     ),
+                     
+                      // 2. Walk (Passeio)
+                      Expanded(
+                        child: PetWalkButton(
+                          label: appL10n.pet_action_walk, // "Passeio"
+                          onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                 builder: (context) => PetWalkEventsScreen( // Navigate to new screen
+                                   petId: uuid,
+                                   petName: name,
+                                 ),
+                               ),
+                             ).then((_) => setState(() {})); 
+                          }
+                        ),
+                      ),
 
-                   // 3. Health (Placeholder)
-                   PetHealthButton(
-                     label: appL10n.pet_action_health,
-                     onTap: () {
-                        if (kDebugMode) {
-                          debugPrint('${PetConstants.logNavHealthPlaceholder}$uuid (Placeholder)');
-                        }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PlaceholderHealthView(petName: name),
-                          ),
-                        ).then((_) => setState(() {}));
-                     }
-                   ),
-                   
-                   // 4. Agenda (Placeholder Action)
-                   PetAgendaButton(
-                     label: appL10n.pet_action_agenda,
-                     onTap: () {
-                        if (kDebugMode) {
-                          debugPrint('${PetConstants.logNavAgenda}$uuid');
-                        }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PetAgendaScreen(
-                              petId: uuid,
-                              petName: name,
-                            ),
-                          ),
-                        ).then((_) => setState(() {}));
-                     }
-                   ),
-                ],
+                      // 3. Agenda
+                      Expanded(
+                        child: PetAgendaButton(
+                          label: appL10n.pet_action_agenda,
+                          onTap: () {
+                             if (kDebugMode) {
+                               debugPrint('${PetConstants.logNavAgenda}$uuid');
+                             }
+                             // Unlock Future: Navigate to Agenda Screen (Tab 0: Scheduled)
+                             Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PetAgendaScreen(
+                                    petId: uuid, 
+                                    petName: name,
+                                  ),
+                                )
+                             ).then((_) => setState(() {}));
+                          }
+                        ),
+                      ),
+
+                     // 4. Health
+                     Expanded(
+                       child: PetHealthButton(
+                         label: appL10n.pet_action_health,
+                         onTap: () {
+                            if (kDebugMode) {
+                              debugPrint('${PetConstants.logNavHealthPlaceholder}$uuid (Active)');
+                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PetHealthScreen(petUuid: uuid, petName: name),
+                              ),
+                            ).then((_) => setState(() {}));
+                         }
+                       ),
+                     ),
+                     
+                     // 5. Profile
+                     Expanded(
+                       child: PetProfileButton(
+                         label: appL10n.pet_action_profile_short, // "Perfil"
+                         onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PetProfileView(petUuid: uuid),
+                              ),
+                            ).then((_) => setState(() {}));
+                         },
+                       ),
+                     ),
+                  ],
+                ),
               )
             ],
           ),

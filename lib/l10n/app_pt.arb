@@ -274,6 +274,11 @@
   "pet_hint_select_type": "Selecione",
   "pet_label_info": "Informação",
   "pet_type_profile": "Perfil",
+  "pet_action_analyses": "Análises",
+  "pet_action_profile_short": "Perfil",
+  "pet_action_health": "Saúde",
+  "pet_action_agenda": "Agenda",
+  "pet_action_walk": "Passeio",
   "pet_type_posture": "Postura",
   "pet_profile_title": "Perfil do Pet",
   "pet_management_title": "Gestão",
@@ -500,8 +505,20 @@
   "pet_agenda_title": "Agenda",
   "pet_agenda_title_dynamic": "Agenda: {petName}",
   "@pet_agenda_title_dynamic": {
+    "description": "Título da tela de agenda com nome do pet dinâmico",
     "placeholders": {
-      "petName": { "type": "Object" }
+        "petName": {
+            "type": "String"
+        }
+    }
+  },
+  "pet_walk_title_dynamic": "Passeio: {petName}",
+  "@pet_walk_title_dynamic": {
+    "description": "Título da tela de passeio com nome do pet dinâmico (Walk)",
+    "placeholders": {
+        "petName": {
+            "type": "String"
+        }
     }
   },
   "pet_agenda_empty": "Agenda vazia",
@@ -582,6 +599,8 @@
   "map_alert_success": "Sucesso!",
   "pet_journal_recording": "Gravando...",
   "pet_journal_photo_saved": "Foto salva!",
+  "pet_agenda_tab_scheduled": "Compromissos",
+  "pet_agenda_tab_timeline": "Histórico e Passeios",
   "map_alert_description_user": "Pelo usuário",
   "pet_journal_gps_error": "Erro GPS",
   "pet_journal_loading_gps": "GPS...",
@@ -732,5 +751,32 @@
   "pet_profile_title_simple": "Perfil",
   "pet_action_save_profile_simple": "Salvar",
   "funeral_save_success_simple": "Funeral salvo!",
-  "health_plan_saved_success_simple": "Saúde salvo!"
+  "health_plan_saved_success_simple": "Saúde salvo!",
+  "pdf_footer_text": "© 2026 ScanNut Multiverso Digital | contato@multiversodigital.com.br",
+  "pdf_page_label": "Página",
+  "pdf_of_label": "de",
+  "pet_agenda_dialog_title": "Agenda",
+  "pet_agenda_dialog_walk": "Passeio",
+  "pet_agenda_dialog_appointment": "Agendar",
+  "pet_appointment_screen_title": "Novo Compromisso",
+  "pet_appointment_label_professional": "Profissional/Local",
+  "pet_appointment_save_success": "Compromisso agendado!",
+  "pet_appointment_type_vaccine": "Vacina",
+  "pet_appointment_type_consultation": "Consulta",
+  "pet_appointment_type_grooming": "Banho e Tosa",
+  "pet_appointment_type_exam": "Exame",
+  "pet_scheduled_list_title": "Agendamentos",
+  "pet_scheduled_empty": "Nenhum compromisso futuro.",
+  "pet_notification_label": "Notificar com Antecedência",
+  "pet_notification_1h": "1 hora antes",
+  "pet_notification_2h": "2 horas antes",
+  "pet_notification_1d": "1 dia antes",
+  "pet_notification_2d": "2 dias antes",
+  "pet_notification_1w": "1 semana antes",
+  "pet_notification_none": "Sem notificação",
+  "pet_delete_confirmation_title": "Confirmar exclusão?",
+  "common_delete": "Excluir",
+  "pet_appointment_tab_data": "Compromisso",
+  "pet_appointment_tab_partner": "Dados do Parceiro",
+  "common_save": "Salvar"
 }

@@ -130,6 +130,41 @@ class UniversalAiService {
     }
   }
 
+  /// MÉTODO RAG: Análise Textual (Histórico/Contexto)
+  Future<String> analyzeText({
+    required String systemPrompt,
+    required String userPrompt,
+    String? modelName,
+  }) async {
+    try {
+      await _syncConfigFromServer();
+      final targetModel = modelName ?? _activeModelName ?? 'gemini-1.5-flash';
+
+      if (_model == null || targetModel != _lastInitializedModelName) {
+        _model = GenerativeModel(
+          model: targetModel,
+          apiKey: EnvService.geminiApiKey,
+          generationConfig: GenerationConfig(
+            temperature: 0.2, // Slightly higher for creative but grounded text
+            maxOutputTokens: 8192,
+          ),
+        );
+        _lastInitializedModelName = targetModel;
+      }
+
+      final content = [Content.multi([TextPart(systemPrompt), TextPart(userPrompt)])];
+
+      debugPrint('[AI_RAG_TRACE] Sending Text Request to $targetModel');
+      final response = await _model!.generateContent(content);
+      return _sanitizeOutput(response.text ?? "Error generating text report.");
+
+    } catch (e) {
+      debugPrint('[UNIVERSAL_AI_ERROR] RAG Failed: $e');
+      return "Technical error during text analysis: $e";
+    }
+  }
+
+
   String _sanitizeOutput(String text) {
     return text.replaceAll('```json', '').replaceAll('```', '').trim();
   }

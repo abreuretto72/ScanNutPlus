@@ -354,28 +354,7 @@ class _PetDashboardViewState extends State<PetDashboardView> {
             
             const SizedBox(height: 16),
             
-            // --- BOTÃO DE HISTÓRICO (Restaurado) ---
-            OutlinedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PetHistoryScreen(petUuid: uuid, petName: name)),
-                );
-                if (kDebugMode) {
-                  debugPrint('${PetConstants.logNavHistory}$uuid');
-                }
-              },
-              icon: const Icon(Icons.history, color: Colors.white70),
-              label: Text(
-                l10n.pet_history_button, 
-                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white70)
-              ),
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Colors.white24),
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              ),
-            ),
+
           ],
         ),
       ),

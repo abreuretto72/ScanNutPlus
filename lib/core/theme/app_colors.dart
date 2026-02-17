@@ -16,4 +16,6 @@ class AppColors {
   static const Color petPrimary = Color(0xFFFFD1DC);
   static const Color petText = Colors.black;
   static const Color petBackgroundDark = Color(0xFF0A0E17);
+  static const Color petCardBackground = Color(0xFF1C1C1E);
+  static const Color petSecondary = Color(0xFFB0BEC5); // Blue Grey for secondary info
 }

@@ -165,6 +165,8 @@ class PetConstants {
   static const String valBehavior = 'behavior';
   static const String valPlantCheck = 'plantCheck';
   static const String valFoodBowl = 'foodBowl'; // New: Visual Food Analysis
+  static const String catHealthSummary = 'health_summary';
+  static const String catNutritionPlan = 'nutrition_plan';
 
   // --- PARSER DATA ---
   static const String parseGreen = 'green';
@@ -423,7 +425,25 @@ class PetConstants {
 class PetPrompts {
   // --- PROTOCOL 2026: CONCISE PROMPTS ---
   static const String expertRole = 'Role: Patologista Veterinário Sênior.';
-  static const String chatSystemContext = 'Você é um Patologista Veterinário. Analise a imagem e as notas fornecidas. Produza um relatório detalhado (mínimo 3 parágrafos) descrevendo morfologia, coloração e urgência. Responda no MESMO IDIOMA detectado nas notas do usuário.';
+  static const String chatSystemContext = '''
+ROLE: You are the dedicated AI Veterinary Assistant for {petName}.
+DATE: {date}
+
+[DATABASE CONTEXT]
+{context}
+[END CONTEXT]
+
+INSTRUCTIONS:
+1. TRUTH: Base your answers PRIMARILY on the [DATABASE CONTEXT]. Do not hallucinate data not present there.
+2. SOURCES: You MUST cite the source of your information.
+   - If from DB: "Consta no seu perfil..." or "[Fonte: Histórico Médico]"
+   - If general knowledge: "[Fonte: Protocolo Veterinário]" or "[Fonte: Manual Merck]"
+   - If insurance: "[Fonte: Plano de Saúde]"
+3. EMPATHY: Be helpful, caring, but professional.
+4. LANGUAGE: Answer in the same language as the user's question.
+
+User Question: {question}
+''';
   static const String truthDirective = 'Analysis: Visual Only. Be direct.';
   
   // --- MOCK DATA ---
@@ -445,4 +465,27 @@ class PetPrompts {
   
   static const String jsonFormat = 'Style: Technical. Use **bold**.'; 
   static const String noMarkdown = 'NO Markdown blocks. Pure text + Tags.';
+
+  static const String promptWalkSummary = '''
+  ROLE: Veterinary Behaviorist & Health Analyst.
+  TASK: Analyze the following timeline of events from a pet's walk/day.
+  
+  INPUT DATA:
+  - List of events with: Time, Type (Urine, Stool, Water, Photo), and Notes.
+  - SPECIAL EVENTS: Look for "Google" tags (Telemetry, Altimetry, Weather).
+  - Context: [Pet Name], [Breed], [Age].
+
+  OUTPUT OBJECTIVES:
+  1. TELEMETRY: Mention Distance & Pace if available (e.g., "Active walk: 3.2km").
+  2. CALORIES: Use Elevation Gain (Altimetry) to estimate effort (e.g., "High burn due to 45m climb").
+  3. CONTEXT: Note environment (Park, Urban) and how it affects behavior.
+  4. PHYSIOLOGY: Correlate Weather (Temp/UV) with hydration needs.
+  5. HIGHLIGHT anomalies (e.g., loose stool, lethargy).
+  6. FORMAT:
+     - Use [VISUAL_SUMMARY] ... [END_SUMMARY] for a brief overview (2-3 lines).
+     - Use [CARD_START] TITLE:... ICON:... CONTENT:... [CARD_END] for detailed sections (Telemetry, Effort, Environment, Health).
+     - Icons: 'map' (Telemetry), 'fire' (Calories/Effort), 'tree' (Context), 'heart' (Physiology).
+  
+  LANGUAGE: Respond in the same language as the input notes (likely Portuguese).
+  ''';
 }

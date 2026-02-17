@@ -5,6 +5,7 @@ import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 
 class UniversalOcrResultView extends StatelessWidget {
   final String imagePath;
@@ -34,6 +35,28 @@ class UniversalOcrResultView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf, color: AppColors.petPrimary),
+            tooltip: 'Gerar PDF',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UniversalPdfPreviewScreen(
+                    filePath: imagePath,
+                    analysisResult: ocrResult,
+                    petDetails: {
+                      PetConstants.fieldName: displayPetName,
+                      PetConstants.fieldBreed: displayBreed,
+                      PetConstants.keyPageTitle: appL10n.pet_initial_assessment,
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -138,8 +161,12 @@ class UniversalOcrResultView extends StatelessWidget {
   // ... (Methods skipped for brevity)
 
   IconData _getOcrIcon(String icon) {
-    if (icon.contains('🔬') || icon.contains('lab')) return Icons.biotech;
-    if (icon.contains('💊') || icon.contains('med')) return Icons.medication;
+    final lower = icon.toLowerCase();
+    if (lower.contains('🔬') || lower.contains('lab') || lower.contains('biotech')) return Icons.biotech;
+    if (lower.contains('💊') || lower.contains('med')) return Icons.medication;
+    if (lower.contains('🌿') || lower.contains('florist') || lower.contains('plant')) return Icons.local_florist;
+    if (lower.contains('⚠️') || lower.contains('warning') || lower.contains('alert')) return Icons.warning;
+    if (lower.contains('✅') || lower.contains('check') || lower.contains('ok')) return Icons.check_circle;
     return Icons.description;
   }
 

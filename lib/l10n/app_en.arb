@@ -573,8 +573,20 @@
   "pet_agenda_title": "Agenda",
   "pet_agenda_title_dynamic": "Agenda: {petName}",
   "@pet_agenda_title_dynamic": {
+    "description": "Title for the Pet Agenda screen with dynamic pet name",
     "placeholders": {
-      "petName": { "type": "Object" }
+        "petName": {
+            "type": "String"
+        }
+    }
+  },
+  "pet_walk_title_dynamic": "Passeio: {petName}",
+  "@pet_walk_title_dynamic": {
+    "description": "Title for the Pet Walk screen with dynamic pet name",
+    "placeholders": {
+        "petName": {
+            "type": "String"
+        }
     }
   },
   "pet_agenda_empty": "Empty Agenda",
@@ -645,6 +657,8 @@
   "map_alert_noise": "Noise",
   "map_alert_risk": "Risk",
   "map_alert_success": "Success!",
+  "pet_agenda_tab_scheduled": "Appointments",
+  "pet_agenda_tab_timeline": "History & Walks",
   "map_alert_description_user": "By user",
   "pet_journal_gps_error": "GPS Error",
   "pet_journal_loading_gps": "GPS...",
@@ -740,7 +754,11 @@
   "pet_hint_select_type": "Select Type",
   "pet_label_info": "Info",
   "pet_type_profile": "Profile",
-  "pet_type_posture": "Posture",
+  "pet_action_analyses": "Analyses",
+  "pet_action_profile_short": "Profile",
+  "pet_action_health": "Health",
+  "pet_action_agenda": "Agenda",
+  "pet_action_walk": "Walk",
   "pet_profile_title": "Pet Profile",
   "pet_management_title": "Management",
   "pet_label_health_plan": "Health Plan",
@@ -793,6 +811,30 @@
   },
   "label_file": "File",
   "common_cancel": "Cancel",
+  "pet_agenda_dialog_title": "Agenda",
+  "pet_agenda_dialog_walk": "Walk",
+  "pet_agenda_dialog_appointment": "Schedule",
+  "pet_appointment_screen_title": "New Appointment",
+  "pet_appointment_label_professional": "Professional/Place",
+  "pet_appointment_save_success": "Appointment scheduled!",
+  "pet_appointment_type_vaccine": "Vaccine",
+  "pet_appointment_type_consultation": "Consultation",
+  "pet_appointment_type_grooming": "Grooming",
+  "pet_appointment_type_exam": "Exam",
+  "pet_scheduled_list_title": "Scheduled",
+  "pet_scheduled_empty": "No future appointments.",
+  "pet_notification_label": "Notify in Advance",
+  "pet_notification_1h": "1 hour before",
+  "pet_notification_2h": "2 hours before",
+  "pet_notification_1d": "1 day before",
+  "pet_notification_2d": "2 days before",
+  "pet_notification_1w": "1 week before",
+  "pet_notification_none": "No notification",
+  "pet_delete_confirmation_title": "Are you sure you want to delete?",
+  "common_delete": "Delete",
+  "pet_appointment_tab_data": "Appointment",
+  "pet_appointment_tab_partner": "Partner Data",
+  "common_save": "Save",
   "@pet_result_title_my_pet": {
     "placeholders": {
       "name": { "type": "Object" }
@@ -808,5 +850,8 @@
     "placeholders": {
       "error": { "type": "Object" }
     }
-  }
+  },
+  "pdf_footer_text": "© 2026 ScanNut Multiverso Digital | contato@multiversodigital.com.br",
+  "pdf_page_label": "Page",
+  "pdf_of_label": "of"
 }

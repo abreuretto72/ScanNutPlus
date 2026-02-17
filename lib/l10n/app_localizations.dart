@@ -2924,11 +2924,17 @@ abstract class AppLocalizations {
   /// **'Agenda'**
   String get pet_agenda_title;
 
-  /// No description provided for @pet_agenda_title_dynamic.
+  /// Title for the Pet Agenda screen with dynamic pet name
   ///
   /// In en, this message translates to:
   /// **'Agenda: {petName}'**
-  String pet_agenda_title_dynamic(Object petName);
+  String pet_agenda_title_dynamic(String petName);
+
+  /// Title for the Pet Walk screen with dynamic pet name
+  ///
+  /// In en, this message translates to:
+  /// **'Passeio: {petName}'**
+  String pet_walk_title_dynamic(String petName);
 
   /// No description provided for @pet_agenda_empty.
   ///
@@ -3223,6 +3229,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Success!'**
   String get map_alert_success;
+
+  /// No description provided for @pet_agenda_tab_scheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointments'**
+  String get pet_agenda_tab_scheduled;
+
+  /// No description provided for @pet_agenda_tab_timeline.
+  ///
+  /// In en, this message translates to:
+  /// **'History & Walks'**
+  String get pet_agenda_tab_timeline;
 
   /// No description provided for @map_alert_description_user.
   ///
@@ -3548,11 +3566,17 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get pet_type_profile;
 
-  /// No description provided for @pet_type_posture.
+  /// No description provided for @pet_action_profile_short.
   ///
   /// In en, this message translates to:
-  /// **'Posture'**
-  String get pet_type_posture;
+  /// **'Profile'**
+  String get pet_action_profile_short;
+
+  /// No description provided for @pet_action_walk.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk'**
+  String get pet_action_walk;
 
   /// No description provided for @pet_profile_title.
   ///
@@ -3685,6 +3709,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get common_cancel;
+
+  /// No description provided for @pet_agenda_dialog_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda'**
+  String get pet_agenda_dialog_title;
+
+  /// No description provided for @pet_agenda_dialog_walk.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk'**
+  String get pet_agenda_dialog_walk;
+
+  /// No description provided for @pet_agenda_dialog_appointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get pet_agenda_dialog_appointment;
+
+  /// No description provided for @pet_appointment_screen_title.
+  ///
+  /// In en, this message translates to:
+  /// **'New Appointment'**
+  String get pet_appointment_screen_title;
+
+  /// No description provided for @pet_appointment_label_professional.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional/Place'**
+  String get pet_appointment_label_professional;
+
+  /// No description provided for @pet_appointment_save_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment scheduled!'**
+  String get pet_appointment_save_success;
+
+  /// No description provided for @pet_appointment_type_vaccine.
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccine'**
+  String get pet_appointment_type_vaccine;
+
+  /// No description provided for @pet_appointment_type_consultation.
+  ///
+  /// In en, this message translates to:
+  /// **'Consultation'**
+  String get pet_appointment_type_consultation;
+
+  /// No description provided for @pet_appointment_type_grooming.
+  ///
+  /// In en, this message translates to:
+  /// **'Grooming'**
+  String get pet_appointment_type_grooming;
+
+  /// No description provided for @pet_appointment_type_exam.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam'**
+  String get pet_appointment_type_exam;
+
+  /// No description provided for @pet_scheduled_list_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get pet_scheduled_list_title;
+
+  /// No description provided for @pet_scheduled_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No future appointments.'**
+  String get pet_scheduled_empty;
+
+  /// No description provided for @pet_notification_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify in Advance'**
+  String get pet_notification_label;
+
+  /// No description provided for @pet_notification_1h.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour before'**
+  String get pet_notification_1h;
+
+  /// No description provided for @pet_notification_2h.
+  ///
+  /// In en, this message translates to:
+  /// **'2 hours before'**
+  String get pet_notification_2h;
+
+  /// No description provided for @pet_notification_1d.
+  ///
+  /// In en, this message translates to:
+  /// **'1 day before'**
+  String get pet_notification_1d;
+
+  /// No description provided for @pet_notification_2d.
+  ///
+  /// In en, this message translates to:
+  /// **'2 days before'**
+  String get pet_notification_2d;
+
+  /// No description provided for @pet_notification_1w.
+  ///
+  /// In en, this message translates to:
+  /// **'1 week before'**
+  String get pet_notification_1w;
+
+  /// No description provided for @pet_notification_none.
+  ///
+  /// In en, this message translates to:
+  /// **'No notification'**
+  String get pet_notification_none;
+
+  /// No description provided for @pet_delete_confirmation_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete?'**
+  String get pet_delete_confirmation_title;
+
+  /// No description provided for @pet_appointment_tab_data.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment'**
+  String get pet_appointment_tab_data;
+
+  /// No description provided for @pet_appointment_tab_partner.
+  ///
+  /// In en, this message translates to:
+  /// **'Partner Data'**
+  String get pet_appointment_tab_partner;
+
+  /// No description provided for @common_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get common_save;
+
+  /// No description provided for @pdf_footer_text.
+  ///
+  /// In en, this message translates to:
+  /// **'© 2026 ScanNut Multiverso Digital | contato@multiversodigital.com.br'**
+  String get pdf_footer_text;
+
+  /// No description provided for @pdf_page_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get pdf_page_label;
+
+  /// No description provided for @pdf_of_label.
+  ///
+  /// In en, this message translates to:
+  /// **'of'**
+  String get pdf_of_label;
 }
 
 class _AppLocalizationsDelegate

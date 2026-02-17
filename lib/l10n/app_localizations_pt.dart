@@ -1480,8 +1480,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_agenda_title => 'Agenda';
 
   @override
-  String pet_agenda_title_dynamic(Object petName) {
+  String pet_agenda_title_dynamic(String petName) {
     return 'Agenda: $petName';
+  }
+
+  @override
+  String pet_walk_title_dynamic(String petName) {
+    return 'Passeio: $petName';
   }
 
   @override
@@ -1636,6 +1641,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get map_alert_success => 'Sucesso!';
+
+  @override
+  String get pet_agenda_tab_scheduled => 'Compromissos';
+
+  @override
+  String get pet_agenda_tab_timeline => 'Histórico e Passeios';
 
   @override
   String get map_alert_description_user => 'Pelo usuário';
@@ -1814,7 +1825,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_type_profile => 'Perfil';
 
   @override
-  String get pet_type_posture => 'Postura';
+  String get pet_action_profile_short => 'Perfil';
+
+  @override
+  String get pet_action_walk => 'Passeio';
 
   @override
   String get pet_profile_title => 'Perfil do Pet';
@@ -1893,4 +1907,83 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get common_cancel => 'Cancelar';
+
+  @override
+  String get pet_agenda_dialog_title => 'Agenda';
+
+  @override
+  String get pet_agenda_dialog_walk => 'Passeio';
+
+  @override
+  String get pet_agenda_dialog_appointment => 'Agendar';
+
+  @override
+  String get pet_appointment_screen_title => 'Novo Compromisso';
+
+  @override
+  String get pet_appointment_label_professional => 'Profissional/Local';
+
+  @override
+  String get pet_appointment_save_success => 'Compromisso agendado!';
+
+  @override
+  String get pet_appointment_type_vaccine => 'Vacina';
+
+  @override
+  String get pet_appointment_type_consultation => 'Consulta';
+
+  @override
+  String get pet_appointment_type_grooming => 'Banho e Tosa';
+
+  @override
+  String get pet_appointment_type_exam => 'Exame';
+
+  @override
+  String get pet_scheduled_list_title => 'Agendamentos';
+
+  @override
+  String get pet_scheduled_empty => 'Nenhum compromisso futuro.';
+
+  @override
+  String get pet_notification_label => 'Notificar com Antecedência';
+
+  @override
+  String get pet_notification_1h => '1 hora antes';
+
+  @override
+  String get pet_notification_2h => '2 horas antes';
+
+  @override
+  String get pet_notification_1d => '1 dia antes';
+
+  @override
+  String get pet_notification_2d => '2 dias antes';
+
+  @override
+  String get pet_notification_1w => '1 semana antes';
+
+  @override
+  String get pet_notification_none => 'Sem notificação';
+
+  @override
+  String get pet_delete_confirmation_title => 'Confirmar exclusão?';
+
+  @override
+  String get pet_appointment_tab_data => 'Compromisso';
+
+  @override
+  String get pet_appointment_tab_partner => 'Dados do Parceiro';
+
+  @override
+  String get common_save => 'Salvar';
+
+  @override
+  String get pdf_footer_text =>
+      '© 2026 ScanNut Multiverso Digital | contato@multiversodigital.com.br';
+
+  @override
+  String get pdf_page_label => 'Página';
+
+  @override
+  String get pdf_of_label => 'de';
 }

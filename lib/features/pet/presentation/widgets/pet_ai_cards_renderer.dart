@@ -179,6 +179,10 @@ class PetAiCardsRenderer extends StatelessWidget {
       case PetConstants.keyInfo: return Icons.info;
       case PetConstants.iconDoc: return Icons.description;
       case PetConstants.valIconPet: return Icons.pets;
+      case 'map': return Icons.map;
+      case 'fire': return Icons.local_fire_department;
+      case 'tree': return Icons.park;
+      case 'heart': return Icons.favorite;
       default: return Icons.info;
     }
   }

@@ -12,6 +12,9 @@ import 'package:scannutplus/features/pet/presentation/widgets/pet_ai_cards_rende
 
 import 'package:just_audio/just_audio.dart';
 
+import 'package:printing/printing.dart';
+import 'package:scannutplus/core/services/universal_pdf_service.dart';
+
 class PetEventDetailScreen extends StatelessWidget {
   final PetEvent event;
   final String petName; // For context
@@ -33,7 +36,14 @@ class PetEventDetailScreen extends StatelessWidget {
       typeColor = Colors.redAccent;
     } else if (type == PetEventType.food) {
       typeColor = Colors.orange;
+    } else if (event.metrics != null && event.metrics!['is_summary'] == true) {
+      typeColor = Colors.amber;
     }
+    
+    // Determine Title
+    final String displayTitle = (event.metrics != null && event.metrics!.containsKey('custom_title'))
+                                ? event.metrics!['custom_title']
+                                : type.label(l10n);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -41,6 +51,36 @@ class PetEventDetailScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         title: Text(l10n.pet_agenda_title_dynamic(petName), style: const TextStyle(color: Colors.white)),
         iconTheme: const IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf),
+            onPressed: () {
+               // Generate PDF PREVIEW
+               Navigator.push(context, MaterialPageRoute(builder: (_) => Scaffold(
+                 appBar: AppBar(title: Text(displayTitle), backgroundColor: typeColor),
+                 body: PdfPreview(
+                   build: (format) => UniversalPdfService.generatePdf(
+                     format,
+                     event.mediaPaths?.isNotEmpty == true ? event.mediaPaths!.first : null,
+                     // CONTENT: Use AI summary if present, otherwise Notes
+                     (event.hasAIAnalysis && event.metrics?[PetConstants.keyAiSummary] != null) 
+                        ? event.metrics![PetConstants.keyAiSummary] 
+                        : (event.notes ?? ''),
+                     {
+                       PetConstants.fieldName: petName,
+                       PetConstants.keyPageTitle: displayTitle,
+                       // Add date context if needed
+                     },
+                     footerText: l10n.pdf_footer_text,
+                     pageLabel: l10n.pdf_page_label,
+                     ofLabel: l10n.pdf_of_label,
+                     colorValue: typeColor.value,
+                   ),
+                 ),
+               )));
+            },
+          )
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -73,7 +113,9 @@ class PetEventDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          type.label(l10n),
+                          (event.metrics != null && event.metrics!.containsKey('custom_title'))
+                              ? event.metrics!['custom_title']
+                              : type.label(l10n),
                           style: TextStyle(color: typeColor, fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         Text(
@@ -126,8 +168,8 @@ class PetEventDetailScreen extends StatelessWidget {
             if (event.metrics != null && event.metrics![PetConstants.keyAudioPath] != null)
               _AudioPlayerWidget(audioPath: event.metrics![PetConstants.keyAudioPath].toString()),
 
-            // Notes Section (Journal)
-            if (event.notes != null && event.notes!.isNotEmpty)
+            // Notes Section (Journal) - HIDE if AI Summary exists to prevent duplication
+            if (event.notes != null && event.notes!.isNotEmpty && !(event.hasAIAnalysis && event.metrics?[PetConstants.keyAiSummary] != null))
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
@@ -157,7 +199,8 @@ class PetEventDetailScreen extends StatelessWidget {
              const SizedBox(height: 24),
 
             // AI Analysis Placeholder (Simulated for Health)
-            if (event.hasAIAnalysis)
+            // SHOW for Summary events if they have structured data
+            if (event.hasAIAnalysis && (event.metrics != null && event.metrics![PetConstants.keyAiSummary] != null))
                Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),

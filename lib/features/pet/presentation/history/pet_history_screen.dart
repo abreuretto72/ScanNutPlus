@@ -10,13 +10,22 @@ import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/presentation/pet_analysis_result_view.dart';
 import 'package:scannutplus/core/services/universal_result_view.dart'; // Universal Video/Image Viewer
 
-import 'package:scannutplus/features/pet/presentation/pet_capture_view.dart';
 import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
+import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 
 class PetHistoryScreen extends StatefulWidget {
   final String? petUuid; // Filter by Pet
   final String? petName; // For Title
-  const PetHistoryScreen({super.key, this.petUuid, this.petName});
+  final String? petBreed; // For New Analysis (Dashboard)
+  final String? petImagePath; // For New Analysis (Dashboard)
+
+  const PetHistoryScreen({
+    super.key, 
+    this.petUuid, 
+    this.petName,
+    this.petBreed,
+    this.petImagePath,
+  });
 
   @override
   State<PetHistoryScreen> createState() => _PetHistoryScreenState();
@@ -111,46 +120,7 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                   color: const Color(0xFFFFD1DC), // Rosa Pastel (Restored)
                   margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: ListTile(
-                    leading: pet.imagePath.isNotEmpty 
-                        ? (() {
-                            final imageFile = File(pet.imagePath);
-                            // Check if video and has thumbnail
-                            final ext = pet.imagePath.split('.').last.toLowerCase();
-                            final isVideo = PetConstants.videoExtensions.contains(ext);
-                            
-                            File? displayImage = imageFile;
-                            if (isVideo) {
-                               final thumbFile = File('${pet.imagePath}.thumb.jpg');
-                               if (thumbFile.existsSync()) {
-                                  displayImage = thumbFile;
-                               } else {
-                                  // Fallback: If video but no thumbnail, check if original path is actually image (legacy mix)
-                                  // or return null to show icon
-                                  displayImage = null; 
-                               }
-                            }
-
-                            if (displayImage != null) {
-                               return CircleAvatar(
-                                radius: 25,
-                                backgroundImage: FileImage(displayImage),
-                                onBackgroundImageError: (_, __) {},
-                                child: isVideo ? const Icon(Icons.play_circle_fill, color: Colors.white54) : null,
-                              );
-                            } else {
-                              // Video without thumbnail or invalid path
-                              return CircleAvatar(
-                                radius: 25,
-                                backgroundColor: Colors.black12,
-                                child: Icon(isVideo ? Icons.videocam : Icons.broken_image, color: Colors.black54),
-                              );
-                            }
-                        })()
-                        : const CircleAvatar(
-                            radius: 25,
-                            backgroundColor: Colors.black12,
-                            child: Icon(Icons.pets, color: Colors.black54),
-                          ),
+                    leading: _buildLeadingIcon(pet),
                     title: Text(
                       pet.getPlantTitle(context) ?? pet.category.toCategoryDisplay(context), // Localized Fallback
                       style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)
@@ -212,7 +182,20 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                                  },
                                  onRetake: () => Navigator.of(context).pop(), 
                                  onShare: () {
-                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_share_not_implemented)));
+                                     Navigator.push(
+                                       context,
+                                       MaterialPageRoute(
+                                         builder: (context) => UniversalPdfPreviewScreen(
+                                           filePath: pet.imagePath,
+                                           analysisResult: pet.rawJson,
+                                           petDetails: {
+                                              PetConstants.fieldName: pet.petName,
+                                              PetConstants.fieldBreed: breed,
+                                              PetConstants.keyPageTitle: l10n.pet_analysis_result_title,
+                                           },
+                                         ),
+                                       ),
+                                     );
                                  },
                                ),
                              ),
@@ -245,6 +228,23 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
         },
       ),
 
+      floatingActionButton: widget.petUuid != null ? FloatingActionButton(
+        onPressed: () {
+          // Navigate to New Analysis Screen (Dashboard)
+          Navigator.pushNamed(
+            context, 
+            '/pet_dashboard', // The screen with the dropdown
+            arguments: {
+              PetConstants.argUuid: widget.petUuid,
+              PetConstants.argName: widget.petName,
+              PetConstants.argBreed: widget.petBreed,
+              PetConstants.argImagePath: widget.petImagePath,
+            },
+          ).then((_) => setState(() {})); // Refresh history on return
+        },
+        backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel (Domain Color)
+        child: const Icon(Icons.add, color: Colors.black), // Black Icon for Contrast
+      ) : null,
     );
   }
 
@@ -273,6 +273,50 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
           ),
         ],
       ),
+
     );
+  }
+
+  Widget _buildLeadingIcon(PetHistoryEntry pet) {
+      if (pet.imagePath.isEmpty) {
+          // Text-only report icons
+          if (pet.category == PetConstants.catHealthSummary) {
+              return const CircleAvatar(radius: 25, backgroundColor: Color(0xFF10AC84), child: Icon(Icons.medical_services, color: Colors.white)); // Green
+          } else if (pet.category == PetConstants.catNutritionPlan) {
+              return const CircleAvatar(radius: 25, backgroundColor: Color(0xFFFF9800), child: Icon(Icons.restaurant, color: Colors.white)); // Orange
+          }
+           // Fallback for other text entries
+          return const CircleAvatar(radius: 25, backgroundColor: Colors.black12, child: Icon(Icons.pets, color: Colors.black54));
+      }
+      
+      final imageFile = File(pet.imagePath);
+      // Check if video and has thumbnail
+      final ext = pet.imagePath.split('.').last.toLowerCase();
+      final isVideo = PetConstants.videoExtensions.contains(ext);
+      
+      File? displayImage = imageFile;
+      if (isVideo) {
+         final thumbFile = File('${pet.imagePath}.thumb.jpg');
+         if (thumbFile.existsSync()) {
+            displayImage = thumbFile;
+         } else {
+            displayImage = null; 
+         }
+      }
+
+      if (displayImage != null) {
+         return CircleAvatar(
+          radius: 25,
+          backgroundImage: FileImage(displayImage),
+          onBackgroundImageError: (_, __) {},
+          child: isVideo ? const Icon(Icons.play_circle_fill, color: Colors.white54) : null,
+        );
+      } else {
+        return CircleAvatar(
+          radius: 25,
+          backgroundColor: Colors.black12,
+          child: Icon(isVideo ? Icons.videocam : Icons.broken_image, color: Colors.black54),
+        );
+      }
   }
 }

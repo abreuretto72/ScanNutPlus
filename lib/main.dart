@@ -16,7 +16,7 @@ import 'package:scannutplus/features/pet/presentation/pet_analysis_result_view.d
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
-import 'package:scannutplus/features/pet/data/models/pet_event_model.dart';
+// import 'package:scannutplus/features/pet/data/models/pet_event_model.dart';
 import 'package:scannutplus/features/pet/map/data/models/pet_map_alert.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart' as legacy_event;
 
@@ -31,7 +31,7 @@ void main() async {
   // Hive Registration
   await Hive.initFlutter();
   Hive.registerAdapter(PetEventTypeAdapter());
-  Hive.registerAdapter(PetEventAdapter()); // New Model (202)
+  // Hive.registerAdapter(PetEventAdapter()); // New Model (202) - Commented out to resolve conflict with Legacy (201)
   Hive.registerAdapter(legacy_event.PetEventAdapter()); // Legacy Model (201)
   Hive.registerAdapter(PetMapAlertAdapter()); // Map Alerts (20)
 

@@ -58,6 +58,10 @@ extension CategoryStringExt on String {
     if (toLowerCase().contains('feces') || toLowerCase().contains('stool')) return l10n.category_feces;
     if (toLowerCase().contains('label') || toLowerCase().contains('nutrition')) return l10n.category_food_label;
     
+    // Archive Mappings
+    if (this == PetConstants.catHealthSummary) return l10n.category_clinical; // Reuse Clinical
+    if (this == PetConstants.catNutritionPlan) return "Plano Nutricional"; // Temporary fallback or new key
+    
     // Specific camelCase mappings (Raw Keys)
     if (this == 'newProfile' || this == PetConstants.typeNewProfile) return l10n.pet_type_new_profile;
     if (this == 'plantCheck' || this == PetConstants.valPlantCheck) return l10n.pet_module_plant;

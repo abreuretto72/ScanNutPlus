@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
-import 'package:scannutplus/features/pet/data/pet_constants.dart';
 
-class PetAnalysisButton extends StatelessWidget {
+class PetWalkButton extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
 
-  const PetAnalysisButton({
+  const PetWalkButton({
     super.key,
     required this.label,
     required this.onTap,
@@ -16,20 +14,15 @@ class PetAnalysisButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        if (kDebugMode) {
-          debugPrint(PetConstants.logAnalysisClick);
-        } // UUID not available here directly as prop? Wait, it is a reusable button.
-        onTap();
-      },
+      onTap: onTap,
       borderRadius: BorderRadius.circular(8),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4), // Slightly tighter padding
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(
-              Icons.analytics_outlined, // Icon requested in prompt
+              Icons.directions_walk,
               color: AppColors.petText,
               size: 24,
             ),

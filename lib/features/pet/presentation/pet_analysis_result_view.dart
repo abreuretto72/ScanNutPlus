@@ -9,7 +9,7 @@ import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart'; // Import PDF Preview
 
 class PetAnalysisResultView extends StatelessWidget {
-  final String imagePath;
+  final String? imagePath;
   final String analysisResult;
   final Duration? executionTime; // Added for telemetry
   final VoidCallback onRetake;
@@ -18,7 +18,7 @@ class PetAnalysisResultView extends StatelessWidget {
 
   const PetAnalysisResultView({
     super.key,
-    required this.imagePath,
+    this.imagePath,
     required this.analysisResult,
     this.executionTime,
     required this.onRetake,
@@ -116,13 +116,14 @@ class PetAnalysisResultView extends StatelessWidget {
           children: [
             // Image Header
             // Image Header
+            if (imagePath != null && imagePath!.isNotEmpty)
              Container(
               height: 220, 
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: AppColors.petPrimary, width: 2), // Pink Border
                 image: DecorationImage(
-                  image: FileImage(File(imagePath)),
+                  image: FileImage(File(imagePath!)),
                   fit: BoxFit.cover,
                 ),
               ),

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scannutplus/features/home/presentation/home_view.dart';
+import 'package:scannutplus/features/pet/presentation/my_pets_view.dart'; // New Home Target
 import 'package:scannutplus/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:scannutplus/features/user/presentation/login_page.dart';
 import 'package:scannutplus/core/services/simple_auth_service.dart';
@@ -96,7 +97,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       if (!mounted) return;
 
       if (authenticated) {
-        nextScreen = const HomeView();
+        // Protocolo Master 2026: Default Home is now MyPetsView
+        nextScreen = const MyPetsView();
         decisionLog = local.debug_nav_home_bio_success;
         
         // Protocolo Master 2026: Silent Login (No SnackBar)

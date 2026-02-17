@@ -5,6 +5,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:scannutplus/pet/agenda/pet_event.dart'; // Agenda Model
+import 'package:scannutplus/pet/agenda/pet_event_repository.dart'; // Agenda Repo
+import 'package:uuid/uuid.dart'; // ID Generation
 
 class PetHistorySource {
   static const String _boxName = 'pet_history_box';
@@ -81,6 +84,9 @@ class PetHistorySource {
       if (kDebugMode) {
         debugPrint('${PetConstants.logTagPetData} HISTORY SAVED: ${entry.id} for $petName ($petUuid)');
       }
+
+      // Step D: Sync to Agenda (Protocol 2026)
+      await _syncToAgenda(entry);
 
     } catch (e, stackTrace) {
       debugPrint('[ERROR] Falha crítica na gravação: $e');
@@ -217,5 +223,42 @@ class PetHistorySource {
     // 3. Remove from Hive
     await box.deleteAll(keysToDelete);
     debugPrint('${PetConstants.logTagPetData} Complete deletion successful.');
+  }
+
+  // --- AGENDA SYNC HELPER ---
+  Future<void> _syncToAgenda(PetHistoryEntry entry) async {
+    try {
+      final repo = PetEventRepository();
+      
+      // Determine Event Type
+      int eventType = 1; // Default to Health (Clinical)
+      if (entry.category.toLowerCase().contains('friend')) {
+        eventType = 6; // Friend
+      } else if (entry.category.toLowerCase().contains('exam')) {
+        eventType = 1; // Health
+      } else {
+        eventType = 5; // Other
+      }
+
+      final event = PetEvent(
+        id: const Uuid().v4(),
+        startDateTime: entry.timestamp,
+        petIds: [entry.petUuid],
+        eventTypeIndex: eventType,
+        hasAIAnalysis: true,
+        notes: "Análise salva no histórico: ${entry.category}",
+        mediaPaths: entry.imagePath.isNotEmpty ? [entry.imagePath] : null,
+      );
+
+      final result = await repo.saveEvent(event);
+      
+      if (result.isSuccess) {
+         debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Evento criado com sucesso: ${event.id}');
+      } else {
+         debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Falha ao criar evento: ${result.status}');
+      }
+    } catch (e) {
+      debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Erro crítico: $e');
+    }
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
+import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 
 class PetHistoryDetailScreen extends StatelessWidget {
   final PetHistoryEntry entry;
@@ -40,6 +41,28 @@ class PetHistoryDetailScreen extends StatelessWidget {
         icon: const Icon(Icons.arrow_back),
         onPressed: () => Navigator.of(context).pop(),
       ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.picture_as_pdf, color: Color(0xFFFFD1DC)), // Pink Icon
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UniversalPdfPreviewScreen(
+                  filePath: entry.imagePath,
+                  analysisResult: entry.rawJson,
+                  petDetails: {
+                     PetConstants.fieldName: entry.petName,
+                     // Extract breed if available or use generic
+                     PetConstants.fieldBreed: PetConstants.legacyUnknownBreed, 
+                     PetConstants.keyPageTitle: PetLocalizations.of(context)!.pet_result_title,
+                  },
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 

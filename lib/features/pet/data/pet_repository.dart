@@ -7,6 +7,10 @@ import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
 import 'package:scannutplus/core/data/objectbox_manager.dart';
 import 'package:scannutplus/objectbox.g.dart';
 import 'pet_constants.dart';
+import 'package:scannutplus/pet/agenda/pet_event.dart'; // Correct UI Model
+import 'package:scannutplus/pet/agenda/pet_event_repository.dart'; // Correct UI Repo
+import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
+import 'package:uuid/uuid.dart'; // ID Generation
 
 class PetRepository {
   late Box<PetEntity> _petBox;
@@ -133,6 +137,9 @@ class PetRepository {
     if (kDebugMode) {
        debugPrint('${PetConstants.logTagPetData}: Analysis added to History (ObjectBox) for $petName ($analysisType)');
     }
+
+    // C. Sync to Agenda (Protocol 2026 - Active Repository)
+    await _syncToAgenda(historyEntry);
   }
 
   /// 3. Get All Registered Profiles (Source of Truth: ObjectBox)
@@ -368,6 +375,108 @@ class PetRepository {
     } else {
        // Fallback to legacy structure if not found (unlikely after migration)
        if (kDebugMode) debugPrint('[UPDATE_ERROR] Pet $uuid not found in ObjectBox for update.');
+    }
+  }
+  
+  
+
+// ... (keep class definition header)
+
+  // --- ARCHIVING (Protocol 2026) ---
+
+  Future<void> saveHealthSummary(String petUuid, String summary) async {
+    final pet = _petBox.query(PetEntity_.uuid.equals(petUuid)).build().findFirst();
+    final petName = pet?.name ?? PetConstants.defaultPetName;
+
+    final entry = PetHistoryEntry(
+      petUuid: petUuid,
+      rawJson: summary,
+      timestamp: DateTime.now(),
+      category: PetConstants.catHealthSummary,
+      petName: petName,
+      imagePath: '', // Text only
+    );
+
+    _historyBox.put(entry);
+    
+    if (kDebugMode) debugPrint('${PetConstants.logTagPetData}: Health Summary archived for $petName');
+
+    await _syncToAgenda(entry);
+  }
+
+  Future<void> saveNutritionPlan(String petUuid, String plan) async {
+    final pet = _petBox.query(PetEntity_.uuid.equals(petUuid)).build().findFirst();
+    final petName = pet?.name ?? PetConstants.defaultPetName;
+
+    final entry = PetHistoryEntry(
+      petUuid: petUuid,
+      rawJson: plan,
+      timestamp: DateTime.now(),
+      category: PetConstants.catNutritionPlan,
+      petName: petName,
+      imagePath: '', // Text only
+    );
+
+    _historyBox.put(entry);
+
+    if (kDebugMode) debugPrint('${PetConstants.logTagPetData}: Nutrition Plan archived for $petName');
+
+    await _syncToAgenda(entry);
+  }
+
+  // --- AGENDA SYNC HELPER ---
+  Future<void> _syncToAgenda(PetHistoryEntry entry) async {
+    try {
+      final repo = PetEventRepository();
+      
+      // Determine Event Type
+      PetEventType eventType = PetEventType.health;
+      
+      // Check category logic
+      if (entry.category == PetConstants.catNutritionPlan || 
+          entry.category.toLowerCase().contains('nutrition') ||
+          entry.category.toLowerCase().contains('food')) {
+        eventType = PetEventType.food;
+      } else if (entry.category == PetConstants.catHealthSummary ||
+                 entry.category.toLowerCase().contains('exam') || 
+                 entry.category.toLowerCase().contains('clinical') ||
+                 entry.category.toLowerCase().contains('stool') || 
+                 entry.category.toLowerCase().contains('mouth') || 
+                 entry.category.toLowerCase().contains('skin')) {
+        eventType = PetEventType.health;
+      } else if (entry.category.toLowerCase().contains('friend')) {
+        eventType = PetEventType.friend;
+      } else {
+        eventType = PetEventType.other;
+      }
+
+      final title = entry.category == PetConstants.catHealthSummary 
+          ? "Resumo Clínico Vet" 
+          : (entry.category == PetConstants.catNutritionPlan ? "Plano Nutricional" : "Análise: ${entry.category.toUpperCase()}");
+
+      final event = PetEvent(
+        id: const Uuid().v4(),
+        startDateTime: entry.timestamp,
+        petIds: [entry.petUuid],
+        eventTypeIndex: eventType.index, // Mapping Enum to Index for UI Model
+        hasAIAnalysis: true,
+        notes: title, 
+        mediaPaths: entry.imagePath.isNotEmpty ? [entry.imagePath] : null,
+        metrics: {
+          PetConstants.keyAiSummary: entry.rawJson,
+          PetConstants.keyCategory: entry.category,
+        },
+      );
+
+      final result = await repo.saveEvent(event);
+      
+      if (result.isSuccess) {
+         if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Evento criado com sucesso: ${event.id}');
+      } else {
+         if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Falha ao criar evento no Hive: ${result.status}');
+      }
+    } catch (e) {
+      if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Erro crítico: $e');
     }
   }
   

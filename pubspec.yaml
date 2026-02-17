@@ -1,7 +1,7 @@
 name: scannutplus
 description: "A new Flutter project."
 publish_to: "none"
-version: 1.0.9+9
+version: 2.1.0+10
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -54,6 +54,7 @@ dependencies:
   just_audio: ^0.10.5
   video_player: ^2.8.2
   video_thumbnail: ^0.5.3
+  flutter_markdown: ^0.7.3
 
 dev_dependencies:
   flutter_test:

@@ -63,16 +63,13 @@ class UniversalOcrService {
 
           SAÍDA OBRIGATÓRIA:
           
-          PART 1: MOBILE CARDS (UI OPTIMIZED)
+          PART 1: MOBILE CARDS (MANDATORY)
           - Generate exactly 3 to 6 interpretive cards using these markers:
             [CARD_START]
             TITLE: [Name in $languageCode]
             ICON: [Emoji or 'local_florist'/'warning']
             CONTENT: [Summary using 🟢 (Seguro/Saudável) or 🔴 (Tóxico/Doente). Keep it direct.]
             [CARD_END]
-
-          PART 2: RAW DATA
-          - Format the technical data in a clean JSON object.
 
           [SOURCES]
           - MANDATORY: Generate a list of sources using exactly this structure:
@@ -104,16 +101,13 @@ class UniversalOcrService {
 
           STRUCTURE (MANDATORY OUTPUT):
           
-          PART 1: MOBILE CARDS (UI OPTIMIZED)
+          PART 1: MOBILE CARDS (MANDATORY)
           - Generate exactly 3 to 6 interpretive cards using these markers:
             [CARD_START]
             TITLE: [Name in $languageCode]
             ICON: [Emoji or 'biotech'/'description']
             CONTENT: [Summary using 🟢 for normal/success and 🔴 for alerts/errors. Keep it direct.]
             [CARD_END]
-
-          PART 2: RAW DATA
-          - Format the technical data in a clean JSON object.
 
           [SOURCES]
           - MANDATORY: Generate a list of sources using exactly this structure:
