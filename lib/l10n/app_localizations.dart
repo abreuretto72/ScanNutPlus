@@ -62,8 +62,7 @@ import 'app_localizations_pt.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -71,8 +70,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -84,8 +82,7 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -1943,8 +1940,38 @@ abstract class AppLocalizations {
   /// No description provided for @pet_event_type_activity.
   ///
   /// In en, this message translates to:
-  /// **'Activity'**
+  /// **'Walks'**
   String get pet_event_type_activity;
+
+  /// No description provided for @pet_event_type_ai_chat.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Chat'**
+  String get pet_event_type_ai_chat;
+
+  /// No description provided for @pet_event_type_appointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointments'**
+  String get pet_event_type_appointment;
+
+  /// No description provided for @pet_event_type_partner.
+  ///
+  /// In en, this message translates to:
+  /// **'Partners'**
+  String get pet_event_type_partner;
+
+  /// No description provided for @pet_event_type_behavior.
+  ///
+  /// In en, this message translates to:
+  /// **'Behavior'**
+  String get pet_event_type_behavior;
+
+  /// No description provided for @pet_event_type_plant.
+  ///
+  /// In en, this message translates to:
+  /// **'Plants'**
+  String get pet_event_type_plant;
 
   /// No description provided for @health_plan_label_card_number.
   ///
@@ -2771,7 +2798,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_event_type_food.
   ///
   /// In en, this message translates to:
-  /// **'Food'**
+  /// **'Nutrition'**
   String get pet_event_type_food;
 
   /// No description provided for @pet_event_type_health.
@@ -2888,17 +2915,35 @@ abstract class AppLocalizations {
   /// **'Walk'**
   String get pet_event_walk;
 
-  /// No description provided for @pet_event_hygiene.
+  /// No description provided for @pet_event_ai_chat.
   ///
   /// In en, this message translates to:
-  /// **'Bath'**
-  String get pet_event_hygiene;
+  /// **'AI Chat'**
+  String get pet_event_ai_chat;
+
+  /// No description provided for @pet_event_appointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment'**
+  String get pet_event_appointment;
+
+  /// No description provided for @pet_event_partner.
+  ///
+  /// In en, this message translates to:
+  /// **'Partner'**
+  String get pet_event_partner;
 
   /// No description provided for @pet_event_behavior.
   ///
   /// In en, this message translates to:
   /// **'Behavior'**
   String get pet_event_behavior;
+
+  /// No description provided for @pet_event_hygiene.
+  ///
+  /// In en, this message translates to:
+  /// **'Bath'**
+  String get pet_event_hygiene;
 
   /// No description provided for @pet_event_medication.
   ///
@@ -3419,7 +3464,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_logic_keywords_health.
   ///
   /// In en, this message translates to:
-  /// **'vomit,diarrhea,cough'**
+  /// **'poop, feces, stool, pee, urine, vomit, diarrhea, blood, wound, injury, pain, limping, choking'**
   String get pet_logic_keywords_health;
 
   /// No description provided for @pet_ai_language.
@@ -3656,6 +3701,150 @@ abstract class AppLocalizations {
   /// **'SAVE PROFILE'**
   String get pet_action_save_profile;
 
+  /// No description provided for @pet_metric_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinical Metrics'**
+  String get pet_metric_title;
+
+  /// No description provided for @pet_metric_section_vitals.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Vital and Clinical Signs'**
+  String get pet_metric_section_vitals;
+
+  /// No description provided for @pet_metric_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Weight (kg)'**
+  String get pet_metric_weight;
+
+  /// No description provided for @pet_metric_bpm.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart Rate (BPM)'**
+  String get pet_metric_bpm;
+
+  /// No description provided for @pet_metric_mpm.
+  ///
+  /// In en, this message translates to:
+  /// **'Respiratory Rate (MPM)'**
+  String get pet_metric_mpm;
+
+  /// No description provided for @pet_metric_temp.
+  ///
+  /// In en, this message translates to:
+  /// **'Rectal Temperature (°C)'**
+  String get pet_metric_temp;
+
+  /// No description provided for @pet_metric_tpc.
+  ///
+  /// In en, this message translates to:
+  /// **'Capillary Refill Time (Secs)'**
+  String get pet_metric_tpc;
+
+  /// No description provided for @pet_metric_glycemia.
+  ///
+  /// In en, this message translates to:
+  /// **'Glycemia Level (mg/dL)'**
+  String get pet_metric_glycemia;
+
+  /// No description provided for @pet_metric_section_structure.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Structure and Composition'**
+  String get pet_metric_section_structure;
+
+  /// No description provided for @pet_metric_ecc.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Condition Score (1 to 9)'**
+  String get pet_metric_ecc;
+
+  /// No description provided for @pet_metric_abd_circ.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdominal Circumference (cm)'**
+  String get pet_metric_abd_circ;
+
+  /// No description provided for @pet_metric_neck_circ.
+  ///
+  /// In en, this message translates to:
+  /// **'Neck Circumference (cm)'**
+  String get pet_metric_neck_circ;
+
+  /// No description provided for @pet_metric_height.
+  ///
+  /// In en, this message translates to:
+  /// **'Height at Withers (cm)'**
+  String get pet_metric_height;
+
+  /// No description provided for @pet_metric_section_hydration.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Hydration and Excretion'**
+  String get pet_metric_section_hydration;
+
+  /// No description provided for @pet_metric_water.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Intake (ml/24h)'**
+  String get pet_metric_water;
+
+  /// No description provided for @pet_metric_urine_vol.
+  ///
+  /// In en, this message translates to:
+  /// **'Urinary Volume (ml or Text)'**
+  String get pet_metric_urine_vol;
+
+  /// No description provided for @pet_metric_urine_dens.
+  ///
+  /// In en, this message translates to:
+  /// **'Urine Specific Gravity'**
+  String get pet_metric_urine_dens;
+
+  /// No description provided for @pet_metric_section_activity.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Activity and Biometrics'**
+  String get pet_metric_section_activity;
+
+  /// No description provided for @pet_metric_distance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance Traveled (km)'**
+  String get pet_metric_distance;
+
+  /// No description provided for @pet_metric_speed.
+  ///
+  /// In en, this message translates to:
+  /// **'Average Speed (km/h)'**
+  String get pet_metric_speed;
+
+  /// No description provided for @pet_metric_sleep.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep/Rest Time (hours)'**
+  String get pet_metric_sleep;
+
+  /// No description provided for @pet_metric_stand_latency.
+  ///
+  /// In en, this message translates to:
+  /// **'Stand Latency (seconds)'**
+  String get pet_metric_stand_latency;
+
+  /// No description provided for @pet_metric_save_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Metrics saved successfully!'**
+  String get pet_metric_save_success;
+
+  /// No description provided for @pet_metric_empty_fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in at least one metric.'**
+  String get pet_metric_empty_fields;
+
   /// No description provided for @pet_not_found.
   ///
   /// In en, this message translates to:
@@ -3865,10 +4054,1053 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'of'**
   String get pdf_of_label;
+
+  /// No description provided for @source_analysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis'**
+  String get source_analysis;
+
+  /// No description provided for @source_walk.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk'**
+  String get source_walk;
+
+  /// No description provided for @source_appointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment'**
+  String get source_appointment;
+
+  /// No description provided for @source_nutrition.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition'**
+  String get source_nutrition;
+
+  /// No description provided for @source_health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get source_health;
+
+  /// No description provided for @source_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get source_profile;
+
+  /// No description provided for @source_journal.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal'**
+  String get source_journal;
+
+  /// No description provided for @pet_appointment_type_vermifuge.
+  ///
+  /// In en, this message translates to:
+  /// **'Deworming/Flea Control'**
+  String get pet_appointment_type_vermifuge;
+
+  /// No description provided for @pet_appointment_type_medication.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous Medication'**
+  String get pet_appointment_type_medication;
+
+  /// No description provided for @pet_appointment_type_training.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get pet_appointment_type_training;
+
+  /// No description provided for @pet_appointment_type_daycare.
+  ///
+  /// In en, this message translates to:
+  /// **'Daycare'**
+  String get pet_appointment_type_daycare;
+
+  /// No description provided for @pet_appointment_type_nails_ears.
+  ///
+  /// In en, this message translates to:
+  /// **'Nails/Ears Cleaning'**
+  String get pet_appointment_type_nails_ears;
+
+  /// No description provided for @pet_appointment_type_dental.
+  ///
+  /// In en, this message translates to:
+  /// **'Teeth Brushing'**
+  String get pet_appointment_type_dental;
+
+  /// No description provided for @pet_appointment_type_food_change.
+  ///
+  /// In en, this message translates to:
+  /// **'Food Change'**
+  String get pet_appointment_type_food_change;
+
+  /// No description provided for @pet_appointment_type_travel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Friendly Travel'**
+  String get pet_appointment_type_travel;
+
+  /// No description provided for @pet_appointment_type_accessories.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories Change'**
+  String get pet_appointment_type_accessories;
+
+  /// No description provided for @pet_appointment_cat_health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health (Essential)'**
+  String get pet_appointment_cat_health;
+
+  /// No description provided for @pet_appointment_cat_wellness.
+  ///
+  /// In en, this message translates to:
+  /// **'Wellness & Aesthetics'**
+  String get pet_appointment_cat_wellness;
+
+  /// No description provided for @pet_appointment_cat_behavior.
+  ///
+  /// In en, this message translates to:
+  /// **'Behavior & Training'**
+  String get pet_appointment_cat_behavior;
+
+  /// No description provided for @pet_appointment_cat_services.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra Services'**
+  String get pet_appointment_cat_services;
+
+  /// No description provided for @pet_appointment_cat_nutrition.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition'**
+  String get pet_appointment_cat_nutrition;
+
+  /// No description provided for @pet_appointment_cat_docs.
+  ///
+  /// In en, this message translates to:
+  /// **'Documentation'**
+  String get pet_appointment_cat_docs;
+
+  /// No description provided for @pet_apt_consultation_general.
+  ///
+  /// In en, this message translates to:
+  /// **'General Practitioner'**
+  String get pet_apt_consultation_general;
+
+  /// No description provided for @pet_apt_consultation_return.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow-up'**
+  String get pet_apt_consultation_return;
+
+  /// No description provided for @pet_apt_consultation_specialist.
+  ///
+  /// In en, this message translates to:
+  /// **'Specialist'**
+  String get pet_apt_consultation_specialist;
+
+  /// No description provided for @pet_apt_consultation_tele.
+  ///
+  /// In en, this message translates to:
+  /// **'Teleconsultation'**
+  String get pet_apt_consultation_tele;
+
+  /// No description provided for @pet_apt_vaccine_annual.
+  ///
+  /// In en, this message translates to:
+  /// **'Annual Vaccine'**
+  String get pet_apt_vaccine_annual;
+
+  /// No description provided for @pet_apt_vaccine_specific.
+  ///
+  /// In en, this message translates to:
+  /// **'Specific Vaccine'**
+  String get pet_apt_vaccine_specific;
+
+  /// No description provided for @pet_apt_vaccine_booster.
+  ///
+  /// In en, this message translates to:
+  /// **'Booster'**
+  String get pet_apt_vaccine_booster;
+
+  /// No description provided for @pet_apt_exam_blood.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Blood Count'**
+  String get pet_apt_exam_blood;
+
+  /// No description provided for @pet_apt_exam_ultrasound.
+  ///
+  /// In en, this message translates to:
+  /// **'Ultrasound'**
+  String get pet_apt_exam_ultrasound;
+
+  /// No description provided for @pet_apt_exam_xray.
+  ///
+  /// In en, this message translates to:
+  /// **'X-Ray'**
+  String get pet_apt_exam_xray;
+
+  /// No description provided for @pet_apt_exam_lab.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Exam'**
+  String get pet_apt_exam_lab;
+
+  /// No description provided for @pet_apt_exam_periodic.
+  ///
+  /// In en, this message translates to:
+  /// **'Periodic'**
+  String get pet_apt_exam_periodic;
+
+  /// No description provided for @pet_apt_procedure_castration.
+  ///
+  /// In en, this message translates to:
+  /// **'Neutering/Spaying'**
+  String get pet_apt_procedure_castration;
+
+  /// No description provided for @pet_apt_procedure_surgery.
+  ///
+  /// In en, this message translates to:
+  /// **'Surgery'**
+  String get pet_apt_procedure_surgery;
+
+  /// No description provided for @pet_apt_procedure_dental.
+  ///
+  /// In en, this message translates to:
+  /// **'Dental Cleaning'**
+  String get pet_apt_procedure_dental;
+
+  /// No description provided for @pet_apt_procedure_dressing.
+  ///
+  /// In en, this message translates to:
+  /// **'Dressing Change'**
+  String get pet_apt_procedure_dressing;
+
+  /// No description provided for @pet_apt_treatment_physio.
+  ///
+  /// In en, this message translates to:
+  /// **'Physiotherapy'**
+  String get pet_apt_treatment_physio;
+
+  /// No description provided for @pet_apt_treatment_acu.
+  ///
+  /// In en, this message translates to:
+  /// **'Acupuncture'**
+  String get pet_apt_treatment_acu;
+
+  /// No description provided for @pet_apt_treatment_chemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Chemotherapy'**
+  String get pet_apt_treatment_chemo;
+
+  /// No description provided for @pet_apt_treatment_hemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Hemodialysis'**
+  String get pet_apt_treatment_hemo;
+
+  /// No description provided for @pet_apt_wellness_bath.
+  ///
+  /// In en, this message translates to:
+  /// **'Bath'**
+  String get pet_apt_wellness_bath;
+
+  /// No description provided for @pet_apt_wellness_grooming.
+  ///
+  /// In en, this message translates to:
+  /// **'Grooming'**
+  String get pet_apt_wellness_grooming;
+
+  /// No description provided for @pet_apt_wellness_hygienic.
+  ///
+  /// In en, this message translates to:
+  /// **'Hygienic Trim'**
+  String get pet_apt_wellness_hygienic;
+
+  /// No description provided for @pet_apt_wellness_hydration.
+  ///
+  /// In en, this message translates to:
+  /// **'Hydration'**
+  String get pet_apt_wellness_hydration;
+
+  /// No description provided for @pet_apt_wellness_daycare.
+  ///
+  /// In en, this message translates to:
+  /// **'Day Care'**
+  String get pet_apt_wellness_daycare;
+
+  /// No description provided for @pet_apt_wellness_hotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Hotel'**
+  String get pet_apt_wellness_hotel;
+
+  /// No description provided for @pet_apt_behavior_training.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get pet_apt_behavior_training;
+
+  /// No description provided for @pet_apt_behavior_evaluation.
+  ///
+  /// In en, this message translates to:
+  /// **'Behavioral Eval'**
+  String get pet_apt_behavior_evaluation;
+
+  /// No description provided for @pet_apt_behavior_social.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialization'**
+  String get pet_apt_behavior_social;
+
+  /// No description provided for @pet_apt_service_taxi.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Taxi'**
+  String get pet_apt_service_taxi;
+
+  /// No description provided for @pet_apt_service_delivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Food Delivery'**
+  String get pet_apt_service_delivery;
+
+  /// No description provided for @pet_apt_nutrition_meal.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal'**
+  String get pet_apt_nutrition_meal;
+
+  /// No description provided for @pet_apt_nutrition_food_change.
+  ///
+  /// In en, this message translates to:
+  /// **'Food Change'**
+  String get pet_apt_nutrition_food_change;
+
+  /// No description provided for @pet_apt_service_nutrition.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition Consult'**
+  String get pet_apt_service_nutrition;
+
+  /// No description provided for @pet_apt_service_mealplan.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal Plan'**
+  String get pet_apt_service_mealplan;
+
+  /// No description provided for @pet_apt_doc_vaccine_card.
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccine Card Renewal'**
+  String get pet_apt_doc_vaccine_card;
+
+  /// No description provided for @pet_apt_doc_health_cert.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Certificate'**
+  String get pet_apt_doc_health_cert;
+
+  /// No description provided for @pet_apt_doc_microchip.
+  ///
+  /// In en, this message translates to:
+  /// **'Microchipping'**
+  String get pet_apt_doc_microchip;
+
+  /// No description provided for @pet_apt_doc_gta.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal Transit Guide'**
+  String get pet_apt_doc_gta;
+
+  /// No description provided for @pet_apt_doc_travel.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel Docs'**
+  String get pet_apt_doc_travel;
+
+  /// No description provided for @pet_apt_select_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get pet_apt_select_category;
+
+  /// No description provided for @pet_apt_select_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment Type'**
+  String get pet_apt_select_type;
+
+  /// No description provided for @source_friend.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend'**
+  String get source_friend;
+
+  /// No description provided for @pet_event_plant.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant'**
+  String get pet_event_plant;
+
+  /// No description provided for @pet_nutrition_copy_action.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy meals to agenda'**
+  String get pet_nutrition_copy_action;
+
+  /// No description provided for @pet_nutrition_select_start_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Select start date (Monday)'**
+  String get pet_nutrition_select_start_date;
+
+  /// No description provided for @pet_nutrition_copy_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Meals copied to agenda!'**
+  String get pet_nutrition_copy_success;
+
+  /// No description provided for @pet_nutrition_copy_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error copying. Check plan format.'**
+  String get pet_nutrition_copy_error;
+
+  /// No description provided for @pet_plan_nutritional.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutritional Plan'**
+  String get pet_plan_nutritional;
+
+  /// No description provided for @pet_walk_summary_dialog_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk Summary 🐾'**
+  String get pet_walk_summary_dialog_title;
+
+  /// No description provided for @pet_walk_summary_dialog_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the interval to generate AI summary.'**
+  String get pet_walk_summary_dialog_desc;
+
+  /// No description provided for @pet_label_start.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get pet_label_start;
+
+  /// No description provided for @pet_label_end.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get pet_label_end;
+
+  /// No description provided for @pet_action_generate_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Summary'**
+  String get pet_action_generate_summary;
+
+  /// No description provided for @pet_error_fetch_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Error fetching events.'**
+  String get pet_error_fetch_events;
+
+  /// No description provided for @pet_error_no_events_period.
+  ///
+  /// In en, this message translates to:
+  /// **'No events found in this period.'**
+  String get pet_error_no_events_period;
+
+  /// No description provided for @pet_msg_summary_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary generated and saved successfully! 🐾'**
+  String get pet_msg_summary_success;
+
+  /// No description provided for @pet_walk_empty_history.
+  ///
+  /// In en, this message translates to:
+  /// **'No walks recorded.'**
+  String get pet_walk_empty_history;
+
+  /// No description provided for @pet_walk_summary_title_generated.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary {start} - {end}'**
+  String pet_walk_summary_title_generated(String start, String end);
+
+  /// No description provided for @pet_msg_google_simulated.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Data (Simulated) added!'**
+  String get pet_msg_google_simulated;
+
+  /// No description provided for @pet_title_ophthalmology.
+  ///
+  /// In en, this message translates to:
+  /// **'Ophthalmology'**
+  String get pet_title_ophthalmology;
+
+  /// No description provided for @pet_title_dental.
+  ///
+  /// In en, this message translates to:
+  /// **'Dental Health'**
+  String get pet_title_dental;
+
+  /// No description provided for @pet_title_dermatology.
+  ///
+  /// In en, this message translates to:
+  /// **'Skin & Coat'**
+  String get pet_title_dermatology;
+
+  /// No description provided for @pet_title_ears.
+  ///
+  /// In en, this message translates to:
+  /// **'Ears'**
+  String get pet_title_ears;
+
+  /// No description provided for @pet_title_digestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Digestion'**
+  String get pet_title_digestion;
+
+  /// No description provided for @pet_title_body_condition.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Condition'**
+  String get pet_title_body_condition;
+
+  /// No description provided for @pet_title_vocalization.
+  ///
+  /// In en, this message translates to:
+  /// **'Vocalization'**
+  String get pet_title_vocalization;
+
+  /// No description provided for @pet_title_behavior.
+  ///
+  /// In en, this message translates to:
+  /// **'Behavior'**
+  String get pet_title_behavior;
+
+  /// No description provided for @pet_title_walk.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk'**
+  String get pet_title_walk;
+
+  /// No description provided for @pet_title_ai_chat.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Chat'**
+  String get pet_title_ai_chat;
+
+  /// No description provided for @pet_title_nutrition.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition'**
+  String get pet_title_nutrition;
+
+  /// No description provided for @pet_title_lab.
+  ///
+  /// In en, this message translates to:
+  /// **'Laboratory'**
+  String get pet_title_lab;
+
+  /// No description provided for @pet_title_label_analysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Label Analysis'**
+  String get pet_title_label_analysis;
+
+  /// No description provided for @pet_title_plants.
+  ///
+  /// In en, this message translates to:
+  /// **'Plants'**
+  String get pet_title_plants;
+
+  /// No description provided for @pet_title_initial_eval.
+  ///
+  /// In en, this message translates to:
+  /// **'Initial Evaluation'**
+  String get pet_title_initial_eval;
+
+  /// No description provided for @pet_title_health_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Summary'**
+  String get pet_title_health_summary;
+
+  /// No description provided for @pet_title_general_checkup.
+  ///
+  /// In en, this message translates to:
+  /// **'General Check-up'**
+  String get pet_title_general_checkup;
+
+  /// No description provided for @pet_title_clinical_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinical Summary'**
+  String get pet_title_clinical_summary;
+
+  /// No description provided for @pet_action_nutrition.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition'**
+  String get pet_action_nutrition;
+
+  /// No description provided for @pet_nutrition_screen_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition'**
+  String get pet_nutrition_screen_title;
+
+  /// No description provided for @pet_title_planned_meal.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned Meal'**
+  String get pet_title_planned_meal;
+
+  /// No description provided for @pet_record_medication.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication'**
+  String get pet_record_medication;
+
+  /// No description provided for @pet_record_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get pet_record_weight;
+
+  /// No description provided for @pet_record_energy.
+  ///
+  /// In en, this message translates to:
+  /// **'Energy'**
+  String get pet_record_energy;
+
+  /// No description provided for @pet_record_appetite.
+  ///
+  /// In en, this message translates to:
+  /// **'Appetite'**
+  String get pet_record_appetite;
+
+  /// No description provided for @pet_record_incident.
+  ///
+  /// In en, this message translates to:
+  /// **'Incidents'**
+  String get pet_record_incident;
+
+  /// No description provided for @pet_record_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Others'**
+  String get pet_record_other;
+
+  /// No description provided for @pet_field_drug_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Drug Name'**
+  String get pet_field_drug_name;
+
+  /// No description provided for @pet_field_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get pet_field_category;
+
+  /// No description provided for @pet_field_dosage.
+  ///
+  /// In en, this message translates to:
+  /// **'Dosage'**
+  String get pet_field_dosage;
+
+  /// No description provided for @pet_field_unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get pet_field_unit;
+
+  /// No description provided for @pet_field_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual Time'**
+  String get pet_field_time;
+
+  /// No description provided for @pet_field_observation.
+  ///
+  /// In en, this message translates to:
+  /// **'Observation'**
+  String get pet_field_observation;
+
+  /// No description provided for @pet_field_mass.
+  ///
+  /// In en, this message translates to:
+  /// **'Mass'**
+  String get pet_field_mass;
+
+  /// No description provided for @pet_field_location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get pet_field_location;
+
+  /// No description provided for @pet_field_energy_level.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get pet_field_energy_level;
+
+  /// No description provided for @pet_field_period.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get pet_field_period;
+
+  /// No description provided for @pet_field_context.
+  ///
+  /// In en, this message translates to:
+  /// **'Context'**
+  String get pet_field_context;
+
+  /// No description provided for @pet_field_consumption.
+  ///
+  /// In en, this message translates to:
+  /// **'Consumption'**
+  String get pet_field_consumption;
+
+  /// No description provided for @pet_field_thirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Thirst'**
+  String get pet_field_thirst;
+
+  /// No description provided for @pet_field_diet_variation.
+  ///
+  /// In en, this message translates to:
+  /// **'Diet Variation'**
+  String get pet_field_diet_variation;
+
+  /// No description provided for @pet_field_severity.
+  ///
+  /// In en, this message translates to:
+  /// **'Severity'**
+  String get pet_field_severity;
+
+  /// No description provided for @pet_field_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get pet_field_description;
+
+  /// No description provided for @pet_field_symptoms.
+  ///
+  /// In en, this message translates to:
+  /// **'Symptoms'**
+  String get pet_field_symptoms;
+
+  /// No description provided for @pet_field_action_taken.
+  ///
+  /// In en, this message translates to:
+  /// **'Action Taken'**
+  String get pet_field_action_taken;
+
+  /// No description provided for @pet_field_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get pet_field_type;
+
+  /// No description provided for @pet_field_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get pet_field_details;
+
+  /// No description provided for @pet_opt_continuous.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous'**
+  String get pet_opt_continuous;
+
+  /// No description provided for @pet_opt_wormer.
+  ///
+  /// In en, this message translates to:
+  /// **'Dewormer'**
+  String get pet_opt_wormer;
+
+  /// No description provided for @pet_opt_flea.
+  ///
+  /// In en, this message translates to:
+  /// **'Flea Control'**
+  String get pet_opt_flea;
+
+  /// No description provided for @pet_opt_antibiotic.
+  ///
+  /// In en, this message translates to:
+  /// **'Antibiotic'**
+  String get pet_opt_antibiotic;
+
+  /// No description provided for @pet_opt_low.
+  ///
+  /// In en, this message translates to:
+  /// **'Low/Apathetic'**
+  String get pet_opt_low;
+
+  /// No description provided for @pet_opt_normal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get pet_opt_normal;
+
+  /// No description provided for @pet_opt_active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get pet_opt_active;
+
+  /// No description provided for @pet_opt_hyper.
+  ///
+  /// In en, this message translates to:
+  /// **'Hyperactive'**
+  String get pet_opt_hyper;
+
+  /// No description provided for @pet_opt_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get pet_opt_morning;
+
+  /// No description provided for @pet_opt_afternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Afternoon'**
+  String get pet_opt_afternoon;
+
+  /// No description provided for @pet_opt_night.
+  ///
+  /// In en, this message translates to:
+  /// **'Night'**
+  String get pet_opt_night;
+
+  /// No description provided for @pet_opt_all_day.
+  ///
+  /// In en, this message translates to:
+  /// **'All Day'**
+  String get pet_opt_all_day;
+
+  /// No description provided for @pet_opt_none.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get pet_opt_none;
+
+  /// No description provided for @pet_opt_half.
+  ///
+  /// In en, this message translates to:
+  /// **'Half'**
+  String get pet_opt_half;
+
+  /// No description provided for @pet_opt_all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get pet_opt_all;
+
+  /// No description provided for @pet_opt_reduced.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduced'**
+  String get pet_opt_reduced;
+
+  /// No description provided for @pet_opt_excessive.
+  ///
+  /// In en, this message translates to:
+  /// **'Excessive'**
+  String get pet_opt_excessive;
+
+  /// No description provided for @pet_opt_mild.
+  ///
+  /// In en, this message translates to:
+  /// **'Mild'**
+  String get pet_opt_mild;
+
+  /// No description provided for @pet_opt_moderate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get pet_opt_moderate;
+
+  /// No description provided for @pet_opt_urgent.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get pet_opt_urgent;
+
+  /// No description provided for @pet_opt_hygiene.
+  ///
+  /// In en, this message translates to:
+  /// **'Hygiene'**
+  String get pet_opt_hygiene;
+
+  /// No description provided for @pet_opt_estrus.
+  ///
+  /// In en, this message translates to:
+  /// **'Estrus/Reproduction'**
+  String get pet_opt_estrus;
+
+  /// No description provided for @pet_opt_social.
+  ///
+  /// In en, this message translates to:
+  /// **'Social'**
+  String get pet_opt_social;
+
+  /// No description provided for @pet_record_save_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Record saved successfully!'**
+  String get pet_record_save_success;
+
+  /// No description provided for @pet_record_save_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error saving record.'**
+  String get pet_record_save_error;
+
+  /// No description provided for @help_ia_pet_pillars_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Inteligência Pet ScanNut+'**
+  String get help_ia_pet_pillars_title;
+
+  /// No description provided for @help_pillar_analysis_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Image and Video Analysis'**
+  String get help_pillar_analysis_title;
+
+  /// No description provided for @help_pillar_analysis_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Our AI processes photos and videos to identify subtle signs of health, posture, and behavior in your pet.'**
+  String get help_pillar_analysis_desc;
+
+  /// No description provided for @help_pillar_walks_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk Monitoring'**
+  String get help_pillar_walks_title;
+
+  /// No description provided for @help_pillar_walks_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Record of what happens during walks, monitoring energy levels, interactions, and predictive routes.'**
+  String get help_pillar_walks_desc;
+
+  /// No description provided for @help_pillar_agenda_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda and Occurrences'**
+  String get help_pillar_agenda_title;
+
+  /// No description provided for @help_pillar_agenda_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Central hub for appointments and daily records: medication, weight, incidents, and analysis history in one place.'**
+  String get help_pillar_agenda_desc;
+
+  /// No description provided for @help_pillar_nutrition_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Nutrition'**
+  String get help_pillar_nutrition_title;
+
+  /// No description provided for @help_pillar_nutrition_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generation of personalized menus and automatic inclusion of meals in the daily agenda for consumption tracking.'**
+  String get help_pillar_nutrition_desc;
+
+  /// No description provided for @help_pillar_profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile and Documentation'**
+  String get help_pillar_profile_title;
+
+  /// No description provided for @help_pillar_profile_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet data, health plans, funeral plans, and storage of important documents for quick access.'**
+  String get help_pillar_profile_desc;
+
+  /// No description provided for @pet_agenda_tab_history_label.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get pet_agenda_tab_history_label;
+
+  /// No description provided for @pet_agenda_tab_records.
+  ///
+  /// In en, this message translates to:
+  /// **'Records'**
+  String get pet_agenda_tab_records;
+
+  /// No description provided for @pet_field_partner_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Place/Professional Name'**
+  String get pet_field_partner_name;
+
+  /// No description provided for @pet_field_contact_person.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Person'**
+  String get pet_field_contact_person;
+
+  /// No description provided for @pet_field_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get pet_field_phone;
+
+  /// No description provided for @pet_field_whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get pet_field_whatsapp;
+
+  /// No description provided for @pet_field_email.
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail'**
+  String get pet_field_email;
+
+  /// No description provided for @pet_field_what_to_do.
+  ///
+  /// In en, this message translates to:
+  /// **'What to do?'**
+  String get pet_field_what_to_do;
+
+  /// No description provided for @pet_field_what_was_done.
+  ///
+  /// In en, this message translates to:
+  /// **'What was done?'**
+  String get pet_field_what_was_done;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -3877,25 +5109,25 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'pt'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en':
-      return AppLocalizationsEn();
-    case 'pt':
-      return AppLocalizationsPt();
+    case 'en': return AppLocalizationsEn();
+    case 'pt': return AppLocalizationsPt();
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

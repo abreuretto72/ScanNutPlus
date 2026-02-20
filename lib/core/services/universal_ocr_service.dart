@@ -6,8 +6,8 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:scannutplus/core/services/env_service.dart';
 
-/// MOTOR 2: UNIVERSAL OCR SERVICE (Extração de Dados)
-/// Responsável por: Exames Laboratoriais, Receitas, Rótulos e Laudos.
+/// MOTOR 2: UNIVERSAL OCR SERVICE (Data Extraction)
+/// Responsible for: Lab Exams, Prescriptions, Labels, and Botanical Reports.
 class UniversalOcrService {
   static final UniversalOcrService _instance = UniversalOcrService._internal();
   factory UniversalOcrService() => _instance;
@@ -15,9 +15,9 @@ class UniversalOcrService {
 
   GenerativeModel? _model;
   String? _activeModelName;
-  String? _lastUsedModel; // Track manually since GenerativeModel doesn't expose it
+  String? _lastUsedModel;
 
-  /// Método Principal de OCR
+  /// Main OCR Processing Method
   Future<String> processOcr({
     required File documentImage,
     required String expertise,
@@ -25,104 +25,107 @@ class UniversalOcrService {
     String? targetFields,
   }) async {
     try {
-      // 1. Sincroniza modelo com o servidor
       await _syncConfigFromServer();
 
-      final targetModel = _activeModelName ?? 'gemini-2.5-pro';
+      final targetModel = _activeModelName ?? 'gemini-1.5-pro';
       debugPrint('[UNIVERSAL_OCR_LOG] Active Model: $targetModel');
       
-      // 2. Inicializa o motor Gemini 2.5 Pro (Temperature 0.0 para precisão total)
       if (_model == null || _lastUsedModel != targetModel) {
         _model = GenerativeModel(
           model: targetModel,
           apiKey: EnvService.geminiApiKey,
           generationConfig: GenerationConfig(
-            temperature: 0.0, // Fidelidade total aos dados do papel
+            temperature: 0.0, // Precision lock for technical data
             maxOutputTokens: 4096, 
           ),
         );
         _lastUsedModel = targetModel;
       }
 
-      // 3. PROMPT DE OCR INTERNACIONALIZADO (PROTOCOLO MASTER 2026)
-      // 3. PROMPT DE OCR INTERNACIONALIZADO (PROTOCOLO MASTER 2026)
       String systemPrompt;
 
       if (expertise.contains('Botanist')) {
-         // --- MODO BOTÂNICO (PLANTS) ---
-         systemPrompt = '''
-          PROTOCOLO MASTER SCANNUT - MODO BOTÂNICO 2026
-          OBJETIVO: Identificação de espécie e diagnóstico de saúde vegetal via imagem.
+        // --- BOTANICAL MODE (PLANTS) ---
+        systemPrompt = '''
+          SCANNUT MASTER PROTOCOL - BOTANICAL MODE 2026
+          OBJECTIVE: Species identification and plant health diagnosis via image.
           EXPERTISE: $expertise
 
-          DIRETRIZES DE ANÁLISE:
-          1. IDENTIFICAÇÃO: Nome científico, nome popular e família botânica.
-          2. SAÚDE: Analisar manchas, bordas secas ou pragas (Cochonilha, Ácaro, Fungos).
-          3. TOXICIDADE: Verificar obrigatoriamente se a planta é tóxica para PETS (Cães/Gatos) ou CRIANÇAS.
-          4. MANUTENÇÃO: Necessidade de luz (Sol/Sombra), frequência de rega e tipo de solo.
+          ANALYSIS GUIDELINES:
+          1. IDENTIFICATION: Scientific name, common name, and botanical family.
+          2. HEALTH: Analyze spots, dry edges, or pests (Mealybugs, Mites, Fungi).
+          3. TOXICITY: Mandatory check if the plant is toxic to PETS (Dogs/Cats) or CHILDREN.
+          4. MAINTENANCE: Light needs (Sun/Shade), watering frequency, and soil type.
 
-          SAÍDA OBRIGATÓRIA:
+          MANDATORY OUTPUT STRUCTURE:
           
           PART 1: MOBILE CARDS (MANDATORY)
           - Generate exactly 3 to 6 interpretive cards using these markers:
             [CARD_START]
             TITLE: [Name in $languageCode]
-            ICON: [Emoji or 'local_florist'/'warning']
-            CONTENT: [Summary using 🟢 (Seguro/Saudável) or 🔴 (Tóxico/Doente). Keep it direct.]
+            ICON: [Emoji or Material Icon name like 'local_florist'/'warning']
+            CONTENT: [Summary in $languageCode using 🟢 (Safe/Healthy) or 🔴 (Toxic/Sick). Keep it direct.]
             [CARD_END]
 
           [SOURCES]
           - MANDATORY: Generate a list of sources using exactly this structure:
-            1. "Base Botânica ScanNut": Cruzamento com catálogo técnico.
-            2. "Análise Visual": Diagnóstico morfologico.
+            1. "ScanNut Botanical Database": Cross-referenced with technical catalog.
+            2. "Visual Morphological Analysis": Direct diagnostic from image.
           - Format: Use bullet points.
           
-          IMPORTANT STRUCTURE RULES:
-          - DO NOT TRANSLATE THE KEYS: 'TITLE', 'ICON', 'CONTENT'. 
-          - KEEP THEM EXACTLY AS SHOWN IN ENGLISH.
-          - ONLY TRANSLATE THE VALUES.
-          - No Markdown code blocks explicitly around the cards (just text).
-          
-          FINAL COMMAND: Output strictly in $languageCode.
+          IMPORTANT RULES:
+          - DO NOT TRANSLATE KEYS: 'TITLE', 'ICON', 'CONTENT'.
+          - ONLY TRANSLATE THE VALUES to $languageCode.
+          - Output strictly in $languageCode.
         ''';
       } else {
-         // --- MODO PADRÃO (LABELS / EXAMS) ---
-         systemPrompt = '''
-          PROTOCOLO MASTER SCANNUT - MODO MULTIMODAL 2026
-          OBJETIVO: Extração técnica de dados de Rótulos de Nutrição ou Exames Laboratoriais.
+        // --- DEFAULT MODE (LABELS / EXAMS) ---
+        systemPrompt = '''
+          SCANNUT MASTER PROTOCOL - MULTIMODAL MODE 2026
+          OBJECTIVE: Technical data extraction from Nutrition Labels or Lab Exams.
           EXPERTISE: $expertise
 
-          DIRETRIZES DE EXTRAÇÃO (RULES):
-          1. SE RÓTULO (LABEL): Extrair Proteína, Gordura, Cálcio, Fósforo, Kcal/kg e Tabela de Consumo (g/dia).
-          2. SE EXAME (LAB): Extrair Analito, Valor Encontrado, Unidade de Medida e Valor de Referência.
-          3. IDENTIFICAÇÃO: Localizar nome do fabricante/marca ou nome do paciente/laboratório.
-          4. ALERTAS: Destacar componentes fora do padrão (ex: excesso de fósforo em ração ou valores alterados em exames).
-          5. SCIENTIFIC TRUTH: Do not invent data. If a value is unreadable, mark it as "UNREADABLE".
+          EXTRACTION RULES:
+          1. STRUCTURED DATA: Use strict Markdown Tables for ANY quantitative data.
+             - Table Format MUST include leading and trailing pipes:
+             | Parameter | Value | Reference | Status |
+          2. IF EXAM (LAB): 
+             - SPLIT complex exams into separate cards (e.g., [CARD] Erythrogram, [CARD] Leukogram).
+             - Extract: Analyte, Value, Unit, Reference Range.
+             - ALERTS: Use 🔴 for OUT of range, 🟢 for Normal.
+          3. IF LABEL (NUTRITION): 
+             - Extract Protein, Fat, Calcium, Phosphorus as a strict Markdown Table.
+          4. IDENTIFICATION: Locate Manufacturer/Brand or Patient/Lab name.
+          5. SCIENTIFIC TRUTH: Do not hallucinate. If unreadable, mark as "-".
 
-          STRUCTURE (MANDATORY OUTPUT):
+          MANDATORY OUTPUT STRUCTURE:
           
           PART 1: MOBILE CARDS (MANDATORY)
           - Generate exactly 3 to 6 interpretive cards using these markers:
             [CARD_START]
-            TITLE: [Name in $languageCode]
-            ICON: [Emoji or 'biotech'/'description']
-            CONTENT: [Summary using 🟢 for normal/success and 🔴 for alerts/errors. Keep it direct.]
+            TITLE: [Section Name in $languageCode e.g., "Hemogram - Red Series"]
+            ICON: [Emoji or 'biotech'/'description'/'warning']
+            CONTENT: 
+            [Brief summary line in $languageCode]
+            
+            | Parameter | Value | Ref | Status |
+            | :--- | :--- | :--- | :---: |
+            | Exemplo | 12.5 | 10-15 | 🟢 |
+            (Populate with extracted data)
+            
+            [Add brief interpretation in $languageCode if needed]
             [CARD_END]
 
           [SOURCES]
-          - MANDATORY: Generate a list of sources using exactly this structure:
-            1. "Dados Primários (Rótulo/Laudo)": Leitura direta dos níveis de garantia/analitos.
-            2. "Base de Dados ScanNut": Cruzamento com catálogo técnico e literatura veterinária.
-            3. "Regulação Internacional": Conformidade com diretrizes da FEDIAF e AAFCO.
-          - Format: Use bullet points.
+          - MANDATORY: Generate a list of sources:
+            - "Primary Data (Label/Exam)": Direct reading of analytes.
+            - "ScanNut Database": Cross-referenced with veterinary literature.
+            - "International Regulations": Compliance with FEDIAF/AAFCO guidelines.
           
-          IMPORTANT STRUCTURE RULES:
-          - DO NOT TRANSLATE THE KEYS: 'TITLE', 'ICON', 'CONTENT'. 
-          - KEEP THEM EXACTLY AS SHOWN IN ENGLISH.
-          - ONLY TRANSLATE THE VALUES.
-          - No Markdown code blocks explicitly around the cards (just text).
-          
-          FINAL COMMAND: Output strictly in $languageCode.
+          IMPORTANT RULES:
+          - DO NOT TRANSLATE KEYS: 'TITLE', 'ICON', 'CONTENT'.
+          - ONLY TRANSLATE THE VALUES to $languageCode.
+          - FINAL COMMAND: Output strictly in $languageCode.
         ''';
       }
 
@@ -135,47 +138,27 @@ class UniversalOcrService {
       ];
 
       final response = await _model!.generateContent(content);
+      String extractedText = response.text ?? "";
       
-      // [FIX SDK ERROR]: Safely extract text avoiding 'Unhandled format' exception
-      String extractedText;
-      try {
-        if (response.candidates.isNotEmpty && 
-            response.candidates.first.content.parts.isNotEmpty) {
-           final part = response.candidates.first.content.parts.first;
-           if (part is TextPart) {
-              extractedText = part.text;
-           } else {
-              extractedText = response.text ?? ""; 
-           }
-        } else {
-           extractedText = response.text ?? "";
-        }
-      } catch (e) {
-         debugPrint('[UNIVERSAL_OCR_WARN] SDK .text access failed: $e. Using fallback.');
-         // Fallback: Dump candidates to see what's happening
-         extractedText = response.candidates.map((c) => c.content.parts.map((p) => p is TextPart ? p.text : '').join()).join('\n');
-      }
+      debugPrint('[UNIVERSAL_OCR_TRACE] Raw AI Response:\n$extractedText');
 
       if (extractedText.isEmpty) {
-         debugPrint('[UNIVERSAL_OCR_ERROR] Empty response from Gemini.');
-         return "{}";
+        debugPrint('[UNIVERSAL_OCR_ERROR] AI returned an empty response.');
+        return "[CARD_START]\nTITLE: Analysis Error\nICON: error\nCONTENT: AI returned an empty response. Verify your API Key and internet connection.\n[CARD_END]";
       }
-
       return _sanitizeOutput(extractedText);
 
     } catch (e) {
       debugPrint('[UNIVERSAL_OCR_ERROR]: $e');
-      return "{}";
+      return "[CARD_START]\nTITLE: System Error\nICON: error\nCONTENT: Exception during OCR Analysis:\n$e\n[CARD_END]";
     }
   }
 
-  /// Limpa a resposta de blocos de código e etiquetas de sistema
   String _sanitizeOutput(String text) {
     return text
         .replaceAll('```json', '')
+        .replaceAll('```markdown', '')
         .replaceAll('```', '')
-        .replaceAll(RegExp(r'(?:ICON|ÍCONE|ICONE|Ícone|Icone):'), '')
-        .replaceAll(RegExp(r'(?:CONTENT|CONTEÚDO|CONTEUDO|Conteúdo|Conteudo):'), '')
         .trim();
   }
 

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:scannutplus/features/home/presentation/home_view.dart';
+// import 'package:scannutplus/features/home/presentation/home_view.dart'; // Removed (Unused)
 import 'package:scannutplus/features/pet/presentation/my_pets_view.dart'; // New Home Target
 import 'package:scannutplus/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:scannutplus/features/user/presentation/login_page.dart';

@@ -424,7 +424,7 @@ class PetConstants {
 
 class PetPrompts {
   // --- PROTOCOL 2026: CONCISE PROMPTS ---
-  static const String expertRole = 'Role: Patologista Veterinário Sênior.';
+  static const String expertRole = 'Role: Senior Veterinary Pathologist.';
   static const String chatSystemContext = '''
 ROLE: You are the dedicated AI Veterinary Assistant for {petName}.
 DATE: {date}
@@ -436,9 +436,9 @@ DATE: {date}
 INSTRUCTIONS:
 1. TRUTH: Base your answers PRIMARILY on the [DATABASE CONTEXT]. Do not hallucinate data not present there.
 2. SOURCES: You MUST cite the source of your information.
-   - If from DB: "Consta no seu perfil..." or "[Fonte: Histórico Médico]"
-   - If general knowledge: "[Fonte: Protocolo Veterinário]" or "[Fonte: Manual Merck]"
-   - If insurance: "[Fonte: Plano de Saúde]"
+   - If from DB: "Found in profile..." or "[Source: Medical History]" (Translate to user language)
+   - If general knowledge: "[Source: Veterinary Protocol]" or "[Source: Merck Manual]" (Translate to user language)
+   - If insurance: "[Source: Health Plan]" (Translate to user language)
 3. EMPATHY: Be helpful, caring, but professional.
 4. LANGUAGE: Answer in the same language as the user's question.
 
@@ -454,7 +454,11 @@ User Question: {question}
   1. Urgency: [Low/Med/High]
   2. [VISUAL_SUMMARY] ... [END_SUMMARY]
   3. [CARD_START] TITLE:... ICON:... CONTENT:... [CARD_END] (Max 4 cards)
-  4. [SOURCES] Source 1, Source 2 [END_SOURCES]
+  4. [SOURCES]
+  - Source 1
+  - Source 2
+  - Source 3
+  [END_SOURCES]
   5. [METADATA] breed_name: ... | species: ... [END_METADATA]''';
 
   static const String visualSummary = 'Summary: Technical & Concise.';
@@ -486,6 +490,6 @@ User Question: {question}
      - Use [CARD_START] TITLE:... ICON:... CONTENT:... [CARD_END] for detailed sections (Telemetry, Effort, Environment, Health).
      - Icons: 'map' (Telemetry), 'fire' (Calories/Effort), 'tree' (Context), 'heart' (Physiology).
   
-  LANGUAGE: Respond in the same language as the input notes (likely Portuguese).
+  LANGUAGE: Respond in the same language as the input notes (usually Portuguese/English/Spanish).
   ''';
 }

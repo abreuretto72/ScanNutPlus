@@ -1,21 +1,20 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:hive_flutter/hive_flutter.dart'; // Added
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
-import 'package:scannutplus/pet/agenda/pet_event.dart'; // Agenda Model
-import 'package:scannutplus/pet/agenda/pet_event_repository.dart'; // Agenda Repo
-import 'package:uuid/uuid.dart'; // ID Generation
+import 'package:scannutplus/features/pet/data/models/pet_event_model.dart';
+import 'package:scannutplus/features/pet/data/repositories/pet_event_repository.dart';
+import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
+import 'package:uuid/uuid.dart';
 
 class PetHistorySource {
   static const String _boxName = 'pet_history_box';
   
-  // 1. Singleton/Lazy Box Pattern
   // 1. Singleton/Lazy Box Pattern with Self-Healing
   Future<Box<PetHistoryEntry>> getBox() async {
-    // Garante que a box SEMPRE retorne o tipo forte da entidade (Strong Typing Enforcement)
     try {
       if (!Hive.isBoxOpen(_boxName)) {
         return await Hive.openBox<PetHistoryEntry>(_boxName);
@@ -23,8 +22,6 @@ class PetHistorySource {
       return Hive.box<PetHistoryEntry>(_boxName);
     } catch (e) {
       debugPrint('${PetConstants.logTagPetFatal} [CRITICAL] HIVE BOX CORRUPTED OR TYPE MISMATCH: $e');
-      // ... existing error handling or simplified since user wants the "Fix"
-      // User snippet was simple. I will keep the self-healing logical structure but enforce the typing.
       try {
         await Hive.deleteBoxFromDisk(_boxName);
       } catch (_) {}
@@ -34,7 +31,7 @@ class PetHistorySource {
 
   // 2. Persist with Image Handling
   Future<void> saveAnalysis({
-    required String petUuid, // Can be null (handled by logic) but typed String for specific pets
+    required String petUuid,
     required String petName,
     required String originalImagePath,
     required String type, // CLINICAL, EXAM, etc.
@@ -230,35 +227,101 @@ class PetHistorySource {
     try {
       final repo = PetEventRepository();
       
-      // Determine Event Type
-      int eventType = 1; // Default to Health (Clinical)
+      // 1. Determine Event Type
+      PetEventType eventType = PetEventType.health; // Default to Health
+      String? subType = 'ai_analysis';
+
       if (entry.category.toLowerCase().contains('friend')) {
-        eventType = 6; // Friend
-      } else if (entry.category.toLowerCase().contains('exam')) {
-        eventType = 1; // Health
-      } else {
-        eventType = 5; // Other
+        eventType = PetEventType.other; 
+        subType = 'friend_detection';
+      } else if (['foodbowl', 'food_bowl', 'label', 'nutrition'].contains(entry.category.toLowerCase())) {
+        eventType = PetEventType.food; // Mapped to "Nutrição"
+        subType = 'nutrition_analysis';
+      }
+
+      // 2. Refined Title Logic (Protocol 2026)
+      // Map technical keys (eyes, skin, etc.) to user-friendly titles
+      String rawCategory = entry.category.toLowerCase();
+      String eventTitle = _mapCategoryToTitle(rawCategory);
+      
+      // If the map returned the same raw category, check if we can get a better title from cards
+      if (eventTitle.toLowerCase() == rawCategory && entry.analysisCards.isNotEmpty) {
+        final firstCard = entry.analysisCards.first;
+        if (firstCard.containsKey('title')) {
+           eventTitle = firstCard['title'].toString();
+        }
+      }
+
+      // Capitalize first letter if it's a generic fallback
+      if (eventTitle.isNotEmpty) {
+          eventTitle = eventTitle[0].toUpperCase() + eventTitle.substring(1);
       }
 
       final event = PetEvent(
         id: const Uuid().v4(),
         startDateTime: entry.timestamp,
         petIds: [entry.petUuid],
-        eventTypeIndex: eventType,
+        eventType: eventType,
+        eventSubType: subType, // Reverted to String based on model definition
         hasAIAnalysis: true,
-        notes: "Análise salva no histórico: ${entry.category}",
+        notes: '', // Empty to avoid redundancy in UI (Title already shows category)
+        metrics: {
+          'custom_title': eventTitle, // FORCE DISPLAY TITLE (Fix for User Feedback)
+          'source': 'analysis', // Standardized Origin
+        },
         mediaPaths: entry.imagePath.isNotEmpty ? [entry.imagePath] : null,
       );
 
-      final result = await repo.saveEvent(event);
+      final resultId = await repo.saveEvent(event);
       
-      if (result.isSuccess) {
-         debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Evento criado com sucesso: ${event.id}');
+      if (resultId != null) {
+         debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Evento criado com sucesso: ${event.id} | Title: $eventTitle');
       } else {
-         debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Falha ao criar evento: ${result.status}');
+         debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Falha ao criar evento.');
       }
     } catch (e) {
       debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Erro crítico: $e');
+    }
+  }
+
+  String _mapCategoryToTitle(String category) {
+    // Map English/Technical keys to Portuguese (Target Market)
+    // Users requested "Respect Language", assuming PT based on "Outros" report.
+    switch (category.toLowerCase()) {
+      case 'eyes': return 'pet_title_ophthalmology'; 
+      case 'mouth': 
+      case 'dental': return 'pet_title_dental'; 
+      case 'skin': 
+      case 'dermatology': 
+      case 'fur': return 'pet_title_dermatology';
+      case 'ears': return 'pet_title_ears';
+      case 'stool': 
+      case 'feces': 
+      case 'gastro': return 'pet_title_digestion';
+      case 'posture': 
+      case 'body': return 'pet_title_body_condition';
+      case 'vocal': return 'pet_title_vocalization';
+      case 'behavior': return 'pet_title_behavior';
+      case 'walk':
+      case 'exercise':
+      case 'activity': return 'pet_title_walk';
+      case 'chat':
+      case 'ai_chat':
+      case 'message': return 'pet_title_ai_chat';
+      case 'foodbowl': 
+      case 'food_bowl': 
+      case 'nutrition': return 'pet_title_nutrition';
+      case 'lab': 
+      case 'lab_result': return 'pet_title_lab';
+      case 'label': return 'pet_title_label_analysis';
+      case 'plant': 
+      case 'plantcheck': return 'pet_title_plants';
+      case 'newprofile': return 'pet_title_initial_eval';
+      case 'general':
+      case 'health_summary': return 'pet_title_health_summary'; 
+      case 'other': return 'pet_title_general_checkup'; 
+      case 'clinical_summary': return 'pet_title_clinical_summary';
+      default: return category; 
     }
   }
 }

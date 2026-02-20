@@ -8,11 +8,12 @@ import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:intl/intl.dart';
 
 class UniversalPdfService {
+  // PDF Base Colors (Always White Background for printing/reading)
   static const PdfColor _colorBackground = PdfColor.fromInt(0xFFFFFFFF); // White
-  static const PdfColor _colorCardBg = PdfColor.fromInt(0xFFF5F5F5); // Very Light Gray
+  static const PdfColor _colorCardBg = PdfColor.fromInt(0xFFF9F9F9); // Crisp White/Gray for cards
   
   static const PdfColor _colorText = PdfColor.fromInt(0xFF000000); // Black
-  static const PdfColor _colorTextDim = PdfColor.fromInt(0xFF666666); // Dark Gray
+  static const PdfColor _colorTextDim = PdfColor.fromInt(0xFF666666); // Standard Gray
 
 
   
@@ -28,15 +29,21 @@ class UniversalPdfService {
   }) async {
     final pdf = pw.Document();
     
-    final accentColor = colorValue != null ? PdfColor.fromInt(colorValue) : PdfColor.fromInt(0xFFFF4081);
+    // Default to Strong Pink (#FC2D7C) if no dynamic color is provided
+    final accentColor = colorValue != null ? PdfColor.fromInt(colorValue) : PdfColor.fromInt(0xFFFC2D7C);
     
     // Load Image (Optional)
     pw.MemoryImage? image;
     if (filePath != null && filePath.isNotEmpty) {
       final file = File(filePath);
       if (file.existsSync()) {
-         final imageBytes = await file.readAsBytes();
-         image = pw.MemoryImage(imageBytes);
+         try {
+           final imageBytes = await file.readAsBytes();
+           image = pw.MemoryImage(imageBytes);
+         } catch (e) {
+           debugPrint('[PDF_WARN] Could not load image (likely video or unsupported format): $e');
+           image = null;
+         }
       }
     }
 
@@ -57,6 +64,20 @@ class UniversalPdfService {
         ? 'ScanNut+: $moduleName' 
         : 'Relatório ScanNut+';
 
+    // --- PDF TRACE LOGS ---
+    debugPrint('[PDF_TRACE] Generating PDF for: $pageTitle');
+    debugPrint('[PDF_TRACE] Analysis Result Length: ${analysisResult.length}');
+    debugPrint('[PDF_TRACE] Cards Parsed: ${cards.length}');
+    if (cards.isNotEmpty) {
+       for (var i = 0; i < cards.length; i++) {
+          debugPrint('[PDF_TRACE] Card $i Title: ${cards[i]['title']}');
+          debugPrint('[PDF_TRACE] Card $i Content Length: ${cards[i]['content']?.length ?? 0}');
+       }
+    } else {
+       debugPrint('[PDF_TRACE] No Cards found! Using Fallback Mode (Full Text Dump).');
+    }
+    // ---------------------
+
     pdf.addPage(
       pw.MultiPage(
         pageTheme: pw.PageTheme(
@@ -64,6 +85,7 @@ class UniversalPdfService {
           theme: pw.ThemeData.withFont(
             base: await PdfGoogleFonts.robotoRegular(),
             bold: await PdfGoogleFonts.robotoBold(),
+            fontFallback: [await PdfGoogleFonts.notoColorEmoji()], // Renderize Emojis properly
           ),
           buildBackground: (context) => pw.FullPage(
             ignoreMargins: true,
@@ -105,25 +127,41 @@ class UniversalPdfService {
           ),
           pw.SizedBox(height: 20),
 
-          // 3. Analysis Cards
+          // 3. Analysis Cards (Flattened List for Pagination)
           if (cards.isNotEmpty)
-             ...cards.map((card) => _buildCard(card, accentColor))
+             ...cards.expand((card) => _buildCard(card, accentColor))
           else if (analysisResult.isNotEmpty)
              // Fallback for unstructured reports (Health/Nutrition)
-             pw.Padding(
-               padding: const pw.EdgeInsets.all(12),
-               child: pw.Text(
-                 _sanitizeText(analysisResult), // Basic sanitization
-                 style: pw.TextStyle(color: _colorText, fontSize: 12)
-               ),
-             ),
+             // FIX: Split huge text into paragraphs to allow MultiPage to handle pagination safely.
+             // FIX 2: Remove [SOURCES] block from body to prevent duplication.
+             ..._removeSourcesBlock(analysisResult).replaceAll('\r\n', '\n').split('\n').map((line) {
+                if (line.trim().isEmpty) return pw.SizedBox(height: 3); // Reduced from 5
+                
+                // Simple Bold detection for lines that look like headers
+                final isHeader = line.trim().length < 60 && (line.trim().endsWith(':') || !line.trim().contains('. '));
+                
+                return pw.Padding(
+                  padding: const pw.EdgeInsets.symmetric(vertical: 1, horizontal: 10), // Reduced spacing
+                  child: pw.Text(
+                    _sanitizeText(line),
+                    style: isHeader 
+                        ? pw.TextStyle(color: accentColor, fontSize: 11, fontWeight: pw.FontWeight.bold) // Sligthly smaller header
+                        : pw.TextStyle(color: _colorText, fontSize: 10, lineSpacing: 1.3), // Tighter line spacing
+                    textAlign: isHeader ? pw.TextAlign.left : pw.TextAlign.justify
+                  )
+                );
+             }),
           
           // 4. Sources Section
            if (_extractSources(analysisResult).isNotEmpty) ...[
-              pw.SizedBox(height: 20),
-              pw.Text('Referências Científicas:', style: pw.TextStyle(color: accentColor, fontSize: 16, fontWeight: pw.FontWeight.bold)),
-              pw.Divider(color: accentColor),
-              ..._extractSources(analysisResult).map((s) => pw.Bullet(text: s, style: pw.TextStyle(color: _colorTextDim, fontSize: 10))),
+              pw.SizedBox(height: 10), // Reduced from 20
+              pw.Wrap(
+                 children: [
+                    pw.Text('Referências Científicas:', style: pw.TextStyle(color: accentColor, fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                    pw.Divider(color: accentColor, thickness: 0.5),
+                 ]
+              ),
+              ..._extractSources(analysisResult).map((s) => pw.Bullet(text: s, style: pw.TextStyle(color: _colorTextDim, fontSize: 9))),
            ]
         ],
       ),
@@ -178,64 +216,42 @@ class UniversalPdfService {
     );
   }
 
-  static pw.Widget _buildCard(Map<String, String> card, PdfColor accentColor) {
-    // WRAP: Using Wrap or just Column is fine, but Container with borders sometimes causes split issues if content is huge.
-    // OPTIMIZATION: Use pw.Partitions or just simple Column with Spans if possible, but Card style is requested.
-    // FIX: Ensure the inner Container for content does NOT have a fixed height (it doesn't).
-    // The issue might be the decoration causing issues on split.
-    // Let's try splitting the header and content into separate widgets in the list if possible, or just keeping them together but allowing wrap.
-    // pw.Container can wrap if it's not in a constrained parent.
+  static List<pw.Widget> _buildCard(Map<String, String> card, PdfColor accentColor) {
+    // SAFE LAYOUT V2: Return a List of widgets so MultiPage can handle pagination for each element individually.
+    // DO NOT use Column/Container wrappers for the *entire* card content.
     
-    return pw.Container(
-      decoration: pw.BoxDecoration(
-        border: pw.Border.all(color: _colorCardBg, width: 0.0), // Invisible border to help layout? No.
-      ),
-      child: pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          // 1. Header (Compact)
-          pw.Container(
-            width: double.infinity,
-            padding: const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 5), // Reduced padding
-            decoration: pw.BoxDecoration(
-              color: _colorCardBg,
-              borderRadius: const pw.BorderRadius.vertical(top: pw.Radius.circular(6)), // Smaller radius
-              border: pw.Border.all(color: accentColor, width: 0.5),
-            ),
-            child: pw.Row(
+    return [
+        // 1. Header (Partitioned) - Keep this distinct
+        pw.Container(
+          width: double.infinity,
+          padding: const pw.EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+          decoration: const pw.BoxDecoration(
+             border: pw.Border(bottom: pw.BorderSide(color: _colorTextDim, width: 0.5)),
+          ),
+          child: pw.Row(
               children: [
-                pw.Container(
-                  width: 20, height: 20, // Smaller icon container
-                  decoration: pw.BoxDecoration(shape: pw.BoxShape.circle, color: accentColor),
-                  alignment: pw.Alignment.center,
-                  child: pw.Text(_getIconSymbol(card['icon']), style: const pw.TextStyle(color: _colorBackground, fontSize: 12))
-                ),
+                pw.Text(_getIconSymbol(card['icon']), style: const pw.TextStyle(fontSize: 14)),
                 pw.SizedBox(width: 8),
                 pw.Expanded(
                   child: pw.Text(
-                    _sanitizeText(card['title'] ?? 'Section'), 
-                    style: pw.TextStyle(color: accentColor, fontSize: 12, fontWeight: pw.FontWeight.bold) // Smaller font
+                    _sanitizeText(card['title'] ?? 'Section').toUpperCase(), 
+                    style: pw.TextStyle(color: accentColor, fontSize: 10, fontWeight: pw.FontWeight.bold)
                   ),
                 ),
               ],
             ),
+        ),
+        
+        // 2. Content (Flowable) - Direct child of MultiPage allows splitting!
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(top: 8, bottom: 12),
+          child: pw.Text(
+            _sanitizeText(card['content'] ?? ''), 
+            style: const pw.TextStyle(color: _colorText, fontSize: 10, lineSpacing: 1.5),
+            textAlign: pw.TextAlign.justify
           ),
-          // 2. Content (Compact)
-          pw.Container(
-            width: double.infinity,
-            padding: const pw.EdgeInsets.fromLTRB(10, 8, 10, 12), // Tighter content padding
-            decoration: pw.BoxDecoration(
-               border: pw.Border.fromBorderSide(pw.BorderSide(color: accentColor, width: 0.5)),
-            ),
-            child: pw.Text(
-              _sanitizeText(card['content'] ?? ''), 
-              style: pw.TextStyle(color: _colorText, fontSize: 10, lineSpacing: 1.5) // Smaller font and tighter line spacing
-            ),
-          ),
-          pw.SizedBox(height: 8), // Reduced gap between cards
-        ],
-      )
-    );
+        ),
+    ];
   }
 
   static String _getIconSymbol(String? iconName) {
@@ -287,13 +303,34 @@ class UniversalPdfService {
     if (!rawResponse.contains('[SOURCES]')) return [];
     try {
       final start = rawResponse.indexOf('[SOURCES]') + '[SOURCES]'.length;
-      final end = rawResponse.indexOf('[END_SOURCES]');
-      if (end == -1 || end < start) return [];
+      int end = rawResponse.indexOf('[END_SOURCES]');
+      if (end == -1) {
+         // Fallback: Check for Metadata start or End of string logic
+         end = rawResponse.indexOf('[METADATA]');
+      }
+      if (end == -1) {
+         // Final Fallback: End of String (if reasonable length)
+         if (rawResponse.length - start < 500) { 
+            end = rawResponse.length;
+         } else {
+             return []; // Too risky
+         }
+      }
+      
+      if (end < start) return [];
       
       final sourceBlock = rawResponse.substring(start, end).trim();
-      return sourceBlock.split('\n')
-          .map((s) => s.trim())
-          .where((s) => s.length > 3) // Basic length check
+      List<String> rawList;
+
+      if (sourceBlock.contains('\n')) {
+         rawList = sourceBlock.split('\n');
+      } else {
+         rawList = sourceBlock.split(',');
+      }
+
+      return rawList
+          .map((s) => s.replaceAll(RegExp(r'^[\-\*]|\d+\.\s*'), '').trim()) // Cleanup bullets
+          .where((s) => s.length > 3)
           .toList();
     } catch (e) {
       return [];
@@ -303,38 +340,32 @@ class UniversalPdfService {
   // Basic Sanitizer for Universal PDF (Simple replacement)
   static String _sanitizeText(String? text) {
       if (text == null) return '';
+      // 1. Specific Replacements (Keep context for known icons if needed, or just strip all)
+      // For stability, we will strip ALL emojis that don't have a specific text equivalent yet.
+      
       return text
-        // Extended Emoji Support
-        .replaceAll('🥩', '[Carne]')
-        .replaceAll('🍗', '[Frango]')
-        .replaceAll('🥦', '[Vegetais]')
-        .replaceAll('💊', '[Sup]')
-        .replaceAll('⚠️', '[ATENÇÃO]')
-        .replaceAll('🚨', '[CRÍTICO]')
-        .replaceAll('✅', '[OK]')
-        .replaceAll('❌', '[X]')
-        .replaceAll('🩺', '[Exame]')
-        .replaceAll('💉', '[Vacina]')
-        .replaceAll('🦠', '[Parasita]')
-        .replaceAll('📋', '[Prontuário]')
-        .replaceAll('🥗', '[Dieta]')
-        .replaceAll('🛒', '[Compras]')
-        .replaceAll('📅', '[Agenda]')
-        .replaceAll('🏥', '[Saúde]')
-        .replaceAll('📉', '[Baixa]')
-        .replaceAll('📈', '[Alta]')
-        .replaceAll('⚖️', '[Peso]')
-        .replaceAll('🐕', '[Cão]')
-        .replaceAll('🐈', '[Gato]')
-        .replaceAll('🍚', '[Arroz]')
-        .replaceAll('🥕', '[Cenoura]')
-        .replaceAll('🍎', '[Fruta]')
-        .replaceAll('📍', '[Local]')
-        .replaceAll('⛰️', '[Alt]')
-        .replaceAll('🌳', '[Parque]')
-        .replaceAll('☀️', '[Sol]')
-        .replaceAll('🔥', '[Cal]')
-        .replaceAll('💧', '[H2O]')
-        .replaceAll('🐾', '[Patas]');
+        .replaceAll(RegExp(r'\*\*|__'), '') // Remove Markdown
+        // Remove Internal AI Tags if they leak into fallback text
+        .replaceAll(RegExp(r'\[CARD_START\]|\[CARD_END\]|\[VISUAL_SUMMARY\]|\[END_SUMMARY\]|\[SOURCES\]|\[END_SOURCES\]|\[METADATA\]|\[END_METADATA\]', caseSensitive: false), '')
+        .replaceAll(RegExp(r'(?:TITLE|TÍTULO):|(?:ICON|ÍCONE|ICONE):|(?:CONTENT|CONTEÚDO|CONTEUDO):', caseSensitive: false), '')
+        .trim();
+  }
+
+  // Helper Methods
+  static String _removeSourcesBlock(String text) {
+    // Case Insensitive Removal using Regex
+    final regex = RegExp(r'\[SOURCES\]', caseSensitive: false);
+    final match = regex.firstMatch(text);
+    if (match != null) {
+      return text.substring(0, match.start).trim();
+    }
+    
+    final metadataRegex = RegExp(r'\[METADATA\]', caseSensitive: false);
+    final metaMatch = metadataRegex.firstMatch(text);
+    if (metaMatch != null) {
+       return text.substring(0, metaMatch.start).trim();
+    }
+    
+    return text;
   }
 }

@@ -269,45 +269,45 @@ class PetAiService extends PetBaseAiService {
         return AiPrompts.contextPosture; 
       case PetImageType.behavior:
         return '''
-PROTOCOLO MASTER SCANNUT - MODO PET 2026
-OBJETIVO: Análise de saúde, raça e segurança animal via imagem.
+SCANNUT MASTER PROTOCOL - PET MODE 2026
+OBJECTIVE: Analysis of health, breed, and animal safety via image.
 
-DIRETRIZES DE EXTRAÇÃO:
-1. IDENTIFICAÇÃO: Raça, idade estimada e porte.
-2. SAÚDE VISUAL: Avaliar estado da pele/pêlo e possíveis anormalidades oculares (manchas, secreção).
-3. SEGURANÇA AMBIENTAL: Identificar perigos na imagem (objetos cortantes, plantas tóxicas ou alimentos proibidos).
-4. RECOMENDAÇÃO: Sugestão de cuidados específicos baseados na raça identificada.
+EXTRACTION GUIDELINES:
+1. IDENTIFICATION: Breed, estimated age, and size.
+2. VISUAL HEALTH: Assess skin/coat condition and possible ocular abnormalities (spots, discharge).
+3. ENVIRONMENTAL SAFETY: Identify hazards in the image (sharp objects, toxic plants, or prohibited foods).
+4. RECOMMENDATION: Specific care suggestion based on the identified breed.
 
-SAÍDA OBRIGATÓRIA (Use tabelas Markdown):
-| Categoria | Detalhe | Status |
+MANDATORY OUTPUT (Use Markdown Tables):
+| Category | Detail | Status |
 | :--- | :--- | :--- |
-| **Identificação** | [Raça] / [Idade] / [Porte] | ℹ️ |
-| **Saúde Visual** | [Detalhes Pele/Olhos] | [🟢/🔴] |
-| **Segurança** | [Lista de Riscos ou 'Ambiente Seguro'] | [🟢/🔴] |
-| **Recomendação** | [Dica da Raça] | 💡 |
+| **Identification** | [Breed] / [Age] / [Size] | ℹ️ |
+| **Visual Health** | [Skin/Eyes Details] | [🟢/🔴] |
+| **Safety** | [List of Risks or 'Safe Environment'] | [🟢/🔴] |
+| **Recommendation** | [Breed Tip] | 💡 |
 
-Use Emojis. Seja direto.
+Use Emojis. Be direct.
 ''';
       case PetImageType.plantCheck:
         return '''
-PROTOCOLO MASTER SCANNUT - MODO BOTÂNICO 2026
-OBJETIVO: Identificação botânica e análise toxicológica para animais domésticos.
+SCANNUT MASTER PROTOCOL - BOTANICAL MODE 2026
+OBJECTIVE: Botanical identification and toxicological analysis for domestic animals.
 
-DIRETRIZES:
-1. IDENTIFICAÇÃO: Nome científico e comum da planta.
-2. TOXICIDADE: Verificar se é tóxica para CÃES ou GATOS. Se sim, destacar com ⚠️ ou ☠️.
-3. SINTOMAS: Se tóxica, listar possíveis sintomas de ingestão.
-4. SEGURANÇA: Classificar como "SEGURA ✅" ou "PERIGOSA ⛔".
+GUIDELINES:
+1. IDENTIFICATION: Scientific and common name of the plant.
+2. TOXICITY: Check if toxic to DOGS or CATS. If yes, highlight with ⚠️ or ☠️.
+3. SYMPTOMS: If toxic, list possible ingestion symptoms.
+4. SAFETY: Classify as "SAFE ✅" or "DANGEROUS ⛔".
 
-SAÍDA OBRIGATÓRIA (Tabela Markdown):
-| Categoria | Detalhe |
+MANDATORY OUTPUT (Markdown Table):
+| Category | Detail |
 | :--- | :--- |
-| **Planta** | [Nome Comum] (*Nome Científico*) |
-| **Toxicidade** | [Tóxica/Segura] |
-| **Sintomas** | [Lista ou 'Nenhum'] |
-| **Ação** | [Manter longe / Seguro] |
+| **Plant** | [Common Name] (*Scientific Name*) |
+| **Toxicity** | [Toxic/Safe] |
+| **Symptoms** | [List or 'None'] |
+| **Action** | [Keep away / Safe] |
 
-Se for tóxica, inicie a resposta com "ALERTA DE TOXICIDADE DETECTADO".
+If toxic, start response with "TOXICITY ALERT DETECTED".
 ''';
       case PetImageType.safety:
       case PetImageType.newProfile:

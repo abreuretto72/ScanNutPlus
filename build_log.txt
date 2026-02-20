@@ -1,19 +1,9 @@
 Running Gradle task 'assembleDebug'...                          
-"pt": 27 untranslated message(s).
-To see a detailed report, use the untranslated-messages-file 
-option in the l10n.yaml file:
-untranslated-messages-file: desiredFileName.txt
-<other option>: <other selection> 
-
-
-This will generate a JSON format file containing all messages that 
-need to be translated.
-lib/features/pet/presentation/universal_pdf_preview_screen.dart:39:52: Error: Required named parameter 'footerText' must be provided.
-             return UniversalPdfService.generatePdf(
-                                                   ^
-lib/core/services/universal_pdf_service.dart:19:28: Context: Found this candidate, but the arguments don't match.
-  static Future<Uint8List> generatePdf(
-                           ^^^^^^^^^^^
+lib/features/pet/agenda/presentation/pet_appointment_screen.dart:383:65: Error: The method 'pet_agenda_date_format' isn't defined for the type 'AppLocalizations'.
+ - 'AppLocalizations' is from 'package:scannutplus/l10n/app_localizations.dart' ('lib/l10n/app_localizations.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'pet_agenda_date_format'.
+                              decoration: _inputDecoration(l10n.pet_agenda_date_format(DateTime.now()), Icons.calendar_today),
+                                                                ^^^^^^^^^^^^^^^^^^^^^^
 Target kernel_snapshot_program failed: Exception
 
 
@@ -30,5 +20,5 @@ Execution failed for task ':app:compileFlutterBuildDebug'.
 > Get more help at https://help.gradle.org.
 
 BUILD FAILED in 17s
-Running Gradle task 'assembleDebug'...                             18,2s
+Running Gradle task 'assembleDebug'...                             17,8s
 Gradle task assembleDebug failed with exit code 1

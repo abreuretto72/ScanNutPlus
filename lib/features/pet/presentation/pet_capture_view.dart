@@ -554,7 +554,6 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
              PetConstants.argType: type,
              PetConstants.argImagePath: _imagePath!,
              PetConstants.argResult: cleanResult,
-             PetConstants.argResult: cleanResult,
              PetConstants.argBreed: finalBreed, // Explicitly passing breed to Result View
              PetConstants.argPetDetails: {
                 PetConstants.fieldName: foundName.isNotEmpty ? foundName : nameToUse,
@@ -630,7 +629,6 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
                  PetConstants.argPetDetails: {
                     PetConstants.fieldName: name,
                     PetConstants.fieldBreed: PetConstants.valueUnknown,
-                    PetConstants.keyIsFriend: _isFriend.toString(),
                     PetConstants.keyIsFriend: _isFriend.toString(),
                     PetConstants.keyTutorName: _tutorName ?? '',
                     PetConstants.keyPageTitle: _getAnalysisTitle(type, AppLocalizations.of(context)!),

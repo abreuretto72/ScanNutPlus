@@ -18,7 +18,7 @@ extension PetImageTypeExt on PetImageType {
       case PetImageType.lab: return l10n.pet_type_lab; 
       case PetImageType.stool: return l10n.category_feces;
       case PetImageType.safety: return l10n.pet_type_safety;
-      case PetImageType.label: return l10n.category_food_label;
+      case PetImageType.label: return l10n.pet_module_nutrition; // Changed from category_food_label as per user request (Rotulos)
       case PetImageType.general: return l10n.pet_type_general;
       case PetImageType.wound: return l10n.category_wound;
       case PetImageType.newProfile: return l10n.pet_type_new_profile;
@@ -52,15 +52,18 @@ extension CategoryStringExt on String {
   String toCategoryDisplay(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     // Map known technical keys (from PetConstants) to L10n or Fallbacks
+    // Fix: Check 'label' before 'lab' because 'label' contains 'lab'
+    if (toLowerCase().contains('label')) return l10n.pet_module_nutrition; // "Rótulos"
+    if (toLowerCase().contains('nutrition')) return l10n.category_food_label; // Keep "Alimentos" for general nutrition if needed, or unify.
+    
     if (this == PetConstants.typeClinical || toLowerCase().contains('clinical')) return l10n.category_clinical;
     if (this == PetConstants.typeLab || toLowerCase().contains('lab')) return l10n.pet_type_lab;
     if (toLowerCase().contains('wound')) return l10n.category_wound;
     if (toLowerCase().contains('feces') || toLowerCase().contains('stool')) return l10n.category_feces;
-    if (toLowerCase().contains('label') || toLowerCase().contains('nutrition')) return l10n.category_food_label;
     
     // Archive Mappings
     if (this == PetConstants.catHealthSummary) return l10n.category_clinical; // Reuse Clinical
-    if (this == PetConstants.catNutritionPlan) return "Plano Nutricional"; // Temporary fallback or new key
+    if (this == PetConstants.catNutritionPlan) return l10n.pet_plan_nutritional; // Localized
     
     // Specific camelCase mappings (Raw Keys)
     if (this == 'newProfile' || this == PetConstants.typeNewProfile) return l10n.pet_type_new_profile;
@@ -86,6 +89,27 @@ extension CategoryStringExt on String {
     if (lower.contains('mouth') || lower.contains('teeth')) return l10n.pet_type_mouth;
     if (lower.contains('biometric')) return l10n.pet_section_biometrics;
     if (lower.contains('weight')) return l10n.pet_section_weight;
+
+    // Mappings for new Repository Keys (Pilar 0 Fix)
+    if (lower == 'pet_title_ophthalmology') return l10n.pet_title_ophthalmology;
+    if (lower == 'pet_title_dental') return l10n.pet_title_dental;
+    if (lower == 'pet_title_dermatology') return l10n.pet_title_dermatology;
+    if (lower == 'pet_title_ears') return l10n.pet_title_ears;
+    if (lower == 'pet_title_digestion') return l10n.pet_title_digestion;
+    if (lower == 'pet_title_body_condition') return l10n.pet_title_body_condition;
+    if (lower == 'pet_title_vocalization') return l10n.pet_title_vocalization;
+    if (lower == 'pet_title_behavior') return l10n.pet_title_behavior;
+    if (lower == 'pet_title_walk') return l10n.pet_title_walk;
+    if (lower == 'pet_title_ai_chat') return l10n.pet_title_ai_chat;
+    if (lower == 'pet_title_nutrition') return l10n.pet_title_nutrition;
+    if (lower == 'pet_title_lab') return l10n.pet_title_lab;
+    if (lower == 'pet_title_label_analysis') return l10n.pet_title_label_analysis;
+    if (lower == 'pet_title_plants' || lower == 'pet_title_pants') return l10n.pet_title_plants; // Fix: Handle typo 'pants'
+    if (lower == 'pet_title_initial_eval') return l10n.pet_title_initial_eval;
+    if (lower == 'pet_title_health_summary') return l10n.pet_title_health_summary;
+    if (lower == 'pet_title_general_checkup') return l10n.pet_title_general_checkup;
+    if (lower == 'pet_title_clinical_summary') return l10n.pet_title_clinical_summary;
+    if (lower == 'pet_title_planned_meal') return l10n.pet_title_planned_meal;
 
     return this; 
   }

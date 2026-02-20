@@ -17,6 +17,16 @@ extension PetEventTypeLabel on PetEventType {
         return l10n.pet_event_type_activity; 
       case PetEventType.other:
         return l10n.pet_event_type_other;
+      case PetEventType.aiChat:
+        return l10n.pet_event_type_ai_chat;
+      case PetEventType.appointment:
+        return l10n.pet_event_type_appointment;
+      case PetEventType.partner:
+        return l10n.pet_event_type_partner;
+      case PetEventType.behavior:
+        return l10n.pet_event_type_behavior;
+      case PetEventType.plant:
+        return l10n.pet_event_plant;
       case PetEventType.friend:
         // Extract "amigo" from keyword list and capitalize
         final word = l10n.keywordFriend.split(',').first.trim();
@@ -41,6 +51,16 @@ extension PetEventTypeLabel on PetEventType {
         return Icons.category;
       case PetEventType.friend:
         return Icons.pets;
+      case PetEventType.aiChat:
+        return Icons.chat;
+      case PetEventType.appointment:
+        return Icons.event;
+      case PetEventType.partner:
+        return Icons.handshake;
+      case PetEventType.behavior:
+        return Icons.psychology;
+      case PetEventType.plant:
+        return Icons.local_florist;
     }
   }
 }

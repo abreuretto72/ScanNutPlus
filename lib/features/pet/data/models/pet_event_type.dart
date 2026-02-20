@@ -26,4 +26,19 @@ enum PetEventType {
 
   @HiveField(6)
   friend,
+
+  @HiveField(7)
+  aiChat,
+
+  @HiveField(8)
+  appointment,
+
+  @HiveField(9)
+  partner,
+
+  @HiveField(10)
+  behavior,
+
+  @HiveField(11)
+  plant,
 }

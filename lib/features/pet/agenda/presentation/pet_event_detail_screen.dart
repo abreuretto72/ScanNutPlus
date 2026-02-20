@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
 import 'package:scannutplus/features/pet/agenda/domain/pet_event_type_extension.dart';
+import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_event_type_label.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart';
@@ -14,6 +15,7 @@ import 'package:just_audio/just_audio.dart';
 
 import 'package:printing/printing.dart';
 import 'package:scannutplus/core/services/universal_pdf_service.dart';
+import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 
 class PetEventDetailScreen extends StatelessWidget {
   final PetEvent event;
@@ -24,6 +26,22 @@ class PetEventDetailScreen extends StatelessWidget {
     required this.event,
     required this.petName,
   });
+
+  // --- HELPER: Source Info ---
+  (String, IconData, Color) _getSourceInfo(String? source, AppLocalizations l10n) {
+    if (source == null) return (l10n.source_analysis, Icons.analytics, Colors.pink);
+    switch (source) {
+      case 'walk': return (l10n.source_walk, Icons.directions_walk, Colors.green);
+      case 'appointment': return (l10n.source_appointment, Icons.calendar_today, Colors.blue);
+      case 'nutrition': return (l10n.source_nutrition, Icons.restaurant, Colors.orange);
+      case 'health_summary': return (l10n.source_health, Icons.medical_services, Colors.red);
+      case 'profile': return (l10n.source_profile, Icons.badge, Colors.purple);
+      case 'journal': return (l10n.source_journal, Icons.edit_note, Colors.grey);
+      case 'friend': return (l10n.source_friend, Icons.people, Colors.teal);
+      case 'analysis': 
+      default: return (l10n.source_analysis, Icons.analytics, Colors.pink);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +60,7 @@ class PetEventDetailScreen extends StatelessWidget {
     
     // Determine Title
     final String displayTitle = (event.metrics != null && event.metrics!.containsKey('custom_title'))
-                                ? event.metrics!['custom_title']
+                                ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
                                 : type.label(l10n);
 
     return Scaffold(
@@ -55,28 +73,18 @@ class PetEventDetailScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.picture_as_pdf),
             onPressed: () {
-               // Generate PDF PREVIEW
-               Navigator.push(context, MaterialPageRoute(builder: (_) => Scaffold(
-                 appBar: AppBar(title: Text(displayTitle), backgroundColor: typeColor),
-                 body: PdfPreview(
-                   build: (format) => UniversalPdfService.generatePdf(
-                     format,
-                     event.mediaPaths?.isNotEmpty == true ? event.mediaPaths!.first : null,
-                     // CONTENT: Use AI summary if present, otherwise Notes
-                     (event.hasAIAnalysis && event.metrics?[PetConstants.keyAiSummary] != null) 
-                        ? event.metrics![PetConstants.keyAiSummary] 
-                        : (event.notes ?? ''),
-                     {
-                       PetConstants.fieldName: petName,
-                       PetConstants.keyPageTitle: displayTitle,
-                       // Add date context if needed
-                     },
-                     footerText: l10n.pdf_footer_text,
-                     pageLabel: l10n.pdf_page_label,
-                     ofLabel: l10n.pdf_of_label,
-                     colorValue: typeColor.value,
-                   ),
-                 ),
+               // Generate PDF PREVIEW using the Standardized Screen
+               Navigator.push(context, MaterialPageRoute(builder: (_) => UniversalPdfPreviewScreen(
+                 title: displayTitle,
+                 filePath: event.mediaPaths?.isNotEmpty == true ? event.mediaPaths!.first : null,
+                 // CONTENT: Use AI summary if present, otherwise Notes
+                 analysisResult: (event.hasAIAnalysis && event.metrics?[PetConstants.keyAiSummary] != null) 
+                    ? event.metrics![PetConstants.keyAiSummary] 
+                    : (event.notes ?? ''),
+                 petDetails: {
+                   PetConstants.fieldName: petName,
+                   PetConstants.keyPageTitle: displayTitle,
+                 },
                )));
             },
           )
@@ -114,7 +122,7 @@ class PetEventDetailScreen extends StatelessWidget {
                       children: [
                         Text(
                           (event.metrics != null && event.metrics!.containsKey('custom_title'))
-                              ? event.metrics!['custom_title']
+                              ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
                               : type.label(l10n),
                           style: TextStyle(color: typeColor, fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -140,6 +148,36 @@ class PetEventDetailScreen extends StatelessWidget {
                               ],
                             ),
                           ),
+                          
+                        // Source Badge (Detail View)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Builder(
+                            builder: (context) {
+                               final sourceKey = event.metrics?['source'];
+                               final sourceInfo = _getSourceInfo(sourceKey, l10n);
+                               return Container(
+                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                 decoration: BoxDecoration(
+                                   color: sourceInfo.$3.withValues(alpha: 0.2),
+                                   borderRadius: BorderRadius.circular(8),
+                                   border: Border.all(color: sourceInfo.$3.withValues(alpha: 0.5)),
+                                 ),
+                                 child: Row(
+                                   mainAxisSize: MainAxisSize.min,
+                                   children: [
+                                     Icon(sourceInfo.$2, size: 14, color: sourceInfo.$3),
+                                     const SizedBox(width: 6),
+                                     Text(
+                                       sourceInfo.$1.toUpperCase(),
+                                       style: TextStyle(color: sourceInfo.$3, fontSize: 11, fontWeight: FontWeight.bold),
+                                     ),
+                                   ],
+                                 ),
+                               );
+                            }
+                          ),
+                        ),
                       ],
                     ),
                   ),

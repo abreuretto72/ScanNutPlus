@@ -5,6 +5,11 @@ import 'package:scannutplus/features/pet/data/pet_health_service.dart';
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_agenda_screen.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:scannutplus/features/pet/data/repositories/pet_event_repository.dart';
+import 'package:scannutplus/features/pet/data/models/pet_event_model.dart' as model;
+import 'package:scannutplus/features/pet/data/models/pet_event_type.dart' as enums;
+import 'package:uuid/uuid.dart';
+import 'package:scannutplus/l10n/app_localizations.dart';
 
 class PetHealthScreen extends StatefulWidget {
   final String petUuid;
@@ -20,37 +25,13 @@ class PetHealthScreen extends StatefulWidget {
   State<PetHealthScreen> createState() => _PetHealthScreenState();
 }
 
-class _PetHealthScreenState extends State<PetHealthScreen> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _PetHealthScreenState extends State<PetHealthScreen> {
+  // late TabController _tabController; // Removed
   final PetHealthService _healthService = PetHealthService();
-  
-  String? _healthSummary;
   String? _nutritionPlan;
-  
-  bool _isLoadingHealth = false;
   bool _isLoadingNutrition = false;
+  
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    // Auto-load summary on init? Or wait for user? 
-    // Let's trigger summary automatically for better UX
-    _loadHealthSummary();
-  }
-
-  Future<void> _loadHealthSummary() async {
-    debugPrint('[PetHealthScreen] Requesting Health Summary...');
-    setState(() => _isLoadingHealth = true);
-    final result = await _healthService.generateHealthSummary(widget.petUuid);
-    debugPrint('[PetHealthScreen] Health Summary received. Length: ${result.length}');
-    if (mounted) {
-      setState(() {
-        _healthSummary = result;
-        _isLoadingHealth = false;
-      });
-    }
-  }
 
   Future<void> _showGoalSelectionDialog() async {
     final Map<String, IconData> goals = {
@@ -209,9 +190,8 @@ class _PetHealthScreenState extends State<PetHealthScreen> with SingleTickerProv
 
 
   Future<void> _generatePdf() async {
-    final isHealthTab = _tabController.index == 0;
-    final content = isHealthTab ? _healthSummary : _nutritionPlan;
-    final title = isHealthTab ? "Resumo Clínico Vet" : "Plano Nutricional";
+    final content = _nutritionPlan;
+    final title = "Plano Nutricional";
 
     if (content == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -243,7 +223,7 @@ class _PetHealthScreenState extends State<PetHealthScreen> with SingleTickerProv
     return Scaffold(
       backgroundColor: AppColors.petBackgroundDark,
       appBar: AppBar(
-        title: Text("Saúde & Nutrição", style: TextStyle(color: Colors.white)),
+        title: Text(AppLocalizations.of(context)?.pet_nutrition_screen_title ?? "Nutrição", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: Colors.white),
         actions: [
@@ -268,47 +248,12 @@ class _PetHealthScreenState extends State<PetHealthScreen> with SingleTickerProv
             tooltip: "Gerar Relatório PDF",
           ),
         ],
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: AppColors.petPrimary,
-          labelColor: AppColors.petPrimary,
-          unselectedLabelColor: Colors.white54,
-          tabs: [
-            Tab(icon: Icon(Icons.monitor_heart), text: "Resumo"),
-            Tab(icon: Icon(Icons.restaurant), text: "Nutrição"),
-          ],
-        ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildHealthTab(),
-          _buildNutritionTab(),
-        ],
-      ),
+      body: _buildNutritionTab(),
     );
   }
 
-  Widget _buildHealthTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildActionCard(
-            title: "Gerar Resumo Clínico",
-            subtitle: "Análise completa baseada no histórico e agenda.",
-            icon: Icons.analytics,
-            onTap: _loadHealthSummary,
-            isLoading: _isLoadingHealth,
-          ),
-          const SizedBox(height: 20),
-          if (_healthSummary != null)
-            _buildReportContent(_healthSummary!),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildNutritionTab() {
     return SingleChildScrollView(
@@ -324,11 +269,217 @@ class _PetHealthScreenState extends State<PetHealthScreen> with SingleTickerProv
             isLoading: _isLoadingNutrition,
           ),
           const SizedBox(height: 20),
-           if (_nutritionPlan != null)
+           if (_nutritionPlan != null) ...[ // Use spread operator for conditional list
             _buildReportContent(_nutritionPlan!),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: _copyMealsToAgenda,
+              icon: const Icon(Icons.calendar_today, color: Colors.black),
+              label: Text(
+                AppLocalizations.of(context)?.pet_nutrition_copy_action ?? "Copiar refeições para agenda",
+                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.petPrimary,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+            ),
+           ],
         ],
       ),
     );
+  }
+
+  Future<void> _copyMealsToAgenda() async {
+    debugPrint("[NUTRITION_DEBUG] _copyMealsToAgenda triggered.");
+    if (_nutritionPlan == null) {
+        debugPrint("[NUTRITION_DEBUG] Plan is null. Aborting.");
+        return;
+    }
+
+    // 1. Select Start Date
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 30)),
+      helpText: AppLocalizations.of(context)?.pet_nutrition_select_start_date ?? "Selecione a Segunda-feira de início",
+    );
+
+    if (pickedDate == null) {
+       debugPrint("[NUTRITION_DEBUG] Date cancelled.");
+       return;
+    }
+    
+    debugPrint("[NUTRITION_DEBUG] Picked Date: $pickedDate");
+
+    // 2. Parse Plan
+    debugPrint("[NUTRITION_DEBUG] Starting Parse (Plan Length: ${_nutritionPlan!.length})");
+    final weeklyMeals = _parseWeeklyMeals(_nutritionPlan!);
+    debugPrint("[NUTRITION_DEBUG] Parse Result: ${weeklyMeals.keys.length} days found.");
+    weeklyMeals.forEach((key, value) {
+        debugPrint("[NUTRITION_DEBUG] Day $key has ${value.length} meals.");
+    });
+    
+    if (weeklyMeals.isEmpty) {
+        debugPrint("[NUTRITION_DEBUG] No meals found in plan.");
+        ScaffoldMessenger.of(context).showSnackBar(
+           SnackBar(content: Text(AppLocalizations.of(context)?.pet_nutrition_copy_error ?? "Erro ao ler cardápio."))
+        );
+        return;
+    }
+
+    // 3. Create Events
+    final repo = PetEventRepository();
+    int createdCount = 0;
+    
+    try {
+      // Iterate 7 days from start date
+      for (int i = 0; i < 7; i++) {
+        final date = pickedDate.add(Duration(days: i));
+        final dayIndex = i + 1; // 1 to 7
+
+        // Get meals for this specific day OR generic "TODOS"
+        List<_MealItem> dayMeals = weeklyMeals[dayIndex] ?? [];
+        if (dayMeals.isEmpty) {
+            debugPrint("[NUTRITION_DEBUG] Day $dayIndex empty. Trying fallback to Day 0 (All Days).");
+            dayMeals = weeklyMeals[0] ?? []; // 0 = "TODOS OS DIAS" fallback
+        } else {
+            debugPrint("[NUTRITION_DEBUG] Day $dayIndex found specific meals.");
+        }
+
+        for (var meal in dayMeals) {
+           try {
+             // Parse input HH:mm
+             final parts = meal.time.split(':');
+             final hour = int.parse(parts[0]);
+             final minute = int.parse(parts[1]);
+             
+             final eventTime = DateTime(date.year, date.month, date.day, hour, minute);
+             debugPrint("[NUTRITION_DEBUG] Creating Event: ${meal.description} at $eventTime");
+             
+             final event = model.PetEvent(
+               id: const Uuid().v4(),
+               startDateTime: eventTime,
+               petIds: [widget.petUuid],
+                eventType: enums.PetEventType.food,
+               hasAIAnalysis: true, 
+               notes: meal.description,
+               metrics: {
+                 'source': 'nutrition_plan',
+                 'custom_title': 'pet_title_planned_meal'
+               }
+             );
+             
+             await repo.saveEvent(event);
+             createdCount++;
+           } catch (e) {
+             debugPrint("[NUTRITION_DEBUG] Error parsing/saving meal: ${meal.time} - $e");
+           }
+        }
+      }
+      
+      debugPrint("[NUTRITION_DEBUG] Finished. Created $createdCount events.");
+      if (mounted) {
+         ScaffoldMessenger.of(context).showSnackBar(
+           SnackBar(
+             content: Text(AppLocalizations.of(context)?.pet_nutrition_copy_success ?? "Agenda atualizada! ($createdCount eventos)"), 
+             backgroundColor: Colors.green
+           )
+         );
+      }
+    } catch (e) {
+      debugPrint("[NUTRITION_DEBUG] Critical Error copying meals: $e");
+       if (mounted) {
+         ScaffoldMessenger.of(context).showSnackBar(
+           SnackBar(content: Text("Erro: $e"), backgroundColor: Colors.red)
+         );
+      }
+    }
+  }
+
+  // Returns Map<DayIndex, List<Meals>>. Index 0 = "All Days/Generic".
+  Map<int, List<_MealItem>> _parseWeeklyMeals(String plan) {
+    Map<int, List<_MealItem>> weeklyMap = {};
+    
+    // 1. Extract Cardápio Block
+    debugPrint("[NUTRITION_DEBUG] Extracting Card Block...");
+    final cardMatch = RegExp(r'TITLE:\s*Cardápio.*?CONTENT:(.*?)\[CARD_END\]', dotAll: true).firstMatch(plan);
+    String menuContent = cardMatch?.group(1) ?? plan; 
+    debugPrint("[NUTRITION_DEBUG] Menu Content Extracted (${menuContent.length} chars).");
+    
+    // Normalize content
+    menuContent = menuContent.replaceAll('**', ''); // Remove bold
+
+    // 2. Strategy: Split by "DIA X" or known headers
+    // Regex to find "DIA 1:" or "SEGUNDA:" block starts
+    final headerRegex = RegExp(r'(?:DIA\s*(\d+)|SEGUNDA|TERÇA|QUARTA|QUINTA|SEXTA|SÁBADO|DOMINGO|TODOS OS DIAS)[:\s-]', caseSensitive: false);
+    
+    final matches = headerRegex.allMatches(menuContent).toList();
+    debugPrint("[NUTRITION_DEBUG] Headers found: ${matches.length}");
+    
+    if (matches.isEmpty) {
+        debugPrint("[NUTRITION_DEBUG] No headers found. Using strict regex on entire content.");
+        // No headers found? Treat strict regex on whole content as "Every Day" (Index 0)
+        weeklyMap[0] = _extractMealsFromText(menuContent);
+        return weeklyMap;
+    }
+
+    // Loop through headers and capture content between them
+    for (int i = 0; i < matches.length; i++) {
+        final start = matches[i].end;
+        final end = (i + 1 < matches.length) ? matches[i+1].start : menuContent.length;
+        
+        final sectionContent = menuContent.substring(start, end);
+        final headerText = menuContent.substring(matches[i].start, matches[i].end).toUpperCase();
+        debugPrint("[NUTRITION_DEBUG] Processing Header: $headerText");
+        
+        int dayIndex = 0; // Default 0
+        
+        if (headerText.contains("DIA")) {
+            final dayDigit = RegExp(r'\d+').firstMatch(headerText)?.group(0);
+            if (dayDigit != null) dayIndex = int.tryParse(dayDigit) ?? 0;
+        } else if (headerText.contains("SEGUNDA")) dayIndex = 1;
+        else if (headerText.contains("TERÇA")) dayIndex = 2;
+        else if (headerText.contains("QUARTA")) dayIndex = 3;
+        else if (headerText.contains("QUINTA")) dayIndex = 4;
+        else if (headerText.contains("SEXTA")) dayIndex = 5;
+        else if (headerText.contains("SÁBADO")) dayIndex = 6;
+        else if (headerText.contains("DOMINGO")) dayIndex = 7;
+        
+        // Extract meals for this section
+        final meals = _extractMealsFromText(sectionContent);
+        debugPrint("[NUTRITION_DEBUG] Found ${meals.length} meals for Day Index $dayIndex");
+        if (meals.isNotEmpty) {
+           weeklyMap[dayIndex] = meals;
+        }
+    }
+    
+    // If we only found index 0 (TODOS) or nothing for specific days, ensure we have something
+    if (weeklyMap.isEmpty) {
+         debugPrint("[NUTRITION_DEBUG] Map empty after header parsing. Fallback to extracting all.");
+         weeklyMap[0] = _extractMealsFromText(menuContent);
+    }
+    
+    return weeklyMap;
+  }
+
+  List<_MealItem> _extractMealsFromText(String text) {
+      List<_MealItem> items = [];
+      // Regex: HH:mm - Desc
+      final regex = RegExp(r'(\d{2}:\d{2})\s*[-:]?\s*(.*)', multiLine: true);
+      final matches = regex.allMatches(text);
+      
+      for (var m in matches) {
+        final time = m.group(1);
+        final desc = m.group(2)?.trim();
+        if (time != null && desc != null && desc.isNotEmpty) {
+           if (!items.any((i) => i.time == time && i.description == desc)) {
+              items.add(_MealItem(time, desc));
+           }
+        }
+      }
+      return items;
   }
 
   Widget _buildActionCard({
@@ -559,4 +710,10 @@ class _AnalysisBlock {
   final String content;
   final IconData icon;
   _AnalysisBlock({required this.title, required this.content, required this.icon});
+}
+
+class _MealItem {
+  final String time;
+  final String description;
+  _MealItem(this.time, this.description);
 }

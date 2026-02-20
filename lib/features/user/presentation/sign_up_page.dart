@@ -3,7 +3,7 @@ import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/core/presentation/widgets/app_scroll_view.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/core/services/simple_auth_service.dart';
-import 'package:scannutplus/features/home/presentation/home_view.dart';
+import 'package:scannutplus/features/pet/presentation/my_pets_view.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -49,7 +49,7 @@ class _SignUpPageState extends State<SignUpPage> {
       Future.delayed(const Duration(milliseconds: 1500), () {
         if (!mounted) return;
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeView()),
+            MaterialPageRoute(builder: (context) => const MyPetsView()),
         );
       });
     });

@@ -40,7 +40,9 @@
   "home_welcome_user": "Olá, {name}",
   "@home_welcome_user": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "common_logout": "Sair",
@@ -140,7 +142,9 @@
   "pet_analysis_error_generic": "Erro de Análise: {error}",
   "@pet_analysis_error_generic": {
     "placeholders": {
-      "error": { "type": "Object" }
+      "error": {
+        "type": "Object"
+      }
     }
   },
   "pet_urgency_red": "Urgência: Crítico",
@@ -159,7 +163,9 @@
   "error_database_load": "Erro ao carregar banco: {error}",
   "@error_database_load": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "pet_section_body": "Corpo",
@@ -200,13 +206,17 @@
   "pet_analyzing_x": "Analisando: {name}",
   "@pet_analyzing_x": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "pet_id_format": "ID: {id}",
   "@pet_id_format": {
     "placeholders": {
-      "id": { "type": "String" }
+      "id": {
+        "type": "String"
+      }
     }
   },
   "pet_type_safety": "Segurança",
@@ -222,7 +232,7 @@
   "pet_status_critical_simple": "Crítico",
   "pet_status_attention_simple": "Atenção",
   "pet_section_sources": "Referências",
-  "pet_action_new_analysis": "Nova Análise",
+  "pet_action_new_analysis": "Analisar",
   "source_scannut_db": "Banco ScanNut+",
   "pet_unknown_name": "Sem Nome",
   "pet_footer_brand": "Inteligência Pet ScanNut+",
@@ -295,6 +305,30 @@
   "error_try_recover": "Recuperar",
   "pet_profile_save_success": "Perfil atualizado",
   "pet_action_save_profile": "SALVAR PERFIL",
+  "pet_metric_title": "Métricas Clínicas",
+  "pet_metric_section_vitals": "1. Sinais Vitais e Clínicos",
+  "pet_metric_weight": "Peso Corporal (kg)",
+  "pet_metric_bpm": "Freq. Cardíaca (BPM)",
+  "pet_metric_mpm": "Freq. Respiratória (MPM)",
+  "pet_metric_temp": "Temperatura Retal (°C)",
+  "pet_metric_tpc": "Tempo de Preenchimento Capilar (Segs)",
+  "pet_metric_glycemia": "Nível de Glicemia (mg/dL)",
+  "pet_metric_section_structure": "2. Estrutura e Composição",
+  "pet_metric_ecc": "Escore Condição Corporal (1 a 9)",
+  "pet_metric_abd_circ": "Circunferência Abdominal (cm)",
+  "pet_metric_neck_circ": "Circunferência do Pescoço (cm)",
+  "pet_metric_height": "Altura Cernelha (cm)",
+  "pet_metric_section_hydration": "3. Hidratação e Excreção",
+  "pet_metric_water": "Ingestão de Água (ml/24h)",
+  "pet_metric_urine_vol": "Volume Urinário (ml ou Texto)",
+  "pet_metric_urine_dens": "Densidade Urinária",
+  "pet_metric_section_activity": "4. Atividade e Biometria",
+  "pet_metric_distance": "Distância Percorrida (km)",
+  "pet_metric_speed": "Velocidade Média (km/h)",
+  "pet_metric_sleep": "Tempo de Sono/Repouso (horas)",
+  "pet_metric_stand_latency": "Latência para Levantar (segundos)",
+  "pet_metric_save_success": "Métricas salvas com sucesso!",
+  "pet_metric_empty_fields": "Por favor, preencha pelo menos uma métrica.",
   "pet_not_found": "Pet não encontrado",
   "pet_plans_title": "Planos",
   "pet_action_manage_health_plan": "Saúde",
@@ -360,14 +394,13 @@
   "funeral_action_call_emergency": "EMERGÊNCIA",
   "funeral_action_save": "SALVAR",
   "funeral_save_success": "Salvo!",
-  "pet_action_analyses": "Análises",
-  "pet_action_health": "Saúde",
-  "pet_action_agenda": "Agenda",
   "pet_history_button": "Histórico",
   "ai_assistant_title": "IA {name}",
   "@ai_assistant_title": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "ai_input_hint": "Pergunte aqui...",
@@ -377,13 +410,17 @@
   "pet_age_years": "{count, plural, =1{1 ano} other{{count} anos}}",
   "@pet_age_years": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "pet_age_months": "{count, plural, =1{1 mês} other{{count} meses}}",
   "@pet_age_months": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "pet_age_estimate_label": "Idade estimada:",
@@ -405,44 +442,61 @@
   "pet_analyses_title": "Análises: {name}",
   "@pet_analyses_title": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "pet_profile_title_dynamic": "Perfil: {name}",
   "@pet_profile_title_dynamic": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "pet_health_title": "Saúde: {name}",
   "@pet_health_title": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "pet_health_plan_title": "Plano Saúde: {name}",
   "@pet_health_plan_title": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "pet_funeral_plan_title": "Plano Funeral: {name}",
   "@pet_funeral_plan_title": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
-  "pet_event_type_food": "Alimentação",
+  "pet_event_type_food": "Nutrição",
   "pet_event_type_health": "Saúde",
   "pet_event_type_weight": "Peso",
   "pet_event_type_hygiene": "Higiene",
-  "pet_event_type_activity": "Atividade",
+  "pet_event_type_activity": "Passeios",
+  "pet_event_type_ai_chat": "Chat IA",
+  "pet_event_type_appointment": "Compromissos",
+  "pet_event_type_partner": "Parceiros",
+  "pet_event_type_behavior": "Comportamento",
+  "pet_event_type_plant": "Plantas",
   "pet_analysis_visual_title": "Análise Visual",
   "pet_event_type_other": "Outros",
   "pet_agenda_coming_soon": "Módulo Agenda para {name}",
   "@pet_agenda_coming_soon": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "pet_medical_history_empty": "Sem histórico médico.",
@@ -451,7 +505,9 @@
   "pet_ai_connection_error": "Erro IA: {error}",
   "@pet_ai_connection_error": {
     "placeholders": {
-      "error": { "type": "Object" }
+      "error": {
+        "type": "Object"
+      }
     }
   },
   "pet_ai_trouble_thinking": "Dificuldade em processar.",
@@ -459,20 +515,26 @@
   "pet_stt_error": "STT Erro: {error}",
   "@pet_stt_error": {
     "placeholders": {
-      "error": { "type": "Object" }
+      "error": {
+        "type": "Object"
+      }
     }
   },
   "pet_entry_deleted": "Excluído",
   "pet_error_history_load": "Erro Histórico: {error}",
   "@pet_error_history_load": {
     "placeholders": {
-      "error": { "type": "Object" }
+      "error": {
+        "type": "Object"
+      }
     }
   },
   "pet_ai_greeting": "Olá! Sou a IA do {name}.",
   "@pet_ai_greeting": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "tab_food": "Alimentos",
@@ -487,18 +549,15 @@
   "pet_section_issues": "Alertas",
   "pet_status_healthy": "SAUDÁVEL",
   "pet_status_attention": "ATENÇÃO",
-  "pet_analysis_title": "Análise: {name}",
-  "@pet_analysis_title": {
-    "placeholders": {
-      "name": { "type": "Object" }
-    }
-  },
-  "pet_event_food": "Comida",
+  "pet_event_food": "Nutrição",
   "pet_event_health": "Saúde",
   "pet_event_weight": "Peso",
   "pet_event_walk": "Passeio",
-  "pet_event_hygiene": "Banho",
+  "pet_event_appointment": "Compromisso",
+  "pet_event_partner": "Parceiro",
   "pet_event_behavior": "Comportamento",
+  "pet_event_ai_chat": "Chat IA",
+  "pet_event_hygiene": "Banho",
   "pet_event_medication": "Remédio",
   "pet_event_note": "Nota",
   "pet_ai_thinking_status": "IA Pensando...",
@@ -507,25 +566,27 @@
   "@pet_agenda_title_dynamic": {
     "description": "Título da tela de agenda com nome do pet dinâmico",
     "placeholders": {
-        "petName": {
-            "type": "String"
-        }
+      "petName": {
+        "type": "String"
+      }
     }
   },
   "pet_walk_title_dynamic": "Passeio: {petName}",
   "@pet_walk_title_dynamic": {
     "description": "Título da tela de passeio com nome do pet dinâmico (Walk)",
     "placeholders": {
-        "petName": {
-            "type": "String"
-        }
+      "petName": {
+        "type": "String"
+      }
     }
   },
   "pet_agenda_empty": "Agenda vazia",
   "pet_agenda_add_event_dynamic": "Evento para {petName}",
   "@pet_agenda_add_event_dynamic": {
     "placeholders": {
-      "petName": { "type": "Object" }
+      "petName": {
+        "type": "Object"
+      }
     }
   },
   "pet_agenda_today": "Hoje",
@@ -539,7 +600,9 @@
   "pet_journal_add_event": "Diário {petName}",
   "@pet_journal_add_event": {
     "placeholders": {
-      "petName": { "type": "Object" }
+      "petName": {
+        "type": "Object"
+      }
     }
   },
   "pet_journal_question": "O que houve?",
@@ -579,7 +642,9 @@
   "error_gps": "GPS: {error}",
   "@error_gps": {
     "placeholders": {
-      "error": { "type": "Object" }
+      "error": {
+        "type": "Object"
+      }
     }
   },
   "gps_error_snack": "Erro GPS.",
@@ -611,13 +676,17 @@
   "pet_journal_file_selected": "Arquivo: {name}",
   "@pet_journal_file_selected": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "pet_journal_file_error": "Erro: {error}",
   "@pet_journal_file_error": {
     "placeholders": {
-      "error": { "type": "Object" }
+      "error": {
+        "type": "Object"
+      }
     }
   },
   "pet_journal_help_title": "Ajuda",
@@ -640,25 +709,33 @@
   "pet_error_ai_analysis_failed": "IA Erro: {error}",
   "@pet_error_ai_analysis_failed": {
     "placeholders": {
-      "error": { "type": "Object" }
+      "error": {
+        "type": "Object"
+      }
     }
   },
   "pet_error_repository_failure": "Falha: {status}",
   "@pet_error_repository_failure": {
     "placeholders": {
-      "status": { "type": "Object" }
+      "status": {
+        "type": "Object"
+      }
     }
   },
   "pet_error_saving_event": "Salvar Erro: {error}",
   "@pet_error_saving_event": {
     "placeholders": {
-      "error": { "type": "Object" }
+      "error": {
+        "type": "Object"
+      }
     }
   },
   "pet_agenda_summary_format": "{count} eventos",
   "@pet_agenda_summary_format": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "common_delete_confirm_title": "Excluir?",
@@ -677,7 +754,9 @@
   "map_error_location": "Erro: {error}",
   "@map_error_location": {
     "placeholders": {
-      "error": { "type": "Object" }
+      "error": {
+        "type": "Object"
+      }
     }
   },
   "map_title_pet_location": "Localização",
@@ -696,7 +775,6 @@
   "error_video_too_long": "Máx 60s",
   "keywordFriend": "Amigo",
   "keywordGuest": "Convidado",
-  "pet_agenda_view_calendar": "Ver Calendário",
   "pet_module_dentistry_programs": "Tártaro, Gengivite, Dentes Quebrados",
   "pet_module_dermatology_programs": "Alopecias, Dermatites, Feridas, Parasitas",
   "pet_module_gastro_programs": "Consistência, Cor, Parasitas, Sangue",
@@ -713,7 +791,6 @@
   "pet_module_plant_programs": "Identificação de Plantas Tóxicas",
   "pet_module_food_bowl": "Alimentação",
   "pet_module_food_bowl_programs": "Qualidade da Ração, Comida Natural",
-  "pet_label_pet": "Pet",
   "action_record_video_audio": "Gravar",
   "action_select_audio": "Escolher Áudio",
   "action_upload_video_audio": "Carregar",
@@ -727,13 +804,17 @@
   "pet_result_title_my_pet": "Meu Pet: {name}",
   "@pet_result_title_my_pet": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "pet_result_title_friend_pet": "Amigo: {name}",
   "@pet_result_title_friend_pet": {
     "placeholders": {
-      "name": { "type": "Object" }
+      "name": {
+        "type": "Object"
+      }
     }
   },
   "pet_action_edit_friend": "Editar",
@@ -775,8 +856,191 @@
   "pet_notification_1w": "1 semana antes",
   "pet_notification_none": "Sem notificação",
   "pet_delete_confirmation_title": "Confirmar exclusão?",
-  "common_delete": "Excluir",
   "pet_appointment_tab_data": "Compromisso",
-  "pet_appointment_tab_partner": "Dados do Parceiro",
-  "common_save": "Salvar"
+  "pet_appointment_tab_partner": "Parceiros",
+  "common_save": "Salvar",
+  "source_analysis": "Análise",
+  "source_walk": "Passeio",
+  "source_appointment": "Compromisso",
+  "source_nutrition": "Nutrição",
+  "source_health": "Saúde",
+  "source_profile": "Perfil",
+  "source_journal": "Diário",
+  "pet_plan_nutritional": "Plano Nutricional",
+  "pet_walk_summary_dialog_title": "Resumo do Passeio 🐾",
+  "pet_walk_summary_dialog_desc": "Selecione o intervalo para gerar o resumo com IA.",
+  "pet_label_start": "Início",
+  "pet_label_end": "Fim",
+  "pet_action_generate_summary": "Gerar Resumo",
+  "pet_error_fetch_events": "Erro ao buscar eventos.",
+  "pet_error_no_events_period": "Nenhum evento encontrado neste período.",
+  "pet_msg_summary_success": "Resumo gerado e salvo com sucesso! 🐾",
+  "pet_walk_empty_history": "Nenhum passeio registrado.",
+  "pet_walk_summary_title_generated": "Resumo {start} - {end}",
+  "@pet_walk_summary_title_generated": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "pet_msg_google_simulated": "Dados do Google (Simulados) adicionados!",
+  "pet_nutrition_copy_action": "Copiar refeições para agenda",
+  "pet_nutrition_select_start_date": "Selecione a data de início (Segunda-feira)",
+  "pet_nutrition_copy_success": "Refeições copiadas para a agenda!",
+  "pet_nutrition_copy_error": "Erro ao copiar. Verifique o formato do plano.",
+  "pet_appointment_type_vermifuge": "Vermifugação/Antipulgas",
+  "pet_appointment_type_medication": "Medicação Contínua",
+  "pet_appointment_type_training": "Adestramento/Treino",
+  "pet_appointment_type_daycare": "Creche/Daycare",
+  "pet_appointment_type_nails_ears": "Corte de Unhas/Ouvidos",
+  "pet_appointment_type_dental": "Escovação de Dentes",
+  "pet_appointment_type_food_change": "Troca de Ração",
+  "pet_appointment_type_travel": "Viagem Pet Friendly",
+  "pet_appointment_type_accessories": "Troca de Acessórios",
+  "pet_appointment_cat_health": "Saúde (Essencial)",
+  "pet_appointment_cat_wellness": "Bem-estar & Estética",
+  "pet_appointment_cat_behavior": "Comportamento & Treino",
+  "pet_appointment_cat_services": "Serviços Extras",
+  "pet_appointment_cat_nutrition": "Nutrição",
+  "pet_appointment_cat_docs": "Documentação",
+  "pet_apt_consultation_general": "Clínica Geral",
+  "pet_apt_consultation_return": "Retorno",
+  "pet_apt_consultation_specialist": "Especialista",
+  "pet_apt_consultation_tele": "Teleconsulta",
+  "pet_apt_vaccine_annual": "Vacina Anual",
+  "pet_apt_vaccine_specific": "Vacina Específica",
+  "pet_apt_vaccine_booster": "Reforço",
+  "pet_apt_exam_blood": "Hemograma",
+  "pet_apt_exam_ultrasound": "Ultrassom",
+  "pet_apt_exam_xray": "Raio-X",
+  "pet_apt_exam_lab": "Laboratorial",
+  "pet_apt_exam_periodic": "Periódico",
+  "pet_apt_procedure_castration": "Castração",
+  "pet_apt_procedure_surgery": "Cirurgia",
+  "pet_apt_procedure_dental": "Limpeza Dentária",
+  "pet_apt_procedure_dressing": "Curativos",
+  "pet_apt_treatment_physio": "Fisioterapia",
+  "pet_apt_treatment_acu": "Acupuntura",
+  "pet_apt_treatment_chemo": "Quimioterapia",
+  "pet_apt_treatment_hemo": "Hemodiálise",
+  "pet_apt_wellness_bath": "Banho",
+  "pet_apt_wellness_grooming": "Tosa",
+  "pet_apt_wellness_hygienic": "Tosa Higiênica",
+  "pet_apt_wellness_hydration": "Hidratação",
+  "pet_apt_wellness_daycare": "Day Care",
+  "pet_apt_wellness_hotel": "Hotelzinho",
+  "pet_apt_behavior_training": "Adestramento",
+  "pet_apt_behavior_evaluation": "Avaliação Comportamental",
+  "pet_apt_behavior_social": "Socialização",
+  "pet_apt_service_taxi": "Táxi Pet",
+  "pet_apt_service_delivery": "Entrega Ração",
+  "pet_apt_nutrition_meal": "Refeição",
+  "pet_apt_nutrition_food_change": "Troca de Ração",
+  "pet_apt_service_nutrition": "Consulta Nutricional",
+  "pet_apt_service_mealplan": "Plano Alimentar",
+  "pet_apt_doc_vaccine_card": "Renovação Carteirinha",
+  "pet_apt_doc_health_cert": "Atestado de Saúde",
+  "pet_apt_doc_microchip": "Microchipagem",
+  "pet_apt_doc_gta": "Emissão GTA",
+  "pet_apt_doc_travel": "Docs Viagem",
+  "pet_apt_select_category": "Categoria",
+  "pet_apt_select_type": "Tipo de Agendamento",
+  "source_friend": "Amigo",
+  "pet_title_ophthalmology": "Oftalmologia",
+  "pet_title_dental": "Saúde Bucal",
+  "pet_title_dermatology": "Pele e Pelagem",
+  "pet_title_ears": "Ouvidos",
+  "pet_title_digestion": "Digestão",
+  "pet_title_body_condition": "Condição Corporal",
+  "pet_title_vocalization": "Vocalização",
+  "pet_title_behavior": "Comportamento",
+  "pet_title_walk": "Passeio",
+  "pet_title_ai_chat": "Chat IA",
+  "pet_title_nutrition": "Nutrição",
+  "pet_title_lab": "Laboratório",
+  "pet_title_label_analysis": "Análise de Rótulo",
+  "pet_title_plants": "Plantas",
+  "pet_title_initial_eval": "Avaliação Inicial",
+  "pet_title_health_summary": "Resumo de Saúde",
+  "pet_title_general_checkup": "Check-up Geral",
+  "pet_title_clinical_summary": "Resumo Clínico",
+  "pet_action_nutrition": "Nutrição",
+  "pet_nutrition_screen_title": "Nutrição",
+  "pet_title_planned_meal": "Refeição Planejada",
+  "pet_record_medication": "Medicação",
+  "pet_record_weight": "Peso",
+  "pet_record_energy": "Energia",
+  "pet_record_appetite": "Apetite",
+  "pet_record_incident": "Incidentes",
+  "pet_record_other": "Outros",
+  "pet_field_drug_name": "Nome do Fármaco",
+  "pet_field_category": "Categoria",
+  "pet_field_dosage": "Dosagem",
+  "pet_field_unit": "Unidade",
+  "pet_field_time": "Horário Real",
+  "pet_field_observation": "Observação",
+  "pet_field_mass": "Massa",
+  "pet_field_location": "Local",
+  "pet_field_energy_level": "Nível",
+  "pet_field_period": "Período",
+  "pet_field_context": "Contexto",
+  "pet_field_consumption": "Consumo",
+  "pet_field_thirst": "Sede",
+  "pet_field_diet_variation": "Variação Dieta",
+  "pet_field_severity": "Gravidade",
+  "pet_field_description": "Descrição",
+  "pet_field_symptoms": "Sintomas",
+  "pet_field_action_taken": "Ação Tomada",
+  "pet_field_type": "Tipo",
+  "pet_field_details": "Detalhes",
+  "pet_opt_continuous": "Contínuo",
+  "pet_opt_wormer": "Vermífugo",
+  "pet_opt_flea": "Antipulgas",
+  "pet_opt_antibiotic": "Antibiótico",
+  "pet_opt_low": "Baixo/Apático",
+  "pet_opt_normal": "Normal",
+  "pet_opt_active": "Ativo",
+  "pet_opt_hyper": "Hiperativo",
+  "pet_opt_morning": "Manhã",
+  "pet_opt_afternoon": "Tarde",
+  "pet_opt_night": "Noite",
+  "pet_opt_all_day": "Dia Inteiro",
+  "pet_opt_none": "Nada",
+  "pet_opt_half": "Metade",
+  "pet_opt_all": "Tudo",
+  "pet_opt_reduced": "Diminuída",
+  "pet_opt_excessive": "Excessiva",
+  "pet_opt_mild": "Leve",
+  "pet_opt_moderate": "Moderada",
+  "pet_opt_urgent": "Urgente",
+  "pet_opt_hygiene": "Higiene",
+  "pet_opt_estrus": "Cio/Reprodução",
+  "pet_opt_social": "Social",
+  "pet_record_save_success": "Registro salvo com sucesso!",
+  "pet_record_save_error": "Erro ao salvar registro.",
+  "help_ia_pet_pillars_title": "Inteligência Pet ScanNut+",
+  "help_pillar_analysis_title": "Análises de Imagens e Vídeos",
+  "help_pillar_analysis_desc": "Nossa IA processa fotos e vídeos para identificar sinais sutis de saúde, postura e comportamento do seu pet.",
+  "help_pillar_walks_title": "Monitoramento de Passeios",
+  "help_pillar_walks_desc": "Registro do que ocorre nos passeios, monitorando níveis de energia, interações e trajetos preditivos.",
+  "help_pillar_agenda_title": "Agenda e Ocorrências",
+  "help_pillar_agenda_desc": "Central de compromissos e registros diários: medicação, peso, incidentes e histórico de análises em um só lugar.",
+  "help_pillar_nutrition_title": "Nutrição Inteligente",
+  "help_pillar_nutrition_desc": "Geração de cardápios personalizados e inclusão automática das refeições na agenda para controle de consumo.",
+  "help_pillar_profile_title": "Perfil e Documentação",
+  "help_pillar_profile_desc": "Dados do pet, planos de saúde, funerário e armazenamento de documentos importantes para acesso rápido.",
+  "pet_agenda_tab_history_label": "Histórico",
+  "pet_agenda_tab_records": "Registros",
+  "pet_field_partner_name": "Nome do Local/Profissional",
+  "pet_field_contact_person": "Pessoa de Contato",
+  "pet_field_phone": "Telefone",
+  "pet_field_whatsapp": "WhatsApp",
+  "pet_field_email": "E-mail",
+  "pet_logic_keywords_health": "coco, cocô, fezes, xixi, urina, vomito, vômito, diarreia, sangue, machucado, ferida, dor, mancar, engasgo",
+  "pet_field_what_to_do": "O que vai fazer?",
+  "pet_field_what_was_done": "O que foi feito?"
 }

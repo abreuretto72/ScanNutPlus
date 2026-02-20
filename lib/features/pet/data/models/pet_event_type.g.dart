@@ -27,6 +27,16 @@ class PetEventTypeAdapter extends TypeAdapter<PetEventType> {
         return PetEventType.other;
       case 6:
         return PetEventType.friend;
+      case 7:
+        return PetEventType.aiChat;
+      case 8:
+        return PetEventType.appointment;
+      case 9:
+        return PetEventType.partner;
+      case 10:
+        return PetEventType.behavior;
+      case 11:
+        return PetEventType.plant;
       default:
         return PetEventType.food;
     }
@@ -55,6 +65,21 @@ class PetEventTypeAdapter extends TypeAdapter<PetEventType> {
         break;
       case PetEventType.friend:
         writer.writeByte(6);
+        break;
+      case PetEventType.aiChat:
+        writer.writeByte(7);
+        break;
+      case PetEventType.appointment:
+        writer.writeByte(8);
+        break;
+      case PetEventType.partner:
+        writer.writeByte(9);
+        break;
+      case PetEventType.behavior:
+        writer.writeByte(10);
+        break;
+      case PetEventType.plant:
+        writer.writeByte(11);
         break;
     }
   }

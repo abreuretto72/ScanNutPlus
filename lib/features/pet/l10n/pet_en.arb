@@ -40,4 +40,19 @@
       }
     }
   }
+
+  "help_ia_pet_pillars_title": "Pet ScanNut+ Intelligence",
+  "help_pillar_analysis_title": "Image and Video Analysis",
+  "help_pillar_analysis_desc": "Our AI processes photos and videos to identify subtle signs of your pet's health, posture, and behavior.",
+  "help_pillar_walks_title": "Walk Monitoring",
+  "help_pillar_walks_desc": "Records what happens during walks, monitoring energy levels, interactions, and predictive routes.",
+  "help_pillar_agenda_title": "Agenda and Incidents",
+  "help_pillar_agenda_desc": "Central hub for appointments and daily records: medication, weight, incidents, and analysis history in one place.",
+  "help_pillar_nutrition_title": "Smart Nutrition",
+  "help_pillar_nutrition_desc": "Generates personalized menus and automatically adds meals to the agenda for consumption tracking.",
+  "help_pillar_profile_title": "Profile and Documentation",
+  "help_pillar_profile_desc": "Pet data, health and funeral plans, and storage of important documents for quick access."
+
+
+
 }

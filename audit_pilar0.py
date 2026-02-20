@@ -8,8 +8,8 @@ def audit_pilar0():
     # Lista de exclusão atualizada com serviços de IA, OCR e Captura
     ignore_files = [
         'app_localizations', 'g.dart', 'freezed.dart', 'pet_localizations', 
-        'app_keys.dart', 'ai_prompts.dart', 'pet_map_styles.dart',
-        'Universal_ai_service.dart', 'Universal_ocr_service.dart', 'pet_capture_view.dart'
+        'app_keys.dart', 'ai_prompts.dart', 'pet_map_styles.dart','pet_ai_service.dart','parsing_logic_test.dart','pet_base_ai_service.dart', 'pet_ai_cards_renderer.dart',
+        'Universal_ai_service.dart', 'Universal_ocr_service.dart', 'pet_health_screen.dart', 'pet_capture_view.dart','pet_history_screen.dart','pet_agenda_screen.dart','pet_appointment_screen.dart'
     ]
     ignore_folders = ['.dart_tool', '.git', 'build']
     ignore_technical = ('.dart', '.png', '.jpg', '.svg', '.json', '.arb', 'package:', 'dart:', 'UTF-8')

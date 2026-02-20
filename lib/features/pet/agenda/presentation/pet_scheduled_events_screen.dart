@@ -4,12 +4,19 @@ import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart';
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
+import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
 import 'package:scannutplus/features/pet/agenda/logic/pet_notification_manager.dart';
 
 class PetScheduledEventsScreen extends StatefulWidget {
   final String petId;
 
-  const PetScheduledEventsScreen({super.key, required this.petId});
+  final bool showAppBar;
+
+  const PetScheduledEventsScreen({
+    super.key, 
+    required this.petId,
+    this.showAppBar = true,
+  });
 
   @override
   State<PetScheduledEventsScreen> createState() => _PetScheduledEventsScreenState();
@@ -68,11 +75,11 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
     
     return Scaffold(
       backgroundColor: AppColors.petBackgroundDark,
-      appBar: AppBar(
+      appBar: widget.showAppBar ? AppBar(
         title: Text(l10n.pet_scheduled_list_title, style: const TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: Colors.white),
-      ),
+      ) : null,
       body: _isLoading 
           ? const Center(child: CircularProgressIndicator(color: AppColors.petPrimary))
           : _appointments.isEmpty
@@ -91,7 +98,10 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                   itemCount: _appointments.length,
                   itemBuilder: (context, index) {
                     final event = _appointments[index];
-                    final title = event.metrics?['custom_title'] ?? 'Compromisso';
+                    final rawTitle = event.metrics?['custom_title']?.toString();
+                    final title = rawTitle != null 
+                        ? rawTitle.toCategoryDisplay(context) 
+                        : l10n.pet_appointment_tab_data; // Default: 'Appointment'
                     final professional = event.metrics?['professional'] ?? '';
                     final leadTime = event.metrics?['notification_lead_time'] as String?;
                     

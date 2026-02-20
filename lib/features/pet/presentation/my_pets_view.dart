@@ -10,12 +10,12 @@ import 'package:scannutplus/l10n/app_localizations.dart';
 import 'dart:io';
 import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_analysis_button.dart';
 import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_profile_button.dart';
-import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_health_button.dart';
+import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_nutrition_button.dart';
 import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_agenda_button.dart';
 import 'package:scannutplus/features/pet/presentation/widgets/pet_card_actions/pet_walk_button.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_agenda_screen.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_walk_events_screen.dart'; // Correct Import Placement
-import 'package:scannutplus/features/pet/agenda/presentation/pet_appointment_screen.dart'; // Added Appointment Screen
+
 
 import 'package:scannutplus/features/pet/presentation/pet_profile_view.dart';
 import 'package:scannutplus/features/pet/presentation/health/pet_health_screen.dart';
@@ -543,13 +543,13 @@ class _MyPetsViewState extends State<MyPetsView> {
                         ),
                       ),
 
-                     // 4. Health
+                     // 4. Nutrition (Was Health)
                      Expanded(
-                       child: PetHealthButton(
-                         label: appL10n.pet_action_health,
+                       child: PetNutritionButton(
+                         label: appL10n.pet_action_nutrition,
                          onTap: () {
                             if (kDebugMode) {
-                              debugPrint('${PetConstants.logNavHealthPlaceholder}$uuid (Active)');
+                               debugPrint('${PetConstants.logNavHealthPlaceholder}$uuid (Nutrition Active)');
                             }
                             Navigator.push(
                               context,

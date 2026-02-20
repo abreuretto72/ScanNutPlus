@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
+import 'package:scannutplus/core/services/universal_ocr_pdf_service.dart';
 
 class UniversalOcrResultView extends StatelessWidget {
   final String imagePath;
@@ -51,6 +53,16 @@ class UniversalOcrResultView extends StatelessWidget {
                       PetConstants.fieldBreed: displayBreed,
                       PetConstants.keyPageTitle: appL10n.pet_initial_assessment,
                     },
+                    customBuilder: (format) => UniversalOcrPdfService.generatePdf(
+                      format,
+                      imagePath,
+                      ocrResult,
+                      {
+                        PetConstants.fieldName: displayPetName,
+                        PetConstants.fieldBreed: displayBreed,
+                        PetConstants.keyPageTitle: appL10n.pet_initial_assessment,
+                      },
+                    ),
                   ),
                 ),
               );
@@ -196,8 +208,17 @@ class UniversalOcrResultView extends StatelessWidget {
             ],
           ),
           const Divider(color: Colors.white10, height: 20),
-          Text(block.content, 
-            style: const TextStyle(color: Colors.white, fontSize: 14, height: 1.5, fontFamily: 'monospace')), // Monospace para parecer dado técnico
+          MarkdownBody(
+            data: block.content,
+            selectable: true,
+            styleSheet: MarkdownStyleSheet(
+              p: const TextStyle(color: Colors.white, fontSize: 14, height: 1.5, fontFamily: 'monospace'),
+              strong: const TextStyle(color: AppColors.petPrimary, fontWeight: FontWeight.bold),
+              tableBody: const TextStyle(color: Colors.white, fontSize: 12),
+              tableHead: const TextStyle(color: AppColors.petPrimary, fontWeight: FontWeight.bold),
+              tableBorder: TableBorder.all(color: Colors.white24, width: 1),
+            ),
+          ),
         ],
       ),
     );

@@ -173,7 +173,14 @@ CONTENT:
 TITLE: Cardápio Semanal 📅
 ICON: doc
 CONTENT:
-(Detailed 7-day plan with measurements).
+CONTENT:
+(Detailed 7-day plan. IMPORTANT: Structure by days. Use this exact format:
+DIA 1:
+* 08:00 - Item
+* 12:00 - Item
+DIA 2:
+...
+If days are identical, write "TODOS OS DIAS:" followed by the schedule).
 [CARD_END]
 
 [CARD_START]

@@ -43,12 +43,14 @@ class CreatePetEventScreen extends StatefulWidget {
   final String petName;
   final String petId;
   final VoidCallback? onEventSaved;
+  final PetEventType? initialEventType;
 
   const CreatePetEventScreen({
     super.key,
     required this.petName,
     required this.petId,
     this.onEventSaved,
+    this.initialEventType,
   });
 
   @override
@@ -128,7 +130,9 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
 
   @override
   void dispose() {
-    _mapController?.dispose(); // Memory Leak Prevention
+    // DO NOT invoke _mapController?.dispose() manually here. 
+    // The google_maps_flutter plugin handles its own platform view lifecycle on Android.
+    // Manually disposing it can cause the SurfaceProducer to corrupt and disappear on subsequent screen pushes.
     _speech.cancel(); // Stop any active listening
     _notesController.dispose();
     super.dispose();
@@ -1214,265 +1218,75 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       
       final isKeywordHealth = allKeywords.any((k) => k.isNotEmpty && textLower.contains(k));
 
-      // Universal AI Trigger: If Image Exists OR Keywords Match OR Audio Exists OR Video Exists -> HEALTH
-      // This ensures "cocô" photo is analyzed even if keyword is missing in some languages.
-      // Also triggers for Audio/Video to classify as Health/Behavior.
-      final isHealth = isKeywordHealth || _capturedImage != null || _selectedAudioFile != null || _capturedVideo != null; 
+      // Universal AI Trigger: 
+      // 1. If Image Exists OR Keywords Match OR Audio Exists OR Video Exists -> Potentially Health
+      // 2. BUT we must handle the 'Walk' case (Activity).
+      //    - If it's a Walk (Activity), we ONLY trigger AI if specific keywords (like poop/vomit) are found.
+      //    - Otherwise, standard walks (just distance/time) don't need AI unless user adds these keywords.
       
-      final detectedType = isHealth ? PetEventType.health : PetEventType.other;
+      bool shouldAnalyze = false;
+
+      // Universal Mode: Analyze if keywords OR media are present, regardless of Walk/Journal mode
+      shouldAnalyze = isKeywordHealth || _capturedImage != null || _selectedAudioFile != null || _capturedVideo != null;
+      
+      // Calculate type: If analysis is triggered, we might want to flag it as Health or keep as Activity?
+      // For Walk context, we keep as Activity (so it shows in Walk history) but hasAIAnalysis=true.
+      // For others, we default to Health if analyzed.
+      
+      final detectedType = widget.initialEventType ?? (shouldAnalyze ? PetEventType.health : PetEventType.other);
+      final isHealth = shouldAnalyze; // Renaming variable for clarity in blocks below
       
       if (kDebugMode && isHealth) {
-        debugPrint('APP_TRACE: 🚑 Health/Behavior Keyword Detected! Classifying as HEALTH.');
+        debugPrint('APP_TRACE: 🚑 Classification: AI Analysis Triggered (Keyword: $isKeywordHealth, Media: ${_capturedImage != null})');
       }
 
-      // REAL AI ANALYSIS (Universal Protocol)
-      String? aiSummary; // Consolidated Declaration
-      
-      // AUDIO ANALYSIS (Direct Implementation per User Request)
-      if (isHealth && _capturedImage == null && _selectedAudioFile != null) {
-         debugPrint('[AGENDA_TRACE] Evento de Áudio Detectado');
-         debugPrint('[AGENDA_TRACE] Path do arquivo: $_selectedAudioFile');
-         
-         if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(l10n.pet_journal_audio_processing),
-                backgroundColor: Colors.blue,
-                duration: const Duration(seconds: 2),
-              )
-            );
-          }
+      String? aiSummary;
 
+      // RESTORED AI LOGIC (Universal)
+      if (isHealth) {
           try {
-             debugPrint('[AGENDA_TRACE] Tentando disparar análise via PetVocalAiService...');
+             if (kDebugMode) debugPrint('[AI_TRACE] Starting AI Analysis...');
+             final lang = Localizations.localeOf(context).languageCode;
              
-             final audioFile = File(_selectedAudioFile!);
-             if (!audioFile.existsSync()) {
-                aiSummary = l10n.pet_journal_audio_error_file_not_found;
-             } else {
+             if (_capturedImage != null) {
+                 final api = PetAiService();
+                 final result = await api.analyzePetImage(
+                    _capturedImage!.path, 
+                    lang, 
+                    type: detectedType == PetEventType.health ? PetImageType.general : PetImageType.general,
+                    petName: widget.petName,
+                    petUuid: widget.petId
+                 );
+                 aiSummary = result.$1;
+             } else if (_selectedAudioFile != null) {
                  final vocalService = PetVocalAiService();
                  aiSummary = await vocalService.analyzeBarking(
-                    audioFile: audioFile, 
-                    languageCode: Localizations.localeOf(context).languageCode, 
+                    audioFile: File(_selectedAudioFile!),
+                    languageCode: lang,
                     petName: widget.petName,
                     tutorNotes: _notesController.text
                  );
-                 
-                 debugPrint('[AGENDA_TRACE] Resposta recebida (Len: ${aiSummary.length})');
-             }
-
-          } catch (e) {
-             debugPrint('[AGENDA_TRACE] Falha crítica na análise vocal: $e');
-             // Fallback to static message if failed
-             aiSummary = l10n.pet_journal_audio_pending; 
-          }
-      }
-
-      // VIDEO ANALYSIS
-      if (isHealth && _capturedVideo != null) {
-         debugPrint('[AGENDA_TRACE] Evento de Vídeo Detectado');
-         
-         if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(l10n.pet_journal_video_processing ?? "Analisando movimento..."),
-                backgroundColor: Colors.blue,
-                duration: const Duration(seconds: 2),
-              )
-            );
-          }
-
-          try {
-             debugPrint('[AGENDA_TRACE] Disparando PetVideoAiService...');
-             final videoFile = File(_capturedVideo!.path);
-             
-             final videoService = PetVideoAiService();
-             aiSummary = await videoService.analyzeVideo(
-                videoFile: videoFile, 
-                petName: widget.petName,
-                notes: _notesController.text,
-                lang: l10n.pet_ai_language,
-             );
-             
-             debugPrint('[AGENDA_TRACE] Resposta Video Recebida');
-          } catch (e) {
-             debugPrint('[AGENDA_TRACE] Falha análise video: $e');
-             aiSummary = l10n.pet_journal_video_error ?? "Erro na análise de vídeo.";
-          }
-      }
-
-      // IMAGE ANALYSIS
-      if (detectedType == PetEventType.health && _capturedImage != null) {
-         if (kDebugMode) debugPrint('APP_TRACE: Enviando imagem para análise da IA...');
-         try {
-            // Determine Language for response
-            final languageCode = Localizations.localeOf(context).languageCode;
-            
-            // Call Service (Real)
-            // Signature: Future<(String, Duration, String)> analyzePetImage(path, lang, {type, name, uuid})
-            if (kDebugMode) debugPrint('[AGENDA_TRACE] Running AI Analysis with language: $languageCode'); // DEBUG LOG
-
-            final resultTuple = await PetAiService().analyzePetImage(
-              _capturedImage!.path, 
-              languageCode,
-              petName: widget.petName, 
-              petUuid: widget.petId,
-              // type defaults to general, which is fine for initial capture
-            );
-            
-            aiSummary = resultTuple.$1; // Extract analysis string
-            
-            if (kDebugMode) debugPrint('APP_TRACE: Resposta da IA Recebida (Length: ${aiSummary?.length})');
-            
-         } catch (e) {
-            debugPrint('APP_TRACE: AI Error: $e');
-            aiSummary = null; // Fail gracefully
-            if (mounted) {
-               ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(
-                   content: Text(l10n.pet_error_ai_analysis_failed(e.toString())), 
-                   backgroundColor: Colors.orange
-                 )
-               );
-            }
-         }
-      }
-
-      // 0.2 MICRO APP: PET FRIEND MANAGER
-      // Intercepta e decide se o evento pertence ao pet principal ou a um amigo/visitante
-      final friendManager = PetFriendManager();
-      
-      // DEBUG L10N
-      if (kDebugMode) {
-         debugPrint('[FRIEND_MANAGER_DEBUG] L10n Keywords: Friend="${l10n.keywordFriend}", Guest="${l10n.keywordGuest}"');
-         debugPrint('[FRIEND_MANAGER_DEBUG] Texto Usuário: "${_notesController.text}"');
-      }
-
-      final isFriendContext = friendManager.identifyPetContext(
-        _notesController.text, 
-        aiSummary, 
-        l10n
-      );
-      
-      // 3. SE FOR AMIGO/GUEST, PEGAR NOMES ANTES DE SALVAR (Master Prompt)
-      if (isFriendContext) {
-          if (mounted) {
-             // Show Modal to Collect Friend Name & Tutor Name
-             final friendData = await showDialog<Map<String, String>>(
-               context: context,
-               barrierDismissible: false,
-               builder: (ctx) {
-                 final nameController = TextEditingController();
-                 final tutorController = TextEditingController();
-                 return AlertDialog(
-                   backgroundColor: const Color(0xFF1C1C1E),
-                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: const BorderSide(color: Colors.white24)),
-                   title: const Row(
-                     children: [
-                        Icon(Icons.pets, color: Colors.orange, size: 28),
-                        SizedBox(width: 10),
-                        Text("Visitante Detectado", style: TextStyle(color: Colors.white, fontSize: 18)),
-                     ],
-                   ),
-                   content: Column(
-                     mainAxisSize: MainAxisSize.min,
-                     children: [
-                       const Text("Identificamos que este evento é de um amigo/visitante. Por favor, identifique-o:", style: TextStyle(color: Colors.white70)),
-                       const SizedBox(height: 16),
-                       TextField(
-                         controller: nameController,
-                         style: const TextStyle(color: Colors.white),
-                         decoration: const InputDecoration(
-                           labelText: "Nome do Pet Amigo",
-                           labelStyle: TextStyle(color: Colors.grey),
-                           enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.orange)),
-                         ),
-                       ),
-                       const SizedBox(height: 12),
-                       TextField(
-                         controller: tutorController,
-                         style: const TextStyle(color: Colors.white),
-                         decoration: const InputDecoration(
-                           labelText: "Nome do Tutor (Opcional)",
-                           labelStyle: TextStyle(color: Colors.grey),
-                           enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.orange)),
-                         ),
-                       ),
-                     ],
-                   ),
-                   actions: [
-                     TextButton(
-                       onPressed: () => Navigator.pop(ctx, {'name': 'Visitante Desconhecido', 'tutor': ''}), 
-                       child: const Text("Pular", style: TextStyle(color: Colors.grey)),
-                     ),
-                     TextButton(
-                       onPressed: () {
-                          if (nameController.text.isNotEmpty) {
-                             Navigator.pop(ctx, {'name': nameController.text, 'tutor': tutorController.text});
-                          }
-                       }, 
-                       child: const Text("Confirmar", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
-                     )
-                   ],
+             } else if (_capturedVideo != null) {
+                 final videoService = PetVideoAiService();
+                 aiSummary = await videoService.analyzeVideo(
+                    videoFile: File(_capturedVideo!.path),
+                    petName: widget.petName,
+                    notes: _notesController.text,
+                    lang: lang
                  );
-               }
-             );
-
-            // Se o usuário cancelou ou pulou, usamos defaults. Se preencheu, usamos os dados.
-            final guestName = friendData?['name'] ?? 'Visitante';
-            final guestTutor = friendData?['tutor'] ?? '';
-
-             // LINK DATA: Se for amigo, mantém o ID do Host também pra não ficar órfão
-             // 3. VÍNCULO DUPLO (AGENDA LEBRON): Garante que o evento apareça na timeline do Host
-             final targetPetId = friendManager.getTargetPetId(widget.petId, true);
-             final Set<String> uniqueIds = {};
-             uniqueIds.add(targetPetId);
-             uniqueIds.add(widget.petId); 
-             
-             final List<String> eventPetIds = uniqueIds.toList();
-
-             // CLASSIFICATION: FORCE FRIEND TYPE (Master Prompt 1)
-             // Override 'Health' if it's a Friend context
-             final finalEventType = PetEventType.friend; // New Enum Value
-             
-             debugPrint('[SAVE_TRACE] Categoria definida como FRIEND para o visitante ($guestName).');
-
-             final event = PetEvent(
-               id: const Uuid().v4(),
-               startDateTime: DateTime.now(), 
-               petIds: eventPetIds, 
-               eventTypeIndex: finalEventType.index, // Use index for Legacy Compassion
-               hasAIAnalysis: detectedType == PetEventType.health, // Keep AI flag true if health-related analysis exists
-               notes: _notesController.text, 
-               address: _currentAddress, 
-               metrics: {
-                 PetConstants.keyLatitude: _currentPos.latitude,
-                 PetConstants.keyLongitude: _currentPos.longitude,
-                 PetConstants.keyAddress: _currentAddress,
-                 if (_selectedAudioFile != null) PetConstants.keyAudioPath: _selectedAudioFile, 
-                 if (_capturedVideo != null) PetConstants.keyVideoPath: _capturedVideo!.path, 
-                 if (aiSummary != null) PetConstants.keyAiSummary: aiSummary,
-                 'guest_pet_name': guestName, // DATA COLLECTION (Master Prompt 2)
-                 'guest_tutor_name': guestTutor,
-                 'event_type': 'FRIEND', // Legacy String fallback
-               },
-               mediaPaths: _capturedImage != null ? [_capturedImage!.path] : null,
-             );
-
-             await _finalizeSave(event, context, isFriend: true);
-             return; // Stop execution of normal flow
+             }
+          } catch (e) {
+             debugPrint('[AI_TRACE] Analysis Failed: $e');
           }
       }
 
-      // FLUXO NORMAL (PET PRINCIPAL)
+       // FLUXO NORMAL (PET PRINCIPAL)
       final event = PetEvent(
         id: const Uuid().v4(),
         startDateTime: DateTime.now(), 
         petIds: [widget.petId], 
-        eventTypeIndex: detectedType.index, // Use index for Legacy Compassion
-        hasAIAnalysis: detectedType == PetEventType.health, 
+        eventTypeIndex: detectedType.index, // Respect detected/initial type
+        hasAIAnalysis: isHealth, // Use the computed flag logic 
         notes: _notesController.text, 
         address: _currentAddress, 
         metrics: {
@@ -1482,6 +1296,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
           if (_selectedAudioFile != null) PetConstants.keyAudioPath: _selectedAudioFile, 
           if (_capturedVideo != null) PetConstants.keyVideoPath: _capturedVideo!.path, 
           if (aiSummary != null) PetConstants.keyAiSummary: aiSummary,
+          'source': widget.initialEventType == PetEventType.activity ? 'walk_journal' : 'journal', // Tag source for filtering
         },
         mediaPaths: _capturedImage != null ? [_capturedImage!.path] : null,
       );

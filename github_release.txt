@@ -29,3 +29,7 @@ git tag -a v1.1.5 -m "Video Analysis Engine (Thumbnails, Controls & AI Depth), H
 git push origin v1.1.5
 git tag -a v1.1.6 -m "Dynamic PDF Titles, Analysis Labels (Result Screen), Existing Pet PDF Fix & Video/Plant Enhancements"
 git push origin v1.1.6
+git tag -a v2.2.0 -m "Pet Repo I18N Refactor, Copy Nutrition to Agenda, Health Titles Standardized & Build Fixes"
+git push origin v2.2.0
+git tag -a v2.2.1 -m "Metrics Screen Implementation, Agenda FAB Logic, UI Contrast Fixes & STT to Textfields"
+git push origin v2.2.1

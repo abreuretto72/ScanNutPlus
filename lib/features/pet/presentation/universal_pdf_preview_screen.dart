@@ -38,7 +38,7 @@ class UniversalPdfPreviewScreen extends StatelessWidget {
            // Fallback to existing logic if params are present
           if (analysisResult != null && petDetails != null) {
              final l10n = AppLocalizations.of(context)!;
-             return UniversalPdfService.generatePdf(
+              return UniversalPdfService.generatePdf(
               format,
               filePath, // Can be null
               analysisResult!,
@@ -46,6 +46,7 @@ class UniversalPdfPreviewScreen extends StatelessWidget {
               footerText: l10n.pdf_footer_text,
               pageLabel: l10n.pdf_page_label,
               ofLabel: l10n.pdf_of_label,
+              colorValue: 0xFFFC2D7C, // ALWAYS force Strong Pink
             );
           }
           return Future.value(Uint8List(0)); // Should handle error ideally

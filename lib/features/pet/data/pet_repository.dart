@@ -429,57 +429,141 @@ class PetRepository {
     try {
       final repo = PetEventRepository();
       
-      // Determine Event Type
-      PetEventType eventType = PetEventType.health;
+      // 1. Refined Title Logic (Protocol 2026)
+      String rawCategory = entry.category.toLowerCase();
+      String mappedTitle = _mapCategoryToTitle(rawCategory);
       
-      // Check category logic
-      if (entry.category == PetConstants.catNutritionPlan || 
-          entry.category.toLowerCase().contains('nutrition') ||
-          entry.category.toLowerCase().contains('food')) {
-        eventType = PetEventType.food;
-      } else if (entry.category == PetConstants.catHealthSummary ||
-                 entry.category.toLowerCase().contains('exam') || 
-                 entry.category.toLowerCase().contains('clinical') ||
-                 entry.category.toLowerCase().contains('stool') || 
-                 entry.category.toLowerCase().contains('mouth') || 
-                 entry.category.toLowerCase().contains('skin')) {
-        eventType = PetEventType.health;
-      } else if (entry.category.toLowerCase().contains('friend')) {
-        eventType = PetEventType.friend;
-      } else {
-        eventType = PetEventType.other;
+      // Capitalize
+      if (mappedTitle.isNotEmpty) {
+          mappedTitle = mappedTitle[0].toUpperCase() + mappedTitle.substring(1);
       }
 
-      final title = entry.category == PetConstants.catHealthSummary 
-          ? "Resumo Clínico Vet" 
-          : (entry.category == PetConstants.catNutritionPlan ? "Plano Nutricional" : "Análise: ${entry.category.toUpperCase()}");
+      final eventTitle = mappedTitle; // "Oftalmologia", "Nutrição", "Resumo de Saúde", "Chat IA"
+
+      // 2. Determine Event Type via Mapped Title or Category
+      PetEventType eventType = PetEventType.health; // Default
+      String source = 'analysis';
+
+      // --- LOGIC MAP ---
+      // CHAT IA
+      if (['Chat IA', 'Chat', 'Conversa', 'AI Chat'].contains(eventTitle) || 
+          rawCategory.contains('chat') || rawCategory.contains('message')) {
+          eventType = PetEventType.aiChat;
+          source = 'chat_log';
+      }
+      // NUTRITION
+      else if (['Nutrição', 'Plano Nutricional', 'Análise de Rótulo', 'Alimentação'].contains(eventTitle) || 
+          rawCategory.contains('food') || rawCategory.contains('nutrition') || rawCategory.contains('label')) {
+          eventType = PetEventType.food;
+          source = 'nutrition';
+      } 
+      // WALKS (PASSEIOS)
+      else if (['Passeio', 'Caminhada', 'Exercício'].contains(eventTitle) ||
+          rawCategory.contains('walk') || rawCategory.contains('exercise') || rawCategory.contains('activity')) {
+          eventType = PetEventType.activity; // Mapped to "Passeios" in UI
+          source = 'walk';
+      }
+      // BEHAVIOR (Comportamento, Vocalização, Body Condition)
+      else if (['Comportamento', 'Vocalização', 'Condição Corporal'].contains(eventTitle) ||
+          rawCategory.contains('behavior') || rawCategory.contains('vocal') || rawCategory.contains('body') || rawCategory.contains('posture')) {
+          eventType = PetEventType.behavior;
+          source = 'behavior_analysis';
+      }
+      // PLANT
+      else if (['Módulo Plantas', 'Plantas', 'Planta', 'Plant'].contains(eventTitle) || 
+          rawCategory.contains('plant') || rawCategory.contains('toxic') || rawCategory.contains('botanic')) {
+          eventType = PetEventType.plant;
+          source = 'plant_analysis';
+      }
+      // HYGIENE -> APPOINTMENT (Consolidated)
+      else if (['Banho', 'Tosa', 'Higiene', 'Grooming', 'Bath'].contains(eventTitle) || 
+          rawCategory.contains('hygiene') || rawCategory.contains('bath') || rawCategory.contains('grooming')) {
+          eventType = PetEventType.appointment; // Consolidated into Appointments
+          source = 'hygiene';
+      }
+      // FRIEND
+      else if (rawCategory.contains('friend')) {
+          eventType = PetEventType.other; // Friend logic usually handled by IS_FRIEND flag
+          source = 'friend';
+      } 
+      // PROFILE
+      else if (['Avaliação Inicial', 'Perfil'].contains(eventTitle)) {
+          eventType = PetEventType.other; 
+          source = 'profile';
+      } 
+      // HEALTH (Default for Eyes, Skin, Mouth, Lab, etc.)
+      else {
+          eventType = PetEventType.health;
+          if (eventTitle == 'Resumo de Saúde') source = 'health_summary';
+      }
 
       final event = PetEvent(
         id: const Uuid().v4(),
         startDateTime: entry.timestamp,
         petIds: [entry.petUuid],
-        eventTypeIndex: eventType.index, // Mapping Enum to Index for UI Model
+        eventTypeIndex: eventType.index,
+        // eventSubType: rawCategory, // Removed: Field does not exist in PetEvent
         hasAIAnalysis: true,
-        notes: title, 
-        mediaPaths: entry.imagePath.isNotEmpty ? [entry.imagePath] : null,
+        notes: eventType == PetEventType.aiChat ? 'Conversa com IA' : 'Análise: $eventTitle', 
         metrics: {
+          'custom_title': eventTitle, // FORCE DISPLAY TITLE
           PetConstants.keyAiSummary: entry.rawJson,
           PetConstants.keyCategory: entry.category,
+          'source': source,
         },
+        mediaPaths: entry.imagePath.isNotEmpty ? [entry.imagePath] : null,
       );
 
-      final result = await repo.saveEvent(event);
+      final resultId = await repo.saveEvent(event);
       
-      if (result.isSuccess) {
-         if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Evento criado com sucesso: ${event.id}');
+      if (resultId != null) {
+         if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Evento criado: ${event.id} | Title: $eventTitle');
       } else {
-         if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Falha ao criar evento no Hive: ${result.status}');
+         if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Falha ao criar evento.');
       }
     } catch (e) {
       if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Erro crítico: $e');
     }
   }
-  
+
+  String _mapCategoryToTitle(String category) {
+    switch (category.toLowerCase()) {
+      case 'eyes': return 'pet_title_ophthalmology'; 
+      case 'mouth': 
+      case 'dental': return 'pet_title_dental'; 
+      case 'skin': 
+      case 'dermatology': 
+      case 'fur': return 'pet_title_dermatology';
+      case 'ears': return 'pet_title_ears';
+      case 'stool': 
+      case 'feces': 
+      case 'gastro': return 'pet_title_digestion';
+      case 'posture': 
+      case 'body': return 'pet_title_body_condition';
+      case 'vocal': return 'pet_title_vocalization';
+      case 'behavior': return 'pet_title_behavior';
+      case 'walk':
+      case 'exercise':
+      case 'activity': return 'pet_title_walk';
+      case 'chat':
+      case 'ai_chat':
+      case 'message': return 'pet_title_ai_chat';
+      case 'foodbowl': 
+      case 'food_bowl': 
+      case 'nutrition': return 'pet_title_nutrition';
+      case 'lab': return 'pet_title_lab';
+      case 'label': return 'pet_title_label_analysis';
+      case 'plant': 
+      case 'plantcheck': return 'pet_title_plants';
+      case 'newprofile': return 'pet_title_initial_eval';
+      case 'general':
+      case 'health_summary': return 'pet_title_health_summary'; 
+      case 'other': return 'pet_title_general_checkup'; 
+      case 'clinical_summary': return 'pet_title_clinical_summary';
+      default: return category; 
+    }
+  }
+
   // Legacy Stub for compatibility
   Future<List<Map<String, dynamic>>> getAnalyses(String uuid) async {
       return getPetHistory(uuid);
