@@ -449,10 +449,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_capture_instructions => 'A IA analisa imagens do pet individualmente.';
 
   @override
-  String get help_domain_pet_title => 'Domínio Pet';
+  String get help_domain_pet_title => 'Uma IA exclusiva para o seu Pet.';
 
   @override
-  String get help_domain_pet_desc => 'Gestão completa para Cães e Gatos.';
+  String get help_domain_pet_desc => 'Seu pet conta com uma inteligência exclusiva no ScanNut+! Nossa IA analisa todos os dados coletados para responder suas dúvidas e gerar relatórios detalhados sobre a saúde dele. Além disso, você pode realizar análises visuais por imagem para acompanhar de perto o bem-estar do seu grande amigo.\n\nVocê pode ainda fazer as mesmas análises para o amigo do seu pet.\n\nDê uma voz ao seu melhor amigo! Com a IA exclusiva do ScanNut+, você tira todas as suas dúvidas e recebe relatórios de saúde baseados no dia a dia do seu pet. Use também a nossa análise de imagens para entender o que as fotos contam sobre a saúde e o comportamento dele.\n\nO ScanNut+ oferece um assistente inteligente dedicado ao seu pet. Ele transforma dados e fotos em relatórios de saúde e respostas imediatas para suas perguntas. Tudo para garantir que seu amigo esteja sempre bem cuidado.';
 
   @override
   String get help_domain_food_title => 'Domínio Food';
@@ -704,6 +704,24 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_tab_history => 'Histórico';
+
+  @override
+  String get pet_appointment_new_partner => '[Novo Parceiro]';
+
+  @override
+  String get pet_appointment_searching_partners => 'Buscando parceiros próximos...';
+
+  @override
+  String get pet_appointment_manual_entry => 'Preencher Manualmente';
+
+  @override
+  String get pet_appointment_no_partner_title => 'Parceiro não informado';
+
+  @override
+  String get pet_appointment_no_partner_msg => 'Você não informou o local ou o profissional. Deseja salvar o compromisso mesmo assim?';
+
+  @override
+  String get pet_appointment_no_partner_confirm => 'Salvar sem parceiro';
 
   @override
   String get pet_history_empty => 'Histórico vazio';
@@ -1682,43 +1700,55 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get pet_journal_help_title => 'Ajuda';
+  String get pet_journal_help_title => 'Como usar esta tela?';
 
   @override
-  String get pet_journal_help_photo_title => 'Fotos';
+  String get pet_journal_help_photo_title => 'Câmera e Galeria';
 
   @override
-  String get pet_journal_help_photo_desc => 'Envie fotos.';
+  String get pet_journal_help_photo_desc => 'Tire uma foto na hora ou escolha da galeria. Use para registrar feridas, fezes, identificar plantas tóxicas no caminho, ou ainda analisar rótulos de ração, imagens de comida e resultados de exames laboratoriais. A nossa IA foca na imagem para gerar análises profundas. Limite: 20MB.';
 
   @override
-  String get pet_journal_help_audio_title => 'Áudio';
+  String get pet_journal_help_audio_title => 'Gravador de Sons';
 
   @override
-  String get pet_journal_help_audio_desc => 'Grave sons.';
+  String get pet_journal_help_audio_desc => 'Aperte e segure o ícone de microfone perto do botão de câmera para gravar sons do ambiente, como latidos, choros, tosses ou respiração ofegante. A inteligência artificial ouvirá o áudio para detectar sinais de estresse ou dor. Limite: 20MB.';
 
   @override
-  String get pet_journal_help_map_title => 'Mapa';
+  String get pet_journal_help_map_title => 'Mapa e Alertas';
 
   @override
-  String get pet_journal_help_map_desc => 'Local automático.';
+  String get pet_journal_help_map_desc => 'O mapa captura automaticamente o local do evento. Se você avistar algum perigo no trajeto (como cães agressivos, veneno ou lixo), clique no ícone de alerta no mapa para registrar e avisar a comunidade.';
 
   @override
-  String get pet_journal_help_notes_title => 'Notas';
+  String get pet_journal_help_notes_title => 'Anotações e Voz';
 
   @override
-  String get pet_journal_help_notes_desc => 'Descreva tudo.';
+  String get pet_journal_help_notes_desc => 'Você pode digitar os detalhes livremente na caixa de texto. Se preferir, clique no microfone dentro do campo de texto para falar. O aplicativo vai digitar tudo o que você disser automaticamente.';
 
   @override
-  String get pet_journal_help_videos_title => 'Vídeo';
+  String get pet_journal_help_videos_title => 'Vídeos Curtos';
 
   @override
-  String get pet_journal_help_videos_desc => 'Em breve.';
+  String get pet_journal_help_videos_desc => 'Grave vídeos curtos direto pelo aplicativo. É perfeito para mostrar ao veterinário da IA como o pet está andando (caso esteja mancando) ou registrar um comportamento estranho em movimento. Limite: 20MB.';
 
   @override
-  String get pet_journal_help_ai_title => 'IA';
+  String get pet_journal_help_ai_title => 'Veterinário IA';
 
   @override
-  String get pet_journal_help_ai_desc => 'Parecer clínico IA.';
+  String get pet_journal_help_ai_desc => 'Ao preencher qualquer um dos itens acima, nossa Inteligência Artificial atua como um veterinário e analisa os dados na hora! Ela gera um resumo clínico no formato de relatório que fica salvo no histórico do pet.';
+
+  @override
+  String get pet_journal_help_friends_title => 'Passeio com Amigos';
+
+  @override
+  String get pet_journal_help_friends_desc => 'Quando a switch estiver no amigo, o app pode fazer todas as análises disponíveis do pet amigo e ainda emitir um relatório PDF.';
+
+  @override
+  String get pet_journal_help_specialized_ai_title => 'IA Especializada no seu Pet';
+
+  @override
+  String get pet_journal_help_specialized_ai_desc => 'Existe uma Inteligência Artificial especialmente desenvolvida para conhecer, aprender e entender todos os dados do seu pet (como no Pet Chat). Assim, ela é capaz de responder a tudo que você perguntar sobre ele de forma personalizada!';
 
   @override
   String pet_error_ai_analysis_failed(Object error) {
@@ -2589,4 +2619,16 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_field_what_was_done => 'O que foi feito?';
+
+  @override
+  String get pet_friend_name_label => 'Nome do Amigo (Pet)';
+
+  @override
+  String get pet_tutor_name_label => 'Nome do Tutor(a)';
+
+  @override
+  String get pet_friend_new => 'Novo Amigo';
+
+  @override
+  String get pet_friend_select => 'Selecione um amigo';
 }

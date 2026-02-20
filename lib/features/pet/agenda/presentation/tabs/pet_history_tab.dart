@@ -89,7 +89,7 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
     if (source == null) return (l10n.source_analysis, Icons.analytics, Colors.pink);
     switch (source) {
       case 'walk': return (l10n.source_walk, Icons.directions_walk, Colors.green);
-      // case 'appointment': return (l10n.source_appointment, Icons.calendar_today, Colors.blue); // Usually in Scheduled tab
+      case 'appointment': return (l10n.source_appointment, Icons.calendar_today, Colors.blue); 
       case 'nutrition': return (l10n.source_nutrition, Icons.restaurant, Colors.orange);
       case 'health_summary': return (l10n.source_health, Icons.medical_services, Colors.red);
       case 'profile': return (l10n.source_profile, Icons.badge, Colors.purple);
@@ -195,166 +195,177 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                     : const Color(0xFFFFD1DC); 
                     final textColor = Colors.black;
 
-                    return Card(
-                      color: cardColor, 
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: cardColor, 
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.black, width: 3),
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black, offset: Offset(5, 5))
+                        ],
                       ),
-                      child: ListTile(
-                        leading: (event.mediaPaths != null && event.mediaPaths!.isNotEmpty)
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.file(
-                                  File(event.mediaPaths!.first),
-                                  width: 48,
-                                  height: 48,
-                                  cacheWidth: 150, 
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Icon(isFriend ? Icons.pets : type.icon, size: 32);
-                                  },
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => PetEventDetailScreen(
+                                  event: event,
+                                  petName: widget.petName,
                                 ),
-                              )
-                            : Icon(isFriend ? Icons.pets : type.icon, size: 32, color: textColor), // Default Icon
-
-                        title: Row(
-                          children: [
-                             Expanded(
-                               child: Text(
-                                 isFriend ? (event.metrics?['guest_pet_name'] ?? 'Visitante') 
-                                 : (event.metrics != null && event.metrics!.containsKey('custom_title'))
-                                    ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
-                                    : type.label(l10n), 
-                                 style: TextStyle(fontWeight: FontWeight.bold, color: textColor),
-                                 overflow: TextOverflow.ellipsis,
-                               ),
-                             ),
-                             if (isFriend) ...[
-                                const SizedBox(width: 8),
+                              ),
+                            ).then((_) {
+                                refresh();
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Icon or Image (Chunky)
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                  decoration: BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(4)),
-                                  child: const Text("FRIEND", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
-                                )
-                             ]
-                          ],
-                        ),
-                        
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Data e Hora (Black Text)
-                            Text(
-                              DateFormat("dd/MM/yyyy • HH:mm").format(event.startDateTime),
-                              style: TextStyle(color: textColor, fontWeight: FontWeight.w500),
-                            ),
-                            
-                            // Source Badge
-                            Builder(
-                              builder: (context) {
-                                final sourceKey = event.metrics?['source'];
-                                final sourceInfo = _getSourceInfo(sourceKey, l10n);
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 4, bottom: 2),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
+                                  width: 64,
+                                  height: 64,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(color: Colors.black, width: 2),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(14),
+                                    child: (event.mediaPaths != null && event.mediaPaths!.isNotEmpty)
+                                      ? Image.file(
+                                          File(event.mediaPaths!.first),
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (context, error, stackTrace) => Icon(isFriend ? Icons.pets_rounded : type.icon, size: 32, color: Colors.black),
+                                        )
+                                      : Icon(isFriend ? Icons.pets_rounded : type.icon, size: 32, color: Colors.black),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                
+                                // Content
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Icon(sourceInfo.$2, size: 12, color: sourceInfo.$3),
-                                      const SizedBox(width: 4),
-                                      Text(sourceInfo.$1.toUpperCase(), style: TextStyle(fontSize: 10, color: sourceInfo.$3, fontWeight: FontWeight.bold)),
+                                      // Title Row
+                                      Row(
+                                        children: [
+                                           Expanded(
+                                             child: Text(
+                                               isFriend ? (event.metrics?['guest_pet_name'] ?? 'Visitante') 
+                                               : (event.metrics != null && event.metrics!.containsKey('custom_title'))
+                                                  ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
+                                                  : type.label(l10n), 
+                                               style: const TextStyle(fontWeight: FontWeight.w900, color: Colors.black, fontSize: 18, letterSpacing: -0.3),
+                                               overflow: TextOverflow.ellipsis,
+                                               maxLines: 2,
+                                             ),
+                                           ),
+                                           if (isFriend)
+                                              Container(
+                                                margin: const EdgeInsets.only(left: 8),
+                                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(10)),
+                                                child: const Text("FRIEND", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: 0.8)),
+                                              )
+                                        ],
+                                      ),
+                                      const SizedBox(height: 6),
+                                      
+                                      // Source Badge & Date
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Builder(
+                                                builder: (context) {
+                                                  final sourceKey = event.metrics?['source'];
+                                                  final sourceInfo = _getSourceInfo(sourceKey, l10n);
+                                                  return Container(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                                                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.black, width: 1.5)),
+                                                    child: Row(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        Icon(sourceInfo.$2, size: 12, color: Colors.black),
+                                                        const SizedBox(width: 4),
+                                                        Flexible(
+                                                          child: Text(
+                                                            sourceInfo.$1.toUpperCase(), 
+                                                            style: const TextStyle(fontSize: 10, color: Colors.black, fontWeight: FontWeight.w900, letterSpacing: 0.5),
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            DateFormat("dd/MM/yyyy").format(event.startDateTime),
+                                            style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 12),
+                                          ),
+                                        ],
+                                      ),
+                                      
+                                      if (isFriend && event.metrics?['guest_tutor_name'] != null && event.metrics!['guest_tutor_name'].toString().isNotEmpty) ...[
+                                          const SizedBox(height: 8),
+                                          Text("${l10n.pet_label_tutor}: ${event.metrics!['guest_tutor_name']}", style: const TextStyle(fontSize: 13, color: Colors.black87, fontWeight: FontWeight.w700)),
+                                      ],
+          
+                                      // Address or specific details
+                                      if (event.address != null && event.address!.isNotEmpty) ...[
+                                         const SizedBox(height: 8),
+                                         Row(
+                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                           children: [
+                                              const Icon(Icons.location_on_rounded, size: 14, color: Colors.black),
+                                              const SizedBox(width: 4),
+                                              Expanded(
+                                                child: Text(
+                                                  event.address!,
+                                                  style: const TextStyle(fontSize: 12, color: Colors.black87, fontWeight: FontWeight.w600),
+                                                  maxLines: 2, 
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                           ],
+                                         ),
+                                      ],
                                     ],
                                   ),
-                                );
-                              }
-                            ),
-                            
-                             if (isFriend && event.metrics?['guest_tutor_name'] != null && event.metrics!['guest_tutor_name'].toString().isNotEmpty)
-                                Text("${l10n.pet_label_tutor}: ${event.metrics!['guest_tutor_name']}", style: TextStyle(fontSize: 12, color: Colors.grey[800], fontStyle: FontStyle.italic)),
-
-                            // Palavras-chave (Resumo)
-                            if (event.notes != null && 
-                                event.notes!.isNotEmpty && 
-                                !event.notes!.contains('pet_title_') && 
-                                !event.notes!.contains('Pet_title_') &&
-                                !event.notes!.contains('Lab_result') &&
-                                !event.notes!.contains('lab_result'))
-                               Padding(
-                                padding: const EdgeInsets.only(top: 4, bottom: 4),
-                                child: Builder(
-                                  builder: (context) {
-                                    // Full text for structured data might be better than keywords
-                                    // For now, keep logic but allow full text if short
-                                    if (event.notes!.length < 50) {
-                                       return Text(
-                                         event.notes!,
-                                         style: TextStyle(fontSize: 12, color: Colors.black87),
-                                       );
-                                    }
-
-                                    // Extração de palavras-chave (>= 4 letras) for normal events
-                                    final keywords = event.notes!
-                                        .split(RegExp(r'\s+')) // Split por espaço
-                                        .map((w) => w.replaceAll(RegExp(r'[.,;!]'), '')) // Remove pontuação
-                                        .where((w) => w.length >= 4) // >= 4 letras
-                                        .take(5) // Top 5
-                                        .join(', ');
-                                    
-                                    if (keywords.isEmpty) return const SizedBox.shrink();
-
-                                    return Text(
-                                      keywords,
-                                      style: TextStyle(
-                                        fontSize: 12, 
-                                        color: Colors.orange[800], 
-                                        fontWeight: FontWeight.w600
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    );
-                                  }
                                 ),
-                              ),
-
-                            // Endereço (se houver)
-                            if (event.address != null && event.address!.isNotEmpty)
-                               Padding(
-                                padding: const EdgeInsets.only(top: 4),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                     Icon(Icons.location_on, size: 12, color: textColor),
-                                     const SizedBox(width: 4),
-                                     Expanded(
-                                       child: Text(
-                                         event.address!,
-                                         style: TextStyle(fontSize: 12, color: textColor),
-                                         maxLines: 2, 
-                                         overflow: TextOverflow.ellipsis,
-                                       ),
-                                     ),
-                                  ],
+                                
+                                // Delete Action
+                                Container(
+                                  margin: const EdgeInsets.only(left: 8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.black, width: 2),
+                                  ),
+                                  child: IconButton(
+                                    icon: const Icon(Icons.delete_rounded, color: Colors.redAccent, size: 20),
+                                    padding: const EdgeInsets.all(6),
+                                    constraints: const BoxConstraints(),
+                                    onPressed: () => widget.onDelete(context, event),
+                                  ),
                                 ),
-                              ),
-                          ],
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
-                          onPressed: () => widget.onDelete(context, event),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => PetEventDetailScreen(
-                                event: event,
-                                petName: widget.petName,
-                              ),
+                              ],
                             ),
-                          ).then((_) {
-                              refresh(); // Refresh on return
-                          });
-                        },
+                          ),
+                        ),
                       ),
                     );
                   }),

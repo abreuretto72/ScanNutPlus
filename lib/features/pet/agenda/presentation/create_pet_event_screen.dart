@@ -60,11 +60,16 @@ class CreatePetEventScreen extends StatefulWidget {
 class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
   // --- CONTROLLERS E ESTADO ---
   late TextEditingController _notesController;
+  late TextEditingController _friendNameController;
+  late TextEditingController _tutorNameController;
   final stt.SpeechToText _speech = stt.SpeechToText();
   
   bool _isListening = false;
   bool _isRecordingAudio = false; // Separate state for Ambient/Bark recording
   bool _isSaving = false;
+  bool _isFriendPresent = false;
+  List<Map<String, String>> _knownFriends = [];
+  Map<String, String>? _selectedFriend;
   bool _isGpsLoading = true;
   bool _isJournalMinimized = false;
   
@@ -107,12 +112,47 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
   void initState() {
     super.initState();
     _notesController = TextEditingController();
+    _friendNameController = TextEditingController();
+    _tutorNameController = TextEditingController();
     _loadMapTypePreference(); // Load map preference
     _initGPS();
+    _loadKnownFriends();
+
     // Listener para atualizar a UI (ativar/desativar ícones) enquanto digita
     _notesController.addListener(() {
       setState(() {});
     });
+  }
+
+  Future<void> _loadKnownFriends() async {
+    final result = await _repository.getByPetId(widget.petId);
+    if (!result.isSuccess || result.data == null) return;
+    
+    final RegExp regex = RegExp(r'\[Amigo: (.*?) \| Tutor: (.*?)\]');
+    final Set<String> uniqueFriends = {};
+    final List<Map<String, String>> parsedFriends = [];
+
+    for (var event in result.data!) {
+      if (event.notes == null) continue;
+      final matches = regex.allMatches(event.notes!);
+      for (var match in matches) {
+        if (match.groupCount >= 2) {
+            final friend = match.group(1)?.trim() ?? "";
+            final tutor = match.group(2)?.trim() ?? "";
+            final key = "$friend-$tutor";
+            if (!uniqueFriends.contains(key) && friend.isNotEmpty) {
+               uniqueFriends.add(key);
+               parsedFriends.add({'friend': friend, 'tutor': tutor});
+            }
+        }
+      }
+    }
+    
+    if (mounted) {
+       setState(() {
+          _knownFriends = parsedFriends;
+       });
+    }
   }
 
   Future<void> _loadMapTypePreference() async {
@@ -572,10 +612,10 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
             child: FloatingActionButton.small(
               heroTag: PetConstants.heroQuickAlertFab,
               elevation: 0, // Flat
-              backgroundColor: Colors.white.withValues(alpha: 0.15), // Translucent
+              backgroundColor: Colors.white.withOpacity(0.15), // Translucent
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: Colors.white.withValues(alpha: 0.3), width: 1)
+                side: BorderSide(color: Colors.white.withOpacity(0.3), width: 1)
               ),
               onPressed: () {
                 HapticFeedback.heavyImpact();
@@ -596,10 +636,10 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                    FloatingActionButton.small(
                     heroTag: PetConstants.heroLayersFab,
                     elevation: 0,
-                    backgroundColor: Colors.white.withValues(alpha: 0.15),
+                    backgroundColor: Colors.white.withOpacity(0.15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(color: Colors.white.withValues(alpha: 0.3), width: 1)
+                      side: BorderSide(color: Colors.white.withOpacity(0.3), width: 1)
                     ),
                     onPressed: () {
                        HapticFeedback.mediumImpact();
@@ -620,10 +660,10 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                child: FloatingActionButton.small(
                  heroTag: 'gps_fab',
                  elevation: 0,
-                 backgroundColor: Colors.black.withValues(alpha: 0.3), // Transparent Black
+                 backgroundColor: Colors.black.withOpacity(0.3), // Transparent Black
                  shape: RoundedRectangleBorder(
                    borderRadius: BorderRadius.circular(12),
-                   side: BorderSide(color: Colors.white.withValues(alpha: 0.1), width: 1)
+                   side: BorderSide(color: Colors.white.withOpacity(0.1), width: 1)
                  ),
                  onPressed: () {
                    HapticFeedback.selectionClick();
@@ -664,7 +704,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                       : const BorderRadius.vertical(top: Radius.circular(32)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.5), 
+                      color: Colors.black.withOpacity(0.5), 
                       blurRadius: _isJournalMinimized ? 10 : 20,
                       offset: _isJournalMinimized ? const Offset(0, 4) : Offset.zero
                     )
@@ -696,22 +736,53 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                           // Pergunta + Botão Minimizar
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    l10n.pet_journal_question,
-                                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  GestureDetector(
-                                    onTap: () {
-                                      HapticFeedback.mediumImpact();
-                                      _showHelpDialog(context);
-                                    },
-                                    child: Icon(Icons.info_outline, size: 20, color: Colors.grey[400]),
-                                  ),
-                                ],
+                              Expanded(
+                                child: Wrap(
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  spacing: 8,
+                                  runSpacing: 4,
+                                  children: [
+                                    Text(
+                                      l10n.pet_journal_question,
+                                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        HapticFeedback.mediumImpact();
+                                        _showHelpDialog(context);
+                                      },
+                                      child: Icon(Icons.info_outline, size: 20, color: Colors.grey[400]),
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "Amigo",
+                                          style: TextStyle(
+                                            color: _isFriendPresent ? Colors.greenAccent : Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 6),
+                                        Transform.scale(
+                                          scale: 0.8,
+                                          child: Switch(
+                                            value: _isFriendPresent,
+                                            activeColor: Colors.greenAccent,
+                                            inactiveTrackColor: Colors.grey[800],
+                                            onChanged: (val) {
+                                              HapticFeedback.lightImpact();
+                                              setState(() => _isFriendPresent = val);
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                               IconButton(
                                 icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white),
@@ -724,6 +795,76 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                             ],
                           ),
                           
+                          // Optional: Friend Details Fields (Neobrutalism Style)
+                          if (_isFriendPresent) ...[
+                            const SizedBox(height: 16),
+                            Container(
+                               decoration: BoxDecoration(
+                                 color: Colors.white,
+                                 border: Border.all(color: Colors.black, width: 3),
+                                 borderRadius: BorderRadius.circular(12),
+                               ),
+                               child: Padding(
+                                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                 child: Column(
+                                   children: [
+                                     DropdownButtonFormField<Map<String, String>>(
+                                         decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            icon: const Icon(Icons.people, color: Colors.black),
+                                         ),
+                                         hint: Text(l10n.pet_friend_select, style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, shadows: [])),
+                                         value: _selectedFriend,
+                                         dropdownColor: Colors.white,
+                                         items: [
+                                           // Option: New Friend
+                                           DropdownMenuItem(
+                                                value: const {'friend': 'novo', 'tutor': 'novo'},
+                                                child: Text("+ ${l10n.pet_friend_new}", style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 16, shadows: [])),
+                                           ),
+                                           ..._knownFriends.map((f) => DropdownMenuItem(
+                                               value: f,
+                                               child: Text("${f['friend']} (${f['tutor']})", style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, shadows: [])),
+                                           )).toList()
+                                         ],
+                                         onChanged: (val) {
+                                            setState(() {
+                                               _selectedFriend = val;
+                                            });
+                                         },
+                                     ),
+                                     if (_selectedFriend == null || _selectedFriend!['friend'] == 'novo') ...[
+                                        const Divider(color: Colors.black, thickness: 2, height: 16),
+                                        TextField(
+                                          controller: _friendNameController,
+                                          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: AppLocalizations.of(context)!.pet_friend_name_label,
+                                              hintStyle: const TextStyle(color: Colors.black54, fontWeight: FontWeight.normal),
+                                              icon: const Icon(Icons.pets, color: Colors.black),
+                                          ),
+                                        ),
+                                        const Divider(color: Colors.black, thickness: 1, height: 16),
+                                        TextField(
+                                          controller: _tutorNameController,
+                                          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: AppLocalizations.of(context)!.pet_tutor_name_label,
+                                              hintStyle: const TextStyle(color: Colors.black54, fontWeight: FontWeight.normal),
+                                              icon: const Icon(Icons.person, color: Colors.black),
+                                          ),
+                                        ),
+                                     ]
+                                   ],
+                                 ),
+                               ),
+                            ),
+                          ],
+                          
+                          const SizedBox(height: 16),
+
                           // Data e Hora
                           Text.rich(
                             TextSpan(
@@ -833,7 +974,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                   ),
                             ),
                           ),
-                          const SizedBox(height: 80), // Fix for button overlapping bottom
+                          SizedBox(height: MediaQuery.of(context).viewInsets.bottom + 120), // Responsive bottom padding based on keyboard
                         ],
                       ),
                     ),
@@ -888,8 +1029,12 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                       children: [
                         _helpItem(Icons.camera_alt, Colors.green, l10n.pet_journal_help_photo_title, l10n.pet_journal_help_photo_desc),
                         _helpItem(Icons.graphic_eq, Colors.orange, l10n.pet_journal_help_audio_title, l10n.pet_journal_help_audio_desc),
-                        _helpItem(Icons.videocam_off, Colors.grey, l10n.pet_journal_help_videos_title, l10n.pet_journal_help_videos_desc),
+                        _helpItem(Icons.map, Colors.blue, l10n.pet_journal_help_map_title, l10n.pet_journal_help_map_desc),
+                        _helpItem(Icons.notes, Colors.teal, l10n.pet_journal_help_notes_title, l10n.pet_journal_help_notes_desc),
+                        _helpItem(Icons.videocam, Colors.redAccent, l10n.pet_journal_help_videos_title, l10n.pet_journal_help_videos_desc),
                         _helpItem(Icons.auto_awesome, Colors.purpleAccent, l10n.pet_journal_help_ai_title, l10n.pet_journal_help_ai_desc),
+                        _helpItem(Icons.group, Colors.pinkAccent, l10n.pet_journal_help_friends_title, l10n.pet_journal_help_friends_desc),
+                        _helpItem(Icons.psychology, Colors.deepPurple, l10n.pet_journal_help_specialized_ai_title, l10n.pet_journal_help_specialized_ai_desc),
                         const SizedBox(height: 20),
                       ],
                     ),
@@ -1281,7 +1426,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       }
 
        // FLUXO NORMAL (PET PRINCIPAL)
-      final event = PetEvent(
+      PetEvent newEventToSave = PetEvent(
         id: const Uuid().v4(),
         startDateTime: DateTime.now(), 
         petIds: [widget.petId], 
@@ -1301,7 +1446,25 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
         mediaPaths: _capturedImage != null ? [_capturedImage!.path] : null,
       );
 
-      await _finalizeSave(event, context, isFriend: false);
+      // Inject the 'Friend' keyword automatically if the switch is ON.
+      if (_isFriendPresent) {
+        String friendName = "?";
+        String tutorName = "?";
+
+        if (_selectedFriend != null && _selectedFriend!['friend'] != 'novo') {
+            friendName = _selectedFriend!['friend']!;
+            tutorName = _selectedFriend!['tutor']!;
+        } else {
+            friendName = _friendNameController.text.trim().isNotEmpty ? _friendNameController.text.trim() : "?";
+            tutorName = _tutorNameController.text.trim().isNotEmpty ? _tutorNameController.text.trim() : "?";
+        }
+        
+        newEventToSave = newEventToSave.copyWith(
+          notes: "${newEventToSave.notes ?? ''} [Amigo: $friendName | Tutor: $tutorName]",
+        );
+      }
+
+      await _finalizeSave(newEventToSave, context, isFriend: _isFriendPresent);
 
     } catch (e) {
        // ... existing error handling ...
@@ -1328,6 +1491,18 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                widget.onEventSaved!(); 
             }
 
+            // Reset UI state before pop so transition is clean
+            setState(() {
+              _isFriendPresent = false;
+              _selectedFriend = null;
+              _friendNameController.clear();
+              _tutorNameController.clear();
+              _notesController.clear();
+              _capturedImage = null;
+              _capturedVideo = null;
+              _selectedAudioFile = null;
+            });
+
             Navigator.pop(context); // Close Screen immediately
             
             // Show Feedback via SnackBar on Parent Screen instead of blocking Dialog
@@ -1336,11 +1511,11 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                SnackBar(
                  content: Row(children: [
                     Icon(isFriend ? Icons.people : Icons.check, color: Colors.white),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(isFriend ? "Evento de Amigo Salvo na Agenda!" : "Evento Salvo!"),
                  ]),
                  backgroundColor: isFriend ? Colors.purple : Colors.green,
-                 duration: Duration(seconds: 2),
+                 duration: const Duration(seconds: 3),
                )
              );
         }

@@ -64,17 +64,20 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E17),
       appBar: AppBar(
-        // Dynamic Title: Análise: [Nome]
         title: Text(
           widget.petName != null 
-            ? l10n.pet_analysis_title(widget.petName!) 
-            : l10n.pet_history_button, 
-          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)
+            ? l10n.pet_analyses_title(widget.petName!).toUpperCase() 
+            : l10n.pet_history_button.toUpperCase(), 
+          style: const TextStyle(fontWeight: FontWeight.w900, color: Colors.white, fontSize: 18, letterSpacing: 1.0)
         ),
-        backgroundColor: Colors.transparent, // Restore to dark/transparent
-        iconTheme: const IconThemeData(color: Colors.white), // Ensure back arrow is white
+        backgroundColor: const Color(0xFF121212),
+        iconTheme: const IconThemeData(color: Colors.white, size: 28),
         centerTitle: true,
         elevation: 0,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(2),
+          child: Container(color: Colors.white24, height: 2),
+        ),
       ),
       // Use StreamBuilder to listen to ObjectBox changes
       body: StreamBuilder<List<PetHistoryEntry>>(
@@ -116,24 +119,21 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
           return SingleChildScrollView( 
             child: Column(
               children: entries.map((pet) { 
-                return Card(
-                  color: const Color(0xFFFFD1DC), // Rosa Pastel (Restored)
+                return Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: ListTile(
-                    leading: _buildLeadingIcon(pet),
-                    title: Text(
-                      pet.getPlantTitle(context) ?? pet.category.toCategoryDisplay(context), // Localized Fallback
-                      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)
-                    ),
-                    subtitle: Text(
-                       '${pet.petName} • ${pet.timestamp.toString().substring(0, 16)}', // Name second (Normal)
-                       style: const TextStyle(color: Colors.black54),
-                    ),
-                    trailing: IconButton(
-                       icon: const Icon(Icons.delete, color: Colors.redAccent),
-                       onPressed: () => _confirmDelete(context, pet.id), 
-                    ),
-                   onTap: () {
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFD1DC), // Rosa Pastel (Domain Color)
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.black, width: 3),
+                    boxShadow: const [
+                       BoxShadow(color: Colors.black, offset: Offset(5, 5))
+                    ],
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: () {
                        // Extract Breed from rawJson (Logic restoration from main flow)
                        String breed = '';
                        // Try multiple patterns to catch various LLM output formats
@@ -218,8 +218,40 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                                ),
                              ),
                            );
-                       }
-                    },
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            _buildLeadingIcon(pet),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    pet.getPlantTitle(context) ?? pet.category.toCategoryDisplay(context).toUpperCase(),
+                                    style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 16, letterSpacing: 0.5),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '${pet.petName} • ${pet.timestamp.toString().substring(0, 16)}',
+                                    style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete_outline, color: Colors.black, size: 28),
+                              onPressed: () => _confirmDelete(context, pet.id),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 );
               }).toList(),
@@ -228,22 +260,31 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
         },
       ),
 
-      floatingActionButton: widget.petUuid != null ? FloatingActionButton(
-        onPressed: () {
-          // Navigate to New Analysis Screen (Dashboard)
-          Navigator.pushNamed(
-            context, 
-            '/pet_dashboard', // The screen with the dropdown
-            arguments: {
-              PetConstants.argUuid: widget.petUuid,
-              PetConstants.argName: widget.petName,
-              PetConstants.argBreed: widget.petBreed,
-              PetConstants.argImagePath: widget.petImagePath,
-            },
-          ).then((_) => setState(() {})); // Refresh history on return
-        },
-        backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel (Domain Color)
-        child: const Icon(Icons.add, color: Colors.black), // Black Icon for Contrast
+      floatingActionButton: widget.petUuid != null ? Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.black, width: 3),
+          boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
+        ),
+        child: FloatingActionButton(
+          onPressed: () {
+            // Navigate to New Analysis Screen (Dashboard)
+            Navigator.pushNamed(
+              context, 
+              '/pet_dashboard', // The screen with the dropdown
+              arguments: {
+                PetConstants.argUuid: widget.petUuid,
+                PetConstants.argName: widget.petName,
+                PetConstants.argBreed: widget.petBreed,
+                PetConstants.argImagePath: widget.petImagePath,
+              },
+            ).then((_) => setState(() {})); // Refresh history on return
+          },
+          backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: const Icon(Icons.add, color: Colors.black, size: 32),
+        ),
       ) : null,
     );
   }
@@ -281,12 +322,24 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
       if (pet.imagePath.isEmpty) {
           // Text-only report icons
           if (pet.category == PetConstants.catHealthSummary) {
-              return const CircleAvatar(radius: 25, backgroundColor: Color(0xFF10AC84), child: Icon(Icons.medical_services, color: Colors.white)); // Green
+              return Container(
+                 width: 50, height: 50,
+                 decoration: BoxDecoration(color: const Color(0xFF10AC84), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.black, width: 2)),
+                 child: const Icon(Icons.medical_services, color: Colors.black),
+              );
           } else if (pet.category == PetConstants.catNutritionPlan) {
-              return const CircleAvatar(radius: 25, backgroundColor: Color(0xFFFF9800), child: Icon(Icons.restaurant, color: Colors.white)); // Orange
+              return Container(
+                 width: 50, height: 50,
+                 decoration: BoxDecoration(color: const Color(0xFFFF9800), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.black, width: 2)),
+                 child: const Icon(Icons.restaurant, color: Colors.black),
+              );
           }
-           // Fallback for other text entries
-          return const CircleAvatar(radius: 25, backgroundColor: Colors.black12, child: Icon(Icons.pets, color: Colors.black54));
+          // Fallback for other text entries
+          return Container(
+             width: 50, height: 50,
+             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.black, width: 2)),
+             child: const Icon(Icons.pets, color: Colors.black),
+          );
       }
       
       final imageFile = File(pet.imagePath);
@@ -305,17 +358,20 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
       }
 
       if (displayImage != null) {
-         return CircleAvatar(
-          radius: 25,
-          backgroundImage: FileImage(displayImage),
-          onBackgroundImageError: (_, __) {},
-          child: isVideo ? const Icon(Icons.play_circle_fill, color: Colors.white54) : null,
+         return Container(
+          width: 50, height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.black, width: 2.5),
+            image: DecorationImage(image: FileImage(displayImage), fit: BoxFit.cover),
+          ),
+          child: isVideo ? const Center(child: Icon(Icons.play_circle_fill, color: Colors.white70, size: 28)) : null,
         );
       } else {
-        return CircleAvatar(
-          radius: 25,
-          backgroundColor: Colors.black12,
-          child: Icon(isVideo ? Icons.videocam : Icons.broken_image, color: Colors.black54),
+        return Container(
+          width: 50, height: 50,
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.black, width: 2.5)),
+          child: Center(child: Icon(isVideo ? Icons.videocam : Icons.broken_image, color: Colors.black)),
         );
       }
   }

@@ -117,12 +117,27 @@ class UniversalPdfService {
               borderRadius: pw.BorderRadius.circular(8),
               border: pw.Border.all(color: accentColor),
             ),
-            child: pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            child: pw.Column(
               children: [
-                pw.Text('Nome: $name', style: pw.TextStyle(color: _colorText, fontSize: 14)),
-                pw.Text('Raça: $breed', style: pw.TextStyle(color: _colorText, fontSize: 14)),
-              ],
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Text('Nome: $name', style: pw.TextStyle(color: _colorText, fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                    pw.Text('Raça: $breed', style: pw.TextStyle(color: _colorText, fontSize: 14)),
+                  ],
+                ),
+                if (petDetails.containsKey('friend_name')) ...[
+                   pw.Divider(color: accentColor, thickness: 0.5),
+                   pw.Row(
+                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                     children: [
+                        pw.Text('Amigo Presente: ${petDetails['friend_name']}', style: pw.TextStyle(color: _colorText, fontSize: 13, fontWeight: pw.FontWeight.bold)),
+                        if (petDetails.containsKey('tutor_name'))
+                          pw.Text('Tutor(a): ${petDetails['tutor_name']}', style: pw.TextStyle(color: _colorText, fontSize: 12)),
+                     ]
+                   )
+                ]
+              ]
             ),
           ),
           pw.SizedBox(height: 20),

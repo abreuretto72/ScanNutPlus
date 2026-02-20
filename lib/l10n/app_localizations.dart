@@ -974,13 +974,13 @@ abstract class AppLocalizations {
   /// No description provided for @help_domain_pet_title.
   ///
   /// In en, this message translates to:
-  /// **'Pet Domain'**
+  /// **'An exclusive AI for your Pet.'**
   String get help_domain_pet_title;
 
   /// No description provided for @help_domain_pet_desc.
   ///
   /// In en, this message translates to:
-  /// **'Complete management for Dogs and Cats: AI for visual analysis, health routines, and toxic plant safety guide.'**
+  /// **'Your pet has an exclusive intelligence in ScanNut+! Our AI analyzes all collected data to answer your questions and generate detailed health reports. In addition, you can perform visual image analysis to closely monitor your best friend\'s well-being.\n\nYou can also perform the same analyses for your pet\'s friend.\n\nGive your best friend a voice! With ScanNut+\'s exclusive AI, you can clarify all your doubts and receive health reports based on your pet\'s daily life. Also use our image analysis to understand what photos tell about their health and behavior.\n\nScanNut+ offers a smart assistant dedicated to your pet. It transforms data and photos into health reports and immediate answers to your questions. Everything to ensure your friend is always well cared for.'**
   String get help_domain_pet_desc;
 
   /// No description provided for @help_domain_food_title.
@@ -1468,6 +1468,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'History'**
   String get pet_tab_history;
+
+  /// No description provided for @pet_appointment_new_partner.
+  ///
+  /// In en, this message translates to:
+  /// **'[New Partner]'**
+  String get pet_appointment_new_partner;
+
+  /// No description provided for @pet_appointment_searching_partners.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching nearby partners...'**
+  String get pet_appointment_searching_partners;
+
+  /// No description provided for @pet_appointment_manual_entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Manually'**
+  String get pet_appointment_manual_entry;
+
+  /// No description provided for @pet_appointment_no_partner_title.
+  ///
+  /// In en, this message translates to:
+  /// **'No Partner Selected'**
+  String get pet_appointment_no_partner_title;
+
+  /// No description provided for @pet_appointment_no_partner_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t specified a location or professional. Do you want to save the appointment anyway?'**
+  String get pet_appointment_no_partner_msg;
+
+  /// No description provided for @pet_appointment_no_partner_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Save without partner'**
+  String get pet_appointment_no_partner_confirm;
 
   /// No description provided for @pet_history_empty.
   ///
@@ -3332,80 +3368,104 @@ abstract class AppLocalizations {
   /// No description provided for @pet_journal_help_title.
   ///
   /// In en, this message translates to:
-  /// **'Help'**
+  /// **'How to use this screen?'**
   String get pet_journal_help_title;
 
   /// No description provided for @pet_journal_help_photo_title.
   ///
   /// In en, this message translates to:
-  /// **'Photos'**
+  /// **'Camera & Gallery'**
   String get pet_journal_help_photo_title;
 
   /// No description provided for @pet_journal_help_photo_desc.
   ///
   /// In en, this message translates to:
-  /// **'Send photos.'**
+  /// **'Take a photo or choose one from your gallery. Use it to log wounds, feces, identify toxic plants on your path, or even analyze pet food labels, food photos, and lab test results. Our AI focuses on the image to generate deep technical analyses. Max size: 20MB.'**
   String get pet_journal_help_photo_desc;
 
   /// No description provided for @pet_journal_help_audio_title.
   ///
   /// In en, this message translates to:
-  /// **'Audio'**
+  /// **'Sound Recorder'**
   String get pet_journal_help_audio_title;
 
   /// No description provided for @pet_journal_help_audio_desc.
   ///
   /// In en, this message translates to:
-  /// **'Record sounds.'**
+  /// **'Press and hold the microphone icon near the camera button to record ambient sounds, barks, cries, or coughing. The AI will listen to the audio to detect stress or pain signals. Max size: 20MB.'**
   String get pet_journal_help_audio_desc;
 
   /// No description provided for @pet_journal_help_map_title.
   ///
   /// In en, this message translates to:
-  /// **'Map'**
+  /// **'Map & Alerts'**
   String get pet_journal_help_map_title;
 
   /// No description provided for @pet_journal_help_map_desc.
   ///
   /// In en, this message translates to:
-  /// **'Auto location.'**
+  /// **'The map automatically saves your current location. If you see danger on your route (like aggressive dogs or poison), tap the alert icon on the map to log it and warn the community.'**
   String get pet_journal_help_map_desc;
 
   /// No description provided for @pet_journal_help_notes_title.
   ///
   /// In en, this message translates to:
-  /// **'Notes'**
+  /// **'Notes & Voice Typing'**
   String get pet_journal_help_notes_title;
 
   /// No description provided for @pet_journal_help_notes_desc.
   ///
   /// In en, this message translates to:
-  /// **'Describe everything.'**
+  /// **'You can type details manually in the text box. If you prefer, tap the microphone inside the text field to just speak; the app will transcribe your words automatically.'**
   String get pet_journal_help_notes_desc;
 
   /// No description provided for @pet_journal_help_videos_title.
   ///
   /// In en, this message translates to:
-  /// **'Video'**
+  /// **'Short Videos'**
   String get pet_journal_help_videos_title;
 
   /// No description provided for @pet_journal_help_videos_desc.
   ///
   /// In en, this message translates to:
-  /// **'Coming soon.'**
+  /// **'Record short clips directly in the app. This is perfect for showing the AI vet how your pet is walking (if they\'re limping) or to capture unusual behavior in motion. Max size: 20MB.'**
   String get pet_journal_help_videos_desc;
 
   /// No description provided for @pet_journal_help_ai_title.
   ///
   /// In en, this message translates to:
-  /// **'AI'**
+  /// **'AI Veterinarian'**
   String get pet_journal_help_ai_title;
 
   /// No description provided for @pet_journal_help_ai_desc.
   ///
   /// In en, this message translates to:
-  /// **'AI Clinical Opinion.'**
+  /// **'When you provide any of the items above, our Artificial Intelligence acts like a vet and analyzes the data instantly! It generates a clinical report that is saved right in your pet\'s history.'**
   String get pet_journal_help_ai_desc;
+
+  /// No description provided for @pet_journal_help_friends_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Walking with Friends'**
+  String get pet_journal_help_friends_title;
+
+  /// No description provided for @pet_journal_help_friends_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'When the switch is on the friend, the app can perform all available analyses for the friend pet and also issue a PDF report.'**
+  String get pet_journal_help_friends_desc;
+
+  /// No description provided for @pet_journal_help_specialized_ai_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Specialized Pet AI'**
+  String get pet_journal_help_specialized_ai_title;
+
+  /// No description provided for @pet_journal_help_specialized_ai_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'There is an Artificial Intelligence specially designed to know, learn, and understand all of your pet\'s data (like in Pet Chat). This allows it to answer anything you ask about your pet in a personalized way!'**
+  String get pet_journal_help_specialized_ai_desc;
 
   /// No description provided for @pet_error_ai_analysis_failed.
   ///
@@ -5098,6 +5158,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What was done?'**
   String get pet_field_what_was_done;
+
+  /// No description provided for @pet_friend_name_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend\'s Name (Pet)'**
+  String get pet_friend_name_label;
+
+  /// No description provided for @pet_tutor_name_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutor\'s Name'**
+  String get pet_tutor_name_label;
+
+  /// No description provided for @pet_friend_new.
+  ///
+  /// In en, this message translates to:
+  /// **'New Friend'**
+  String get pet_friend_new;
+
+  /// No description provided for @pet_friend_select.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a friend'**
+  String get pet_friend_select;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

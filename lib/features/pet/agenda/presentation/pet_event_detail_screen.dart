@@ -63,6 +63,13 @@ class PetEventDetailScreen extends StatelessWidget {
                                 ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
                                 : type.label(l10n);
 
+    // Friend Detection
+    final RegExp friendRegex = RegExp(r'\[Amigo: (.*?) \| Tutor: (.*?)\]');
+    final friendMatch = event.notes != null ? friendRegex.firstMatch(event.notes!) : null;
+    final String? friendName = friendMatch?.group(1);
+    final String? tutorName = friendMatch?.group(2);
+    final String displayNotes = event.notes?.replaceAll(friendRegex, '').trim() ?? '';
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -84,6 +91,8 @@ class PetEventDetailScreen extends StatelessWidget {
                  petDetails: {
                    PetConstants.fieldName: petName,
                    PetConstants.keyPageTitle: displayTitle,
+                   if (friendName != null) 'friend_name': friendName,
+                   if (tutorName != null) 'tutor_name': tutorName,
                  },
                )));
             },
@@ -186,6 +195,40 @@ class PetEventDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
+            // Friend Info Block
+            if (friendName != null && tutorName != null)
+              Container(
+                margin: const EdgeInsets.only(bottom: 24),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.petPrimary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: AppColors.petPrimary, width: 2),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.group, color: AppColors.petPrimary, size: 32),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${l10n.pet_friend_name_label}: $friendName",
+                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            "${l10n.pet_tutor_name_label}: $tutorName",
+                            style: const TextStyle(color: Colors.white70, fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
             // Image Section (Visual Evidence)
             if (event.mediaPaths != null && event.mediaPaths!.isNotEmpty)
               Container(
@@ -207,7 +250,7 @@ class PetEventDetailScreen extends StatelessWidget {
               _AudioPlayerWidget(audioPath: event.metrics![PetConstants.keyAudioPath].toString()),
 
             // Notes Section (Journal) - HIDE if AI Summary exists to prevent duplication
-            if (event.notes != null && event.notes!.isNotEmpty && !(event.hasAIAnalysis && event.metrics?[PetConstants.keyAiSummary] != null))
+            if (displayNotes.isNotEmpty && !(event.hasAIAnalysis && event.metrics?[PetConstants.keyAiSummary] != null))
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
@@ -227,7 +270,7 @@ class PetEventDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      event.notes!,
+                      displayNotes,
                       style: const TextStyle(color: Colors.white, fontSize: 16, height: 1.5),
                     ),
                   ],

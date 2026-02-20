@@ -39,7 +39,7 @@
         "format": "yMd"
       }
     }
-  }
+  },
 
   "help_ia_pet_pillars_title": "Pet ScanNut+ Intelligence",
   "help_pillar_analysis_title": "Image and Video Analysis",
@@ -51,8 +51,17 @@
   "help_pillar_nutrition_title": "Smart Nutrition",
   "help_pillar_nutrition_desc": "Generates personalized menus and automatically adds meals to the agenda for consumption tracking.",
   "help_pillar_profile_title": "Profile and Documentation",
-  "help_pillar_profile_desc": "Pet data, health and funeral plans, and storage of important documents for quick access."
+  "help_pillar_profile_desc": "Pet data, health and funeral plans, and storage of important documents for quick access.",
 
-
-
+  "pet_delete_confirmation_title": "Delete Record?",
+  "pet_appointment_edit": "Edit Appointment",
+  "pet_appointment_outcome": "Register Outcome",
+  "pet_appointment_outcome_title": "How was the appointment?",
+  "pet_appointment_outcome_hint": "Describe what happened, any exams performed...",
+  "pet_appointment_outcome_save": "Save Outcome",
+  "pet_field_what_to_do": "What to do?",
+  "pet_friend_name_label": "Friend's Name (Pet)",
+  "pet_tutor_name_label": "Tutor's Name",
+  "pet_friend_new": "New Friend",
+  "pet_friend_select": "Select a friend"
 }

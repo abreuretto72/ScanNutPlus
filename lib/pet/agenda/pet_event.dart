@@ -54,6 +54,36 @@ class PetEvent extends HiveObject {
     this.mediaPaths,
     this.partnerId,
   });
+
+  PetEvent copyWith({
+    String? id,
+    DateTime? startDateTime,
+    List<String>? petIds,
+    int? eventTypeIndex,
+    bool? hasAIAnalysis,
+    String? address,
+    DateTime? endDateTime,
+    int? eventSubTypeIndex,
+    String? notes,
+    Map<String, dynamic>? metrics,
+    List<String>? mediaPaths,
+    String? partnerId,
+  }) {
+    return PetEvent(
+      id: id ?? this.id,
+      startDateTime: startDateTime ?? this.startDateTime,
+      petIds: petIds ?? this.petIds,
+      eventTypeIndex: eventTypeIndex ?? this.eventTypeIndex,
+      hasAIAnalysis: hasAIAnalysis ?? this.hasAIAnalysis,
+      address: address ?? this.address,
+      endDateTime: endDateTime ?? this.endDateTime,
+      eventSubTypeIndex: eventSubTypeIndex ?? this.eventSubTypeIndex,
+      notes: notes ?? this.notes,
+      metrics: metrics ?? this.metrics,
+      mediaPaths: mediaPaths ?? this.mediaPaths,
+      partnerId: partnerId ?? this.partnerId,
+    );
+  }
 }
 
 /// Adapter manual para garantir controle total de leitura/escrita.

@@ -531,99 +531,147 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                     // Google Event Logic
                     final isSummary = event.metrics != null && event.metrics!['is_summary'] == true;
                     final isGoogleEvent = event.metrics != null && event.metrics!['is_google_event'] == true;
+                    final isFriendEvent = event.notes != null && event.notes!.contains('[Amigo:');
                     
                     // Card Color
                     final cardColor = isSummary ? const Color(0xFFFFF9C4) // Light Yellow/Gold for Summary
                                     : isGoogleEvent ? const Color(0xFFE3F2FD) // Light Blue for Google
+                                    : isFriendEvent ? const Color(0xFFB9FBC0) // Light Mint Green for Friends
                                     : const Color(0xFFFFD1DC); 
                     final textColor = Colors.black;
 
-                    return Card(
-                      color: cardColor, 
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: cardColor, 
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.black, width: 3),
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black, offset: Offset(5, 5))
+                        ],
                       ),
-                      child: ListTile(
-                        leading: isSummary 
-                                ? Icon(Icons.auto_awesome, size: 32, color: Colors.amber[800]) // Summary Icon
-                            : isGoogleEvent
-                                ? const Icon(Icons.map, size: 32, color: Color(0xFF4285F4)) // Google Maps Icon (Blue)
-                                : Icon(Icons.directions_walk, size: 32, color: textColor), // Walk Icon
-
-                        title: Text(
-                           (event.metrics != null && event.metrics!.containsKey('custom_title'))
-                              ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
-                              : l10n.pet_event_walk, 
-                           style: TextStyle(fontWeight: FontWeight.bold, color: textColor),
-                           overflow: TextOverflow.ellipsis,
-                        ),
-                        
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Data e Hora (Black Text)
-                            Text(
-                              DateFormat("dd/MM/yyyy • HH:mm").format(event.startDateTime),
-                              style: TextStyle(color: textColor, fontWeight: FontWeight.w500),
-                            ),
-                         
-                            // Palavras-chave (Resumo)
-                            if (event.notes != null && event.notes!.isNotEmpty)
-                               Padding(
-                                padding: const EdgeInsets.only(top: 4, bottom: 4),
-                                child: Text(
-                                  event.notes!,
-                                  style: TextStyle(
-                                    fontSize: 12, 
-                                    color: Colors.black87,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => PetEventDetailScreen(
+                                  event: event,
+                                  petName: widget.petName,
+                                ),
+                              ),
+                            ).then((_) {
+                               setState(() {
+                                 _futureEvents = _loadEvents(); // Refresh on return
+                               });
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Icon (Chunky)
+                                Container(
+                                  width: 56,
+                                  height: 56,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(color: Colors.black, width: 2),
                                   ),
-                                  maxLines: 4, 
-                                  overflow: TextOverflow.ellipsis,
+                                  child: isSummary 
+                                      ? Icon(Icons.auto_awesome_rounded, size: 28, color: Colors.amber[800]) // Summary Icon
+                                      : isGoogleEvent
+                                          ? const Icon(Icons.map_rounded, size: 28, color: const Color(0xFF4285F4)) // Google Maps Icon (Blue)
+                                          : isFriendEvent
+                                              ? const Icon(Icons.pets, size: 28, color: Colors.black) // Friend Walk Icon
+                                              : const Icon(Icons.directions_walk_rounded, size: 28, color: Colors.black), // Walk Icon
                                 ),
-                              ),
-
-                            // Endereço (se houver)
-                            if (event.address != null && event.address!.isNotEmpty)
-                               Padding(
-                                padding: const EdgeInsets.only(top: 4),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                     Icon(Icons.location_on, size: 12, color: textColor),
-                                     const SizedBox(width: 4),
-                                     Expanded(
-                                       child: Text(
-                                         event.address!,
-                                         style: TextStyle(fontSize: 12, color: textColor),
-                                         maxLines: 2, 
+                                const SizedBox(width: 16),
+                                
+                                // Content
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // Title
+                                      Text(
+                                         (event.metrics != null && event.metrics!.containsKey('custom_title'))
+                                            ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
+                                            : l10n.pet_event_walk, 
+                                         style: const TextStyle(fontWeight: FontWeight.w900, color: Colors.black, fontSize: 18, letterSpacing: -0.3),
                                          overflow: TextOverflow.ellipsis,
-                                       ),
-                                     ),
-                                  ],
+                                         maxLines: 2,
+                                      ),
+                                      const SizedBox(height: 6),
+                                      
+                                      // Date
+                                      Text(
+                                        DateFormat("dd/MM/yyyy • HH:mm").format(event.startDateTime),
+                                        style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 13),
+                                      ),
+                                      
+                                      // Notes
+                                      if (event.notes != null && event.notes!.isNotEmpty) ...[
+                                         const SizedBox(height: 8),
+                                         Text(
+                                           event.notes!,
+                                           style: const TextStyle(
+                                             fontSize: 13, 
+                                             color: Colors.black87,
+                                             fontWeight: FontWeight.w600,
+                                           ),
+                                           maxLines: 4, 
+                                           overflow: TextOverflow.ellipsis,
+                                         ),
+                                      ],
+          
+                                      // Address
+                                      if (event.address != null && event.address!.isNotEmpty) ...[
+                                         const SizedBox(height: 8),
+                                         Row(
+                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                           children: [
+                                              const Icon(Icons.location_on_rounded, size: 14, color: Colors.black),
+                                              const SizedBox(width: 4),
+                                              Expanded(
+                                                child: Text(
+                                                  event.address!,
+                                                  style: const TextStyle(fontSize: 12, color: Colors.black87, fontWeight: FontWeight.w600),
+                                                  maxLines: 2, 
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                           ],
+                                         ),
+                                      ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                          ],
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
-                          onPressed: () => _confirmDelete(context, event),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => PetEventDetailScreen(
-                                event: event,
-                                petName: widget.petName,
-                              ),
+                                
+                                // Delete Action
+                                Container(
+                                  margin: const EdgeInsets.only(left: 8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.black, width: 2),
+                                  ),
+                                  child: IconButton(
+                                    icon: const Icon(Icons.delete_rounded, color: Colors.redAccent, size: 20),
+                                    padding: const EdgeInsets.all(6),
+                                    constraints: const BoxConstraints(),
+                                    onPressed: () => _confirmDelete(context, event),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ).then((_) {
-                             setState(() {
-                               _futureEvents = _loadEvents(); // Refresh on return
-                             });
-                          });
-                        },
+                          ),
+                        ),
                       ),
                     );
                   }),

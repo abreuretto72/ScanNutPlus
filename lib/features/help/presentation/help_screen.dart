@@ -87,33 +87,37 @@ class HelpScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // Food Domain Tile
-              _buildDomainTile(
-                theme,
-                Icons.restaurant,
-                l10n.help_domain_food_title,
-                l10n.help_domain_food_desc,
-                const Color(0xFFFF9800), // Orange Accent
-                cardColor,
-                borderColor,
-                textColor,
-                shadowStyle,
+              const SizedBox(height: 32),
+
+              // PET JOURNAL GUIDE
+              Text(
+                "Guia do Diário / Passeio",
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                  shadows: shadowStyle,
+                ),
               ),
               const SizedBox(height: 16),
-
-              // Plant Domain Tile
-              _buildDomainTile(
-                theme,
-                LucideIcons.leaf,
-                l10n.help_domain_plant_title,
-                l10n.help_domain_plant_desc,
-                const Color(0xFF10AC84), // Green Accent
-                cardColor,
-                borderColor,
-                textColor,
-                shadowStyle,
-              ),
+              
+              _buildAnalysisTile(theme, l10n.pet_journal_help_photo_title, l10n.pet_journal_help_photo_desc, cardColor, borderColor, textColor, shadowStyle),
+              const SizedBox(height: 8),
+              _buildAnalysisTile(theme, l10n.pet_journal_help_audio_title, l10n.pet_journal_help_audio_desc, cardColor, borderColor, textColor, shadowStyle),
+              const SizedBox(height: 8),
+              _buildAnalysisTile(theme, l10n.pet_journal_help_map_title, l10n.pet_journal_help_map_desc, cardColor, borderColor, textColor, shadowStyle),
+              const SizedBox(height: 8),
+              _buildAnalysisTile(theme, l10n.pet_journal_help_notes_title, l10n.pet_journal_help_notes_desc, cardColor, borderColor, textColor, shadowStyle),
+              const SizedBox(height: 8),
+              _buildAnalysisTile(theme, l10n.pet_journal_help_videos_title, l10n.pet_journal_help_videos_desc, cardColor, borderColor, textColor, shadowStyle),
+              const SizedBox(height: 8),
+              _buildAnalysisTile(theme, l10n.pet_journal_help_ai_title, l10n.pet_journal_help_ai_desc, cardColor, borderColor, textColor, shadowStyle),
+              const SizedBox(height: 8),
+              _buildAnalysisTile(theme, l10n.pet_journal_help_friends_title, l10n.pet_journal_help_friends_desc, cardColor, borderColor, textColor, shadowStyle),
+              const SizedBox(height: 8),
+              _buildAnalysisTile(theme, l10n.pet_journal_help_specialized_ai_title, l10n.pet_journal_help_specialized_ai_desc, cardColor, borderColor, textColor, shadowStyle),
+              
               const SizedBox(height: 32),
+
 
               // Technical Analysis Guide Header
               Text(

@@ -234,3 +234,65 @@ extension PetHistoryEntryExt on PetHistoryEntry {
       return '$plantName ($status)';
   }
 }
+
+extension AppointmentTypeExt on String {
+  /// Translates a raw appointment_type from the DB (e.g. 'vaccine_annual') into a localized string.
+  String toAppointmentTypeDisplay(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    switch(this) {
+      // Health
+      case 'consultation_general': return l10n.pet_apt_consultation_general;
+      case 'consultation_return': return l10n.pet_apt_consultation_return;
+      case 'consultation_specialist': return l10n.pet_apt_consultation_specialist;
+      case 'consultation_tele': return l10n.pet_apt_consultation_tele;
+      case 'vaccine_annual': return l10n.pet_apt_vaccine_annual;
+      case 'vaccine_specific': return l10n.pet_apt_vaccine_specific;
+      case 'vaccine_booster': return l10n.pet_apt_vaccine_booster;
+      case 'exam_blood': return l10n.pet_apt_exam_blood;
+      case 'exam_ultrasound': return l10n.pet_apt_exam_ultrasound;
+      case 'exam_xray': return l10n.pet_apt_exam_xray;
+      case 'exam_lab': return l10n.pet_apt_exam_lab;
+      case 'exam_periodic': return l10n.pet_apt_exam_periodic;
+      case 'procedure_castration': return l10n.pet_apt_procedure_castration;
+      case 'procedure_surgery': return l10n.pet_apt_procedure_surgery;
+      case 'procedure_dental': return l10n.pet_apt_procedure_dental;
+      case 'procedure_dressing': return l10n.pet_apt_procedure_dressing;
+      case 'treatment_physio': return l10n.pet_apt_treatment_physio;
+      case 'treatment_acu': return l10n.pet_apt_treatment_acu;
+      case 'treatment_chemo': return l10n.pet_apt_treatment_chemo;
+      case 'treatment_hemo': return l10n.pet_apt_treatment_hemo;
+      
+      // Wellness
+      case 'wellness_bath': return l10n.pet_apt_wellness_bath;
+      case 'wellness_grooming': return l10n.pet_apt_wellness_grooming;
+      case 'wellness_hygienic': return l10n.pet_apt_wellness_hygienic;
+      case 'wellness_hydration': return l10n.pet_apt_wellness_hydration;
+      case 'wellness_daycare': return l10n.pet_apt_wellness_daycare;
+      case 'wellness_hotel': return l10n.pet_apt_wellness_hotel;
+
+      // Behavior
+      case 'behavior_training': return l10n.pet_apt_behavior_training;
+      case 'behavior_evaluation': return l10n.pet_apt_behavior_evaluation;
+      case 'behavior_social': return l10n.pet_apt_behavior_social;
+
+      // Nutrition
+      case 'nutrition_meal': return l10n.pet_apt_nutrition_meal;
+      case 'nutrition_food_change': return l10n.pet_apt_nutrition_food_change;
+
+      // Services
+      case 'service_taxi': return l10n.pet_apt_service_taxi;
+      case 'service_delivery': return l10n.pet_apt_service_delivery;
+      case 'service_nutrition': return l10n.pet_apt_service_nutrition;
+      case 'service_mealplan': return l10n.pet_apt_service_mealplan;
+
+      // Docs
+      case 'doc_vaccine_card': return l10n.pet_apt_doc_vaccine_card;
+      case 'doc_health_cert': return l10n.pet_apt_doc_health_cert;
+      case 'doc_microchip': return l10n.pet_apt_doc_microchip;
+      case 'doc_gta': return l10n.pet_apt_doc_gta;
+      case 'doc_travel': return l10n.pet_apt_doc_travel;
+
+      default: return l10n.pet_apt_consultation_general; // Fallback
+    }
+  }
+}

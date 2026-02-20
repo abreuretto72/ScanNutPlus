@@ -71,64 +71,74 @@ class PetRecordsTab extends StatelessWidget {
   }
 
   Widget _buildCard(BuildContext context, _RecordItem item) {
-    return Card(
-      elevation: 4,
-      color: AppColors.petCardBackground,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: InkWell(
-        onTap: () {
-          if (item.type == PetRecordType.weight) {
-             Navigator.push(
-               context,
-               MaterialPageRoute(
-                 builder: (_) => PetMetricsScreen(
-                   petId: petId,
-                   petName: petName,
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.petPrimary, // Rosa Pastel
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.black, width: 3),
+        boxShadow: const [
+          BoxShadow(color: Colors.black, offset: Offset(5, 5))
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(24),
+          onTap: () {
+            if (item.type == PetRecordType.weight) {
+               Navigator.push(
+                 context,
+                 MaterialPageRoute(
+                   builder: (_) => PetMetricsScreen(
+                     petId: petId,
+                     petName: petName,
+                   ),
                  ),
-               ),
-             ).then((saved) {
-                if (saved == true) onRecordSaved();
-             });
-          } else {
-             Navigator.push(
-               context,
-               MaterialPageRoute(
-                 builder: (_) => PetRecordFormScreen(
-                   petId: petId,
-                   petName: petName,
-                   recordType: item.type,
+               ).then((saved) {
+                  if (saved == true) onRecordSaved();
+               });
+            } else {
+               Navigator.push(
+                 context,
+                 MaterialPageRoute(
+                   builder: (_) => PetRecordFormScreen(
+                     petId: petId,
+                     petName: petName,
+                     recordType: item.type,
+                   ),
                  ),
-               ),
-             ).then((saved) {
-                if (saved == true) {
-                  onRecordSaved();
-                }
-             });
-          }
-        },
-        borderRadius: BorderRadius.circular(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                color: AppColors.petPrimary,
-                shape: BoxShape.circle,
+               ).then((saved) {
+                  if (saved == true) {
+                    onRecordSaved();
+                  }
+               });
+            }
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.black, width: 2),
+                ),
+                child: Icon(item.icon, size: 40, color: Colors.black),
               ),
-              child: Icon(item.icon, size: 40, color: Colors.black),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              item.label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+              const SizedBox(height: 16),
+              Text(
+                item.label,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -0.5,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

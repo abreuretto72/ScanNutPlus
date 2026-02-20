@@ -81,20 +81,49 @@ class _ProfileViewState extends State<ProfileView> {
     }
   }
 
+  Widget _buildLabeledField(String labelText, Widget child) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10), // Reduced from 12 to bring the field up slightly
+          child: child,
+        ),
+        Positioned(
+          left: 24, // Shifted away from the 16px border-radius curve exactly onto the flat line
+          top: 3, // Pushed down exactly to center over the Y=10 border outline
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2), // Thinner height so it doesn't invade
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(4),
+              // Border width 0 removed to eliminate subpixel white aliasing (the "teeth")
+            ),
+            child: Text(
+              labelText.toUpperCase(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: 11,
+                letterSpacing: 1.0,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    // Deep Navy Styles & Hard Shadow
-    const cardBackgroundColor = Color(0xFF121A2B);
-    const cardBorderColor = Color(0xFF22304A);
-    const textColor = Color(0xFFEAF0FF);
-    const emailColor = Color(0xFFA9B4CC);
-    const shadowStyle = [
-       Shadow(color: Colors.black, offset: Offset(2.0, 2.0), blurRadius: 4.0),
-       Shadow(color: Colors.black, offset: Offset(-0.5, -0.5), blurRadius: 1.0),
-    ];
+    // Neo-Brutalist Styles
+    const cardBackgroundColor = Colors.white;
+    const cardBorderColor = Colors.black;
+    const textColor = Colors.black;
+    const emailColor = Colors.black54;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -117,8 +146,9 @@ class _ProfileViewState extends State<ProfileView> {
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: cardBackgroundColor,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: cardBorderColor, width: 2),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(color: cardBorderColor, width: 3),
+                  boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(6, 6))],
                 ),
                 child: Column(
                   children: [
@@ -131,8 +161,8 @@ class _ProfileViewState extends State<ProfileView> {
                         height: 96,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: theme.scaffoldBackgroundColor,
-                          border: Border.all(color: const Color(0xFF1F3A5F), width: 2),
+                          color: Colors.grey.shade200,
+                          border: Border.all(color: Colors.black, width: 3),
                           image: _userPhotoPath != null
                               ? DecorationImage(
                                   image: FileImage(File(_userPhotoPath!)),
@@ -141,7 +171,7 @@ class _ProfileViewState extends State<ProfileView> {
                               : null,
                         ),
                         child: _userPhotoPath == null
-                            ? Icon(Icons.person_outline, size: 48, color: theme.primaryColorLight)
+                            ? const Icon(Icons.person_outline, size: 48, color: Colors.black)
                             : null,
                       ),
                     ),
@@ -149,18 +179,18 @@ class _ProfileViewState extends State<ProfileView> {
                     
                     // Section Title
                     Text(
-                      l10n.section_account_data,
-                      style: TextStyle(
-                        color: theme.primaryColorLight,
+                      l10n.section_account_data.toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.black54,
                         fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        shadows: shadowStyle,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.0,
                       ),
                     ),
                     const SizedBox(height: 16),
 
                     // Name Input
-                    TextField(
+                    _buildLabeledField(l10n.label_name, TextField(
                       controller: _nameController,
                       onEditingComplete: () {
                          _updateName(_nameController.text);
@@ -168,64 +198,54 @@ class _ProfileViewState extends State<ProfileView> {
                       },
                       style: TextStyle(
                         color: textColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        shadows: shadowStyle,
+                        fontSize: 22,
+                        letterSpacing: -0.5,
                       ),
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
-                        labelText: l10n.label_name,
                         hintText: l10n.hint_user_name,
-                        hintStyle: TextStyle(color: theme.disabledColor),
-                        labelStyle: TextStyle(
-                            color: theme.disabledColor,
-                            shadows: shadowStyle,
-                            fontSize: 14,
-                        ),
+                        hintStyle: const TextStyle(color: Colors.black),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: cardBorderColor),
-                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(color: cardBorderColor, width: 2),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: theme.primaryColorLight),
-                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: Colors.black, width: 3),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         filled: true,
-                        fillColor: Colors.black.withValues(alpha: 0.2),
+                        fillColor: Colors.white,
                         alignLabelWithHint: true,
                         floatingLabelAlignment: FloatingLabelAlignment.center,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                       ),
-                    ),
+                    )),
                     
                     const SizedBox(height: 16),
                     
                     // Email Read-Only
-                    TextField(
+                    _buildLabeledField(l10n.label_email, TextField(
                       enabled: false,
                       controller: TextEditingController(text: _userEmail), // Display only
                       style: TextStyle(
                         color: emailColor,
                         fontSize: 14,
-                        shadows: shadowStyle,
                       ),
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
-                        labelText: l10n.label_email,
-                        labelStyle: TextStyle(
-                            color: theme.disabledColor,
-                            shadows: shadowStyle,
-                            fontSize: 12,
-                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                         disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent),
+                          borderSide: const BorderSide(color: Colors.black12, width: 2),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        filled: false,
+                        filled: true,
+                        fillColor: Colors.grey.shade50,
                         alignLabelWithHint: true,
                         floatingLabelAlignment: FloatingLabelAlignment.center,
-                         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       ),
-                    ),
+                    )),
                   ],
                 ),
               ),
@@ -234,39 +254,54 @@ class _ProfileViewState extends State<ProfileView> {
 
               // Settings Section
               Text(
-                l10n.menu_settings,
+                l10n.menu_settings.toUpperCase(),
                 style: theme.textTheme.titleMedium?.copyWith(
-                  color: theme.colorScheme.onSurface,
-                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                  letterSpacing: 1.0,
                 ),
               ),
               const SizedBox(height: 16),
               
               Container(
                 decoration: BoxDecoration(
-                  color: theme.cardColor,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: theme.dividerColor),
+                  color: const Color(0xFFF1F5F9), // Light Greyish Blue
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.black, width: 3),
+                  boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(5, 5))],
                 ),
                 child: Column(
                   children: [
                     SwitchListTile(
-                      title: Text(l10n.profile_biometric_enable, style: theme.textTheme.bodyLarge),
+                      title: Text(l10n.profile_biometric_enable, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 16)),
                       value: _biometricEnabled,
-
+                      activeThumbColor: Colors.black,
+                      activeTrackColor: const Color(0xFF10AC84), // Neo-green
+                      inactiveThumbColor: Colors.black54,
+                      inactiveTrackColor: Colors.grey.shade400,
+                      trackOutlineColor: WidgetStateProperty.all(Colors.black), // Pro-max thick outline
                       onChanged: (val) async {
                          setState(() {
                            _biometricEnabled = val;
                          });
                          await simpleAuthService.setBiometricEnabled(val); // Save to Service
                       },
-                      secondary: Icon(LucideIcons.fingerprint, color: theme.primaryColorLight),
+                      secondary: const Icon(LucideIcons.fingerprint, color: Colors.black, size: 28),
                     ),
-                     const Divider(height: 1),
+                     const Divider(height: 2, thickness: 2, color: Colors.black),
                      ListTile(
-                       leading: Icon(LucideIcons.lock, color: theme.primaryColorLight),
-                       title: Text(l10n.profile_change_password, style: theme.textTheme.bodyLarge),
-                       trailing: Icon(LucideIcons.chevronRight, color: theme.disabledColor, size: 20),
+                       leading: const Icon(LucideIcons.lock, color: Colors.black, size: 28),
+                       title: Text(l10n.profile_change_password, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 16)),
+                       trailing: Container(
+                         padding: const EdgeInsets.all(4),
+                         decoration: BoxDecoration(
+                           color: Colors.grey.shade200, 
+                           borderRadius: BorderRadius.circular(8), 
+                           border: Border.all(color: Colors.black, width: 2)
+                         ),
+                         child: const Icon(LucideIcons.chevronRight, color: Colors.black, size: 20)
+                       ),
                        onTap: _showChangePasswordSheet,
                      ),
                   ],
@@ -311,9 +346,10 @@ class _ProfileViewState extends State<ProfileView> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: const Color(0xFF121212), // Dark aesthetic for modal
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        side: BorderSide(color: Colors.white24, width: 2),
       ),
       builder: (context) => Padding(
         padding: EdgeInsets.only(
@@ -345,9 +381,6 @@ class _ChangePasswordFormState extends State<_ChangePasswordForm> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    
-    // Purple accent for confirmation
-    const purpleAccent = Color(0xFF6A4D8C);
 
     return SingleChildScrollView(
       child: Column(
@@ -355,14 +388,12 @@ class _ChangePasswordFormState extends State<_ChangePasswordForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            l10n.profile_change_password,
+            l10n.profile_change_password.toUpperCase(),
             style: theme.textTheme.headlineSmall?.copyWith(
-              color: theme.colorScheme.onSurface,
-              fontWeight: FontWeight.bold,
-              shadows: const [
-                 Shadow(color: Colors.black, offset: Offset(2.0, 2.0), blurRadius: 4.0),
-                 Shadow(color: Colors.black, offset: Offset(-0.5, -0.5), blurRadius: 1.0),
-              ],
+              color: Colors.white,
+              fontWeight: FontWeight.w900,
+              fontSize: 22,
+              letterSpacing: 0.5,
             ),
             textAlign: TextAlign.center,
           ),
@@ -376,25 +407,33 @@ class _ChangePasswordFormState extends State<_ChangePasswordForm> {
           
           const SizedBox(height: 32),
           
-          ElevatedButton(
-            onPressed: _isLoading ? null : _handleSubmit,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: purpleAccent,
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Colors.white, width: 3),
+              boxShadow: const [BoxShadow(color: Colors.white24, offset: Offset(4, 4))],
             ),
-            child: _isLoading 
-              ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-              : Text(
-                  l10n.password_save,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    shadows: [
-                       Shadow(color: Colors.black, offset: Offset(2.0, 2.0), blurRadius: 4.0),
-                    ],
+            child: ElevatedButton(
+              onPressed: _isLoading ? null : _handleSubmit,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              child: _isLoading 
+                ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 3, color: Colors.white))
+                : Text(
+                    l10n.password_save.toUpperCase(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
+                      letterSpacing: 1.0,
+                    ),
                   ),
-                ),
+            ),
           ),
           const SizedBox(height: 48),
         ],
@@ -403,29 +442,54 @@ class _ChangePasswordFormState extends State<_ChangePasswordForm> {
   }
 
   Widget _buildPasswordField(String label, TextEditingController controller, ThemeData theme) {
-    return TextField(
-      controller: controller,
-      obscureText: true,
-      style: TextStyle(color: theme.colorScheme.onSurface),
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(
-          color: theme.disabledColor,
-          shadows: const [
-             Shadow(color: Colors.black, offset: Offset(1.0, 1.0), blurRadius: 2.0),
-          ],
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10), // Reduced from 12 to bring the field up slightly
+          child: TextField(
+            controller: controller,
+            obscureText: true,
+            style: const TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+              hintText: label,
+              hintStyle: const TextStyle(color: Colors.black),
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              filled: true,
+              fillColor: Colors.white,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.black, width: 2),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF6A4D8C), width: 3),
+              ),
+            ),
+          ),
         ),
-        filled: true,
-        fillColor: theme.cardColor,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: theme.dividerColor, width: 2),
+        Positioned(
+          left: 24, // Shifted away from the 16px border-radius curve exactly onto the flat line
+          top: 3, // Pushed down exactly to center over the Y=10 border outline
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2), // Thinner height so it doesn't invade
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(4),
+              // Border width 0 removed to eliminate subpixel white aliasing (the "teeth")
+            ),
+            child: Text(
+              label.toUpperCase(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: 11,
+                letterSpacing: 1.0,
+              ),
+            ),
+          ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFF6A4D8C), width: 2),
-        ),
-      ),
+      ],
     );
   }
 

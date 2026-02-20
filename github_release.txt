@@ -33,3 +33,5 @@ git tag -a v2.2.0 -m "Pet Repo I18N Refactor, Copy Nutrition to Agenda, Health T
 git push origin v2.2.0
 git tag -a v2.2.1 -m "Metrics Screen Implementation, Agenda FAB Logic, UI Contrast Fixes & STT to Textfields"
 git push origin v2.2.1
+git tag -a v2.2.2 -m "Appoint. Cards Interaction, Google Places Partners, Profile & Agenda UI Neobrutalism, Expanded Localization & Walk Modal Guides"
+git push origin v2.2.2

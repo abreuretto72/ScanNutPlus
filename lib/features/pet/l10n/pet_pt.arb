@@ -17,7 +17,7 @@
   "help_pillar_nutrition_title": "Nutrição Inteligente",
   "help_pillar_nutrition_desc": "Geração de cardápios personalizados e inclusão automática das refeições na agenda para controle de consumo.",
   "help_pillar_profile_title": "Perfil e Documentação",
-  "help_pillar_profile_desc": "Dados do pet, planos de saúde, funerário e armazenamento de documentos importantes para acesso rápido."
+  "help_pillar_profile_desc": "Dados do pet, planos de saúde, funerário e armazenamento de documentos importantes para acesso rápido.",
   "pet_label_dog": "Cão",
   "pet_label_cat": "Gato",
   "pet_result_title": "Resultado da Análise",
@@ -35,6 +35,8 @@
   "pet_voice_action": "Enviar Voz",
   "pet_voice_retry": "Tentar Novamente",
   "pet_rag_new_identity": "Identidade salva: {name}",
+  "pet_friend_new": "Novo Amigo",
+  "pet_friend_select": "Selecione um amigo",
   "pet_analysis_for": "Análise: {name}",
   "pet_voice_who_is_this": "Quem é este pet?",
   "key_green": "Monitorar",
@@ -87,4 +89,9 @@
         "format": "yMd"
       }
     }
-  }
+  },
+  "pet_friend_name_label": "Nome do Amigo (Pet)",
+  "pet_tutor_name_label": "Nome do Tutor(a)",
+  "pet_friend_new": "Novo Amigo",
+  "pet_friend_select": "Selecione um amigo"
+}

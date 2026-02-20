@@ -6,6 +6,7 @@ import 'package:scannutplus/pet/agenda/pet_event.dart';
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
 import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
 import 'package:scannutplus/features/pet/agenda/logic/pet_notification_manager.dart';
+import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
 
 class PetScheduledEventsScreen extends StatefulWidget {
   final String petId;
@@ -45,8 +46,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
       
       final filtered = allEvents.where((e) {
         final isAppt = e.metrics?['is_appointment'] == true;
-        final isFuture = e.startDateTime.isAfter(now);
-        return isAppt && isFuture;
+        return isAppt;
       }).toList();
 
       // Sort ascending (nearest first)
@@ -105,45 +105,176 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                     final professional = event.metrics?['professional'] ?? '';
                     final leadTime = event.metrics?['notification_lead_time'] as String?;
                     
-                    return Card(
-                      color: AppColors.petCardBackground,
-                      margin: const EdgeInsets.only(bottom: 12),
-                      shape: RoundedRectangleBorder(
-                         borderRadius: BorderRadius.circular(12),
-                         side: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
-                      ),
-                      child: ListTile(
-                        leading: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: AppColors.petPrimary.withValues(alpha: 0.2),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(Icons.calendar_month, color: AppColors.petPrimary),
-                        ),
-                        title: Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              DateFormat('dd/MM/yyyy HH:mm').format(event.startDateTime),
-                              style: const TextStyle(color: Colors.white70),
+                    final appointmentType = event.metrics?['appointment_type'] as String?;
+                    final typeDisplay = appointmentType != null ? appointmentType.toAppointmentTypeDisplay(context) : null;
+
+                    final categoryLabel = event.metrics?['source'] == 'appointment' 
+                        ? title // fallback if source is basic
+                        : title;
+                    
+                    // We need a helper to translate the type, or we just display the raw text if translation isn't available here.
+                    // Actually, the 'custom_title' already contains the translated type by default in `pet_appointment_screen.dart`!
+                    // E.g.: "Consulta Geral (Dr. João)" or just "Consulta Geral ()".
+                    // But if the user typed something custom, 'custom_title' has that.
+                    // Let's use the explicit fields from metrics.
+                    
+                    final whatToDo = event.notes ?? ''; // Notes might contain 'What to do' or we just show the title
+                    
+                    final rawCategory = event.eventTypeIndex == PetEventType.health.index ? l10n.pet_appointment_cat_health 
+                        : event.eventTypeIndex == PetEventType.food.index ? l10n.pet_appointment_cat_nutrition 
+                        : l10n.pet_appointment_tab_data;
+
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () => _showEventActionsModal(context, event),
+                          borderRadius: BorderRadius.circular(24),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.petPrimary, // Rosa Pastel
+                              borderRadius: BorderRadius.circular(24),
+                              border: Border.all(color: Colors.black, width: 3),
+                              boxShadow: const [
+                                 BoxShadow(color: Colors.black, offset: Offset(6, 6)) // Hard Shadow
+                              ],
                             ),
-                            if (professional.isNotEmpty)
-                              Text(professional, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-                             if (leadTime != null && leadTime != 'none')
-                              Row(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Icon(Icons.notifications_active, size: 12, color: AppColors.petSecondary),
-                                  const SizedBox(width: 4),
-                                  Text(leadTime, style: const TextStyle(color: AppColors.petSecondary, fontSize: 10)),
+                                  // CABEÇALHO: Ícone, Categoria e Lixeira
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              shape: BoxShape.circle,
+                                              border: Border.all(color: Colors.black, width: 2),
+                                            ),
+                                            child: const Icon(Icons.calendar_month_rounded, color: Colors.black, size: 24),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                            child: Text(
+                                              rawCategory.toUpperCase(), 
+                                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 10, letterSpacing: 1.2),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white, 
+                                          shape: BoxShape.circle, 
+                                          border: Border.all(color: Colors.black, width: 2)
+                                        ),
+                                        child: IconButton(
+                                          icon: const Icon(Icons.delete_rounded, color: Colors.redAccent, size: 22),
+                                          padding: const EdgeInsets.all(6),
+                                          constraints: const BoxConstraints(),
+                                          onPressed: () => _confirmDelete(context, event.id),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16),
+                                  
+                                  // O QUE VAI FAZER (Título / Tipo)
+                                  Text(
+                                    title, 
+                                    style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 22, height: 1.1, letterSpacing: -0.5),
+                                  ),
+                                  
+                                  if (typeDisplay != null) ...[
+                                     const SizedBox(height: 4),
+                                     Text(
+                                       typeDisplay.toUpperCase(),
+                                       style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 14),
+                                     ),
+                                  ],
+                                  
+                                  if (whatToDo.isNotEmpty) ...[
+                                     const SizedBox(height: 8),
+                                     Container(
+                                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                       decoration: BoxDecoration(
+                                          color: Colors.white.withValues(alpha: 0.5),
+                                          borderRadius: BorderRadius.circular(12),
+                                          border: Border.all(color: Colors.black, width: 1.5),
+                                       ),
+                                       child: Text(
+                                         "${l10n.pet_field_what_to_do}: $whatToDo",
+                                         style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontStyle: FontStyle.italic, fontSize: 13),
+                                       ),
+                                     ),
+                                  ],
+                                  
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                    child: Divider(color: Colors.black, height: 1, thickness: 3),
+                                  ),
+                                  
+                                  // DATA E HORA
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.access_time_rounded, color: Colors.black, size: 20),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          DateFormat('dd/MM/yyyy • HH:mm').format(event.startDateTime),
+                                          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 15),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      if (leadTime != null && leadTime != 'none')
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.black, width: 1.5)),
+                                          child: Row(
+                                            children: [
+                                              const Icon(Icons.notifications_active_rounded, size: 14, color: Colors.black),
+                                              const SizedBox(width: 4),
+                                              Text(leadTime, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 12)),
+                                            ],
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  
+                                  // PARCEIRO / PROFISSIONAL
+                                  if (professional.isNotEmpty) ...[
+                                     const SizedBox(height: 12),
+                                     Row(
+                                       children: [
+                                         const Icon(Icons.storefront_rounded, color: Colors.black, size: 20),
+                                         const SizedBox(width: 8),
+                                         Expanded(
+                                           child: Text(
+                                             "${l10n.pet_appointment_tab_partner}: $professional", 
+                                             style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w700, fontSize: 14),
+                                             overflow: TextOverflow.ellipsis,
+                                           ),
+                                         ),
+                                       ],
+                                     ),
+                                  ],
                                 ],
                               ),
-                          ],
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.redAccent),
-                          onPressed: () => _confirmDelete(context, event.id),
+                            ),
+                          ),
                         ),
                       ),
                     );
@@ -176,5 +307,157 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
          ],
        )
      );
+  }
+
+  void _showEventActionsModal(BuildContext context, PetEvent event) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: AppColors.petBackgroundDark,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+            border: Border(
+               top: BorderSide(color: Colors.black, width: 4),
+               left: BorderSide(color: Colors.black, width: 4),
+               right: BorderSide(color: Colors.black, width: 4),
+            ),
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 12),
+                Container(width: 40, height: 6, decoration: BoxDecoration(color: Colors.grey[700], borderRadius: BorderRadius.circular(10))),
+                const SizedBox(height: 24),
+                
+                // Editar Agendamento
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      // TODO: Navigate to Edit (Requires creating navigation logic next)
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.black, width: 3),
+                        boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
+                      ),
+                      child: const Center(
+                        child: Text("Editar Agendamento", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w900)),
+                      ),
+                    ),
+                  ),
+                ),
+                
+                const SizedBox(height: 16),
+                
+                // Registrar Desfecho
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      _showOutcomeDialog(context, event);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      decoration: BoxDecoration(
+                        color: AppColors.petPrimary,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.black, width: 3),
+                        boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
+                      ),
+                      child: const Center(
+                        child: Text("Registrar Desfecho", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w900)),
+                      ),
+                    ),
+                  ),
+                ),
+                
+                const SizedBox(height: 32),
+              ],
+            ),
+          ),
+        );
+      }
+    );
+  }
+
+  void _showOutcomeDialog(BuildContext context, PetEvent event) {
+    final controller = TextEditingController();
+    
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          backgroundColor: AppColors.petBackgroundDark,
+          shape: RoundedRectangleBorder(
+             borderRadius: BorderRadius.circular(24),
+             side: const BorderSide(color: Colors.black, width: 4),
+          ),
+          title: const Text("Registrar Desfecho", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900)),
+          content: TextField(
+            controller: controller,
+            maxLines: 4,
+            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+            decoration: InputDecoration(
+              hintText: "Como foi o atendimento?",
+              hintStyle: const TextStyle(color: Colors.black54),
+              filled: true,
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.black, width: 2),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.black, width: 3),
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text("Cancelar", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final outcome = controller.text.trim();
+                if (outcome.isNotEmpty) {
+                   Navigator.pop(ctx);
+                   
+                   final updatedNotes = event.notes != null && event.notes!.isNotEmpty 
+                       ? "${event.notes}\n\n[Desfecho]: $outcome" 
+                       : "[Desfecho]: $outcome";
+                       
+                   final updatedEvent = event.copyWith(notes: updatedNotes);
+                   
+                   await _repository.update(updatedEvent);
+                   _loadAppointments();
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.petPrimary,
+                foregroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: const BorderSide(color: Colors.black, width: 2),
+                ),
+                elevation: 0,
+              ),
+              child: const Text("Salvar", style: TextStyle(fontWeight: FontWeight.w900)),
+            )
+          ],
+        );
+      }
+    );
   }
 }
