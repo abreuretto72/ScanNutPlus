@@ -6,6 +6,7 @@ import 'package:pdf/widgets.dart' as pw; // Alias to avoid conflicts with Flutte
 import 'package:printing/printing.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:intl/intl.dart';
+import 'package:scannutplus/l10n/app_localizations.dart';
 
 class UniversalPdfService {
   // PDF Base Colors (Always White Background for printing/reading)
@@ -22,9 +23,7 @@ class UniversalPdfService {
     String? filePath,
     String analysisResult,
     Map<String, String> petDetails, {
-    required String footerText,
-    required String pageLabel,
-    required String ofLabel,
+    required AppLocalizations l10n,
     int? colorValue, // Dynamic Accent Color
   }) async {
     final pdf = pw.Document();
@@ -54,15 +53,15 @@ class UniversalPdfService {
     final cards = _parseCards(analysisResult);
     
     // Pet Info
-    final name = petDetails[PetConstants.fieldName] ?? 'Unknown Pet';
-    final breed = petDetails[PetConstants.fieldBreed] ?? 'Unknown Breed';
+    final name = petDetails[PetConstants.fieldName] ?? l10n.pdf_unknown_pet;
+    final breed = petDetails[PetConstants.fieldBreed] ?? l10n.pdf_unknown_breed;
     final dateStr = DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now());
     
     // Dynamic Title (e.g. "ScanNut+: Avaliação da Condição Corporal" or fallback)
     final moduleName = petDetails[PetConstants.keyPageTitle];
     final pageTitle = moduleName != null 
-        ? 'ScanNut+: $moduleName' 
-        : 'Relatório ScanNut+';
+        ? l10n.pdf_scannut_module(moduleName) 
+        : l10n.pdf_scannut_report;
 
     // --- PDF TRACE LOGS ---
     debugPrint('[PDF_TRACE] Generating PDF for: $pageTitle');
@@ -92,8 +91,8 @@ class UniversalPdfService {
             child: pw.Container(color: _colorBackground),
           ),
         ),
-        header: (context) => _buildHeader(pageTitle, dateStr, accentColor),
-        footer: (context) => _buildFooter(context, footerText, pageLabel, ofLabel, accentColor),
+        header: (context) => _buildHeader(pageTitle, dateStr, accentColor, l10n),
+        footer: (context) => _buildFooter(context, accentColor, l10n),
         build: (context) => [
           // 1. Image Section (Conditional)
           if (image != null)
@@ -131,9 +130,9 @@ class UniversalPdfService {
                    pw.Row(
                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                      children: [
-                        pw.Text('Amigo Presente: ${petDetails['friend_name']}', style: pw.TextStyle(color: _colorText, fontSize: 13, fontWeight: pw.FontWeight.bold)),
+                        pw.Text(l10n.pdf_friend_present(petDetails['friend_name']!), style: pw.TextStyle(color: _colorText, fontSize: 13, fontWeight: pw.FontWeight.bold)),
                         if (petDetails.containsKey('tutor_name'))
-                          pw.Text('Tutor(a): ${petDetails['tutor_name']}', style: pw.TextStyle(color: _colorText, fontSize: 12)),
+                          pw.Text(l10n.pdf_tutor(petDetails['tutor_name']!), style: pw.TextStyle(color: _colorText, fontSize: 12)),
                      ]
                    )
                 ]
@@ -172,7 +171,7 @@ class UniversalPdfService {
               pw.SizedBox(height: 10), // Reduced from 20
               pw.Wrap(
                  children: [
-                    pw.Text('Referências Científicas:', style: pw.TextStyle(color: accentColor, fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                    pw.Text(l10n.pdf_scientific_references, style: pw.TextStyle(color: accentColor, fontSize: 14, fontWeight: pw.FontWeight.bold)),
                     pw.Divider(color: accentColor, thickness: 0.5),
                  ]
               ),
@@ -185,7 +184,7 @@ class UniversalPdfService {
     return pdf.save();
   }
 
-  static pw.Widget _buildHeader(String title, String date, PdfColor accentColor) {
+  static pw.Widget _buildHeader(String title, String date, PdfColor accentColor, AppLocalizations l10n) {
     return pw.Container(
       margin: const pw.EdgeInsets.only(bottom: 20),
       padding: const pw.EdgeInsets.only(bottom: 10),
@@ -199,8 +198,8 @@ class UniversalPdfService {
           pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.end,
             children: [
-               pw.Text('Data: $date', style: pw.TextStyle(color: _colorText, fontSize: 10)),
-               pw.Text('Protocolo Master 2026', style: pw.TextStyle(color: _colorTextDim, fontSize: 8)),
+               pw.Text(l10n.pdf_date(date), style: pw.TextStyle(color: _colorText, fontSize: 10)),
+               pw.Text(l10n.pdf_master_protocol_2026, style: pw.TextStyle(color: _colorTextDim, fontSize: 8)),
             ]
           )
         ],
@@ -208,24 +207,36 @@ class UniversalPdfService {
     );
   }
 
-  static pw.Widget _buildFooter(pw.Context context, String footerText, String pageLabel, String ofLabel, PdfColor accentColor) {
+  static pw.Widget _buildFooter(pw.Context context, PdfColor accentColor, AppLocalizations l10n) {
     return pw.Container(
       margin: const pw.EdgeInsets.only(top: 20),
       padding: const pw.EdgeInsets.only(top: 10),
       decoration: pw.BoxDecoration(
         border: pw.Border(top: pw.BorderSide(color: accentColor, width: 0.5)),
       ),
-      child: pw.Row(
-        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+      child: pw.Column(
         children: [
-          pw.Text(
-            '$pageLabel ${context.pageNumber} $ofLabel ${context.pagesCount}',
-            style: const pw.TextStyle(color: _colorTextDim, fontSize: 8),
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text(
+                l10n.pdf_page_count(context.pageNumber, context.pagesCount),
+                style: const pw.TextStyle(color: _colorTextDim, fontSize: 8),
+              ),
+              pw.Text(
+                l10n.pdf_footer_text,
+                style: pw.TextStyle(color: accentColor, fontSize: 8),
+              ),
+            ],
           ),
-          pw.Text(
-            footerText,
-            style: pw.TextStyle(color: accentColor, fontSize: 8),
-          ),
+          if (l10n.ai_disclaimer_footer.isNotEmpty) ...[
+            pw.SizedBox(height: 6),
+            pw.Text(
+              l10n.ai_disclaimer_footer,
+              style: pw.TextStyle(color: _colorTextDim, fontSize: 8, fontStyle: pw.FontStyle.italic),
+              textAlign: pw.TextAlign.center,
+            ),
+          ]
         ],
       ),
     );

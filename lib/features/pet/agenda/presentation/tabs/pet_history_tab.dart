@@ -259,7 +259,7 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                         children: [
                                            Expanded(
                                              child: Text(
-                                               isFriend ? (event.metrics?['guest_pet_name'] ?? 'Visitante') 
+                                               isFriend ? (event.metrics?['guest_pet_name'] ?? l10n.history_guest) 
                                                : (event.metrics != null && event.metrics!.containsKey('custom_title'))
                                                   ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
                                                   : type.label(l10n), 
@@ -273,7 +273,7 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                                 margin: const EdgeInsets.only(left: 8),
                                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                                 decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(10)),
-                                                child: const Text("FRIEND", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: 0.8)),
+                                                child: Text(l10n.source_friend.toUpperCase(), style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: 0.8)),
                                               )
                                         ],
                                       ),

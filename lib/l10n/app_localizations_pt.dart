@@ -495,7 +495,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String pet_analysis_error_generic(Object error) {
-    return 'Erro de Análise: $error';
+    return 'Tivemos uma pequena dificuldade técnica na análise. Tente novamente! ($error)';
   }
 
   @override
@@ -584,7 +584,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String error_database_load(String error) {
-    return 'Erro ao carregar banco: $error';
+    return 'Não conseguimos acessar seus dados agora. Tente novamente! ($error)';
   }
 
   @override
@@ -1016,7 +1016,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_journal_video_saved => 'Vídeo salvo!';
 
   @override
-  String get error_file_too_large => 'Máx 20MB';
+  String get error_file_too_large => 'Arquivo muito grande (Máx 20MB).';
 
   @override
   String get pet_journal_searching_address => 'Endereço...';
@@ -1638,7 +1638,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String error_gps(Object error) {
-    return 'GPS: $error';
+    return 'Não conseguimos localizar seu dispositivo agora. Verifique a conexão ($error)';
   }
 
   @override
@@ -1757,7 +1757,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String pet_error_repository_failure(Object status) {
-    return 'Falha: $status';
+    return 'Ops, não conseguimos salvar suas alterações no momento ($status)';
   }
 
   @override
@@ -1896,7 +1896,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get error_unexpected_title => 'Erro Inesperado';
 
   @override
-  String get error_unexpected_message => 'Reinicie o app.';
+  String get error_unexpected_message => 'Tivemos um probleminha técnico. Estamos trabalhando para resolver.';
 
   @override
   String get error_try_recover => 'Recuperar';
@@ -2083,6 +2083,198 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_appointment_tab_partner => 'Parceiros';
+
+  @override
+  String get pet_appointment_edit => 'Editar Agendamento';
+
+  @override
+  String get pet_appointment_outcome => 'Registrar Desfecho';
+
+  @override
+  String get pet_appointment_outcome_title => 'Desfecho do Evento';
+
+  @override
+  String get pet_appointment_outcome_hint => 'O que aconteceu no compromisso? Adicione notas, recomendações, etc.';
+
+  @override
+  String get pet_appointment_outcome_save => 'Salvar Desfecho';
+
+  @override
+  String get parse_part => 'PART ';
+
+  @override
+  String get parse_title_en => 'TITLE:';
+
+  @override
+  String get parse_title_pt => 'TÍTULO:';
+
+  @override
+  String get parse_content_en => 'CONTENT:';
+
+  @override
+  String get parse_content_pt => 'CONTEÚDO:';
+
+  @override
+  String get parse_icon_en => 'ICON:';
+
+  @override
+  String get parse_icon_pt => 'ÍCONE:';
+
+  @override
+  String get pdf_preview_title => 'PDF Preview';
+
+  @override
+  String get pdf_button_generate => 'Gerar PDF';
+
+  @override
+  String get tech_true => 'true';
+
+  @override
+  String get tech_is_friend => 'is_friend';
+
+  @override
+  String get tech_tutor_name => 'tutor_name';
+
+  @override
+  String get tech_is_new_friend => 'is_new_friend';
+
+  @override
+  String get tech_title => 'title';
+
+  @override
+  String get tech_icon => 'icon';
+
+  @override
+  String get tech_content => 'content';
+
+  @override
+  String get tech_warning => 'warning';
+
+  @override
+  String get tech_identification => 'identificação';
+
+  @override
+  String get tech_analysis => 'análise';
+
+  @override
+  String get tech_plant => 'plant';
+
+  @override
+  String get tech_health => 'saúde';
+
+  @override
+  String get tech_dental => 'dental';
+
+  @override
+  String get tech_skin => 'skin';
+
+  @override
+  String get tech_dermatology => 'dermatology';
+
+  @override
+  String get tech_fur => 'fur';
+
+  @override
+  String get tech_ears => 'ears';
+
+  @override
+  String get tech_stool => 'stool';
+
+  @override
+  String get tech_feces => 'feces';
+
+  @override
+  String get tech_gastro => 'gastro';
+
+  @override
+  String get tech_posture => 'posture';
+
+  @override
+  String get tech_body => 'body';
+
+  @override
+  String get tech_vocal => 'vocal';
+
+  @override
+  String get tech_behavior => 'behavior';
+
+  @override
+  String get tech_walk => 'walk';
+
+  @override
+  String get tech_exercise => 'exercise';
+
+  @override
+  String get tech_activity => 'activity';
+
+  @override
+  String get tech_chat => 'chat';
+
+  @override
+  String get tech_ai_chat => 'ai_chat';
+
+  @override
+  String get tech_message => 'message';
+
+  @override
+  String get tech_foodbowl => 'foodbowl';
+
+  @override
+  String get tech_food_bowl => 'food_bowl';
+
+  @override
+  String get tech_nutrition => 'nutrition';
+
+  @override
+  String get tech_lab => 'lab';
+
+  @override
+  String get tech_label => 'label';
+
+  @override
+  String get tech_plantcheck => 'plantcheck';
+
+  @override
+  String get tech_newprofile => 'newprofile';
+
+  @override
+  String get tech_general => 'general';
+
+  @override
+  String get tech_health_summary => 'health_summary';
+
+  @override
+  String get tech_other => 'other';
+
+  @override
+  String get tech_clinical_summary => 'clinical_summary';
+
+  @override
+  String get tech_ai_analysis => 'ai_analysis';
+
+  @override
+  String get tech_friend => 'friend';
+
+  @override
+  String get tech_friend_detection => 'friend_detection';
+
+  @override
+  String get tech_nutrition_analysis => 'nutrition_analysis';
+
+  @override
+  String get tech_eyes => 'eyes';
+
+  @override
+  String get tech_mouth => 'mouth';
+
+  @override
+  String get tech_lab_result => 'lab_result';
+
+  @override
+  String get tech_scannut_report => 'ScanNut_Report_';
+
+  @override
+  String get tech_pdf_ext => '.pdf';
 
   @override
   String get common_save => 'Salvar';
@@ -2615,10 +2807,28 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_field_email => 'E-mail';
 
   @override
+  String get ai_disclaimer_footer => '💡 Análise gerada pela tecnologia Gemini. Consulte sempre um especialista.';
+
+  @override
+  String get pet_agenda_edit_btn => 'Editar';
+
+  @override
+  String get pet_agenda_outcome_btn => 'Resultado';
+
+  @override
   String get pet_field_what_to_do => 'O que vai fazer?';
 
   @override
   String get pet_field_what_was_done => 'O que foi feito?';
+
+  @override
+  String get pet_agenda_outcome_title => 'Resultado/Desfecho';
+
+  @override
+  String get pet_agenda_outcome_hint => 'Como procedeu após a análise? Piorou? Melhorou?';
+
+  @override
+  String get pet_agenda_outcome_prefix => 'Desfecho';
 
   @override
   String get pet_friend_name_label => 'Nome do Amigo (Pet)';
@@ -2631,4 +2841,245 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_friend_select => 'Selecione um amigo';
+
+  @override
+  String get error_generic_title => 'Ops! Algo não saiu como esperado';
+
+  @override
+  String get error_generic_message => 'O sistema teve um pequeno tropeço técnico. Já estamos verificando!';
+
+  @override
+  String get error_button_retry => 'Tentar Novamente';
+
+  @override
+  String get error_unknown => 'Desconhecido';
+
+  @override
+  String get pdf_report_disclaimer => 'Relatório gerado automaticamente por ScanNut+ IA. Consulte sempre um veterinário.';
+
+  @override
+  String get pdf_analysis_report => 'RELATÓRIO DE ANÁLISE';
+
+  @override
+  String get pdf_part => 'PARTE ';
+
+  @override
+  String get pdf_references_sources => 'REFERÊNCIAS & FONTES';
+
+  @override
+  String get pdf_title_label => 'TÍTULO:';
+
+  @override
+  String get pdf_content_label => 'CONTEÚDO:';
+
+  @override
+  String get pdf_icon_label => 'ÍCONE:';
+
+  @override
+  String get ocr_scan_title => 'Digitalização de Exame';
+
+  @override
+  String get action_generate_pdf => 'Gerar PDF';
+
+  @override
+  String get ocr_extracted_data_title => 'DADOS EXTRAÍDOS DO EXAME';
+
+  @override
+  String get ocr_extracted_item => 'Dado Extraído';
+
+  @override
+  String get ocr_scientific_sources => 'Fontes Científicas & Regulatórias';
+
+  @override
+  String get pdf_unknown_pet => 'Pet Desconhecido';
+
+  @override
+  String get pdf_unknown_breed => 'Raça Desconhecida';
+
+  @override
+  String get pdf_scannut_report => 'Relatório ScanNut+';
+
+  @override
+  String get pdf_scientific_references => 'Referências Científicas:';
+
+  @override
+  String get pdf_master_protocol_2026 => 'Protocolo Master 2026';
+
+  @override
+  String get pdf_section => 'Seção';
+
+  @override
+  String get general_analysis => 'Análise';
+
+  @override
+  String get general_scientific_sources => 'Fontes Científicas';
+
+  @override
+  String get help_journal_walk_guide => 'Guia do Diário / Passeio';
+
+  @override
+  String get partner_filter_all => 'Todos';
+
+  @override
+  String get partner_filter_health => 'Saúde';
+
+  @override
+  String get partner_filter_hospitality => 'Hospitalidade';
+
+  @override
+  String get partner_filter_aesthetics => 'Estética';
+
+  @override
+  String get partner_filter_education => 'Educação';
+
+  @override
+  String get partner_filter_services => 'Serviços';
+
+  @override
+  String get error_location_disabled => 'Serviços de localização desativados.';
+
+  @override
+  String get error_location_denied => 'Permissões de localização negadas';
+
+  @override
+  String get error_location_permanently_denied => 'Permissões de localização permanentemente negadas.';
+
+  @override
+  String error_fetching_places(String error) {
+    return 'Erro ao buscar locais: $error';
+  }
+
+  @override
+  String get partner_about => 'Sobre o Parceiro';
+
+  @override
+  String get partner_network_search => 'Pesquisa de Rede';
+
+  @override
+  String get partner_force_search_restart => 'Forçar reinício da busca';
+
+  @override
+  String get partner_syncing_contacts => 'Sincronizando contatos...';
+
+  @override
+  String get partner_open_now => 'ABERTO';
+
+  @override
+  String get partner_select_this => 'SELECIONAR ESTE PARCEIRO';
+
+  @override
+  String get walk_no_notes => 'Sem notas';
+
+  @override
+  String walk_error_generating_summary(String error) {
+    return 'Erro ao gerar resumo: $error';
+  }
+
+  @override
+  String get walk_ai_summary => 'Resumo com IA';
+
+  @override
+  String get walk_event_removed_success => 'Evento removido com sucesso!';
+
+  @override
+  String get walk_error_deleting => 'Erro ao deletar';
+
+  @override
+  String get history_guest => 'Visitante';
+
+  @override
+  String get agenda_appointment => 'Compromisso';
+
+  @override
+  String get metrics_registered_clinical => 'Métricas Clínicas Registradas';
+
+  @override
+  String pdf_page_count(int page, int total) {
+    return 'Página $page de $total';
+  }
+
+  @override
+  String pdf_scannut_module(String module) {
+    return 'ScanNut+: $module';
+  }
+
+  @override
+  String pdf_name(String name) {
+    return 'Nome: $name';
+  }
+
+  @override
+  String pdf_breed(String breed) {
+    return 'Raça: $breed';
+  }
+
+  @override
+  String pdf_friend_present(String friendName) {
+    return 'Amigo Presente: $friendName';
+  }
+
+  @override
+  String pdf_tutor(String tutorName) {
+    return 'Tutor(a): $tutorName';
+  }
+
+  @override
+  String pdf_date(String date) {
+    return 'Data: $date';
+  }
+
+  @override
+  String walk_location_real_context(String place) {
+    return 'Local: $place (Contexto Real)';
+  }
+
+  @override
+  String walk_weather_summary(String temp, String desc, String humidity) {
+    return 'Temperatura: $temp°C, $desc. Umidade: $humidity%.';
+  }
+
+  @override
+  String get pet_nutrition_hybrid => 'Híbrida (Ração + Natural)';
+
+  @override
+  String get pet_nutrition_maintain => 'Manter Peso (Equilíbrio)';
+
+  @override
+  String get pet_nutrition_weight_loss => 'Perda de Peso';
+
+  @override
+  String get pet_nutrition_muscle => 'Ganho de Massa';
+
+  @override
+  String get pet_nutrition_therapeutic => 'Terapêutica/Doença';
+
+  @override
+  String get pet_nutrition_exclusion => 'Dieta de Exclusão';
+
+  @override
+  String get pet_nutrition_senior => 'Sênior/Cognitivo';
+
+  @override
+  String get pet_nutrition_puppy => 'Filhote';
+
+  @override
+  String get pet_nutrition_gestating => 'Gestante/Lactante';
+
+  @override
+  String get pet_nutrition_athlete => 'Atleta/Trabalho';
+
+  @override
+  String get pet_nutrition_recovery => 'Recuperação';
+
+  @override
+  String get pet_nutrition_every_day => 'TODOS OS DIAS:';
+
+  @override
+  String get pet_error_nutrition_plan => 'Erro ao gerar plano nutricional.';
+
+  @override
+  String get pet_error_summary => 'Não foi possível gerar o resumo no momento. Tente novamente mais tarde.';
+
+  @override
+  String get pet_health_based_on_history => 'Baseado no Histórico Clínico do Pet';
 }

@@ -4,6 +4,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class UniversalOcrPdfService {
@@ -18,6 +19,7 @@ class UniversalOcrPdfService {
     String? filePath,
     String analysisResult,
     Map<String, String> petDetails,
+    AppLocalizations l10n,
   ) async {
     final pdf = pw.Document();
     
@@ -39,8 +41,8 @@ class UniversalOcrPdfService {
     final theme = pw.ThemeData.withFont(base: fontRegular, bold: fontBold);
 
     // Pet Info
-    final name = petDetails[PetConstants.fieldName] ?? 'Unknown';
-    final breed = petDetails[PetConstants.fieldBreed] ?? 'Unknown';
+    final name = petDetails[PetConstants.fieldName] ?? l10n.error_unknown;
+    final breed = petDetails[PetConstants.fieldBreed] ?? l10n.error_unknown;
     final dateStr = DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now());
 
     pdf.addPage(
@@ -49,20 +51,20 @@ class UniversalOcrPdfService {
           theme: theme,
           pageFormat: format.applyMargin(left: 2.0 * PdfPageFormat.cm, top: 2.0 * PdfPageFormat.cm, right: 2.0 * PdfPageFormat.cm, bottom: 2.0 * PdfPageFormat.cm),
         ),
-        header: (context) => _buildHeader(dateStr),
-        footer: (context) => _buildFooter(context),
+        header: (context) => _buildHeader(dateStr, l10n),
+        footer: (context) => _buildFooter(context, l10n),
         build: (context) => [
           // 1. Identity
           _buildIdentitySection(name, breed, image),
           pw.SizedBox(height: 20),
 
           // 2. Content (Parsed with Tables)
-          ..._parseAndBuildContent(analysisResult, fontMono, fontBold),
+          ..._parseAndBuildContent(analysisResult, fontMono, fontBold, l10n),
           
           // 3. Signature / Disclaimer
           pw.SizedBox(height: 30),
           pw.Divider(color: PdfColors.grey300),
-          pw.Text("Relatório gerado automaticamente por ScanNut+ IA. Consulte sempre um veterinário.", 
+          pw.Text(l10n.pdf_report_disclaimer, 
             style: const pw.TextStyle(color: PdfColors.grey600, fontSize: 8),
             textAlign: pw.TextAlign.center
           ),
@@ -73,7 +75,7 @@ class UniversalOcrPdfService {
     return pdf.save();
   }
 
-  static pw.Widget _buildHeader(String date) {
+  static pw.Widget _buildHeader(String date, AppLocalizations l10n) {
     return pw.Container(
       margin: const pw.EdgeInsets.only(bottom: 20),
       decoration: const pw.BoxDecoration(
@@ -83,18 +85,18 @@ class UniversalOcrPdfService {
       child: pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
-          pw.Text("RELATÓRIO DE ANÁLISE", style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold, color: _colorAccent)),
+          pw.Text(l10n.pdf_analysis_report, style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold, color: _colorAccent)),
           pw.Text(date, style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey700)),
         ],
       ),
     );
   }
 
-  static pw.Widget _buildFooter(pw.Context context) {
+  static pw.Widget _buildFooter(pw.Context context, AppLocalizations l10n) {
     return pw.Container(
       margin: const pw.EdgeInsets.only(top: 20),
       alignment: pw.Alignment.centerRight,
-      child: pw.Text("Página ${context.pageNumber} de ${context.pagesCount}", style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey500)),
+      child: pw.Text(l10n.pdf_page_count(context.pageNumber, context.pagesCount), style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey500)),
     );
   }
 
@@ -126,7 +128,7 @@ class UniversalOcrPdfService {
     );
   }
 
-  static List<pw.Widget> _parseAndBuildContent(String text, pw.Font fontMono, pw.Font fontBold) {
+  static List<pw.Widget> _parseAndBuildContent(String text, pw.Font fontMono, pw.Font fontBold, AppLocalizations l10n) {
     final widgets = <pw.Widget>[];
     final lines = text.split('\n');
     
@@ -180,7 +182,7 @@ class UniversalOcrPdfService {
          inSourceSection = true;
          widgets.add(pw.SizedBox(height: 10));
          widgets.add(pw.Divider(color: _colorAccent, thickness: 0.5));
-         widgets.add(pw.Text('REFERÊNCIAS & FONTES', style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, color: _colorAccent)));
+         widgets.add(pw.Text(l10n.pdf_references_sources, style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, color: _colorAccent)));
          widgets.add(pw.SizedBox(height: 5));
          continue;
       }

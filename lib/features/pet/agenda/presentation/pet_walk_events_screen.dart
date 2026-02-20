@@ -109,7 +109,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
 
 
   // --- REAL TELEMETRY (HIDDEN) ---
-  Future<void> _captureRealTelemetryHidden() async {
+  Future<void> _captureRealTelemetryHidden(AppLocalizations l10n) async {
     debugPrint("[SCAN_NUT_TRACE] [TELEMETRY] Iniciando captura escondida de telemetria");
     final now = DateTime.now();
 
@@ -135,7 +135,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
             startDateTime: now,
             petIds: [widget.petId],
             eventTypeIndex: 5, 
-            notes: "Local: $placeContext (Contexto Real)",
+            notes: l10n.walk_location_real_context(placeContext),
             metrics: {
               'custom_title': '📍 Contexto do Local', 
               'is_google_event': true, // Using same flag for UI card style
@@ -165,7 +165,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
             startDateTime: now.add(const Duration(seconds: 1)), // Slight offset for ordering
             petIds: [widget.petId],
             eventTypeIndex: 5,
-            notes: "Temperatura: $temp°C, $desc. Umidade: $humidity%.",
+            notes: l10n.walk_weather_summary(temp.toString(), desc, humidity.toString()),
             metrics: {
               'custom_title': '🌤️ Clima Atual', 
               'is_google_event': true,
@@ -311,12 +311,12 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
 
       // ONLY CAPTURE TELEMETRY IF WE HAVE EVENTS TO SUMMARIZE
       debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Events found. Starting Background Telemetry now...");
-      await _captureRealTelemetryHidden();
+      await _captureRealTelemetryHidden(l10n);
       debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Background Telemetry Finished.");
 
       final eventsText = walkEvents.map((e) {
         final time = DateFormat('HH:mm').format(e.startDateTime);
-        final notes = e.notes ?? "Sem notas";
+        final notes = e.notes ?? l10n.walk_no_notes;
         final typeStr = e.eventTypeIndex == 0 ? "Food" : 
                         e.eventTypeIndex == 3 ? "Hygiene/Stool/Urine" : 
                         e.eventTypeIndex == 4 ? "Activity" : "Other"; 
@@ -363,7 +363,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
 
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Erro ao gerar resumo: $e")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.walk_error_generating_summary(e.toString()))));
       }
     }
   }
@@ -403,12 +403,14 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
            _futureEvents = _loadEvents();
          });
          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Evento removido com sucesso!'), backgroundColor: Colors.green));
+            final l10n = AppLocalizations.of(context)!;
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.walk_event_removed_success), backgroundColor: Colors.green));
          }
        }
      } catch (e) {
        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Erro ao deletar'), backgroundColor: Colors.red));
+          final l10n = AppLocalizations.of(context)!;
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_error_delete_event), backgroundColor: Colors.red));
        }
      }
   }
@@ -428,7 +430,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return IconButton(
                   icon: const Icon(Icons.auto_awesome, color: Color(0xFF10AC84)), // Green Star
-                  tooltip: "Resumo com IA",
+                  tooltip: l10n.walk_ai_summary,
                   onPressed: _showSummaryDialog,
                 );
               }

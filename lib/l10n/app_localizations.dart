@@ -1064,7 +1064,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_analysis_error_generic.
   ///
   /// In en, this message translates to:
-  /// **'Analysis Error: {error}'**
+  /// **'We had a slight technical difficulty during the analysis. Please try again. ({error})'**
   String pet_analysis_error_generic(Object error);
 
   /// No description provided for @pet_urgency_red.
@@ -1238,7 +1238,7 @@ abstract class AppLocalizations {
   /// No description provided for @error_database_load.
   ///
   /// In en, this message translates to:
-  /// **'Error loading database: {error}'**
+  /// **'We couldn\'t access your data right now. How about trying again? ({error})'**
   String error_database_load(String error);
 
   /// No description provided for @pet_section_mouth.
@@ -2084,7 +2084,7 @@ abstract class AppLocalizations {
   /// No description provided for @error_file_too_large.
   ///
   /// In en, this message translates to:
-  /// **'File too large'**
+  /// **'This file is too large (Max 20MB).'**
   String get error_file_too_large;
 
   /// No description provided for @pet_journal_searching_address.
@@ -3254,7 +3254,7 @@ abstract class AppLocalizations {
   /// No description provided for @error_gps.
   ///
   /// In en, this message translates to:
-  /// **'GPS: {error}'**
+  /// **'We couldn\'t locate your device right now. Please check your connection ({error})'**
   String error_gps(Object error);
 
   /// No description provided for @gps_error_snack.
@@ -3476,7 +3476,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_error_repository_failure.
   ///
   /// In en, this message translates to:
-  /// **'Failure: {status}'**
+  /// **'Oops, we couldn\'t save your changes at the moment ({status})'**
   String pet_error_repository_failure(Object status);
 
   /// No description provided for @pet_error_saving_event.
@@ -3740,7 +3740,7 @@ abstract class AppLocalizations {
   /// No description provided for @error_unexpected_message.
   ///
   /// In en, this message translates to:
-  /// **'Restart the app.'**
+  /// **'We had a little technical issue. We\'re working on fixing it.'**
   String get error_unexpected_message;
 
   /// No description provided for @error_try_recover.
@@ -4088,8 +4088,392 @@ abstract class AppLocalizations {
   /// No description provided for @pet_appointment_tab_partner.
   ///
   /// In en, this message translates to:
-  /// **'Partner Data'**
+  /// **'Partners'**
   String get pet_appointment_tab_partner;
+
+  /// No description provided for @pet_appointment_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Appointment'**
+  String get pet_appointment_edit;
+
+  /// No description provided for @pet_appointment_outcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Register Outcome'**
+  String get pet_appointment_outcome;
+
+  /// No description provided for @pet_appointment_outcome_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Outcome'**
+  String get pet_appointment_outcome_title;
+
+  /// No description provided for @pet_appointment_outcome_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened during the appointment? Add notes, recommendations, etc.'**
+  String get pet_appointment_outcome_hint;
+
+  /// No description provided for @pet_appointment_outcome_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Outcome'**
+  String get pet_appointment_outcome_save;
+
+  /// No description provided for @parse_part.
+  ///
+  /// In en, this message translates to:
+  /// **'PART '**
+  String get parse_part;
+
+  /// No description provided for @parse_title_en.
+  ///
+  /// In en, this message translates to:
+  /// **'TITLE:'**
+  String get parse_title_en;
+
+  /// No description provided for @parse_title_pt.
+  ///
+  /// In en, this message translates to:
+  /// **'TÍTULO:'**
+  String get parse_title_pt;
+
+  /// No description provided for @parse_content_en.
+  ///
+  /// In en, this message translates to:
+  /// **'CONTENT:'**
+  String get parse_content_en;
+
+  /// No description provided for @parse_content_pt.
+  ///
+  /// In en, this message translates to:
+  /// **'CONTEÚDO:'**
+  String get parse_content_pt;
+
+  /// No description provided for @parse_icon_en.
+  ///
+  /// In en, this message translates to:
+  /// **'ICON:'**
+  String get parse_icon_en;
+
+  /// No description provided for @parse_icon_pt.
+  ///
+  /// In en, this message translates to:
+  /// **'ÍCONE:'**
+  String get parse_icon_pt;
+
+  /// No description provided for @pdf_preview_title.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF Preview'**
+  String get pdf_preview_title;
+
+  /// No description provided for @pdf_button_generate.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate PDF'**
+  String get pdf_button_generate;
+
+  /// No description provided for @tech_true.
+  ///
+  /// In en, this message translates to:
+  /// **'true'**
+  String get tech_true;
+
+  /// No description provided for @tech_is_friend.
+  ///
+  /// In en, this message translates to:
+  /// **'is_friend'**
+  String get tech_is_friend;
+
+  /// No description provided for @tech_tutor_name.
+  ///
+  /// In en, this message translates to:
+  /// **'tutor_name'**
+  String get tech_tutor_name;
+
+  /// No description provided for @tech_is_new_friend.
+  ///
+  /// In en, this message translates to:
+  /// **'is_new_friend'**
+  String get tech_is_new_friend;
+
+  /// No description provided for @tech_title.
+  ///
+  /// In en, this message translates to:
+  /// **'title'**
+  String get tech_title;
+
+  /// No description provided for @tech_icon.
+  ///
+  /// In en, this message translates to:
+  /// **'icon'**
+  String get tech_icon;
+
+  /// No description provided for @tech_content.
+  ///
+  /// In en, this message translates to:
+  /// **'content'**
+  String get tech_content;
+
+  /// No description provided for @tech_warning.
+  ///
+  /// In en, this message translates to:
+  /// **'warning'**
+  String get tech_warning;
+
+  /// No description provided for @tech_identification.
+  ///
+  /// In en, this message translates to:
+  /// **'identificação'**
+  String get tech_identification;
+
+  /// No description provided for @tech_analysis.
+  ///
+  /// In en, this message translates to:
+  /// **'análise'**
+  String get tech_analysis;
+
+  /// No description provided for @tech_plant.
+  ///
+  /// In en, this message translates to:
+  /// **'plant'**
+  String get tech_plant;
+
+  /// No description provided for @tech_health.
+  ///
+  /// In en, this message translates to:
+  /// **'saúde'**
+  String get tech_health;
+
+  /// No description provided for @tech_dental.
+  ///
+  /// In en, this message translates to:
+  /// **'dental'**
+  String get tech_dental;
+
+  /// No description provided for @tech_skin.
+  ///
+  /// In en, this message translates to:
+  /// **'skin'**
+  String get tech_skin;
+
+  /// No description provided for @tech_dermatology.
+  ///
+  /// In en, this message translates to:
+  /// **'dermatology'**
+  String get tech_dermatology;
+
+  /// No description provided for @tech_fur.
+  ///
+  /// In en, this message translates to:
+  /// **'fur'**
+  String get tech_fur;
+
+  /// No description provided for @tech_ears.
+  ///
+  /// In en, this message translates to:
+  /// **'ears'**
+  String get tech_ears;
+
+  /// No description provided for @tech_stool.
+  ///
+  /// In en, this message translates to:
+  /// **'stool'**
+  String get tech_stool;
+
+  /// No description provided for @tech_feces.
+  ///
+  /// In en, this message translates to:
+  /// **'feces'**
+  String get tech_feces;
+
+  /// No description provided for @tech_gastro.
+  ///
+  /// In en, this message translates to:
+  /// **'gastro'**
+  String get tech_gastro;
+
+  /// No description provided for @tech_posture.
+  ///
+  /// In en, this message translates to:
+  /// **'posture'**
+  String get tech_posture;
+
+  /// No description provided for @tech_body.
+  ///
+  /// In en, this message translates to:
+  /// **'body'**
+  String get tech_body;
+
+  /// No description provided for @tech_vocal.
+  ///
+  /// In en, this message translates to:
+  /// **'vocal'**
+  String get tech_vocal;
+
+  /// No description provided for @tech_behavior.
+  ///
+  /// In en, this message translates to:
+  /// **'behavior'**
+  String get tech_behavior;
+
+  /// No description provided for @tech_walk.
+  ///
+  /// In en, this message translates to:
+  /// **'walk'**
+  String get tech_walk;
+
+  /// No description provided for @tech_exercise.
+  ///
+  /// In en, this message translates to:
+  /// **'exercise'**
+  String get tech_exercise;
+
+  /// No description provided for @tech_activity.
+  ///
+  /// In en, this message translates to:
+  /// **'activity'**
+  String get tech_activity;
+
+  /// No description provided for @tech_chat.
+  ///
+  /// In en, this message translates to:
+  /// **'chat'**
+  String get tech_chat;
+
+  /// No description provided for @tech_ai_chat.
+  ///
+  /// In en, this message translates to:
+  /// **'ai_chat'**
+  String get tech_ai_chat;
+
+  /// No description provided for @tech_message.
+  ///
+  /// In en, this message translates to:
+  /// **'message'**
+  String get tech_message;
+
+  /// No description provided for @tech_foodbowl.
+  ///
+  /// In en, this message translates to:
+  /// **'foodbowl'**
+  String get tech_foodbowl;
+
+  /// No description provided for @tech_food_bowl.
+  ///
+  /// In en, this message translates to:
+  /// **'food_bowl'**
+  String get tech_food_bowl;
+
+  /// No description provided for @tech_nutrition.
+  ///
+  /// In en, this message translates to:
+  /// **'nutrition'**
+  String get tech_nutrition;
+
+  /// No description provided for @tech_lab.
+  ///
+  /// In en, this message translates to:
+  /// **'lab'**
+  String get tech_lab;
+
+  /// No description provided for @tech_label.
+  ///
+  /// In en, this message translates to:
+  /// **'label'**
+  String get tech_label;
+
+  /// No description provided for @tech_plantcheck.
+  ///
+  /// In en, this message translates to:
+  /// **'plantcheck'**
+  String get tech_plantcheck;
+
+  /// No description provided for @tech_newprofile.
+  ///
+  /// In en, this message translates to:
+  /// **'newprofile'**
+  String get tech_newprofile;
+
+  /// No description provided for @tech_general.
+  ///
+  /// In en, this message translates to:
+  /// **'general'**
+  String get tech_general;
+
+  /// No description provided for @tech_health_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'health_summary'**
+  String get tech_health_summary;
+
+  /// No description provided for @tech_other.
+  ///
+  /// In en, this message translates to:
+  /// **'other'**
+  String get tech_other;
+
+  /// No description provided for @tech_clinical_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'clinical_summary'**
+  String get tech_clinical_summary;
+
+  /// No description provided for @tech_ai_analysis.
+  ///
+  /// In en, this message translates to:
+  /// **'ai_analysis'**
+  String get tech_ai_analysis;
+
+  /// No description provided for @tech_friend.
+  ///
+  /// In en, this message translates to:
+  /// **'friend'**
+  String get tech_friend;
+
+  /// No description provided for @tech_friend_detection.
+  ///
+  /// In en, this message translates to:
+  /// **'friend_detection'**
+  String get tech_friend_detection;
+
+  /// No description provided for @tech_nutrition_analysis.
+  ///
+  /// In en, this message translates to:
+  /// **'nutrition_analysis'**
+  String get tech_nutrition_analysis;
+
+  /// No description provided for @tech_eyes.
+  ///
+  /// In en, this message translates to:
+  /// **'eyes'**
+  String get tech_eyes;
+
+  /// No description provided for @tech_mouth.
+  ///
+  /// In en, this message translates to:
+  /// **'mouth'**
+  String get tech_mouth;
+
+  /// No description provided for @tech_lab_result.
+  ///
+  /// In en, this message translates to:
+  /// **'lab_result'**
+  String get tech_lab_result;
+
+  /// No description provided for @tech_scannut_report.
+  ///
+  /// In en, this message translates to:
+  /// **'ScanNut_Report_'**
+  String get tech_scannut_report;
+
+  /// No description provided for @tech_pdf_ext.
+  ///
+  /// In en, this message translates to:
+  /// **'.pdf'**
+  String get tech_pdf_ext;
 
   /// No description provided for @common_save.
   ///
@@ -5147,6 +5531,24 @@ abstract class AppLocalizations {
   /// **'E-mail'**
   String get pet_field_email;
 
+  /// No description provided for @ai_disclaimer_footer.
+  ///
+  /// In en, this message translates to:
+  /// **'💡 Analysis generated by Gemini technology. Always consult a specialist.'**
+  String get ai_disclaimer_footer;
+
+  /// No description provided for @pet_agenda_edit_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get pet_agenda_edit_btn;
+
+  /// No description provided for @pet_agenda_outcome_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Outcome'**
+  String get pet_agenda_outcome_btn;
+
   /// No description provided for @pet_field_what_to_do.
   ///
   /// In en, this message translates to:
@@ -5158,6 +5560,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What was done?'**
   String get pet_field_what_was_done;
+
+  /// No description provided for @pet_agenda_outcome_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Outcome'**
+  String get pet_agenda_outcome_title;
+
+  /// No description provided for @pet_agenda_outcome_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How did it proceed after the analysis? Did it get worse? Better?'**
+  String get pet_agenda_outcome_hint;
+
+  /// No description provided for @pet_agenda_outcome_prefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Outcome'**
+  String get pet_agenda_outcome_prefix;
 
   /// No description provided for @pet_friend_name_label.
   ///
@@ -5182,6 +5602,444 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select a friend'**
   String get pet_friend_select;
+
+  /// No description provided for @error_generic_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Oops! Something didn\'t go as expected'**
+  String get error_generic_title;
+
+  /// No description provided for @error_generic_message.
+  ///
+  /// In en, this message translates to:
+  /// **'The system had a little technical hiccup. We are already looking into it!'**
+  String get error_generic_message;
+
+  /// No description provided for @error_button_retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get error_button_retry;
+
+  /// No description provided for @error_unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get error_unknown;
+
+  /// No description provided for @pdf_report_disclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Report generated automatically by ScanNut+ AI. Always consult a veterinarian.'**
+  String get pdf_report_disclaimer;
+
+  /// No description provided for @pdf_analysis_report.
+  ///
+  /// In en, this message translates to:
+  /// **'ANALYSIS REPORT'**
+  String get pdf_analysis_report;
+
+  /// No description provided for @pdf_part.
+  ///
+  /// In en, this message translates to:
+  /// **'PART '**
+  String get pdf_part;
+
+  /// No description provided for @pdf_references_sources.
+  ///
+  /// In en, this message translates to:
+  /// **'REFERENCES & SOURCES'**
+  String get pdf_references_sources;
+
+  /// No description provided for @pdf_title_label.
+  ///
+  /// In en, this message translates to:
+  /// **'TITLE:'**
+  String get pdf_title_label;
+
+  /// No description provided for @pdf_content_label.
+  ///
+  /// In en, this message translates to:
+  /// **'CONTENT:'**
+  String get pdf_content_label;
+
+  /// No description provided for @pdf_icon_label.
+  ///
+  /// In en, this message translates to:
+  /// **'ICON:'**
+  String get pdf_icon_label;
+
+  /// No description provided for @ocr_scan_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam Scan'**
+  String get ocr_scan_title;
+
+  /// No description provided for @action_generate_pdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate PDF'**
+  String get action_generate_pdf;
+
+  /// No description provided for @ocr_extracted_data_title.
+  ///
+  /// In en, this message translates to:
+  /// **'EXTRACTED EXAM DATA'**
+  String get ocr_extracted_data_title;
+
+  /// No description provided for @ocr_extracted_item.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted Data'**
+  String get ocr_extracted_item;
+
+  /// No description provided for @ocr_scientific_sources.
+  ///
+  /// In en, this message translates to:
+  /// **'Scientific & Regulatory Sources'**
+  String get ocr_scientific_sources;
+
+  /// No description provided for @pdf_unknown_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Pet'**
+  String get pdf_unknown_pet;
+
+  /// No description provided for @pdf_unknown_breed.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Breed'**
+  String get pdf_unknown_breed;
+
+  /// No description provided for @pdf_scannut_report.
+  ///
+  /// In en, this message translates to:
+  /// **'ScanNut+ Report'**
+  String get pdf_scannut_report;
+
+  /// No description provided for @pdf_scientific_references.
+  ///
+  /// In en, this message translates to:
+  /// **'Scientific References:'**
+  String get pdf_scientific_references;
+
+  /// No description provided for @pdf_master_protocol_2026.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Protocol 2026'**
+  String get pdf_master_protocol_2026;
+
+  /// No description provided for @pdf_section.
+  ///
+  /// In en, this message translates to:
+  /// **'Section'**
+  String get pdf_section;
+
+  /// No description provided for @general_analysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis'**
+  String get general_analysis;
+
+  /// No description provided for @general_scientific_sources.
+  ///
+  /// In en, this message translates to:
+  /// **'Scientific Sources'**
+  String get general_scientific_sources;
+
+  /// No description provided for @help_journal_walk_guide.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal / Walk Guide'**
+  String get help_journal_walk_guide;
+
+  /// No description provided for @partner_filter_all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get partner_filter_all;
+
+  /// No description provided for @partner_filter_health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get partner_filter_health;
+
+  /// No description provided for @partner_filter_hospitality.
+  ///
+  /// In en, this message translates to:
+  /// **'Hospitality'**
+  String get partner_filter_hospitality;
+
+  /// No description provided for @partner_filter_aesthetics.
+  ///
+  /// In en, this message translates to:
+  /// **'Aesthetics'**
+  String get partner_filter_aesthetics;
+
+  /// No description provided for @partner_filter_education.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get partner_filter_education;
+
+  /// No description provided for @partner_filter_services.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get partner_filter_services;
+
+  /// No description provided for @error_location_disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Location services are disabled.'**
+  String get error_location_disabled;
+
+  /// No description provided for @error_location_denied.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permissions are denied'**
+  String get error_location_denied;
+
+  /// No description provided for @error_location_permanently_denied.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permissions are permanently denied.'**
+  String get error_location_permanently_denied;
+
+  /// No description provided for @error_fetching_places.
+  ///
+  /// In en, this message translates to:
+  /// **'Error fetching places: {error}'**
+  String error_fetching_places(String error);
+
+  /// No description provided for @partner_about.
+  ///
+  /// In en, this message translates to:
+  /// **'About the Partner'**
+  String get partner_about;
+
+  /// No description provided for @partner_network_search.
+  ///
+  /// In en, this message translates to:
+  /// **'Network Search'**
+  String get partner_network_search;
+
+  /// No description provided for @partner_force_search_restart.
+  ///
+  /// In en, this message translates to:
+  /// **'Force search restart'**
+  String get partner_force_search_restart;
+
+  /// No description provided for @partner_syncing_contacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing contacts...'**
+  String get partner_syncing_contacts;
+
+  /// No description provided for @partner_open_now.
+  ///
+  /// In en, this message translates to:
+  /// **'OPEN NOW'**
+  String get partner_open_now;
+
+  /// No description provided for @partner_select_this.
+  ///
+  /// In en, this message translates to:
+  /// **'SELECT THIS PARTNER'**
+  String get partner_select_this;
+
+  /// No description provided for @walk_no_notes.
+  ///
+  /// In en, this message translates to:
+  /// **'No notes'**
+  String get walk_no_notes;
+
+  /// No description provided for @walk_error_generating_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Error generating summary: {error}'**
+  String walk_error_generating_summary(String error);
+
+  /// No description provided for @walk_ai_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Summary'**
+  String get walk_ai_summary;
+
+  /// No description provided for @walk_event_removed_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Event successfully removed!'**
+  String get walk_event_removed_success;
+
+  /// No description provided for @walk_error_deleting.
+  ///
+  /// In en, this message translates to:
+  /// **'Error deleting'**
+  String get walk_error_deleting;
+
+  /// No description provided for @history_guest.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get history_guest;
+
+  /// No description provided for @agenda_appointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment'**
+  String get agenda_appointment;
+
+  /// No description provided for @metrics_registered_clinical.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered Clinical Metrics'**
+  String get metrics_registered_clinical;
+
+  /// No description provided for @pdf_page_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} of {total}'**
+  String pdf_page_count(int page, int total);
+
+  /// No description provided for @pdf_scannut_module.
+  ///
+  /// In en, this message translates to:
+  /// **'ScanNut+: {module}'**
+  String pdf_scannut_module(String module);
+
+  /// No description provided for @pdf_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name: {name}'**
+  String pdf_name(String name);
+
+  /// No description provided for @pdf_breed.
+  ///
+  /// In en, this message translates to:
+  /// **'Breed: {breed}'**
+  String pdf_breed(String breed);
+
+  /// No description provided for @pdf_friend_present.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend Present: {friendName}'**
+  String pdf_friend_present(String friendName);
+
+  /// No description provided for @pdf_tutor.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutor: {tutorName}'**
+  String pdf_tutor(String tutorName);
+
+  /// No description provided for @pdf_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date: {date}'**
+  String pdf_date(String date);
+
+  /// No description provided for @walk_location_real_context.
+  ///
+  /// In en, this message translates to:
+  /// **'Location: {place} (Real Context)'**
+  String walk_location_real_context(String place);
+
+  /// No description provided for @walk_weather_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature: {temp}°C, {desc}. Humidity: {humidity}%.'**
+  String walk_weather_summary(String temp, String desc, String humidity);
+
+  /// No description provided for @pet_nutrition_hybrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid (Kibble + Fresh)'**
+  String get pet_nutrition_hybrid;
+
+  /// No description provided for @pet_nutrition_maintain.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight Maintenance'**
+  String get pet_nutrition_maintain;
+
+  /// No description provided for @pet_nutrition_weight_loss.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight Loss'**
+  String get pet_nutrition_weight_loss;
+
+  /// No description provided for @pet_nutrition_muscle.
+  ///
+  /// In en, this message translates to:
+  /// **'Muscle Building'**
+  String get pet_nutrition_muscle;
+
+  /// No description provided for @pet_nutrition_therapeutic.
+  ///
+  /// In en, this message translates to:
+  /// **'Therapeutic/Disease'**
+  String get pet_nutrition_therapeutic;
+
+  /// No description provided for @pet_nutrition_exclusion.
+  ///
+  /// In en, this message translates to:
+  /// **'Exclusion Diet'**
+  String get pet_nutrition_exclusion;
+
+  /// No description provided for @pet_nutrition_senior.
+  ///
+  /// In en, this message translates to:
+  /// **'Senior/Cognitive'**
+  String get pet_nutrition_senior;
+
+  /// No description provided for @pet_nutrition_puppy.
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy/Kitten'**
+  String get pet_nutrition_puppy;
+
+  /// No description provided for @pet_nutrition_gestating.
+  ///
+  /// In en, this message translates to:
+  /// **'Gestating/Lactating'**
+  String get pet_nutrition_gestating;
+
+  /// No description provided for @pet_nutrition_athlete.
+  ///
+  /// In en, this message translates to:
+  /// **'Athlete/Work'**
+  String get pet_nutrition_athlete;
+
+  /// No description provided for @pet_nutrition_recovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery'**
+  String get pet_nutrition_recovery;
+
+  /// No description provided for @pet_nutrition_every_day.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY DAY:'**
+  String get pet_nutrition_every_day;
+
+  /// No description provided for @pet_error_nutrition_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Error generating nutritional plan.'**
+  String get pet_error_nutrition_plan;
+
+  /// No description provided for @pet_error_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not generate summary right now. Try again later.'**
+  String get pet_error_summary;
+
+  /// No description provided for @pet_health_based_on_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on Pet\'s Clinical History'**
+  String get pet_health_based_on_history;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

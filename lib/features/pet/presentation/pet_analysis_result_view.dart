@@ -52,7 +52,8 @@ class PetAnalysisResultView extends StatelessWidget {
     // Otherwise fallback to "Analyzing: Name".
     String titleText = appL10n.pet_analyzing_x(displayPetName);
     
-    final isFriend = petDetails?[PetConstants.keyIsFriend] == 'true';
+    final l10n = AppLocalizations.of(context)!;
+    final isFriend = petDetails?[PetConstants.keyIsFriend] == PetConstants.valTrue;
     final tutorName = petDetails?[PetConstants.keyTutorName] ?? '';
 
     if (isFriend) {
@@ -87,7 +88,7 @@ class PetAnalysisResultView extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.picture_as_pdf, color: AppColors.petPrimary), // Pink Icon
-            tooltip: 'Gerar PDF',
+            tooltip: l10n.pdf_button_generate,
             onPressed: () {
               Navigator.push(
                 context,

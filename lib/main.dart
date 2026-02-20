@@ -1,4 +1,5 @@
 import 'dart:async'; // For runZonedGuarded
+import 'dart:ui'; // For PlatformDispatcher
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
@@ -26,6 +27,19 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
+    
+    // 1. Captura erros do Flutter (UI e Widgets)
+    FlutterError.onError = (details) {
+      FlutterError.presentError(details);
+      _handleGlobalError(details.exception, details.stack);
+    };
+
+    // 2. Captura erros assíncronos (APIs, Gemini, Banco de Dados)
+    PlatformDispatcher.instance.onError = (error, stack) {
+      _handleGlobalError(error, stack);
+      return true;
+    };
+
     await EnvService.init(); // Priority Init
     await ObjectBoxManager.init();
     
@@ -85,10 +99,46 @@ void main() {
 
     runApp(const ProviderScope(child: ScanNutApp()));
   }, (error, stack) {
-    // Log error to console (or crashlytics in future)
-    debugPrint('[SCAN_NUT_FATAL] Global Error Caught: $error');
-    debugPrint('[SCAN_NUT_FATAL] Stack: $stack');
+    // Fallback de segurança máximo
+    debugPrint('[SCAN_NUT_FATAL] Falha crônica: $error');
   });
+}
+
+// O "Coração" do capturador Anti-Gravity
+void _handleGlobalError(Object error, StackTrace? stack) {
+  debugPrint("Anti-Gravity detectou um problema: $error");
+  debugPrint("Stacktrace restrito: $stack");
+
+  // Recupera o contexto do app via NavigatorKey
+  final context = navigatorKey.currentContext;
+  if (context != null) {
+      final l10n = AppLocalizations.of(context);
+      
+      // Exibição humanizada (Ergonomia SM A256E)
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+               Text(
+                 l10n?.error_generic_title ?? 'Ops! Algo não saiu como esperado', 
+                 style: const TextStyle(fontWeight: FontWeight.bold)
+               ),
+               const SizedBox(height: 4),
+               Text(l10n?.error_generic_message ?? 'O sistema teve um pequeno tropeço técnico. Já estamos verificando!'),
+            ],
+          ),
+          backgroundColor: Colors.redAccent, // Feedback Visual Crítico em Vermelho
+          behavior: SnackBarBehavior.floating, // Ao alcance do polegar
+          action: SnackBarAction(
+            label: l10n?.error_button_retry ?? 'Tentar Novamente',
+            textColor: Colors.white,
+            onPressed: () {}, // Fechará automaticamente e indicará que pode tentar novamente
+          ),
+        ),
+      );
+  }
 }
 
 class ScanNutApp extends StatefulWidget {

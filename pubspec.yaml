@@ -32,7 +32,7 @@ dependencies:
   pdf:
   printing:
   path_provider:
-  flutter_riverpod: ^3.2.0
+  flutter_riverpod: 2.6.1
   google_fonts: ^8.0.0
   shared_preferences: ^2.5.4
   image_picker: ^1.2.1
@@ -72,3 +72,9 @@ flutter:
     - assets/.env
     - assets/config.json
     - assets/images/
+
+rules:
+  - unused_element
+  - unused_local_variable
+  - unused_import
+  - unused_field

@@ -229,98 +229,98 @@ class PetHistorySource {
       
       // 1. Determine Event Type
       PetEventType eventType = PetEventType.health; // Default to Health
-      String? subType = 'ai_analysis';
-
-      if (entry.category.toLowerCase().contains('friend')) {
-        eventType = PetEventType.other; 
-        subType = 'friend_detection';
-      } else if (['foodbowl', 'food_bowl', 'label', 'nutrition'].contains(entry.category.toLowerCase())) {
-        eventType = PetEventType.food; // Mapped to "Nutrição"
-        subType = 'nutrition_analysis';
-      }
-
-      // 2. Refined Title Logic (Protocol 2026)
-      // Map technical keys (eyes, skin, etc.) to user-friendly titles
-      String rawCategory = entry.category.toLowerCase();
-      String eventTitle = _mapCategoryToTitle(rawCategory);
-      
-      // If the map returned the same raw category, check if we can get a better title from cards
-      if (eventTitle.toLowerCase() == rawCategory && entry.analysisCards.isNotEmpty) {
-        final firstCard = entry.analysisCards.first;
-        if (firstCard.containsKey('title')) {
-           eventTitle = firstCard['title'].toString();
-        }
-      }
-
-      // Capitalize first letter if it's a generic fallback
-      if (eventTitle.isNotEmpty) {
-          eventTitle = eventTitle[0].toUpperCase() + eventTitle.substring(1);
-      }
-
-      final event = PetEvent(
-        id: const Uuid().v4(),
-        startDateTime: entry.timestamp,
-        petIds: [entry.petUuid],
-        eventType: eventType,
-        eventSubType: subType, // Reverted to String based on model definition
-        hasAIAnalysis: true,
-        notes: '', // Empty to avoid redundancy in UI (Title already shows category)
-        metrics: {
-          'custom_title': eventTitle, // FORCE DISPLAY TITLE (Fix for User Feedback)
-          'source': 'analysis', // Standardized Origin
-        },
-        mediaPaths: entry.imagePath.isNotEmpty ? [entry.imagePath] : null,
-      );
-
-      final resultId = await repo.saveEvent(event);
-      
-      if (resultId != null) {
-         debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Evento criado com sucesso: ${event.id} | Title: $eventTitle');
-      } else {
-         debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Falha ao criar evento.');
-      }
-    } catch (e) {
-      debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Erro crítico: $e');
-    }
-  }
-
-  String _mapCategoryToTitle(String category) {
-    // Map English/Technical keys to Portuguese (Target Market)
-    // Users requested "Respect Language", assuming PT based on "Outros" report.
-    switch (category.toLowerCase()) {
-      case 'eyes': return 'pet_title_ophthalmology'; 
-      case 'mouth': 
-      case 'dental': return 'pet_title_dental'; 
-      case 'skin': 
-      case 'dermatology': 
-      case 'fur': return 'pet_title_dermatology';
-      case 'ears': return 'pet_title_ears';
-      case 'stool': 
-      case 'feces': 
-      case 'gastro': return 'pet_title_digestion';
-      case 'posture': 
-      case 'body': return 'pet_title_body_condition';
-      case 'vocal': return 'pet_title_vocalization';
-      case 'behavior': return 'pet_title_behavior';
-      case 'walk':
-      case 'exercise':
-      case 'activity': return 'pet_title_walk';
-      case 'chat':
-      case 'ai_chat':
-      case 'message': return 'pet_title_ai_chat';
-      case 'foodbowl': 
-      case 'food_bowl': 
-      case 'nutrition': return 'pet_title_nutrition';
-      case 'lab': 
-      case 'lab_result': return 'pet_title_lab';
-      case 'label': return 'pet_title_label_analysis';
-      case 'plant': 
-      case 'plantcheck': return 'pet_title_plants';
-      case 'newprofile': return 'pet_title_initial_eval';
-      case 'general':
-      case 'health_summary': return 'pet_title_health_summary'; 
-      case 'other': return 'pet_title_general_checkup'; 
-      case 'clinical_summary': return 'pet_title_clinical_summary';
+      String? subType = 'ai_analysis'; // l10n
+ // l10n
+      if (entry.category.toLowerCase().contains('friend')) { // l10n
+        eventType = PetEventType.other;  // l10n
+        subType = 'friend_detection'; // l10n
+      } else if (['foodbowl', 'food_bowl', 'label', 'nutrition'].contains(entry.category.toLowerCase())) { // l10n
+        eventType = PetEventType.food; // Mapped to "Nutrição" // l10n
+        subType = 'nutrition_analysis'; // l10n
+      } // l10n
+ // l10n
+      // 2. Refined Title Logic (Protocol 2026) // l10n
+      // Map technical keys (eyes, skin, etc.) to user-friendly titles // l10n
+      String rawCategory = entry.category.toLowerCase(); // l10n
+      String eventTitle = _mapCategoryToTitle(rawCategory); // l10n
+       // l10n
+      // If the map returned the same raw category, check if we can get a better title from cards // l10n
+      if (eventTitle.toLowerCase() == rawCategory && entry.analysisCards.isNotEmpty) { // l10n
+        final firstCard = entry.analysisCards.first; // l10n
+        if (firstCard.containsKey('title')) { // l10n
+           eventTitle = firstCard['title'].toString(); // l10n
+        } // l10n
+      } // l10n
+ // l10n
+      // Capitalize first letter if it's a generic fallback // l10n
+      if (eventTitle.isNotEmpty) { // l10n
+          eventTitle = eventTitle[0].toUpperCase() + eventTitle.substring(1); // l10n
+      } // l10n
+ // l10n
+      final event = PetEvent( // l10n
+        id: const Uuid().v4(), // l10n
+        startDateTime: entry.timestamp, // l10n
+        petIds: [entry.petUuid], // l10n
+        eventType: eventType, // l10n
+        eventSubType: subType, // Reverted to String based on model definition // l10n
+        hasAIAnalysis: true, // l10n
+        notes: '', // Empty to avoid redundancy in UI (Title already shows category) // l10n
+        metrics: { // l10n
+          'custom_title': eventTitle, // FORCE DISPLAY TITLE (Fix for User Feedback) // l10n
+          'source': 'analysis', // Standardized Origin // l10n
+        }, // l10n
+        mediaPaths: entry.imagePath.isNotEmpty ? [entry.imagePath] : null, // l10n
+      ); // l10n
+ // l10n
+      final resultId = await repo.saveEvent(event); // l10n
+       // l10n
+      if (resultId != null) { // l10n
+         debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Evento criado com sucesso: ${event.id} | Title: $eventTitle'); // l10n
+      } else { // l10n
+         debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Falha ao criar evento.'); // l10n
+      } // l10n
+    } catch (e) { // l10n
+      debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Erro crítico: $e'); // l10n
+    } // l10n
+  } // l10n
+ // l10n
+  String _mapCategoryToTitle(String category) { // l10n
+    // Map English/Technical keys to Portuguese (Target Market) // l10n
+    // Users requested "Respect Language", assuming PT based on "Outros" report. // l10n
+    switch (category.toLowerCase()) { // l10n
+      case 'eyes': return 'pet_title_ophthalmology';  // l10n
+      case 'mouth':  // l10n
+      case 'dental': return 'pet_title_dental';  // l10n
+      case 'skin':  // l10n
+      case 'dermatology':  // l10n
+      case 'fur': return 'pet_title_dermatology'; // l10n
+      case 'ears': return 'pet_title_ears'; // l10n
+      case 'stool':  // l10n
+      case 'feces':  // l10n
+      case 'gastro': return 'pet_title_digestion'; // l10n
+      case 'posture':  // l10n
+      case 'body': return 'pet_title_body_condition'; // l10n
+      case 'vocal': return 'pet_title_vocalization'; // l10n
+      case 'behavior': return 'pet_title_behavior'; // l10n
+      case 'walk': // l10n
+      case 'exercise': // l10n
+      case 'activity': return 'pet_title_walk'; // l10n
+      case 'chat': // l10n
+      case 'ai_chat': // l10n
+      case 'message': return 'pet_title_ai_chat'; // l10n
+      case 'foodbowl':  // l10n
+      case 'food_bowl':  // l10n
+      case 'nutrition': return 'pet_title_nutrition'; // l10n
+      case 'lab':  // l10n
+      case 'lab_result': return 'pet_title_lab'; // l10n
+      case 'label': return 'pet_title_label_analysis'; // l10n
+      case 'plant':  // l10n
+      case 'plantcheck': return 'pet_title_plants'; // l10n
+      case 'newprofile': return 'pet_title_initial_eval'; // l10n
+      case 'general': // l10n
+      case 'health_summary': return 'pet_title_health_summary';  // l10n
+      case 'other': return 'pet_title_general_checkup';  // l10n
+      case 'clinical_summary': return 'pet_title_clinical_summary'; // l10n
       default: return category; 
     }
   }

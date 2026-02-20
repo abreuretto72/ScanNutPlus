@@ -32,7 +32,7 @@ class UniversalOcrResultView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.petBackgroundDark,
       appBar: AppBar(
-        title: Text(appL10n.pet_initial_assessment, // Ou "Digitalização de Exame"
+        title: Text(appL10n.ocr_scan_title,
           style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -40,7 +40,7 @@ class UniversalOcrResultView extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.picture_as_pdf, color: AppColors.petPrimary),
-            tooltip: 'Gerar PDF',
+            tooltip: appL10n.action_generate_pdf,
             onPressed: () {
               Navigator.push(
                 context,
@@ -53,16 +53,6 @@ class UniversalOcrResultView extends StatelessWidget {
                       PetConstants.fieldBreed: displayBreed,
                       PetConstants.keyPageTitle: appL10n.pet_initial_assessment,
                     },
-                    customBuilder: (format) => UniversalOcrPdfService.generatePdf(
-                      format,
-                      imagePath,
-                      ocrResult,
-                      {
-                        PetConstants.fieldName: displayPetName,
-                        PetConstants.fieldBreed: displayBreed,
-                        PetConstants.keyPageTitle: appL10n.pet_initial_assessment,
-                      },
-                    ),
                   ),
                 ),
               );
@@ -97,20 +87,34 @@ class UniversalOcrResultView extends StatelessWidget {
             ),
 
             // Título da Seção de Resultados
-            const Padding(
-              padding: EdgeInsets.only(bottom: 16, left: 4),
-              child: Text("DADOS EXTRAÍDOS DO EXAME", 
-                style: TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16, left: 4),
+              child: Text(appL10n.ocr_extracted_data_title, 
+                style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
             ),
 
             // Cards de Interpretação (Extraídos do OCR)
-            if (_parseOcrCards(ocrResult).isEmpty)
+            if (_parseOcrCards(ocrResult, appL10n).isEmpty)
               _buildRawTextFallback(ocrResult)
             else
-              ..._parseOcrCards(ocrResult).map((block) => _buildOcrDataCard(block)),
+              ..._parseOcrCards(ocrResult, appL10n).map((block) => _buildOcrDataCard(block)),
 
             // Seção de Fontes (Validação Científica do OCR)
             _buildSourcesCard(context, _extractSources(ocrResult)),
+
+            // AI Disclaimer Footer
+            Padding(
+              padding: const EdgeInsets.only(top: 24, bottom: 8),
+              child: Text(
+                appL10n.ai_disclaimer_footer,
+                style: const TextStyle(
+                  color: Colors.white54,
+                  fontSize: 12,
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
       ),
@@ -119,7 +123,7 @@ class UniversalOcrResultView extends StatelessWidget {
 
   // --- Lógica de UI e Parsing ---
 
-  List<_OcrBlock> _parseOcrCards(String rawResponse) {
+  List<_OcrBlock> _parseOcrCards(String rawResponse, AppLocalizations appL10n) {
     List<_OcrBlock> blocks = [];
     Set<String> seenTitles = {}; // DEDUPLICATION ENFORCED
 
@@ -129,7 +133,7 @@ class UniversalOcrResultView extends StatelessWidget {
     for (var match in matches) {
       final body = match.group(1) ?? '';
       // Use Polyglot Regex
-      final title = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(body)?.group(1)?.trim() ?? 'Dado Extraído';
+      final title = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(body)?.group(1)?.trim() ?? appL10n.ocr_extracted_item;
       
       // STRICT DEDUPLICATION
       if (seenTitles.contains(title.toLowerCase())) continue;
@@ -293,9 +297,9 @@ class UniversalOcrResultView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(children: [
-             Icon(Icons.menu_book, color: Colors.white54, size: 16),
-             SizedBox(width: 8),
-             Text("Fontes Científicas & Regulatórias", style: TextStyle(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.bold)),
+             const Icon(Icons.menu_book, color: Colors.white54, size: 16),
+             const SizedBox(width: 8),
+             Text(AppLocalizations.of(context)!.ocr_scientific_sources, style: const TextStyle(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.bold)),
           ]),
           const SizedBox(height: 12),
           ...sources.map((s) => Padding(

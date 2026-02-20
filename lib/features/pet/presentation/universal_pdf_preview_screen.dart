@@ -11,7 +11,7 @@ class UniversalPdfPreviewScreen extends StatelessWidget {
   final String? analysisResult;
   final Map<String, String>? petDetails;
   final Future<Uint8List> Function(PdfPageFormat)? customBuilder;
-  final String title;
+  final String? title;
 
   const UniversalPdfPreviewScreen({
     super.key,
@@ -19,14 +19,17 @@ class UniversalPdfPreviewScreen extends StatelessWidget {
     this.analysisResult,
     this.petDetails,
     this.customBuilder,
-    this.title = 'PDF Preview',
+    this.title,
   });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final displayTitle = title ?? l10n.pdf_preview_title;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(title, style: const TextStyle(color: Colors.white)),
+        title: Text(displayTitle, style: const TextStyle(color: Colors.white)),
         backgroundColor: AppColors.petBackgroundDark,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -43,15 +46,13 @@ class UniversalPdfPreviewScreen extends StatelessWidget {
               filePath, // Can be null
               analysisResult!,
               petDetails!,
-              footerText: l10n.pdf_footer_text,
-              pageLabel: l10n.pdf_page_label,
-              ofLabel: l10n.pdf_of_label,
+              l10n: l10n,
               colorValue: 0xFFFC2D7C, // ALWAYS force Strong Pink
             );
           }
           return Future.value(Uint8List(0)); // Should handle error ideally
         },
-        pdfFileName: 'ScanNut_Report_${DateTime.now().millisecondsSinceEpoch}.pdf',
+        pdfFileName: '${l10n.tech_scannut_report}${DateTime.now().millisecondsSinceEpoch}${l10n.tech_pdf_ext}',
         canChangeOrientation: false,
         canChangePageFormat: false,
         canDebug: false,

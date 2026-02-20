@@ -141,7 +141,7 @@ class _PetMetricsScreenState extends State<PetMetricsScreen> {
         petIds: [widget.petId],
         eventTypeIndex: PetEventType.health.index, 
         hasAIAnalysis: false,
-        notes: "Métricas Clínicas Registradas",
+        notes: l10n.metrics_registered_clinical,
         metrics: metricsData,
       );
 

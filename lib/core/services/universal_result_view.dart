@@ -113,7 +113,7 @@ class _UniversalResultViewState extends State<UniversalResultView> {
         actions: [
           IconButton(
             icon: const Icon(Icons.picture_as_pdf, color: AppColors.petPrimary),
-            tooltip: 'Gerar PDF',
+            tooltip: appL10n.action_generate_pdf,
             onPressed: () {
               Navigator.push(
                 context,
@@ -167,10 +167,24 @@ class _UniversalResultViewState extends State<UniversalResultView> {
             ),
             
             // Cards Dinâmicos do Laudo
-            ..._parseDynamicCards(widget.analysisResult).map((block) => _buildDynamicCard(block)),
+            ..._parseDynamicCards(widget.analysisResult, appL10n).map((block) => _buildDynamicCard(block)),
 
             // Seção de Fontes Científicas
             _buildSourcesCard(context, _extractSources(widget.analysisResult)),
+
+            // AI Disclaimer Footer
+            Padding(
+              padding: const EdgeInsets.only(top: 24, bottom: 8),
+              child: Text(
+                appL10n.ai_disclaimer_footer,
+                style: const TextStyle(
+                  color: Colors.white54,
+                  fontSize: 12,
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
       ),
@@ -259,7 +273,7 @@ class _UniversalResultViewState extends State<UniversalResultView> {
 
   // --- Métodos de Parsing e UI herdados da PetAnalysisResultView ---
 
-  List<_AnalysisBlock> _parseDynamicCards(String rawResponse) {
+  List<_AnalysisBlock> _parseDynamicCards(String rawResponse, AppLocalizations appL10n) {
     List<_AnalysisBlock> blocks = [];
     debugPrint('[SCAN_NUT_TRACE] Start Parsing Dynamic Cards. Raw Length: ${rawResponse.length}');
     
@@ -272,7 +286,7 @@ class _UniversalResultViewState extends State<UniversalResultView> {
       final body = match.group(1) ?? '';
       
       // Polyglot Regex from PetConstants
-      final title = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(body)?.group(1) ?? 'Análise';
+      final title = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(body)?.group(1) ?? appL10n.general_analysis;
       // Robust Content Extraction
       // Use dotAll: true to capture multiline content
       final content = RegExp(PetConstants.regexContent, dotAll: true, caseSensitive: false).firstMatch(body)?.group(1) ?? '';
@@ -389,7 +403,7 @@ class _UniversalResultViewState extends State<UniversalResultView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Fontes Científicas", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Text(AppLocalizations.of(context)!.general_scientific_sources, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           ...sources.map((s) => Text("• $s", style: const TextStyle(color: Colors.white70, fontSize: 12))),
         ],

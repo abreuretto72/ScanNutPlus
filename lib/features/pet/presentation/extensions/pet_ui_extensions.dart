@@ -162,20 +162,20 @@ extension PetHistoryEntryExt on PetHistoryEntry {
            final List<dynamic> cards = jsonDecode(analysisCardsJson);
            if (cards.isNotEmpty) {
               final firstCard = cards.first;
-              String rawTitle = firstCard['title'] ?? '';
-              final icon = firstCard['icon'] ?? '';
-              final content = firstCard['content'] ?? '';
+              String rawTitle = firstCard[l10n.tech_title] ?? '';
+              final icon = firstCard[l10n.tech_icon] ?? '';
+              final content = firstCard[l10n.tech_content] ?? '';
               
-              isToxic = icon == 'warning' || icon == '⚠️' || icon == '☠️' || icon == '💀';
+              isToxic = icon == l10n.tech_warning || icon == '⚠️' || icon == '☠️' || icon == '💀';
               
               // If we already found the name in metadata only, we still need to check toxicity in cards if not parsed from raw
               if (plantName.isEmpty) {
                   // Validate Title: If generic, search inside Content
                   final lowerTitle = rawTitle.toLowerCase();
-                  bool isGeneric = lowerTitle.contains('identificação') || 
-                                   lowerTitle.contains('análise') || 
-                                   lowerTitle.contains('plant') ||
-                                   lowerTitle.contains('saúde');
+                  bool isGeneric = lowerTitle.contains(l10n.tech_identification) || 
+                                   lowerTitle.contains(l10n.tech_analysis) || 
+                                   lowerTitle.contains(l10n.tech_plant) ||
+                                   lowerTitle.contains(l10n.tech_health);
                                    
                   if (!isGeneric && rawTitle.split(' ').length < 10) {
                       plantName = rawTitle;
@@ -212,7 +212,7 @@ extension PetHistoryEntryExt on PetHistoryEntry {
          final iconMatch = RegExp(PetConstants.regexIcon).firstMatch(rawJson);
          if (iconMatch != null) {
             final iconStr = iconMatch.group(1)?.trim() ?? '';
-            isToxic = iconStr == 'warning' || iconStr == '⚠️' || iconStr == '☠️' || iconStr == '💀';
+            isToxic = iconStr == l10n.tech_warning || iconStr == '⚠️' || iconStr == '☠️' || iconStr == '💀';
          }
       }
 

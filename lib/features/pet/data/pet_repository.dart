@@ -530,36 +530,36 @@ class PetRepository {
     switch (category.toLowerCase()) {
       case 'eyes': return 'pet_title_ophthalmology'; 
       case 'mouth': 
-      case 'dental': return 'pet_title_dental'; 
-      case 'skin': 
-      case 'dermatology': 
-      case 'fur': return 'pet_title_dermatology';
-      case 'ears': return 'pet_title_ears';
-      case 'stool': 
-      case 'feces': 
-      case 'gastro': return 'pet_title_digestion';
-      case 'posture': 
-      case 'body': return 'pet_title_body_condition';
-      case 'vocal': return 'pet_title_vocalization';
-      case 'behavior': return 'pet_title_behavior';
-      case 'walk':
-      case 'exercise':
-      case 'activity': return 'pet_title_walk';
-      case 'chat':
-      case 'ai_chat':
-      case 'message': return 'pet_title_ai_chat';
-      case 'foodbowl': 
-      case 'food_bowl': 
-      case 'nutrition': return 'pet_title_nutrition';
-      case 'lab': return 'pet_title_lab';
-      case 'label': return 'pet_title_label_analysis';
-      case 'plant': 
-      case 'plantcheck': return 'pet_title_plants';
-      case 'newprofile': return 'pet_title_initial_eval';
-      case 'general':
-      case 'health_summary': return 'pet_title_health_summary'; 
-      case 'other': return 'pet_title_general_checkup'; 
-      case 'clinical_summary': return 'pet_title_clinical_summary';
+      case 'dental': return 'pet_title_dental';  // l10n
+      case 'skin':  // l10n
+      case 'dermatology':  // l10n
+      case 'fur': return 'pet_title_dermatology'; // l10n
+      case 'ears': return 'pet_title_ears'; // l10n
+      case 'stool':  // l10n
+      case 'feces':  // l10n
+      case 'gastro': return 'pet_title_digestion'; // l10n
+      case 'posture':  // l10n
+      case 'body': return 'pet_title_body_condition'; // l10n
+      case 'vocal': return 'pet_title_vocalization'; // l10n
+      case 'behavior': return 'pet_title_behavior'; // l10n
+      case 'walk': // l10n
+      case 'exercise': // l10n
+      case 'activity': return 'pet_title_walk'; // l10n
+      case 'chat': // l10n
+      case 'ai_chat': // l10n
+      case 'message': return 'pet_title_ai_chat'; // l10n
+      case 'foodbowl':  // l10n
+      case 'food_bowl':  // l10n
+      case 'nutrition': return 'pet_title_nutrition'; // l10n
+      case 'lab': return 'pet_title_lab'; // l10n
+      case 'label': return 'pet_title_label_analysis'; // l10n
+      case 'plant':  // l10n
+      case 'plantcheck': return 'pet_title_plants'; // l10n
+      case 'newprofile': return 'pet_title_initial_eval'; // l10n
+      case 'general': // l10n
+      case 'health_summary': return 'pet_title_health_summary';  // l10n
+      case 'other': return 'pet_title_general_checkup';  // l10n
+      case 'clinical_summary': return 'pet_title_clinical_summary'; // l10n
       default: return category; 
     }
   }

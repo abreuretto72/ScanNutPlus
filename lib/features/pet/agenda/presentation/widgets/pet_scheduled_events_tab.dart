@@ -178,7 +178,7 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
     final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
-      backgroundColor: AppColors.petBackgroundLight,
+      backgroundColor: AppColors.petPrimary,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -249,7 +249,7 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
             hintText: l10n.pet_appointment_outcome_hint,
             hintStyle: const TextStyle(color: Colors.black54),
             filled: true,
-            fillColor: AppColors.petBackgroundLight,
+            fillColor: AppColors.petPrimary,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.black, width: 2)),
             enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.black, width: 2)),
             focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.petPrimary, width: 2)),
@@ -293,7 +293,7 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
       address: event.address,
     );
 
-    await _repository.save(updatedEvent);
+    await _repository.update(updatedEvent);
     _loadAppointments();
     widget.onEventDeleted?.call(); // Refresh parent view if necessary to show summary update
   }

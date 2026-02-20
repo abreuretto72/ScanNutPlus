@@ -78,65 +78,56 @@ class _MyPetsViewState extends State<MyPetsView> {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      // ERGONOMIA SM A256E: Uso obrigatório de SingleChildScrollView
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            FutureBuilder<List<Map<String, dynamic>>>(
-              future: _repository.getAllRegisteredPets(), // Método blindado no repository
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator(color: AppColors.petPrimary));
-                }
+      // ERGONOMIA SM A256E: Remoção de SingleChildScrollView aninhada para resgatar o Lazy Rendering
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: _repository.getAllRegisteredPets(), // Método blindado no repository
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator(color: AppColors.petPrimary));
+          }
 
-                // UI FILTER: Double protection against ghost cards
-                final allPets = snapshot.data ?? [];
-                final pets = allPets.where((p) => p[PetConstants.fieldName] != null && p[PetConstants.fieldName].toString().isNotEmpty && p[PetConstants.fieldName].toString() != PetConstants.valNull).toList();
-                
-                if (kDebugMode) {
-                  debugPrint('${PetConstants.logUiBuild}${pets.length}');
-                }
-                for (var p in pets) {
-                  if (kDebugMode) {
-                    debugPrint('${PetConstants.logUiItem}UUID: ${p[PetConstants.fieldUuid]}, Name: ${p[PetConstants.fieldName]}');
-                  }
-                }
+          // UI FILTER: Double protection against ghost cards
+          final allPets = snapshot.data ?? [];
+          final pets = allPets.where((p) => p[PetConstants.fieldName] != null && p[PetConstants.fieldName].toString().isNotEmpty && p[PetConstants.fieldName].toString() != PetConstants.valNull).toList();
+          
+          if (kDebugMode) {
+            debugPrint('${PetConstants.logUiBuild}${pets.length}');
+            for (var p in pets) {
+              debugPrint('${PetConstants.logUiItem}UUID: ${p[PetConstants.fieldUuid]}, Name: ${p[PetConstants.fieldName]}');
+            }
+          }
 
-                if (pets.isEmpty) {
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 100),
-                      child: Column(
-                        children: [
-                           Icon(Icons.pets, size: 64, color: Colors.white24),
-                           const SizedBox(height: 16),
-                           Text(
-                             appL10n.pet_no_pets_registered, 
-                             style: const TextStyle(color: Colors.white54, fontSize: 16)
-                           ),
-                        ],
-                      ),
-                    ),
-                  );
-                }
+          if (pets.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 100),
+                child: Column(
+                  children: [
+                     const Icon(Icons.pets, size: 64, color: Colors.white24),
+                     const SizedBox(height: 16),
+                     Text(
+                       appL10n.pet_no_pets_registered, 
+                       style: const TextStyle(color: Colors.white54, fontSize: 16)
+                     ),
+                  ],
+                ),
+              ),
+            );
+          }
 
-                return ListView.builder(
-                  shrinkWrap: true, // Necessário dentro de SingleChildScrollView
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: pets.length,
-                  itemBuilder: (context, index) {
-                    final pet = pets[index];
-                    return _buildPetCard(pet);
-                  },
-                );
-              },
-            ),
-            // Espaçador para o conteúdo não invadir o rodapé
-            const SizedBox(height: 80),
-          ],
-        ),
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.all(16.0),
+            itemCount: pets.length + 1, // +1 para o espaçador
+            itemBuilder: (context, index) {
+              if (index == pets.length) {
+                return const SizedBox(height: 80); // Espaçador para o FAB não cobrir card
+              }
+              final pet = pets[index];
+              return _buildPetCard(pet);
+            },
+          );
+        },
       ),
       // Botão Flutuante (FAB) - Rosa Pastel com Ícone Preto e Borda
       floatingActionButton: FloatingActionButton(
@@ -506,7 +497,7 @@ class _MyPetsViewState extends State<MyPetsView> {
                       // 2. Walk (Passeio)
                       Expanded(
                         child: PetWalkButton(
-                          label: appL10n.pet_action_walk, // "Passeio"
+                          label: appL10n.pet_action_walk, // Passeio
                           onTap: () {
                              Navigator.push(
                                context,

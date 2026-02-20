@@ -327,9 +327,9 @@ class _PetDashboardViewState extends State<PetDashboardView> {
                   PetConstants.argBreed: breed, // Keep original breed or update if friend loaded
                   PetConstants.argImagePath: imagePath,
                   // New Arguments for Friend Logic
-                  'is_friend': _isFriendMode,
-                  'tutor_name': _isFriendMode ? (_selectedFriendUuid == PetConstants.valNewFriend ? _tutorNameController.text : _friendPets.firstWhere((p) => p.uuid == _selectedFriendUuid).tutorName) : null,
-                  'is_new_friend': _isFriendMode && _selectedFriendUuid == PetConstants.valNewFriend,
+                  l10n.tech_is_friend: _isFriendMode,
+                  l10n.tech_tutor_name: _isFriendMode ? (_selectedFriendUuid == PetConstants.valNewFriend ? _tutorNameController.text : _friendPets.firstWhere((p) => p.uuid == _selectedFriendUuid).tutorName) : null,
+                  l10n.tech_is_new_friend: _isFriendMode && _selectedFriendUuid == PetConstants.valNewFriend,
                 }).then((_) {
                    setState(() {
                       _selectedType = null; // Optional: reset selection on return
@@ -437,7 +437,7 @@ class _PetDashboardViewState extends State<PetDashboardView> {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_msg_friend_updated)));
                }
              },
-             child: const Text('Salvar'), 
+             child: Text(l10n.common_save), 
            ),
          ],
        ),

@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/features/pet/agenda/data/models/partner_model.dart';
 import 'package:scannutplus/features/pet/agenda/logic/pet_partner_service.dart';
+import 'package:scannutplus/l10n/app_localizations.dart';
 
 class PetPartnerSelectionScreen extends StatefulWidget {
   const PetPartnerSelectionScreen({super.key});
@@ -26,10 +27,14 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchPartners(forceRefresh: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _fetchPartners(forceRefresh: false, l10n: AppLocalizations.of(context)!);
+      }
+    });
   }
 
-  Future<void> _fetchPartners({bool forceRefresh = false}) async {
+  Future<void> _fetchPartners({bool forceRefresh = false, required AppLocalizations l10n}) async {
     setState(() {
       _isSearchingPartners = true;
       _selectedPartner = null;
@@ -41,19 +46,19 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
 
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-          throw Exception('Location services are disabled.');
+          throw Exception(l10n.error_location_disabled);
       }
 
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          throw Exception('Location permissions are denied');
+          throw Exception(l10n.error_location_denied);
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        throw Exception('Location permissions are permanently denied.');
+        throw Exception(l10n.error_location_permanently_denied);
       }
 
       Position position = await Geolocator.getCurrentPosition();
@@ -73,8 +78,9 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
     } catch (e) {
       debugPrint('[PetPartnerSelectionScreen] Erro: $e');
       if (mounted) {
+         final errorL10n = AppLocalizations.of(context)!;
          ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(content: Text('Erro ao buscar locais: $e'), backgroundColor: Colors.red),
+           SnackBar(content: Text(errorL10n.error_fetching_places(e.toString())), backgroundColor: Colors.red),
          );
       }
     } finally {
@@ -132,10 +138,11 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appL10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.petBackgroundDark,
       appBar: AppBar(
-        title: Text(_selectedPartner != null ? 'Sobre o Parceiro' : 'Pesquisa de Rede', 
+        title: Text(_selectedPartner != null ? appL10n.partner_about : appL10n.partner_network_search, 
             style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w900, letterSpacing: 0.5)),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -150,8 +157,8 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
         actions: _selectedPartner == null ? [
           IconButton(
             icon: const Icon(Icons.refresh_rounded, color: AppColors.petPrimary, size: 28),
-            tooltip: 'Forçar reinício da busca',
-            onPressed: () => _fetchPartners(forceRefresh: true),
+            tooltip: appL10n.partner_force_search_restart,
+            onPressed: () => _fetchPartners(forceRefresh: true, l10n: appL10n),
           ),
           const SizedBox(width: 8),
         ] : null,
@@ -160,10 +167,21 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
           ? const Center(child: CircularProgressIndicator(color: AppColors.petPrimary, strokeWidth: 4))
           : (_selectedPartner != null)
               ? _buildPartnerDetails()
-              : _buildSearchList(),
+              : _buildSearchList(appL10n),
     );
   }
 
+  String _translateCategory(String category, AppLocalizations l10n) {
+    switch (category) {
+      case 'Todos': return l10n.partner_filter_all;
+      case 'Saúde': return l10n.partner_filter_health;
+      case 'Hospitalidade': return l10n.partner_filter_hospitality;
+      case 'Estética': return l10n.partner_filter_aesthetics;
+      case 'Educação': return l10n.partner_filter_education;
+      case 'Serviços': return l10n.partner_filter_services;
+      default: return category;
+    }
+  }
 
   IconData _getCategoryIcon(String? category) {
     if (category == null) return Icons.storefront_rounded;
@@ -181,7 +199,7 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
     }
   }
 
-  Widget _buildSearchList() {
+  Widget _buildSearchList(AppLocalizations appL10n) {
      return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -219,7 +237,7 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                           child: Text(
-                            cat, 
+                            _translateCategory(cat, appL10n), 
                             style: TextStyle(
                               color: isSelected ? Colors.black : Colors.white70, 
                               fontWeight: isSelected ? FontWeight.w900 : FontWeight.w600,
@@ -341,14 +359,15 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
   }
 
   Widget _buildPartnerDetails() {
+     final appL10n = AppLocalizations.of(context)!;
      if (_isSearchingPartners) {
-        return const Center(
+        return Center(
            child: Column(
              mainAxisSize: MainAxisSize.min,
              children: [
-                CircularProgressIndicator(color: AppColors.petPrimary, strokeWidth: 4),
-                SizedBox(height: 24),
-                Text('Sincronizando contatos...', style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w700, fontSize: 16)),
+                const CircularProgressIndicator(color: AppColors.petPrimary, strokeWidth: 4),
+                const SizedBox(height: 24),
+                Text(appL10n.partner_syncing_contacts, style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w700, fontSize: 16)),
              ],
            ),
         );
@@ -383,7 +402,7 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
                        Container(
                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                          decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.white, width: 2)),
-                         child: const Text('ABERTO', style: TextStyle(color: Colors.greenAccent, fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: 0.8)),
+                         child: Text(appL10n.partner_open_now, style: const TextStyle(color: Colors.greenAccent, fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: 0.8)),
                        ),
                  ],
                ),
@@ -409,7 +428,7 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
                      Container(
                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                        decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(16)),
-                       child: Text(_selectedPartner!.category!.toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 12, letterSpacing: 1.0)),
+                       child: Text(_translateCategory(_selectedPartner!.category!, appL10n).toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 12, letterSpacing: 1.0)),
                      ),
                  ]
                ),
@@ -441,7 +460,7 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                      side: const BorderSide(color: Colors.white, width: 2),
                    ),
-                   child: const Text('SELECIONAR ESTE PARCEIRO', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, letterSpacing: 0.5)),
+                   child: Text(appL10n.partner_select_this, style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16, letterSpacing: 0.5)),
                  ),
                )
             ],
