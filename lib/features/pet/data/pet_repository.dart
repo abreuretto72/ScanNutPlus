@@ -83,7 +83,7 @@ class PetRepository {
           breed: breed, 
           imagePath: imagePath,
           species: PetConstants.speciesUnknown, // Default, update later
-          type: analysisType == PetConstants.typeFriend ? PetConstants.typeFriend : PetConstants.typePet
+          type: (isFriend || analysisType == PetConstants.typeFriend) ? PetConstants.typeFriend : PetConstants.typePet
         );
         if (kDebugMode) {
           debugPrint(PetConstants.logDbWriteNew);
