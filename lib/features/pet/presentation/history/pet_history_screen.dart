@@ -87,11 +87,17 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
           centerTitle: true,
           elevation: 0,
           bottom: TabBar(
-            indicatorColor: const Color(0xFF10AC84), // Scanner Green
-            indicatorWeight: 4,
-            labelColor: Colors.white,
+            indicator: BoxDecoration(
+              color: const Color(0xFFFFD1DC), // Rosa Pastel 
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.black, width: 2),
+            ),
+            indicatorPadding: const EdgeInsets.symmetric(horizontal: -8, vertical: 6),
+            labelColor: Colors.black,
+            labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
             unselectedLabelColor: Colors.white54,
-            labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+            dividerColor: Colors.transparent,
             tabs: [
                Tab(text: l10n.pet_my_pets_title.toUpperCase()),
                Tab(text: l10n.pet_friend_list_label.toUpperCase()),
@@ -167,38 +173,25 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
           },
         ),
 
-        floatingActionButton: widget.petUuid != null ? Builder(
-          builder: (context) {
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.black, width: 3),
-                boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
-              ),
-              child: FloatingActionButton(
-                onPressed: () {
-                  // Navigate to New Analysis Screen (Dashboard)
-                  final tabController = DefaultTabController.of(context);
-                  Navigator.pushNamed(
-                    context, 
-                    '/pet_dashboard', // The screen with the dropdown
-                    arguments: {
-                      PetConstants.argUuid: widget.petUuid,
-                      PetConstants.argName: widget.petName,
-                      PetConstants.argBreed: widget.petBreed,
-                      PetConstants.argImagePath: widget.petImagePath,
-                      'my_pet_name': widget.petName, // Route the owner's name downstream
-                      'is_friend_tab': tabController.index == 1, // Pass Active Tab State
-                    },
-                  ).then((_) => setState(() {})); // Refresh history on return
-                },
-                backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel
-                elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                child: const Icon(Icons.add, color: Colors.black, size: 32),
-              ),
-            );
-          }
+        floatingActionButton: widget.petUuid != null ? FloatingActionButton(
+          onPressed: () {
+            // Navigate to New Analysis Screen (Dashboard)
+            final tabController = DefaultTabController.of(context);
+            Navigator.pushNamed(
+              context, 
+              '/pet_dashboard', // The screen with the dropdown
+              arguments: {
+                PetConstants.argUuid: widget.petUuid,
+                PetConstants.argName: widget.petName,
+                PetConstants.argBreed: widget.petBreed,
+                PetConstants.argImagePath: widget.petImagePath,
+                'my_pet_name': widget.petName, // Route the owner's name downstream
+                'is_friend_tab': tabController.index == 1, // Pass Active Tab State
+              },
+            ).then((_) => setState(() {})); // Refresh history on return
+          },
+          backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel (Domain Color)
+          child: const Icon(Icons.add, color: Colors.black), // Black Icon
         ) : null,
       ),
     );

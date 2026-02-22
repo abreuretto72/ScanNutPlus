@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
@@ -526,11 +527,20 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
         ],
       ),
       
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onAddEventPressed,
-        tooltip: l10n.pet_agenda_add_event,
-        backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel (Domain Color)
-        child: const Icon(Icons.add, color: Colors.black), // Black Icon
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.black, width: 3),
+          boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
+        ),
+        child: FloatingActionButton(
+          onPressed: _onAddEventPressed,
+          tooltip: l10n.pet_agenda_add_event,
+          backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel (Domain Color)
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: const Icon(Icons.add, color: Colors.black, size: 32),
+        ),
       ),
       
       body: Column(
@@ -703,20 +713,27 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                         children: [
                           // Icon (Chunky)
                           Container(
-                            width: 56,
-                            height: 56,
+                            width: 64,
+                            height: 64,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(color: Colors.black, width: 2),
                             ),
-                            child: isSummary 
-                                ? Icon(Icons.auto_awesome_rounded, size: 28, color: Colors.amber[800]) // Summary Icon
-                                : isGoogleEvent
-                                    ? const Icon(Icons.map_rounded, size: 28, color: Color(0xFF4285F4)) // Google Maps Icon (Blue)
-                                    : isFriendEvent
-                                        ? const Icon(Icons.pets, size: 28, color: Colors.black) // Friend Walk Icon
-                                        : const Icon(Icons.directions_walk_rounded, size: 28, color: Colors.black), // Walk Icon
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(14),
+                              child: isSummary 
+                                  ? Icon(Icons.auto_awesome_rounded, size: 32, color: Colors.amber[800]) // Summary Icon
+                                  : isGoogleEvent
+                                      ? const Icon(Icons.map_rounded, size: 32, color: Color(0xFF4285F4)) // Google Maps Icon (Blue)
+                                      : (event.mediaPaths != null && event.mediaPaths!.isNotEmpty)
+                                          ? Image.file(
+                                              File(event.mediaPaths!.first),
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (context, error, stackTrace) => Icon(isFriendEvent ? Icons.pets : Icons.directions_walk_rounded, size: 32, color: Colors.black),
+                                            )
+                                          : Icon(isFriendEvent ? Icons.pets : Icons.directions_walk_rounded, size: 32, color: Colors.black),
+                            ),
                           ),
                           const SizedBox(width: 16),
                           
@@ -729,12 +746,12 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                                 Text(
                                    // isFriendTab prepend "Amigo: " to title if it's the friend tab
                                    isFriendTab 
-                                      ? '${l10n.pet_friend_prefix.toUpperCase()}: ${(event.metrics != null && event.metrics!['is_metric_record'] == true) ? event.metrics!['custom_title'] ?? l10n.pet_event_walk : (event.metrics != null && event.metrics!.containsKey('custom_title')) ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context) : l10n.pet_event_walk}'
+                                      ? '${l10n.pet_friend_prefix.toUpperCase()}: ${(event.metrics != null && event.metrics!['is_metric_record'] == true) ? event.metrics!['custom_title'] ?? l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? l10n.pet_unknown_name) : (event.metrics != null && event.metrics!.containsKey('custom_title')) ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context) : l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? l10n.pet_unknown_name)}'
                                       : ((event.metrics != null && event.metrics!['is_metric_record'] == true) 
-                                        ? "Métricas Clínicas: ${event.metrics!['custom_title'] ?? l10n.pet_event_walk}"
+                                        ? "Métricas Clínicas: ${event.metrics!['custom_title'] ?? l10n.pet_walk_title_dynamic(widget.petName)}"
                                      : (event.metrics != null && event.metrics!.containsKey('custom_title'))
                                         ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
-                                        : l10n.pet_event_walk), 
+                                        : l10n.pet_walk_title_dynamic(widget.petName)), 
                                    style: const TextStyle(fontWeight: FontWeight.w900, color: Colors.black, fontSize: 18, letterSpacing: -0.3),
                                    overflow: TextOverflow.ellipsis,
                                    maxLines: 2,

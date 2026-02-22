@@ -224,12 +224,13 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                   return const SizedBox.shrink();
                 }
                 
-                return Container(
+                  return Container(
                   decoration: BoxDecoration(
-                    boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
                     borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.black, width: 3),
+                    boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
                   ),
-                  child: FloatingActionButton.extended(
+                  child: FloatingActionButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -249,12 +250,8 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                     tooltip: l10n.pet_agenda_add_event,
                     elevation: 0,
                     backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel
-                    shape: RoundedRectangleBorder(
-                       borderRadius: BorderRadius.circular(20), 
-                       side: const BorderSide(color: Colors.black, width: 3)
-                    ),
-                    icon: const Icon(Icons.add_rounded, color: Colors.black, size: 28),
-                    label: Text(l10n.common_new.toUpperCase(), style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 16, letterSpacing: 0.5)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    child: const Icon(Icons.add, color: Colors.black, size: 32),
                   ),
                 );
               }

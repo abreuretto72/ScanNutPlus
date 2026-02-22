@@ -377,12 +377,20 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
              ),
           ],
           bottom: TabBar(
-            indicatorColor: AppColors.petPrimary,
-            labelColor: AppColors.petPrimary,
-            unselectedLabelColor: Colors.grey, labelStyle: const TextStyle(fontWeight: FontWeight.w900), unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+            indicator: BoxDecoration(
+              color: const Color(0xFFFFD1DC), // Rosa Pastel 
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.black, width: 2),
+            ),
+            indicatorPadding: const EdgeInsets.symmetric(horizontal: -8, vertical: 6),
+            labelColor: Colors.black,
+            labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
+            unselectedLabelColor: Colors.white54,
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+            dividerColor: Colors.transparent,
             tabs: [
-              Tab(text: l10n.pet_appointment_tab_data, icon: const Icon(Icons.calendar_today)),
-              Tab(text: l10n.pet_appointment_tab_partner, icon: const Icon(Icons.store)),
+              Tab(text: l10n.pet_appointment_tab_data.toUpperCase(), icon: const Icon(Icons.calendar_today)),
+              Tab(text: l10n.pet_appointment_tab_partner.toUpperCase(), icon: const Icon(Icons.store)),
             ],
           ),
         ),
