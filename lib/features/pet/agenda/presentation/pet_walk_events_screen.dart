@@ -671,6 +671,14 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
               final isGoogleEvent = event.metrics != null && event.metrics!['is_google_event'] == true;
               final isFriendEvent = event.notes != null && event.notes!.contains('[Amigo:');
               
+              String friendNameFallback = l10n.pet_unknown_name;
+              if (isFriendEvent) {
+                  final match = RegExp(r'\[Amigo:\s*(.*?)\s*\|').firstMatch(event.notes!);
+                  if (match != null && match.group(1) != null) {
+                      friendNameFallback = match.group(1)!.trim();
+                  }
+              }
+              
               // Card Color
               final cardColor = isSummary ? const Color(0xFFFFF9C4) // Light Yellow/Gold for Summary
                               : isGoogleEvent ? const Color(0xFFE3F2FD) // Light Blue for Google
@@ -746,7 +754,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                                 Text(
                                    // isFriendTab prepend "Amigo: " to title if it's the friend tab
                                    isFriendTab 
-                                      ? ((event.metrics != null && event.metrics!['is_metric_record'] == true) ? event.metrics!['custom_title'] ?? l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? l10n.pet_unknown_name) : (event.metrics != null && event.metrics!.containsKey('custom_title')) ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context) : l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? l10n.pet_unknown_name))
+                                      ? ((event.metrics != null && event.metrics!['is_metric_record'] == true) ? event.metrics!['custom_title'] ?? l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? friendNameFallback) : (event.metrics != null && event.metrics!.containsKey('custom_title')) ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context) : l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? friendNameFallback))
                                       : ((event.metrics != null && event.metrics!['is_metric_record'] == true) 
                                         ? "Métricas Clínicas: ${event.metrics!['custom_title'] ?? l10n.pet_walk_title_dynamic(widget.petName)}"
                                      : (event.metrics != null && event.metrics!.containsKey('custom_title'))

@@ -215,7 +215,7 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFD1DC), // Rosa Pastel (Domain Color)
+                color: isFriendTab ? const Color(0xFFB9FBC0) : const Color(0xFFFFD1DC), // Domain Colors: Mint for Friends, Pink for Pets
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.black, width: 3),
                 boxShadow: const [
