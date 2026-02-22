@@ -746,7 +746,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                                 Text(
                                    // isFriendTab prepend "Amigo: " to title if it's the friend tab
                                    isFriendTab 
-                                      ? '${l10n.pet_friend_prefix.toUpperCase()}: ${(event.metrics != null && event.metrics!['is_metric_record'] == true) ? event.metrics!['custom_title'] ?? l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? l10n.pet_unknown_name) : (event.metrics != null && event.metrics!.containsKey('custom_title')) ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context) : l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? l10n.pet_unknown_name)}'
+                                      ? ((event.metrics != null && event.metrics!['is_metric_record'] == true) ? event.metrics!['custom_title'] ?? l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? l10n.pet_unknown_name) : (event.metrics != null && event.metrics!.containsKey('custom_title')) ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context) : l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? l10n.pet_unknown_name))
                                       : ((event.metrics != null && event.metrics!['is_metric_record'] == true) 
                                         ? "Métricas Clínicas: ${event.metrics!['custom_title'] ?? l10n.pet_walk_title_dynamic(widget.petName)}"
                                      : (event.metrics != null && event.metrics!.containsKey('custom_title'))
