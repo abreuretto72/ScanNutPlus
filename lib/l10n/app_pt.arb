@@ -139,6 +139,21 @@
   "pet_result_status_stable": "Status: Estável",
   "pet_result_summary_title": "Resumo da Análise",
   "pet_result_visual_empty": "Sem anomalias visuais detectadas",
+  "pet_med_drug_name": "Nome do Fármaco",
+  "pet_med_dosage": "Dosagem",
+  "pet_med_unit": "Unidade",
+  "pet_med_route": "Via de Adm.",
+  "pet_med_oral": "Oral",
+  "pet_med_injectable": "Injetável",
+  "pet_med_topical": "Tópica",
+  "pet_med_drops": "Colírio/Gotas",
+  "pet_med_duration": "Duração (Dias)",
+  "pet_med_interval": "Intervalo (Horas)",
+  "pet_med_save": "Agendar Tratamento",
+  "pet_med_take_dose": "Dar Dose",
+  "pet_med_empty_error": "O nome do remédio é obrigatório.",
+  "pet_med_success": "Medicação agendada com sucesso!",
+  "pet_med_taken_success": "Dose registrada com sucesso!",
   "pet_analysis_error_generic": "Tivemos uma pequena dificuldade técnica na análise. Tente novamente! ({error})",
   "@pet_analysis_error_generic": {
     "placeholders": {
@@ -286,7 +301,7 @@
   "pet_error_image_not_found": "Imagem não encontrada.",
   "btn_go": "Ir",
   "pet_created_at_label": "Criado em",
-  "pet_initial_assessment": "Avaliação Inicial",
+  "pet_initial_assessment": "Novo Perfil",
   "pet_hint_select_type": "Selecione",
   "pet_label_info": "Informação",
   "pet_type_profile": "Perfil",
@@ -797,6 +812,7 @@
   "pet_module_vocal_programs": "Latidos, Miados, Tosse, Respiração",
   "pet_module_behavior": "Comportamento",
   "pet_module_behavior_programs": "Raça, Postura, Ansiedade, Tremores",
+  "pet_error_ai_unhandled_format": "A inteligência artificial gerou uma resposta complexa demais nesta tentativa. Por favor, clique em analisar novamente.",
   "pet_module_plant": "Plantas",
   "pet_module_plant_programs": "Identificação de Plantas Tóxicas",
   "pet_module_food_bowl": "Alimentação",
@@ -1038,7 +1054,7 @@
   "pet_title_lab": "Laboratório",
   "pet_title_label_analysis": "Análise de Rótulo",
   "pet_title_plants": "Plantas",
-  "pet_title_initial_eval": "Avaliação Inicial",
+  "pet_title_initial_eval": "Novo Perfil",
   "pet_title_health_summary": "Resumo de Saúde",
   "pet_title_general_checkup": "Check-up Geral",
   "pet_title_clinical_summary": "Resumo Clínico",
@@ -1210,5 +1226,23 @@
   "pet_nutrition_every_day": "TODOS OS DIAS:",
   "pet_error_nutrition_plan": "Erro ao gerar plano nutricional.",
   "pet_error_summary": "Não foi possível gerar o resumo no momento. Tente novamente mais tarde.",
-  "pet_health_based_on_history": "Baseado no Histórico Clínico do Pet"
+  "pet_health_based_on_history": "Baseado no Histórico Clínico do Pet",
+  "pet_metric_last_recorded": "Último: {value}",
+  "@pet_metric_last_recorded": { "placeholders": { "value": { "type": "String" } } },
+  "pet_metric_save_quick": "Salvar {metric}",
+  "@pet_metric_save_quick": { "placeholders": { "metric": { "type": "String" } } },
+  "pet_metric_empty_state": "S/ Reg.",
+  "pet_metric_quick_action_title": "Ações Rápidas",
+  "pet_error_no_internet_title": "Sem Conexão com a Internet",
+  "pet_error_no_internet_content": "Ops! Parece que o seu celular está sem internet ou o sinal caiu. Verifique a sua conexão e clique em tentar novamente.",
+  "pet_error_timeout_title": "Servidor Ocupado",
+  "pet_error_timeout_content": "A Inteligência Artificial demorou muito para responder desta vez. Isso acontece quando há muitos acessos ao mesmo tempo. Por favor, aguarde alguns segundos e tente novamente.",
+  "pet_error_technical_title": "Não foi possível analisar",
+  "pet_error_technical_content": "Tivemos uma pequena falha técnica ao analisar seus dados. Não se preocupe, pode tentar novamente.",
+  "pet_analysis_title": "Novo Perfil: {name}",
+  "@pet_analysis_title": {
+    "placeholders": {
+      "name": { "type": "Object" }
+    }
+  }
 }

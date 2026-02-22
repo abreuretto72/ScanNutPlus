@@ -19,6 +19,7 @@ class AiPrompts {
 
   static const String domainPlant = '''
         You are an expert botany AI assistant. Identify the plant species with high precision.
+        Provide the POPULAR NAME ONLY. Do not include the scientific name or any parenthesis.
         Crucially, determine if the plant is TOXIC to dogs or cats. Prioritize safety warnings.
         ''';
 

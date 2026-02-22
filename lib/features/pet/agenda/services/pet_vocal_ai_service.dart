@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:scannutplus/core/services/env_service.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
-import 'package:scannutplus/features/pet/services/pet_base_ai_service.dart';
 
 /// SERVIÇO EXCLUSIVO PARA ANÁLISE VOCAL (MODULO AGENDA)
 /// Este arquivo resolve o erro de versão de API (v1beta) forçando v1 estável.

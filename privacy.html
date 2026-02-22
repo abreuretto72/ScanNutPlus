@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Política de Privacidade - ScanNut+</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .lang-switch {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .lang-switch a {
+            text-decoration: none;
+            color: #666;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            font-size: 14px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .lang-switch a.active {
+            background-color: #FC2D7C;
+            color: white;
+            border-color: #FC2D7C;
+        }
+
+        h1 {
+            color: #FC2D7C;
+        }
+
+        h2 {
+            color: #222;
+            margin-top: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        p,
+        li {
+            color: #555;
+        }
+
+        ul {
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background-color: #ffe6f0;
+            padding: 10px;
+            border-left: 4px solid #FC2D7C;
+            margin: 15px 0;
+        }
+
+        /* Language Sections */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+    </style>
+    <script>
+        function setLanguage(lang) {
+            document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.lang-switch a').forEach(el => el.classList.remove('active'));
+
+            document.getElementById('content-' + lang).classList.add('active');
+            document.getElementById('btn-' + lang).classList.add('active');
+
+            document.documentElement.lang = lang;
+        }
+
+        // Auto-detect browser language
+        window.onload = function () {
+            var userLang = navigator.language || navigator.userLanguage;
+            if (userLang.startsWith('pt')) setLanguage('pt');
+            else setLanguage('en');
+        };
+    </script>
+</head>
+
+<body>
+    <div class="lang-switch">
+        <a id="btn-en" onclick="setLanguage('en')">English</a>
+        <a id="btn-pt" onclick="setLanguage('pt')">Português</a>
+    </div>
+
+    <div class="container">
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="lang-content active">
+            <h1>Privacy Policy - ScanNut+</h1>
+            <p><strong>Last updated:</strong> February 20, 2026</p>
+
+            <p><strong>Multiverso Digital</strong> ("we," "our," or "developer") built the <strong>ScanNut+</strong> app
+                as a Commercial app. This SERVICE is provided by Multiverso Digital and is intended for use as is.</p>
+
+            <p>This page is used to inform visitors regarding our policies with the collection, use, and disclosure of
+                Personal Information if anyone decided to use our Service.</p>
+
+            <p>By choosing to use our Service, you agree to the collection and use of information in relation to this
+                policy. The Personal Information that we collect is used for providing and improving the Service. We
+                will not share your information with anyone except as described in this Privacy Policy.</p>
+
+            <h2>1. Information Collection and Use</h2>
+            <p>For a better experience, we may require you to provide certain information, including:</p>
+            <ul>
+                <li><strong>Account Data:</strong> Name, email, and password entered during registration.</li>
+                <li><strong>Pet Data:</strong> Name, breed, age, weight, medical information, and your pet's clinical
+                    history.</li>
+                <li><strong>Media (Camera and Microphone):</strong> Photos, videos, and audio captured specifically for
+                    analysis within the app.</li>
+                <li><strong>Location (GPS):</strong> Approximate or precise location data when using the Map or Walk
+                    Diary features.</li>
+            </ul>
+
+            <h2>2. Generative AI Processing (Google Gemini)</h2>
+            <div class="highlight">
+                <p><strong>ScanNut+</strong> actively uses Generative Artificial Intelligence technologies, specifically
+                    the <strong>Gemini</strong> API (provided by Google), to process visual, audio, and text data to
+                    generate predictive health and wellness reports for animals and plants.</p>
+            </div>
+            <ul>
+                <li><strong>Data Transmission:</strong> When you submit a photo, video, or audio file, this file and
+                    associated metadata are securely and anonymously transmitted to Google Gemini API servers.</li>
+                <li><strong>Exclusive Purpose:</strong> The transmitted data is used <strong>exclusively</strong> to
+                    generate the requested analysis within the app's interface.</li>
+                <li><strong>Disclaimer:</strong> All analyses generated by Gemini are for guidance only. They <strong>DO
+                        NOT</strong> replace professional veterinary evaluation, diagnosis, or treatment.</li>
+            </ul>
+
+            <h2>3. Data Retention and Deletion</h2>
+            <ul>
+                <li><strong>Storage:</strong> Records and reports (PDFs) build up the health history on your device and
+                    are synced to our secure servers (Google Cloud/Firebase).</li>
+                <li><strong>Data Deletion:</strong> Deleting a Pet profile <strong>irreversibly erases</strong> the
+                    entire history of consultations, AI analyses (Gemini), appointments, and associated media for that
+                    profile from our active databases.</li>
+            </ul>
+
+            <h2>4. Contact Us</h2>
+            <p>If you have any questions about the Privacy Policy or AI analyses, contact us at:</p>
+            <p><strong>Email:</strong> contato@multiversodigital.com.br<br>
+                <strong>Developer:</strong> Multiverso Digital
+            </p>
+        </div>
+
+        <!-- PORTUGUESE CONTENT -->
+        <div id="content-pt" class="lang-content">
+            <h1>Política de Privacidade - ScanNut+</h1>
+            <p><strong>Última atualização:</strong> 20 de Fevereiro de 2026</p>
+
+            <p>A <strong>Multiverso Digital</strong> ("nós", "nosso" ou "desenvolvedor") construiu o aplicativo
+                <strong>ScanNut+</strong> como um aplicativo Comercial. Este SERVIÇO é fornecido pela Multiverso Digital
+                e deve ser usado no estado em que se encontra.</p>
+
+            <p>Esta página informa os visitantes sobre nossas políticas relativas à coleta, uso e divulgação de
+                Informações Pessoais de quem decide usar nosso Serviço.</p>
+
+            <p>Ao escolher usar nosso Serviço, você concorda com a coleta e uso de informações em relação a esta
+                política. As Informações Pessoais que coletamos são usadas para fornecer e melhorar o Serviço. Não
+                compartilharemos suas informações com ninguém, exceto conforme descrito nesta Política de Privacidade.
+            </p>
+
+            <h2>1. Coleta e Uso de Informações</h2>
+            <p>Para uma melhor experiência, podemos exigir certas informações, incluindo:</p>
+            <ul>
+                <li><strong>Dados da Conta:</strong> Nome, e-mail e senha inseridos durante o cadastro.</li>
+                <li><strong>Dados do Pet:</strong> Nome, raça, idade, peso, informações médicas e histórico clínico do
+                    seu animal.</li>
+                <li><strong>Mídia (Câmera e Microfone):</strong> Fotos, vídeos e áudios capturados pelo usuário
+                    especificamente para análise dentro do aplicativo.</li>
+                <li><strong>Localização (GPS):</strong> Dados de localização aproximada ou precisa quando você utiliza o
+                    recurso de Mapa ou Diário de Passeio.</li>
+            </ul>
+
+            <h2>2. Processamento de IA Generativa (Google Gemini)</h2>
+            <div class="highlight">
+                <p>O <strong>ScanNut+</strong> utiliza ativamente tecnologias de Inteligência Artificial Generativa,
+                    especificamente a API <strong>Gemini</strong> (fornecida pelo Google), para processar dados visuais,
+                    de áudio e de texto visando gerar relatórios preditivos de saúde animal e vegetal.</p>
+            </div>
+            <ul>
+                <li><strong>Transmissão de Dados:</strong> Quando você submete uma foto, vídeo ou áudio, este arquivo e
+                    os metadados associados são transmitidos de forma segura e anonimizada para os servidores da API do
+                    Google Gemini.</li>
+                <li><strong>Finalidade Exclusiva:</strong> Os dados enviados são utilizados
+                    <strong>exclusivamente</strong> para gerar a análise solicitada na interface do aplicativo.</li>
+                <li><strong>Cláusula de Isenção (Disclaimer):</strong> Todas as análises geradas pelo Gemini são
+                    orientativas. Elas <strong>NÃO</strong> substituem a avaliação, o diagnóstico ou o tratamento por um
+                    médico veterinário.</li>
+            </ul>
+
+            <h2>3. Retenção e Exclusão de Dados</h2>
+            <ul>
+                <li><strong>Armazenamento:</strong> Os registros e laudos (PDFs) compõem o histórico em seu dispositivo
+                    e em nossos servidores seguros (Google Cloud/Firebase) para sincronização.</li>
+                <li><strong>Exclusão de Dados:</strong> A exclusão do perfil do Pet <strong>apaga
+                        irreversivelmente</strong> todo o histórico de consultas, análises de IA (Gemini), agendamentos
+                    e mídias associadas àquele perfil em nossos bancos de dados ativos.</li>
+            </ul>
+
+            <h2>4. Contato</h2>
+            <p>Se você tiver alguma dúvida sobre a Política de Privacidade ou as análises de IA, contate-nos em:</p>
+            <p><strong>E-mail:</strong> contato@multiversodigital.com.br<br>
+                <strong>Desenvolvedor:</strong> Multiverso Digital
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

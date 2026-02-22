@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
-import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:video_player/video_player.dart'; // Necessário para o preview de vídeo
 import 'package:path/path.dart' as p;
-import 'package:scannutplus/core/services/universal_pdf_service.dart';
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 
 class UniversalResultView extends StatefulWidget {

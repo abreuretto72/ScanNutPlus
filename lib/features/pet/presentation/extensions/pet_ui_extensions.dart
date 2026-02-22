@@ -14,7 +14,7 @@ extension PetImageTypeExt on PetImageType {
       case PetImageType.eyes: return l10n.pet_type_eyes;
       case PetImageType.ears: return l10n.pet_module_ears;
       case PetImageType.mouth: return l10n.pet_type_mouth;
-      case PetImageType.posture: return l10n.pet_section_posture;
+      case PetImageType.posture: return l10n.pet_module_physique;
       case PetImageType.lab: return l10n.pet_type_lab; 
       case PetImageType.stool: return l10n.category_feces;
       case PetImageType.safety: return l10n.pet_type_safety;
@@ -84,7 +84,7 @@ extension CategoryStringExt on String {
     if (lower.contains('ear')) return l10n.pet_section_ears;
     if (lower.contains('nose')) return l10n.pet_section_nose;
     if (lower.contains('eye')) return l10n.pet_type_eyes;
-    if (lower.contains('body') || lower.contains('posture')) return l10n.pet_section_posture;
+    if (lower.contains('body') || lower.contains('posture')) return l10n.pet_module_physique;
     if (lower.contains('issue') || lower.contains('potential')) return l10n.pet_section_issues;
     if (lower.contains('mouth') || lower.contains('teeth')) return l10n.pet_type_mouth;
     if (lower.contains('biometric')) return l10n.pet_section_biometrics;
@@ -149,8 +149,9 @@ extension PetHistoryEntryExt on PetHistoryEntry {
 
       // 0. Priority: Check Metadata in Raw JSON (Most Reliable)
       // Log Example: [METADATA] breed_name: Cóleo (Plectranthus scutellarioides) | ...
+      // We only want the common name, so we stop capturing before the first opening parenthesis.
       if (plantName.isEmpty) {
-          final metaMatch = RegExp(r'breed_name:\s*([^|\]\n]*)', caseSensitive: false).firstMatch(rawJson);
+          final metaMatch = RegExp(r'breed_name:\s*([^\(|\]\n]+)', caseSensitive: false).firstMatch(rawJson);
           if (metaMatch != null) {
               plantName = metaMatch.group(1)?.trim() ?? '';
           }
@@ -178,7 +179,7 @@ extension PetHistoryEntryExt on PetHistoryEntry {
                                    lowerTitle.contains(l10n.tech_health);
                                    
                   if (!isGeneric && rawTitle.split(' ').length < 10) {
-                      plantName = rawTitle;
+                      plantName = rawTitle.replaceAll(RegExp(r'\s*\(.*\)'), '').trim();
                   } else {
                       // DEEP SEARCH IN CONTENT
                       // Patterns: **Name**, Nome: Name, Species: Name
@@ -193,13 +194,13 @@ extension PetHistoryEntryExt on PetHistoryEntry {
                               String candidate = match.group(1)?.trim() ?? '';
                               // Cleanup
                               if (candidate.isNotEmpty && candidate.length < 40) { // Increased length for scientific names
-                                  plantName = candidate;
+                                  plantName = candidate.replaceAll(RegExp(r'\s*\(.*\)'), '').trim();
                                   break;
                               }
                           }
                       }
                       // Ultimate Fallback if regex fails but title was generic
-                      if (plantName.isEmpty) plantName = rawTitle; 
+                      if (plantName.isEmpty) plantName = rawTitle.replaceAll(RegExp(r'\s*\(.*\)'), '').trim(); 
                   }
               }
            }
@@ -226,8 +227,8 @@ extension PetHistoryEntryExt on PetHistoryEntry {
 
       if (plantName.isEmpty) return l10n.pet_module_plant;
 
-      // Clean cleanup
-      plantName = plantName.replaceAll(RegExp(r'[*_:]'), '').trim();
+      // Clean cleanup and final strip of any lingering scientific names in parenthesis
+      plantName = plantName.replaceAll(RegExp(r'[*_:]'), '').replaceAll(RegExp(r'\s*\(.*\)'), '').trim();
 
       // Format: "Name (Toxic/Safe)"
       final status = isToxic ? l10n.pet_plant_toxic : l10n.pet_plant_safe;

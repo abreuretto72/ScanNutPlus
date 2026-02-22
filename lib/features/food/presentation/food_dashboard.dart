@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:scannutplus/core/presentation/widgets/app_scroll_view.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
+import 'package:gal/gal.dart';
+import 'package:flutter/foundation.dart'; // For kDebugMode
 
 class FoodDashboard extends StatefulWidget {
   const FoodDashboard({super.key});
@@ -23,6 +25,15 @@ class _FoodDashboardState extends State<FoodDashboard> {
   Future<void> _pickImage(ImageSource source) async {
     final XFile? pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {
+      if (source == ImageSource.camera) {
+         try {
+            await Gal.putImage(pickedFile.path);
+            if (kDebugMode) debugPrint('[GAL] Saved food photo to gallery: ${pickedFile.path}');
+         } catch (e) {
+            if (kDebugMode) debugPrint('[GAL_ERROR] Failed to save food photo to gallery: $e');
+         }
+      }
+
       setState(() {
         _image = File(pickedFile.path);
         _isAnalyzing = true;

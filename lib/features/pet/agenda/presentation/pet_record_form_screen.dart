@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart';
@@ -9,6 +8,8 @@ import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
 import 'package:uuid/uuid.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:gal/gal.dart';
+import 'package:flutter/foundation.dart'; // For kDebugMode
 
 enum PetRecordType {
   medication, // 💊 Medicação
@@ -60,7 +61,7 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
   String? _severity;
   String? _otherType;
   
-  DateTime _selectedDate = DateTime.now();
+  final DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
   File? _selectedImage;
 
@@ -378,7 +379,7 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
 
   Widget _buildDropdown({required String label, required List<String> items, required String? value, required ValueChanged<String?> onChanged}) {
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       items: items.map((e) => DropdownMenuItem(value: e, child: Text(e, style: const TextStyle(color: Colors.white)))).toList(),
       onChanged: onChanged,
       dropdownColor: AppColors.petBackgroundDark,
@@ -430,7 +431,15 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
           onPressed: () async {
             final picker = ImagePicker();
             final xFile = await picker.pickImage(source: ImageSource.camera);
-            if (xFile != null) setState(() => _selectedImage = File(xFile.path));
+            if (xFile != null) {
+              try {
+                 await Gal.putImage(xFile.path);
+                 if (kDebugMode) debugPrint('[GAL] Saved photo to gallery: ${xFile.path}');
+              } catch (e) {
+                 if (kDebugMode) debugPrint('[GAL_ERROR] Failed to save photo to gallery: $e');
+              }
+              setState(() => _selectedImage = File(xFile.path));
+            }
           },
           icon: const Icon(Icons.camera_alt),
           label: Text(l10n.action_take_photo),

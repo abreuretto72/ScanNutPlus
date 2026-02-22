@@ -406,7 +406,7 @@ class _MyPetsViewState extends State<MyPetsView> {
                   
                   // BOTÃO DE EXCLUSÃO (Preto/Vermelho)
                   IconButton(
-                    icon: const Icon(Icons.delete_outline, color: AppColors.petText), // Alert Icon Black
+                    icon: const Icon(Icons.delete_outline, color: Colors.red), // Alert Icon Red
                     tooltip: appL10n.pet_delete_title,
                     onPressed: () {
                       // Diálogo de Confirmação (Mantém estilo Dark para contraste de alerta)

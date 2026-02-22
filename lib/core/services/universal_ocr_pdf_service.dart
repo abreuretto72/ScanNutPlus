@@ -204,14 +204,11 @@ class UniversalOcrPdfService {
         tableRows.add(
           pw.TableRow(
             decoration: isHeader ? const pw.BoxDecoration(color: _colorAccent) : null,
-            children: cells.length >= 4 
-             ? [
-                _buildCell(cells[0], isHeader, fontBold, alignLeft: true),
-                _buildCell(cells[1], isHeader, fontBold),
-                _buildCell(cells[2], isHeader, fontBold),
-                _buildStatusCell(cells[3], isHeader), // Custom Status Cell
-               ]
-             : cells.map((c) => _buildCell(c, isHeader, fontBold)).toList(),
+            children: cells.map((c) {
+               // Assuming the last column might be a status column
+               bool isStatusCol = cells.indexOf(c) == cells.length - 1 && cells.length >= 2;
+               return isStatusCol ? _buildStatusCell(c, isHeader) : _buildCell(c, isHeader, fontBold, alignLeft: cells.indexOf(c) == 0);
+            }).toList(),
           )
         );
 
@@ -297,9 +294,10 @@ class UniversalOcrPdfService {
     
     // Check for Emojis/Status
     PdfColor? dotColor;
-    if (text.contains('🔴')) dotColor = PdfColors.red;
-    else if (text.contains('🟢')) dotColor = PdfColors.green;
-    else if (text.contains('🟡')) dotColor = PdfColors.amber;
+    if (text.contains('🔴') || text.contains('🟥')) {
+      dotColor = PdfColors.red;
+    } else if (text.contains('🟢') || text.contains('🟩')) dotColor = PdfColors.green;
+    else if (text.contains('🟡') || text.contains('🟨')) dotColor = PdfColors.amber;
     
     if (dotColor != null) {
        return pw.Container(

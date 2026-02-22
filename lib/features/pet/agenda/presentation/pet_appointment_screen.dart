@@ -7,12 +7,10 @@ import 'package:scannutplus/pet/agenda/pet_event.dart';
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
 import 'package:scannutplus/features/pet/agenda/logic/pet_notification_manager.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_scheduled_events_screen.dart';
-import 'package:scannutplus/features/pet/agenda/logic/pet_partner_service.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_partner_selection_screen.dart';
 import 'package:scannutplus/features/pet/agenda/data/models/partner_model.dart';
 import 'package:uuid/uuid.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'package:geolocator/geolocator.dart';
 
 class PetAppointmentScreen extends StatefulWidget {
   final String petId;
@@ -491,7 +489,7 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
 
                           // NOTIFICATION
                           _buildLabeledField(l10n.pet_notification_label, DropdownButtonFormField<String>(
-                            value: _selectedLeadTime,
+                            initialValue: _selectedLeadTime,
                             decoration: _inputDecoration(l10n.pet_notification_label, Icons.notifications),
                             dropdownColor: AppColors.petPrimary,
                             style: const TextStyle(color: Colors.black, fontSize: 16),
@@ -518,7 +516,7 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                          children: [
                             // PARTNER DROPDOWN
                             _buildLabeledField(l10n.pet_field_partner_name, DropdownButtonFormField<String>(
-                              value: _selectedPartner,
+                              initialValue: _selectedPartner,
                               isExpanded: true,
                               decoration: _inputDecoration(l10n.pet_field_partner_name, Icons.business),
                               dropdownColor: AppColors.petPrimary,

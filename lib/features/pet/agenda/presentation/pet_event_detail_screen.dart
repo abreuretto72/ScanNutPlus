@@ -13,8 +13,6 @@ import 'package:scannutplus/features/pet/presentation/widgets/pet_ai_cards_rende
 
 import 'package:just_audio/just_audio.dart';
 
-import 'package:printing/printing.dart';
-import 'package:scannutplus/core/services/universal_pdf_service.dart';
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 
 class PetEventDetailScreen extends StatelessWidget {
@@ -284,23 +282,11 @@ class PetEventDetailScreen extends StatelessWidget {
             if (event.hasAIAnalysis && (event.metrics != null && event.metrics![PetConstants.keyAiSummary] != null))
                Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1A2F2B), // Very deep green/teal
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xFF10AC84)),
-                ),
+                padding: const EdgeInsets.only(top: 8), // Minimal padding instead of full box
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     Row(
-                      children: [
-                        Icon(Icons.auto_awesome, color: Color(0xFF10AC84), size: 20),
-                        SizedBox(width: 8),
-                        Text(l10n.pet_label_ai_summary, style: const TextStyle(color: Color(0xFF10AC84), fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
+                     // Removed "Resumo IA" header and green box
                      // In a real scenario, this would check 'metrics' for the stored analysis text
                     if (event.metrics?[PetConstants.keyAiSummary] != null)
                       PetAiCardsRenderer(

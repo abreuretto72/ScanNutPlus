@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 
@@ -12,7 +10,6 @@ import 'package:scannutplus/pet/agenda/pet_event.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart'; 
 import 'package:scannutplus/features/pet/agenda/domain/pet_event_type_extension.dart';
 import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
-import 'package:scannutplus/features/pet/agenda/presentation/pet_event_type_label.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/create_pet_event_screen.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_event_detail_screen.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/widgets/pet_activity_calendar.dart'; 
@@ -38,6 +35,7 @@ class PetWalkEventsScreen extends StatefulWidget {
 class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
   final PetEventRepository _repository = PetEventRepository();
   late Future<List<PetEvent>> _futureEvents;
+  DateTime? _selectedDate;
 
   @override
   void initState() {
@@ -179,6 +177,38 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
       }
     } catch (e) {
       debugPrint("[SCAN_NUT_TRACE] [TELEMETRY_ERROR] Erro ao capturar telemetria em segundo plano: $e");
+    }
+  }
+
+  // --- FEATURE: SMART MEDICATION (DAR DOSE) ---
+  Future<void> _markMedicationAsTaken(BuildContext context, PetEvent event) async {
+    try {
+      final updatedMetrics = Map<String, dynamic>.from(event.metrics ?? {});
+      updatedMetrics['status'] = 'taken';
+
+      final updatedEvent = PetEvent(
+        id: event.id,
+        startDateTime: DateTime.now(), // Log exact moment
+        endDateTime: event.endDateTime,
+        petIds: event.petIds,
+        eventTypeIndex: event.eventTypeIndex,
+        notes: event.notes,
+        metrics: updatedMetrics,
+        mediaPaths: event.mediaPaths,
+        partnerId: event.partnerId,
+        hasAIAnalysis: event.hasAIAnalysis,
+      );
+
+      await _repository.saveEvent(updatedEvent);
+      if (mounted) {
+        setState(() {
+          _futureEvents = _loadEvents();
+        });
+        final l10n = AppLocalizations.of(context)!;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_med_taken_success), backgroundColor: Colors.green));
+      }
+    } catch (e) {
+      debugPrint("Error marking medication as taken: $e");
     }
   }
   
@@ -329,6 +359,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
       final summary = await UniversalAiService().analyzeText(
         systemPrompt: prompt,
         userPrompt: "Generate the Walk Summary now.",
+        l10n: l10n,
       );
       debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] AI Response Received");
 
@@ -462,6 +493,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                          return PetActivityCalendar(
                            events: events,
                            onDateSelected: (date) {
+                             setState(() => _selectedDate = date);
                              Navigator.pop(context); 
                            },
                          );
@@ -482,14 +514,56 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
         child: const Icon(Icons.add, color: Colors.black), // Black Icon
       ),
       
-      body: FutureBuilder<List<PetEvent>>(
-        future: _futureEvents,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+           if (_selectedDate != null)
+             Padding(
+               padding: const EdgeInsets.only(top: 16.0, bottom: 8.0, left: 16, right: 16),
+               child: Row(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                   Container(
+                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                     decoration: BoxDecoration(
+                       color: const Color(0xFFFFD1DC),
+                       borderRadius: BorderRadius.circular(20),
+                       border: Border.all(color: Colors.black, width: 2),
+                     ),
+                     child: Row(
+                       mainAxisSize: MainAxisSize.min,
+                       children: [
+                         Text(
+                           "Filtro: ${DateFormat('dd/MM/yyyy').format(_selectedDate!)}",
+                           style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 14),
+                         ),
+                         const SizedBox(width: 8),
+                         InkWell(
+                           onTap: () => setState(() => _selectedDate = null),
+                           child: const Icon(Icons.close, color: Colors.black, size: 20),
+                         ),
+                       ],
+                     ),
+                   ),
+                 ],
+               ),
+             ),
+             
+           Expanded(
+             child: FutureBuilder<List<PetEvent>>(
+               future: _futureEvents,
+               builder: (context, snapshot) {
+                 if (snapshot.connectionState == ConnectionState.waiting) {
+                   return const Center(child: CircularProgressIndicator());
+                 }
 
-          final events = snapshot.data ?? [];
+                 final allEvents = snapshot.data ?? [];
+                 final events = allEvents.where((e) {
+                    if (_selectedDate != null) {
+                       return DateUtils.isSameDay(e.startDateTime, _selectedDate!);
+                    }
+                    return true;
+                 }).toList();
 
           if (events.isEmpty) {
             return Center(
@@ -588,7 +662,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                                   child: isSummary 
                                       ? Icon(Icons.auto_awesome_rounded, size: 28, color: Colors.amber[800]) // Summary Icon
                                       : isGoogleEvent
-                                          ? const Icon(Icons.map_rounded, size: 28, color: const Color(0xFF4285F4)) // Google Maps Icon (Blue)
+                                          ? const Icon(Icons.map_rounded, size: 28, color: Color(0xFF4285F4)) // Google Maps Icon (Blue)
                                           : isFriendEvent
                                               ? const Icon(Icons.pets, size: 28, color: Colors.black) // Friend Walk Icon
                                               : const Icon(Icons.directions_walk_rounded, size: 28, color: Colors.black), // Walk Icon
@@ -602,7 +676,9 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                                     children: [
                                       // Title
                                       Text(
-                                         (event.metrics != null && event.metrics!.containsKey('custom_title'))
+                                         (event.metrics != null && event.metrics!['is_metric_record'] == true) 
+                                            ? "Métricas Clínicas: ${event.metrics!['custom_title'] ?? l10n.pet_event_walk}"
+                                         : (event.metrics != null && event.metrics!.containsKey('custom_title'))
                                             ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
                                             : l10n.pet_event_walk, 
                                          style: const TextStyle(fontWeight: FontWeight.w900, color: Colors.black, fontSize: 18, letterSpacing: -0.3),
@@ -655,6 +731,22 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                                   ),
                                 ),
                                 
+                                 if (event.metrics != null && event.metrics!['is_medication'] == true && event.metrics!['status'] == 'pending')
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 8),
+                                      width: double.infinity,
+                                      child: ElevatedButton.icon(
+                                        onPressed: () => _markMedicationAsTaken(context, event),
+                                        icon: const Icon(Icons.check, color: Colors.white, size: 18),
+                                        label: Text(l10n.pet_med_take_dose, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color(0xFF10AC84), // Plant Green
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Colors.black, width: 2)),
+                                          elevation: 0,
+                                        ),
+                                      ),
+                                    ),
+                                 
                                 // Delete Action
                                 Container(
                                   margin: const EdgeInsets.only(left: 8),
@@ -683,6 +775,9 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
           );
         },
       ),
-    );
-  }
-}
+              ),
+            ],
+          ),
+        );
+      }
+    }

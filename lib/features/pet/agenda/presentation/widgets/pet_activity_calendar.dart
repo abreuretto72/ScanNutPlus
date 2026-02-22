@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart'; // Legacy Model used in UI
 import 'package:intl/intl.dart';
 

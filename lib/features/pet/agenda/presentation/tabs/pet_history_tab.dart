@@ -14,6 +14,7 @@ import 'package:scannutplus/features/pet/agenda/presentation/pet_event_type_labe
 class PetHistoryTab extends StatefulWidget {
   final String petId;
   final String petName;
+  final DateTime? filterDate;
   final Future<void> Function(BuildContext, PetEvent) onDelete;
 
   const PetHistoryTab({
@@ -21,6 +22,7 @@ class PetHistoryTab extends StatefulWidget {
     required this.petId,
     required this.petName,
     required this.onDelete,
+    this.filterDate,
   });
 
   @override
@@ -53,6 +55,36 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
       return result.data!;
     }
     return [];
+  }
+
+  // --- FEATURE: SMART MEDICATION (DAR DOSE) ---
+  Future<void> _markMedicationAsTaken(BuildContext context, PetEvent event) async {
+    try {
+      final updatedMetrics = Map<String, dynamic>.from(event.metrics ?? {});
+      updatedMetrics['status'] = 'taken';
+
+      final updatedEvent = PetEvent(
+        id: event.id,
+        startDateTime: DateTime.now(), // Log exact moment
+        endDateTime: event.endDateTime,
+        petIds: event.petIds,
+        eventTypeIndex: event.eventTypeIndex,
+        notes: event.notes,
+        metrics: updatedMetrics,
+        mediaPaths: event.mediaPaths,
+        partnerId: event.partnerId,
+        hasAIAnalysis: event.hasAIAnalysis,
+      );
+
+      await _repository.saveEvent(updatedEvent);
+      refresh();
+      if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_med_taken_success), backgroundColor: Colors.green));
+      }
+    } catch (e) {
+      debugPrint("Error marking medication as taken: $e");
+    }
   }
 
   /// Normaliza data (yyyy-mm-dd)
@@ -147,6 +179,11 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
            final isAppointment = e.metrics?['is_appointment'] == true;
            final isFuture = e.startDateTime.isAfter(DateTime.now());
            if (isAppointment && isFuture) return false;
+
+           // Selected Date Filter
+           if (widget.filterDate != null) {
+             if (!DateUtils.isSameDay(e.startDateTime, widget.filterDate)) return false;
+           }
 
            return true; 
         }).toList();
@@ -260,6 +297,8 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                            Expanded(
                                              child: Text(
                                                isFriend ? (event.metrics?['guest_pet_name'] ?? l10n.history_guest) 
+                                               : (event.metrics != null && event.metrics!['is_metric_record'] == true)
+                                                  ? "Métricas Clínicas: ${event.metrics!['custom_title'] ?? type.label(l10n)}"
                                                : (event.metrics != null && event.metrics!.containsKey('custom_title'))
                                                   ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
                                                   : type.label(l10n), 
@@ -277,9 +316,14 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                               )
                                         ],
                                       ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        DateFormat("dd/MM/yyyy • HH:mm").format(event.startDateTime),
+                                        style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 13),
+                                      ),
                                       const SizedBox(height: 6),
                                       
-                                      // Source Badge & Date
+                                      // Source Badge
                                       Row(
                                         children: [
                                           Expanded(
@@ -311,11 +355,6 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(width: 4),
-                                          Text(
-                                            DateFormat("dd/MM/yyyy").format(event.startDateTime),
-                                            style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 12),
-                                          ),
                                         ],
                                       ),
                                       
@@ -343,9 +382,26 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                            ],
                                          ),
                                       ],
-                                    ],
-                                  ),
-                                ),
+                                        
+                                        if (event.metrics != null && event.metrics!['is_medication'] == true && event.metrics!['status'] == 'pending')
+                                            Container(
+                                              margin: const EdgeInsets.only(top: 8),
+                                              width: double.infinity,
+                                              child: ElevatedButton.icon(
+                                                onPressed: () => _markMedicationAsTaken(context, event),
+                                                icon: const Icon(Icons.check, color: Colors.white, size: 18),
+                                                label: Text(l10n.pet_med_take_dose, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: const Color(0xFF10AC84), // Plant Green
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Colors.black, width: 2)),
+                                                  elevation: 0,
+                                                ),
+                                              ),
+                                            ),
+
+                                     ],
+                                   ),
+                                 ),
                                 
                                 // Delete Action
                                 Container(

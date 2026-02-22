@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:scannutplus/features/pet/data/pet_constants.dart';
 
 class PetWeatherService {
   final String _apiKey = "YOUR_OPENWEATHER_API_KEY"; // TODO: Move to .env or Remote Config

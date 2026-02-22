@@ -4,19 +4,22 @@ import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart';
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
-import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
-import 'package:scannutplus/features/pet/agenda/logic/pet_notification_manager.dart';
+import 'package:scannutplus/features/pet/agenda/presentation/pet_appointment_screen.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:scannutplus/features/pet/agenda/logic/pet_notification_manager.dart';
 
 class PetScheduledEventsScreen extends StatefulWidget {
   final String petId;
-
   final bool showAppBar;
+  final DateTime? filterDate;
 
   const PetScheduledEventsScreen({
     super.key,
     required this.petId,
     this.showAppBar = true,
+    this.filterDate,
   });
 
   @override
@@ -27,12 +30,25 @@ class PetScheduledEventsScreen extends StatefulWidget {
 class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
   final PetEventRepository _repository = PetEventRepository();
   List<PetEvent> _appointments = [];
+  final bool _isPlanCopied = false;
+
+  final stt.SpeechToText _speech = stt.SpeechToText();
+  bool _isListening = false;
+  String _previousText = '';
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _loadAppointments();
+  }
+
+  @override
+  void didUpdateWidget(PetScheduledEventsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.filterDate != oldWidget.filterDate) {
+      _loadAppointments();
+    }
   }
 
   Future<void> _loadAppointments() async {
@@ -47,7 +63,13 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
 
       final filtered = allEvents.where((e) {
         final isAppt = e.metrics?['is_appointment'] == true;
-        return isAppt;
+        
+        bool dateMatches = true;
+        if (widget.filterDate != null) {
+          dateMatches = DateUtils.isSameDay(e.startDateTime, widget.filterDate);
+        }
+        
+        return isAppt && dateMatches;
       }).toList();
 
       // Sort ascending (nearest first)
@@ -112,7 +134,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
             final event = _appointments[index];
             final rawTitle = event.metrics?['custom_title']?.toString();
             final title =
-                rawTitle != null ? rawTitle : l10n.pet_appointment_tab_data;
+                rawTitle ?? l10n.pet_appointment_tab_data;
             final professional =
                 event.metrics?['professional']?.toString() ?? '';
             final leadTime =
@@ -121,7 +143,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
             final appointmentType =
                 event.metrics?['appointment_type']?.toString();
             final typeDisplay =
-                appointmentType != null ? appointmentType : null;
+                appointmentType;
 
             final whatToDo = event.notes ?? '';
 
@@ -192,7 +214,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                               ),
                               IconButton(
                                 icon: const Icon(Icons.delete_outline_rounded,
-                                    color: Colors.black54),
+                                    color: Colors.redAccent),
                                 onPressed: () =>
                                     _confirmDelete(context, event.id),
                               ),
@@ -384,7 +406,18 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                   child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
-                      // TODO: Navigate to Edit
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PetAppointmentScreen(
+                            petId: widget.petId,
+                            petName: '',
+                            existingEvent: event,
+                          ),
+                        ),
+                      ).then((_) {
+                        _loadAppointments(); // Refresh list on return
+                      });
                     },
                     child: Container(
                       width: double.infinity,
@@ -456,6 +489,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
   void _showOutcomeDialog(BuildContext context, PetEvent event) {
     final controller = TextEditingController();
     final l10n = AppLocalizations.of(context)!;
+    List<String> selectedMedia = [];
 
     showModalBottomSheet(
       context: context,
@@ -476,9 +510,11 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
               ),
             ),
             child: SafeArea(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
+              child: StatefulBuilder(
+                builder: (BuildContext dlgCtx, StateSetter setModalState) {
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -523,71 +559,174 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                             borderSide:
                                 const BorderSide(color: Colors.black, width: 3),
                           ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isListening ? Icons.mic : Icons.mic_none,
+                              color: _isListening ? Colors.redAccent : Colors.grey,
+                            ),
+                            onPressed: () => _toggleVoiceInput(controller, setModalState, l10n),
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(ctx),
-                            child: Text(
-                              l10n.common_cancel,
-                              style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                            ),
+                      const SizedBox(height: 16),
+                      // EXIBIR ARQUIVOS SELECIONADOS
+                      if (selectedMedia.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: selectedMedia.map((path) {
+                              final fileName = path.split('/').last;
+                              return Chip(
+                                backgroundColor: AppColors.petPrimary.withValues(alpha: 0.5),
+                                label: Text(
+                                  fileName,
+                                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                deleteIcon: const Icon(Icons.close, size: 16, color: Colors.black),
+                                onDeleted: () {
+                                  setModalState(() {
+                                    selectedMedia.remove(path);
+                                  });
+                                },
+                              );
+                            }).toList(),
                           ),
-                          const SizedBox(width: 16),
-                          ElevatedButton(
+                        ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.attach_file, color: Colors.white, size: 28),
                             onPressed: () async {
-                              final outcome = controller.text.trim();
-                              if (outcome.isNotEmpty) {
-                                Navigator.pop(ctx);
+                              FilePickerResult? result = await FilePicker.platform.pickFiles(
+                                allowMultiple: true,
+                                type: FileType.custom,
+                                allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
+                              );
 
-                                final prefix = l10n.pet_agenda_outcome_prefix;
-                                final updatedNotes = event.notes != null &&
-                                        event.notes!.isNotEmpty
-                                    ? "${event.notes}\n\n[$prefix]: $outcome"
-                                    : "[$prefix]: $outcome";
-
-                                final updatedEvent =
-                                    event.copyWith(notes: updatedNotes);
-
-                                await _repository.update(updatedEvent);
-                                _loadAppointments();
+                              if (result != null) {
+                                final paths = result.paths.where((p) => p != null).cast<String>().toList();
+                                setModalState(() {
+                                  selectedMedia.addAll(paths);
+                                });
                               }
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.petPrimary,
-                              foregroundColor: Colors.black,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 24, vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                side: const BorderSide(
-                                    color: Colors.black, width: 2),
+                          ),
+                          Row(
+                            children: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(ctx),
+                                child: Text(
+                                  l10n.common_cancel,
+                                  style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
                               ),
-                              elevation: 0,
-                            ),
-                            child: Text(
-                              l10n.common_save,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w900, fontSize: 16),
-                            ),
+                              const SizedBox(width: 8),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  final outcome = controller.text.trim();
+                                  if (outcome.isNotEmpty || selectedMedia.isNotEmpty) {
+                                    Navigator.pop(ctx);
+
+                                    final prefix = l10n.pet_agenda_outcome_prefix;
+                                    String updatedNotes = event.notes ?? "";
+                                    
+                                    if (outcome.isNotEmpty) {
+                                        updatedNotes = updatedNotes.isNotEmpty 
+                                          ? "$updatedNotes\n\n[$prefix]: $outcome"
+                                          : "[$prefix]: $outcome";
+                                    }
+
+                                    // Combina medias antigas com novas
+                                    final currentMedia = event.mediaPaths ?? [];
+                                    final newMedia = <String>{...currentMedia, ...selectedMedia}.toList(); // Ensure unique Strings
+
+                                    final updatedEvent = event.copyWith(
+                                        notes: updatedNotes.isNotEmpty ? updatedNotes : null,
+                                        mediaPaths: newMedia.isNotEmpty ? newMedia : null
+                                    );
+
+                                    await _repository.update(updatedEvent);
+                                    _loadAppointments();
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.petPrimary,
+                                  foregroundColor: Colors.black,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    side: const BorderSide(
+                                        color: Colors.black, width: 2),
+                                  ),
+                                  elevation: 0,
+                                ),
+                                child: Text(
+                                  l10n.common_save,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w900, fontSize: 16),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                       const SizedBox(height: 8),
                     ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+                  ), // Column
+                ), // Padding inner
+              ); // return SingleChildScrollView
+            },
+          ), // StatefulBuilder
+        ), // SafeArea
+      ), // Container
+    ); // return Padding
+  },
+); // showModalBottomSheet
+  }
+
+  void _toggleVoiceInput(TextEditingController controller, StateSetter setModalState, AppLocalizations l10n) async {
+    if (_isListening) {
+      setModalState(() => _isListening = false);
+      _speech.stop();
+    } else {
+      bool available = await _speech.initialize();
+      if (available) {
+        _previousText = controller.text;
+        setModalState(() => _isListening = true);
+        
+        _speech.listen(
+          onResult: (val) {
+            setModalState(() {
+              final newText = val.recognizedWords;
+              if (_previousText.isEmpty) {
+                 controller.text = newText;
+              } else {
+                 controller.text = "$_previousText $newText";
+              }
+            });
+          },
+          listenFor: const Duration(seconds: 30),
+          pauseFor: const Duration(seconds: 5),
+          partialResults: true,
+          cancelOnError: true,
+          listenMode: stt.ListenMode.dictation,
         );
-      },
-    );
+      } else {
+         if (mounted) {
+           ScaffoldMessenger.of(context).showSnackBar(
+             SnackBar(content: Text(l10n.pet_journal_mic_permission_denied)),
+           );
+         }
+      }
+    }
   }
 }

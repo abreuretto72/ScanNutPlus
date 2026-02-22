@@ -1,5 +1,4 @@
 
-import 'package:objectbox/objectbox.dart';
 import 'package:scannutplus/core/data/objectbox_manager.dart';
 import 'package:scannutplus/features/pet/data/models/pet_entity.dart';
 import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
@@ -9,7 +8,7 @@ import 'package:intl/intl.dart';
 
 import 'package:scannutplus/features/pet/data/models/health_plan_entity.dart';
 import 'package:scannutplus/features/pet/data/repositories/pet_event_repository.dart'; // Added
-import 'package:scannutplus/features/pet/data/models/pet_event_model.dart'; // Added
+// Added
 
 class PetAiRepository {
   late Box<PetEntity> _petBox;
@@ -134,6 +133,6 @@ class PetAiRepository {
   String _truncate(String? text, int length) {
     if (text == null) return '';
     if (text.length <= length) return text;
-    return text.substring(0, length) + '...';
+    return '${text.substring(0, length)}...';
   }
 }

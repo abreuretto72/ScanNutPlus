@@ -5,8 +5,8 @@ import 'package:scannutplus/features/pet/data/pet_health_service.dart';
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_agenda_screen.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
-import 'package:scannutplus/features/pet/data/repositories/pet_event_repository.dart';
-import 'package:scannutplus/features/pet/data/models/pet_event_model.dart' as model;
+import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
+import 'package:scannutplus/pet/agenda/pet_event.dart' as model;
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart' as enums;
 import 'package:uuid/uuid.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
@@ -30,8 +30,29 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
   final PetHealthService _healthService = PetHealthService();
   String? _nutritionPlan;
   bool _isLoadingNutrition = false;
+  bool _isPlanCopied = false;
   
+  @override
+  void initState() {
+    super.initState();
+    _loadInitialNutritionPlan();
+  }
 
+  Future<void> _loadInitialNutritionPlan() async {
+    if (mounted) {
+      setState(() => _isLoadingNutrition = true);
+    }
+    final latestPlan = await _healthService.getLatestNutritionPlan(widget.petUuid);
+    if (mounted) {
+      setState(() {
+        if (latestPlan != null) {
+          _nutritionPlan = latestPlan;
+        }
+        _isLoadingNutrition = false;
+        _isPlanCopied = false;
+      });
+    }
+  }
 
   Future<void> _showGoalSelectionDialog() async {
     final Map<String, IconData> goals = {
@@ -178,12 +199,19 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
   }) async {
     debugPrint('[PetHealthScreen] Requesting Nutrition Plan (Type: $dietType, Goal: $goal)...');
     setState(() => _isLoadingNutrition = true);
-    final result = await _healthService.generateNutritionPlan(widget.petUuid, dietType: dietType, goal: goal);
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) {
+      debugPrint('[PetHealthScreen] Error: AppLocalizations not found.');
+      setState(() => _isLoadingNutrition = false);
+      return;
+    }
+    final result = await _healthService.generateNutritionPlan(widget.petUuid, dietType: dietType, goal: goal, l10n: l10n);
     debugPrint('[PetHealthScreen] Nutrition Plan received. Length: ${result.length}');
     if (mounted) {
       setState(() {
         _nutritionPlan = result;
         _isLoadingNutrition = false;
+        _isPlanCopied = false;
       });
     }
   }
@@ -273,14 +301,16 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
             _buildReportContent(_nutritionPlan!),
             const SizedBox(height: 24),
             ElevatedButton.icon(
-              onPressed: _copyMealsToAgenda,
-              icon: const Icon(Icons.calendar_today, color: Colors.black),
+              onPressed: _isPlanCopied ? null : _copyMealsToAgenda,
+              icon: Icon(Icons.calendar_today, color: _isPlanCopied ? Colors.grey : Colors.black),
               label: Text(
-                AppLocalizations.of(context)?.pet_nutrition_copy_action ?? "Copiar refeições para agenda",
-                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                _isPlanCopied 
+                  ? "Refeições já copiadas" 
+                  : (AppLocalizations.of(context)?.pet_nutrition_copy_action ?? "Copiar refeições para agenda"),
+                style: TextStyle(color: _isPlanCopied ? Colors.grey : Colors.black, fontWeight: FontWeight.bold),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.petPrimary,
+                backgroundColor: _isPlanCopied ? Colors.white12 : AppColors.petPrimary,
                 padding: const EdgeInsets.symmetric(vertical: 12),
               ),
             ),
@@ -303,7 +333,20 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 30)),
-      helpText: AppLocalizations.of(context)?.pet_nutrition_select_start_date ?? "Selecione a Segunda-feira de início",
+      helpText: AppLocalizations.of(context)?.pet_nutrition_select_start_date ?? "Selecione a data de início",
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: Colors.orange, // Cor laranja para destaque (AppColors.petFood)
+              onPrimary: Colors.white, // Texto no destaque
+              surface: const Color(0xFF1C1C1E), // Fundo principal
+              onSurface: Colors.white, // Texto no calendário
+            ), dialogTheme: DialogThemeData(backgroundColor: const Color(0xFF1C1C1E)),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (pickedDate == null) {
@@ -333,20 +376,28 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
     final repo = PetEventRepository();
     int createdCount = 0;
     
+    debugPrint("[SCAN_NUT_TRACE] [NUTRITION_AGENDA] Attempting to copy meals. Picked Start Date: $pickedDate");
+    
     try {
-      // Iterate 7 days from start date
+      // Loop exactly 7 days from the selected start date
       for (int i = 0; i < 7; i++) {
-        final date = pickedDate.add(Duration(days: i));
-        final dayIndex = i + 1; // 1 to 7
-
-        // Get meals for this specific day OR generic "TODOS"
-        List<_MealItem> dayMeals = weeklyMeals[dayIndex] ?? [];
+        final currentDate = pickedDate.add(Duration(days: i));
+        final currentWeekday = currentDate.weekday; // 1 = Monday, 7 = Sunday
+        
+        // Find which day of the plan maps to this calendar weekday
+        List<_MealItem> dayMeals = weeklyMeals[currentWeekday] ?? [];
+        
+        // Fallback Strategies
         if (dayMeals.isEmpty) {
-            debugPrint("[NUTRITION_DEBUG] Day $dayIndex empty. Trying fallback to Day 0 (All Days).");
-            dayMeals = weeklyMeals[0] ?? []; // 0 = "TODOS OS DIAS" fallback
-        } else {
-            debugPrint("[NUTRITION_DEBUG] Day $dayIndex found specific meals.");
+            if (weeklyMeals.containsKey(0)) {
+               dayMeals = weeklyMeals[0]!; // Global generic 'TODOS OS DIAS'
+            } else if (weeklyMeals.isNotEmpty) {
+               // If it generated days but skipped one, just pick the first available to not leave the calendar empty
+               dayMeals = weeklyMeals.values.first; 
+            }
         }
+        
+        debugPrint("[NUTRITION_DEBUG] Assigning Plan for Calendar Weekday $currentWeekday to Date $currentDate");
 
         for (var meal in dayMeals) {
            try {
@@ -355,23 +406,25 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
              final hour = int.parse(parts[0]);
              final minute = int.parse(parts[1]);
              
-             final eventTime = DateTime(date.year, date.month, date.day, hour, minute);
+             final eventTime = DateTime(currentDate.year, currentDate.month, currentDate.day, hour, minute);
              debugPrint("[NUTRITION_DEBUG] Creating Event: ${meal.description} at $eventTime");
              
-             final event = model.PetEvent(
-               id: const Uuid().v4(),
-               startDateTime: eventTime,
-               petIds: [widget.petUuid],
-                eventType: enums.PetEventType.food,
-               hasAIAnalysis: true, 
-               notes: meal.description,
-               metrics: {
-                 'source': 'nutrition_plan',
-                 'custom_title': 'pet_title_planned_meal'
-               }
-             );
-             
-             await repo.saveEvent(event);
+              final event = model.PetEvent(
+                id: const Uuid().v4(),
+                startDateTime: eventTime,
+                endDateTime: eventTime,
+                petIds: [widget.petUuid],
+                eventTypeIndex: enums.PetEventType.food.index,
+                hasAIAnalysis: false, // Refeições não são "Análises de IA" cruas
+                notes: meal.description,
+                metrics: {
+                  'source': 'nutrition_plan',
+                  'custom_title': 'Refeição',
+                }
+              );
+              
+              debugPrint("[SCAN_NUT_TRACE] [NUTRITION_AGENDA] Saving Event ID: ${event.id} | Date: $eventTime | Title: 'Refeição' | Notes: '${meal.description}'");
+              await repo.saveEvent(event);
              createdCount++;
            } catch (e) {
              debugPrint("[NUTRITION_DEBUG] Error parsing/saving meal: ${meal.time} - $e");
@@ -379,12 +432,16 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
         }
       }
       
-      debugPrint("[NUTRITION_DEBUG] Finished. Created $createdCount events.");
+      debugPrint("[SCAN_NUT_TRACE] [NUTRITION_AGENDA] Finished. Created $createdCount events total.");
       if (mounted) {
+         setState(() {
+           _isPlanCopied = true;
+         });
          ScaffoldMessenger.of(context).showSnackBar(
            SnackBar(
-             content: Text(AppLocalizations.of(context)?.pet_nutrition_copy_success ?? "Agenda atualizada! ($createdCount eventos)"), 
-             backgroundColor: Colors.green
+             content: Text(AppLocalizations.of(context)?.pet_nutrition_copy_success ?? "Agenda atualizada! ($createdCount eventos criados com sucesso nas próximas datas)"), 
+             backgroundColor: Colors.green,
+             duration: const Duration(seconds: 4),
            )
          );
       }
@@ -398,29 +455,24 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
     }
   }
 
-  // Returns Map<DayIndex, List<Meals>>. Index 0 = "All Days/Generic".
+  // Returns Map<WeekdayIndex, List<Meals>>. Index 0 = "All Days/Generic". 1 = Monday, 7 = Sunday.
   Map<int, List<_MealItem>> _parseWeeklyMeals(String plan) {
     Map<int, List<_MealItem>> weeklyMap = {};
     
-    // 1. Extract Cardápio Block
-    debugPrint("[NUTRITION_DEBUG] Extracting Card Block...");
-    final cardMatch = RegExp(r'TITLE:\s*Cardápio.*?CONTENT:(.*?)\[CARD_END\]', dotAll: true).firstMatch(plan);
-    String menuContent = cardMatch?.group(1) ?? plan; 
-    debugPrint("[NUTRITION_DEBUG] Menu Content Extracted (${menuContent.length} chars).");
+    // 1. Extract Content Map
+    debugPrint("[NUTRITION_DEBUG] Parsing Plan for Weekdays...");
     
     // Normalize content
-    menuContent = menuContent.replaceAll('**', ''); // Remove bold
-
-    // 2. Strategy: Split by "DIA X" or known headers
-    // Regex to find "DIA 1:" or "SEGUNDA:" block starts
-    final headerRegex = RegExp(r'(?:DIA\s*(\d+)|SEGUNDA|TERÇA|QUARTA|QUINTA|SEXTA|SÁBADO|DOMINGO|TODOS OS DIAS)[:\s-]', caseSensitive: false);
+    String menuContent = plan.replaceAll('**', ''); // Remove bold
+    
+    // Look for explicit day headers in the content (AI usually outputs SEGUNDA-FEIRA etc in uppercase or title case)
+    final headerRegex = RegExp(r'(?:DIA\s*(\d+)|SEGUNDA|TERÇA|QUARTA|QUINTA|SEXTA|SÁBADO|DOMINGO|TODOS OS DIAS|REFEIÇÃO ÚNICA)[:\s-]', caseSensitive: false);
     
     final matches = headerRegex.allMatches(menuContent).toList();
     debugPrint("[NUTRITION_DEBUG] Headers found: ${matches.length}");
     
     if (matches.isEmpty) {
-        debugPrint("[NUTRITION_DEBUG] No headers found. Using strict regex on entire content.");
-        // No headers found? Treat strict regex on whole content as "Every Day" (Index 0)
+        debugPrint("[NUTRITION_DEBUG] No headers found. Using strict regex on entire content as Generic (0).");
         weeklyMap[0] = _extractMealsFromText(menuContent);
         return weeklyMap;
     }
@@ -434,28 +486,36 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
         final headerText = menuContent.substring(matches[i].start, matches[i].end).toUpperCase();
         debugPrint("[NUTRITION_DEBUG] Processing Header: $headerText");
         
-        int dayIndex = 0; // Default 0
+        int dayIndex = 0; // Default 0 (Generic)
         
-        if (headerText.contains("DIA")) {
-            final dayDigit = RegExp(r'\d+').firstMatch(headerText)?.group(0);
-            if (dayDigit != null) dayIndex = int.tryParse(dayDigit) ?? 0;
-        } else if (headerText.contains("SEGUNDA")) dayIndex = 1;
-        else if (headerText.contains("TERÇA")) dayIndex = 2;
-        else if (headerText.contains("QUARTA")) dayIndex = 3;
-        else if (headerText.contains("QUINTA")) dayIndex = 4;
-        else if (headerText.contains("SEXTA")) dayIndex = 5;
-        else if (headerText.contains("SÁBADO")) dayIndex = 6;
-        else if (headerText.contains("DOMINGO")) dayIndex = 7;
+        if (headerText.contains("SEGUNDA")) { dayIndex = DateTime.monday; }
+        else if (headerText.contains("TERÇA")) { dayIndex = DateTime.tuesday; }
+        else if (headerText.contains("QUARTA")) { dayIndex = DateTime.wednesday; }
+        else if (headerText.contains("QUINTA")) { dayIndex = DateTime.thursday; }
+        else if (headerText.contains("SEXTA")) { dayIndex = DateTime.friday; }
+        else if (headerText.contains("SÁBADO") || headerText.contains("SABADO")) { dayIndex = DateTime.saturday; }
+        else if (headerText.contains("DOMINGO")) { dayIndex = DateTime.sunday; }
+        else if (headerText.contains("DIA")) {
+             // If the AI answers with "DIA 1" we fall back to generic mapping relative to Monday
+             final dayDigit = RegExp(r'\d+').firstMatch(headerText)?.group(0);
+             if (dayDigit != null) {
+                 int digit = int.tryParse(dayDigit) ?? 0;
+                 // map 1->Monday(1), 7->Sunday(7). If it goes beyond 7, loop it.
+                 if (digit > 0) {
+                     dayIndex = digit % 7; 
+                     if (dayIndex == 0) dayIndex = 7;
+                 }
+             }
+        }
         
         // Extract meals for this section
         final meals = _extractMealsFromText(sectionContent);
-        debugPrint("[NUTRITION_DEBUG] Found ${meals.length} meals for Day Index $dayIndex");
+        debugPrint("[NUTRITION_DEBUG] Found ${meals.length} meals for Weekday Index $dayIndex");
         if (meals.isNotEmpty) {
            weeklyMap[dayIndex] = meals;
         }
     }
     
-    // If we only found index 0 (TODOS) or nothing for specific days, ensure we have something
     if (weeklyMap.isEmpty) {
          debugPrint("[NUTRITION_DEBUG] Map empty after header parsing. Fallback to extracting all.");
          weeklyMap[0] = _extractMealsFromText(menuContent);

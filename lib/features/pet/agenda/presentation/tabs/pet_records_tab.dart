@@ -3,6 +3,7 @@ import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_record_form_screen.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_metrics_screen.dart';
+import 'package:scannutplus/features/pet/agenda/presentation/pet_medication_screen.dart';
 
 class PetRecordsTab extends StatelessWidget {
   final String petId;
@@ -85,7 +86,19 @@ class PetRecordsTab extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(24),
           onTap: () {
-            if (item.type == PetRecordType.weight) {
+            if (item.type == PetRecordType.medication) {
+               Navigator.push(
+                 context,
+                 MaterialPageRoute(
+                   builder: (_) => PetMedicationScreen(
+                     petId: petId,
+                     petName: petName,
+                   ),
+                 ),
+               ).then((saved) {
+                  if (saved == true) onRecordSaved();
+               });
+            } else if (item.type == PetRecordType.weight) {
                Navigator.push(
                  context,
                  MaterialPageRoute(

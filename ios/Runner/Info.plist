@@ -51,5 +51,11 @@
 	<string>O ScanNutPlus precisa da sua localização para mapear eventos do seu pet.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>O ScanNutPlus precisa da sua localização para mapear eventos do seu pet.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>O ScanNutPlus precisa da sua câmera para registrar a imagem e análise do pet.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>O ScanNutPlus precisa acessar sua galeria para anexar imagens.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>O ScanNutPlus precisa do acesso para salvar a foto ou vídeo na sua galeria.</string>
 </dict>
 </plist>

@@ -2,9 +2,7 @@ import 'package:scannutplus/core/theme/app_colors.dart'; // AppColors
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
-import 'package:flutter/foundation.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
-import 'package:scannutplus/features/pet/presentation/history/pet_history_screen.dart';
 import 'package:scannutplus/features/pet/data/pet_repository.dart';
 import 'package:scannutplus/features/pet/data/models/pet_entity.dart';
 
@@ -108,7 +106,7 @@ class _PetDashboardViewState extends State<PetDashboardView> {
                  ),
                  secondary: Icon(_isFriendMode ? Icons.group : Icons.pets, color: AppColors.petPrimary),
                  value: _isFriendMode,
-                 activeColor: AppColors.petPrimary,
+                 activeThumbColor: AppColors.petPrimary,
                  onChanged: (val) {
                    setState(() {
                      _isFriendMode = val;

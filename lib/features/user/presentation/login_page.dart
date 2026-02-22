@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/core/presentation/widgets/app_scroll_view.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
-import 'package:scannutplus/features/home/presentation/home_view.dart';
 import 'package:scannutplus/features/pet/presentation/my_pets_view.dart'; // Manual Login Target
 import 'package:scannutplus/core/services/simple_auth_service.dart';
 import 'package:scannutplus/features/user/presentation/sign_up_page.dart';

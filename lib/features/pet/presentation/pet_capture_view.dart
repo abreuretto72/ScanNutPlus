@@ -24,6 +24,7 @@ import 'package:scannutplus/core/services/universal_ai_service.dart'; // New Eng
 import 'package:scannutplus/core/services/universal_result_view.dart'; // New View
 import 'package:scannutplus/core/services/universal_ocr_service.dart'; // New OCR Engine
 import 'package:scannutplus/core/services/universal_ocr_result_view.dart'; // New OCR View
+import 'package:gal/gal.dart'; // Added for saving camera captures to gallery
 
 class PetCaptureView extends StatefulWidget {
   const PetCaptureView({super.key});
@@ -114,7 +115,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
     try {
       final String? thumbPath = await VideoThumbnail.thumbnailFile(
         video: videoPath,
-        thumbnailPath: videoPath + '.thumb.jpg',
+        thumbnailPath: '$videoPath.thumb.jpg',
         imageFormat: ImageFormat.JPEG,
         maxHeight: 256, // Smaller for list view
         quality: 75,
@@ -187,6 +188,20 @@ class _PetCaptureViewState extends State<PetCaptureView> {
         final ext = path.split('.').last.toLowerCase();
         final isVideoFile = isVideo || PetConstants.videoExtensions.contains(ext);
 
+        // Save to gallery if taken with camera
+        if (source == ImageSource.camera) {
+           try {
+              if (isVideoFile) {
+                 await Gal.putVideo(path);
+              } else {
+                 await Gal.putImage(path);
+              }
+              if (kDebugMode) debugPrint('[GAL] Saved media to gallery: $path');
+           } catch (e) {
+              if (kDebugMode) debugPrint('[GAL_ERROR] Failed to save media to gallery: $e');
+           }
+        }
+
         if (isVideoFile) {
            // Generate Thumbnail in Background
            _generateThumbnail(path);
@@ -243,6 +258,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
          debugPrint('[SCAN_NUT_LOG] Imagem carregada: $_imagePath');
          print('[PET_STEP_1]: Analyze button pressed. Starting flow.');
       }
+      debugPrint('[VOCAL_TRACE] State set to _isAnalyzing = true. UI should show Loading indicator.');
 
       try {
         String result = '';
@@ -259,16 +275,17 @@ class _PetCaptureViewState extends State<PetCaptureView> {
              final ocrService = UniversalOcrService();
              String expertise = '';
              
-             if (type == PetImageType.label) expertise = 'Veterinary Nutritionist';
-             else if (type == PetImageType.lab) expertise = 'Veterinary Clinical Pathologist';
+             if (type == PetImageType.label) {
+               expertise = 'Veterinary Nutritionist';
+             } else if (type == PetImageType.lab) expertise = 'Veterinary Clinical Pathologist';
 
              debugPrint('[UNIVERSAL_OCR_TRACE] Step 2: Calling UniversalOcrService with expertise: $expertise');
              
-             // Process OCR
              result = await ocrService.processOcr(
                documentImage: File(_imagePath!), 
                expertise: expertise, 
-               languageCode: lang
+               languageCode: lang,
+               l10n: AppLocalizations.of(context)!,
              );
              
              debugPrint('[UNIVERSAL_OCR_TRACE] Step 3: OCR Analysis Complete. Length: ${result.length}');
@@ -419,14 +436,17 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
             }
             
             debugPrint('[UNIVERSAL_FLOW_TRACE] Step 3: Calling UniversalAiService...');
+            debugPrint('[VOCAL_TRACE] Sending payload to UniversalAiService.analyze(...)');
             final universalService = UniversalAiService();
             result = await universalService.analyze(
               file: File(_imagePath!), 
               expertise: expertise, 
               context: aiContext, 
               languageCode: lang,
-              petName: nameToUse
+              petName: nameToUse,
+              l10n: AppLocalizations.of(context)!,
             );
+            debugPrint('[VOCAL_TRACE] Successfully received result from UniversalAiService. Length: ${result.length}');
             debugPrint('[UNIVERSAL_FLOW_TRACE] Step 4: Analysis returned. Length: ${result.length}');
             foundName = nameToUse;
         } else {
@@ -525,7 +545,7 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
         
         if (!mounted) return;
 
-        if (type == PetImageType.newProfile || _isAddingNewPet || type == PetImageType.behavior || type == PetImageType.plantCheck || type == PetImageType.mouth || type == PetImageType.skin || type == PetImageType.stool || type == PetImageType.eyes || type == PetImageType.ears || type == PetImageType.posture || type == PetImageType.foodBowl) {
+        if (type == PetImageType.newProfile || _isAddingNewPet || type == PetImageType.behavior || type == PetImageType.plantCheck || type == PetImageType.mouth || type == PetImageType.skin || type == PetImageType.stool || type == PetImageType.eyes || type == PetImageType.ears || type == PetImageType.posture || type == PetImageType.foodBowl || type == PetImageType.vocal) {
             // [UNIVERSAL RESULT VIEW]
              Navigator.pushReplacement(
               context,

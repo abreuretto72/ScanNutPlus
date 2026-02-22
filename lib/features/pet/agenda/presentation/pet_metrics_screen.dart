@@ -3,6 +3,7 @@ import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart';
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
+import 'package:scannutplus/features/pet/agenda/presentation/pet_medication_screen.dart'; // Added Medication Screen imports
 import 'package:uuid/uuid.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
 
@@ -21,315 +22,314 @@ class PetMetricsScreen extends StatefulWidget {
 }
 
 class _PetMetricsScreenState extends State<PetMetricsScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  // A. Sinais Vitais
-  final _weightCtrl = TextEditingController();
-  final _bpmCtrl = TextEditingController();
-  final _mpmCtrl = TextEditingController();
-  final _tempCtrl = TextEditingController();
-  final _tpcCtrl = TextEditingController();
-  final _glycemiaCtrl = TextEditingController();
-
-  // B. Estrutura
-  final _eccCtrl = TextEditingController();
-  final _abdCircCtrl = TextEditingController();
-  final _neckCircCtrl = TextEditingController();
-  final _heightCtrl = TextEditingController();
-
-  // C. Hidratação e Excreção
-  final _waterCtrl = TextEditingController();
-  final _urineVolCtrl = TextEditingController();
-  final _urineDensCtrl = TextEditingController();
-
-  // D. Atividade e Biometria
-  final _distanceCtrl = TextEditingController();
-  final _speedCtrl = TextEditingController();
-  final _sleepCtrl = TextEditingController();
-  final _latencyCtrl = TextEditingController();
-
-  bool _isLoading = false;
+  final PetEventRepository _repository = PetEventRepository();
+  Map<String, String> _lastMetrics = {};
+  bool _isLoading = true;
 
   @override
-  void dispose() {
-    _weightCtrl.dispose();
-    _bpmCtrl.dispose();
-    _mpmCtrl.dispose();
-    _tempCtrl.dispose();
-    _tpcCtrl.dispose();
-    _glycemiaCtrl.dispose();
-    _eccCtrl.dispose();
-    _abdCircCtrl.dispose();
-    _neckCircCtrl.dispose();
-    _heightCtrl.dispose();
-    _waterCtrl.dispose();
-    _urineVolCtrl.dispose();
-    _urineDensCtrl.dispose();
-    _distanceCtrl.dispose();
-    _speedCtrl.dispose();
-    _sleepCtrl.dispose();
-    _latencyCtrl.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _loadLastMetrics();
   }
 
-  bool _hasAnyData() {
-    return _weightCtrl.text.isNotEmpty ||
-        _bpmCtrl.text.isNotEmpty ||
-        _mpmCtrl.text.isNotEmpty ||
-        _tempCtrl.text.isNotEmpty ||
-        _tpcCtrl.text.isNotEmpty ||
-        _glycemiaCtrl.text.isNotEmpty ||
-        _eccCtrl.text.isNotEmpty ||
-        _abdCircCtrl.text.isNotEmpty ||
-        _neckCircCtrl.text.isNotEmpty ||
-        _heightCtrl.text.isNotEmpty ||
-        _waterCtrl.text.isNotEmpty ||
-        _urineVolCtrl.text.isNotEmpty ||
-        _urineDensCtrl.text.isNotEmpty ||
-        _distanceCtrl.text.isNotEmpty ||
-        _speedCtrl.text.isNotEmpty ||
-        _sleepCtrl.text.isNotEmpty ||
-        _latencyCtrl.text.isNotEmpty;
+  Future<void> _loadLastMetrics() async {
+    final result = await _repository.getByPetId(widget.petId);
+    if (result.isSuccess && result.data != null) {
+        final metricsEvents = result.data!.where((e) => e.metrics?['is_metric_record'] == true).toList();
+        metricsEvents.sort((a, b) => a.startDateTime.compareTo(b.startDateTime));
+        
+        final Map<String, String> latest = {};
+        for (final ev in metricsEvents) {
+            final m = ev.metrics ?? {};
+            for (final key in m.keys) {
+                if (key != 'is_metric_record' && key != 'custom_title' && m[key] != null) {
+                    latest[key] = m[key].toString();
+                }
+            }
+        }
+        if (mounted) {
+           setState(() {
+               _lastMetrics = latest;
+               _isLoading = false;
+           });
+        }
+    } else {
+        if (mounted) setState(() => _isLoading = false);
+    }
   }
 
-  Future<void> _saveMetrics() async {
+  Future<void> _saveMetric(String key, String value, String label) async {
+    if (value.trim().isEmpty) return;
+    
     final l10n = AppLocalizations.of(context)!;
+    final now = DateTime.now();
     
-    if (!_formKey.currentState!.validate()) return;
+    final metricsData = {
+      'is_metric_record': true,
+      'custom_title': label,
+      key: value.trim(),
+    };
+
+    final event = PetEvent(
+      id: const Uuid().v4(),
+      startDateTime: now,
+      endDateTime: now,
+      petIds: [widget.petId],
+      eventTypeIndex: PetEventType.health.index, 
+      hasAIAnalysis: false,
+      notes: '$label: ${value.trim()}',
+      metrics: metricsData,
+    );
+
+    await _repository.saveEvent(event);
     
-    if (!_hasAnyData()) {
+    if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.pet_metric_empty_fields), backgroundColor: Colors.orange),
+         SnackBar(content: Text(l10n.pet_metric_save_success), backgroundColor: Colors.green),
       );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-    
-    try {
-      final now = DateTime.now();
-      
-      final metricsData = {
-        'is_metric_record': true,
-        // Vitals
-        if (_weightCtrl.text.isNotEmpty) 'weight': _weightCtrl.text.trim(),
-        if (_bpmCtrl.text.isNotEmpty) 'bpm': _bpmCtrl.text.trim(),
-        if (_mpmCtrl.text.isNotEmpty) 'mpm': _mpmCtrl.text.trim(),
-        if (_tempCtrl.text.isNotEmpty) 'temperature': _tempCtrl.text.trim(),
-        if (_tpcCtrl.text.isNotEmpty) 'capillary_refill_time': _tpcCtrl.text.trim(),
-        if (_glycemiaCtrl.text.isNotEmpty) 'glycemia': _glycemiaCtrl.text.trim(),
-        // Structure
-        if (_eccCtrl.text.isNotEmpty) 'body_condition_score': _eccCtrl.text.trim(),
-        if (_abdCircCtrl.text.isNotEmpty) 'abdominal_circ': _abdCircCtrl.text.trim(),
-        if (_neckCircCtrl.text.isNotEmpty) 'neck_circ': _neckCircCtrl.text.trim(),
-        if (_heightCtrl.text.isNotEmpty) 'height_withers': _heightCtrl.text.trim(),
-        // Hydration
-        if (_waterCtrl.text.isNotEmpty) 'water_intake': _waterCtrl.text.trim(),
-        if (_urineVolCtrl.text.isNotEmpty) 'urine_volume': _urineVolCtrl.text.trim(),
-        if (_urineDensCtrl.text.isNotEmpty) 'urine_density': _urineDensCtrl.text.trim(),
-        // Activity
-        if (_distanceCtrl.text.isNotEmpty) 'distance_traveled': _distanceCtrl.text.trim(),
-        if (_speedCtrl.text.isNotEmpty) 'average_speed': _speedCtrl.text.trim(),
-        if (_sleepCtrl.text.isNotEmpty) 'sleep_time': _sleepCtrl.text.trim(),
-        if (_latencyCtrl.text.isNotEmpty) 'stand_latency': _latencyCtrl.text.trim(),
-      };
-
-      final event = PetEvent(
-        id: const Uuid().v4(),
-        startDateTime: now,
-        endDateTime: now,
-        petIds: [widget.petId],
-        eventTypeIndex: PetEventType.health.index, 
-        hasAIAnalysis: false,
-        notes: l10n.metrics_registered_clinical,
-        metrics: metricsData,
-      );
-
-      final repo = PetEventRepository();
-      await repo.saveEvent(event);
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(content: Text(l10n.pet_metric_save_success), backgroundColor: Colors.green),
-        );
-        Navigator.pop(context, true);
-      }
-    } catch (e) {
-       if (mounted) {
-         ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(content: Text(l10n.pet_error_saving_event(e.toString())), backgroundColor: Colors.red),
-         );
-       }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
+      _loadLastMetrics(); // refresh
     }
   }
 
-  InputDecoration _inputDeco(String label, IconData icon) {
-    return InputDecoration(
-      labelText: label,
-      labelStyle: const TextStyle(color: Colors.grey, fontSize: 13),
-      prefixIcon: Icon(icon, color: AppColors.petPrimary, size: 20),
-      filled: true,
-      fillColor: Colors.black26,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.petPrimary)),
+  void _showMetricBottomSheet(BuildContext context, String key, String label, IconData icon, bool isInteger, bool isText) {
+    final l10n = AppLocalizations.of(context)!;
+    final ctrl = TextEditingController();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.petBackgroundDark,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (ctx) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(ctx).viewInsets.bottom,
+            left: 24, right: 24, top: 24,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                   Icon(icon, color: AppColors.petPrimary, size: 28),
+                   const SizedBox(width: 12),
+                   Expanded(child: Text(label, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold))),
+                   IconButton(icon: const Icon(Icons.close, color: Colors.white), onPressed: () => Navigator.pop(ctx)),
+                ],
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: ctrl,
+                autofocus: true,
+                keyboardType: isText ? TextInputType.text : TextInputType.numberWithOptions(decimal: !isInteger),
+                style: const TextStyle(color: Colors.white, fontSize: 18),
+                decoration: InputDecoration(
+                  labelText: label,
+                  labelStyle: const TextStyle(color: Colors.grey),
+                  filled: true,
+                  fillColor: Colors.black26,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: AppColors.petPrimary, width: 2)),
+                ),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF10AC84), // SUCCESS GREEN
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                ),
+                onPressed: () {
+                  if (ctrl.text.trim().isNotEmpty) {
+                    _saveMetric(key, ctrl.text, label);
+                    Navigator.pop(ctx);
+                  }
+                },
+                icon: const Icon(Icons.check),
+                label: Text(l10n.pet_metric_save_quick(label), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              ),
+              const SizedBox(height: 32),
+            ],
+          ),
+        );
+      },
     );
   }
 
   Widget _buildSectionHeader(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 4),
-      child: Row(
-        children: [
-          Container(width: 4, height: 20, color: AppColors.petPrimary),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(title, style: const TextStyle(color: AppColors.petPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
-          ),
-        ],
+    return SliverPadding(
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
+      sliver: SliverToBoxAdapter(
+        child: Row(
+          children: [
+            Container(width: 4, height: 20, color: AppColors.petPrimary),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(title, style: const TextStyle(color: AppColors.petPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildNumberField(TextEditingController ctrl, String label, IconData icon, {bool isInteger = false}) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: TextFormField(
-        controller: ctrl,
-        keyboardType: TextInputType.numberWithOptions(decimal: !isInteger),
-        decoration: _inputDeco(label, icon),
-        style: const TextStyle(color: Colors.white, fontSize: 15),
-      ),
-    );
-  }
-  
-  Widget _buildTextField(TextEditingController ctrl, String label, IconData icon) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: TextFormField(
-        controller: ctrl,
-        decoration: _inputDeco(label, icon),
-        style: const TextStyle(color: Colors.white, fontSize: 15),
-      ),
-    );
+  Widget _buildGrid(List<Map<String, dynamic>> items) {
+     return SliverPadding(
+       padding: const EdgeInsets.symmetric(horizontal: 16),
+       sliver: SliverGrid(
+         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+           crossAxisCount: 2,
+           mainAxisSpacing: 12,
+           crossAxisSpacing: 12,
+           childAspectRatio: 1.3,
+         ),
+         delegate: SliverChildBuilderDelegate(
+           (context, index) {
+             final item = items[index];
+             final key = item['key'] as String;
+             final label = item['label'] as String;
+             final icon = item['icon'] as IconData;
+             final isInt = item['isInt'] as bool;
+             final isText = item['isText'] as bool;
+
+             final lastValue = _lastMetrics[key];
+             final l10n = AppLocalizations.of(context)!;
+
+             return InkWell(
+               onTap: () => _showMetricBottomSheet(context, key, label, icon, isInt, isText),
+               borderRadius: BorderRadius.circular(16),
+               child: Container(
+                 decoration: BoxDecoration(
+                   color: AppColors.petPrimary,
+                   borderRadius: BorderRadius.circular(16),
+                   border: Border.all(color: Colors.black, width: 2),
+                   boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(3, 3))],
+                 ),
+                 padding: const EdgeInsets.all(12),
+                 child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
+                     Icon(icon, color: Colors.black, size: 28),
+                     const Spacer(),
+                     Text(label, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 13), maxLines: 2, overflow: TextOverflow.ellipsis),
+                     const SizedBox(height: 4),
+                     Text(
+                       lastValue != null ? l10n.pet_metric_last_recorded(lastValue) : l10n.pet_metric_empty_state, 
+                       style: TextStyle(color: Colors.black.withValues(alpha: 0.7), fontSize: 11, fontWeight: FontWeight.bold),
+                     ),
+                   ],
+                 ),
+               ),
+             );
+           },
+           childCount: items.length,
+         ),
+       ),
+     );
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: AppColors.petBackgroundDark,
+        appBar: AppBar(title: Text(l10n.pet_metric_quick_action_title, style: const TextStyle(color: Colors.white)), backgroundColor: Colors.transparent, iconTheme: const IconThemeData(color: Colors.white)),
+        body: const Center(child: CircularProgressIndicator(color: AppColors.petPrimary)),
+      );
+    }
+
+    // A. SINAIS VITAIS
+    // 'weight', 'bpm', 'mpm', 'temperature', 'glycemia', 'capillary_refill_time'
+    final vitals = [
+      {'key': 'weight', 'label': l10n.pet_metric_weight, 'icon': Icons.monitor_weight, 'isInt': false, 'isText': false},
+      {'key': 'bpm', 'label': l10n.pet_metric_bpm, 'icon': Icons.favorite, 'isInt': true, 'isText': false},
+      {'key': 'mpm', 'label': l10n.pet_metric_mpm, 'icon': Icons.air, 'isInt': true, 'isText': false},
+      {'key': 'temperature', 'label': l10n.pet_metric_temp, 'icon': Icons.thermostat, 'isInt': false, 'isText': false},
+      {'key': 'glycemia', 'label': l10n.pet_metric_glycemia, 'icon': Icons.water_drop, 'isInt': false, 'isText': false},
+      {'key': 'capillary_refill_time', 'label': l10n.pet_metric_tpc, 'icon': Icons.timer, 'isInt': false, 'isText': true},
+    ];
+
+    final structure = [
+      {'key': 'body_condition_score', 'label': l10n.pet_metric_ecc, 'icon': Icons.straighten, 'isInt': true, 'isText': false},
+      {'key': 'abdominal_circ', 'label': l10n.pet_metric_abd_circ, 'icon': Icons.architecture, 'isInt': false, 'isText': false},
+      {'key': 'neck_circ', 'label': l10n.pet_metric_neck_circ, 'icon': Icons.checkroom, 'isInt': false, 'isText': false},
+      {'key': 'height_withers', 'label': l10n.pet_metric_height, 'icon': Icons.height, 'isInt': false, 'isText': false},
+    ];
+
+    final hydration = [
+      {'key': 'water_intake', 'label': l10n.pet_metric_water, 'icon': Icons.local_drink, 'isInt': true, 'isText': false},
+      {'key': 'urine_volume', 'label': l10n.pet_metric_urine_vol, 'icon': Icons.opacity, 'isInt': false, 'isText': true},
+      {'key': 'urine_density', 'label': l10n.pet_metric_urine_dens, 'icon': Icons.science, 'isInt': false, 'isText': false},
+    ];
+
+    final activity = [
+      {'key': 'distance_traveled', 'label': l10n.pet_metric_distance, 'icon': Icons.directions_run, 'isInt': false, 'isText': false},
+      {'key': 'average_speed', 'label': l10n.pet_metric_speed, 'icon': Icons.speed, 'isInt': false, 'isText': false},
+      {'key': 'sleep_time', 'label': l10n.pet_metric_sleep, 'icon': Icons.nightlight_round, 'isInt': false, 'isText': false},
+      {'key': 'stand_latency', 'label': l10n.pet_metric_stand_latency, 'icon': Icons.timer_off, 'isInt': false, 'isText': false},
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.petBackgroundDark,
       appBar: AppBar(
-        title: Text(l10n.pet_metric_title, style: const TextStyle(color: Colors.white)),
+        title: Text(l10n.pet_metric_quick_action_title, style: const TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-              physics: const BouncingScrollPhysics(),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // A. SINAIS VITAIS
-                    _buildSectionHeader(l10n.pet_metric_section_vitals),
-                    _buildNumberField(_weightCtrl, l10n.pet_metric_weight, Icons.monitor_weight),
-                    Row(
-                      children: [
-                        Expanded(child: _buildNumberField(_bpmCtrl, l10n.pet_metric_bpm, Icons.favorite, isInteger: true)),
-                        const SizedBox(width: 8),
-                        Expanded(child: _buildNumberField(_mpmCtrl, l10n.pet_metric_mpm, Icons.air, isInteger: true)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: _buildNumberField(_tempCtrl, l10n.pet_metric_temp, Icons.thermostat)),
-                        const SizedBox(width: 8),
-                        Expanded(child: _buildNumberField(_glycemiaCtrl, l10n.pet_metric_glycemia, Icons.water_drop)),
-                      ],
-                    ),
-                    _buildTextField(_tpcCtrl, l10n.pet_metric_tpc, Icons.timer),
-
-                    // B. ESTRUTURA E COMPOSIÇÃO
-                    _buildSectionHeader(l10n.pet_metric_section_structure),
-                    _buildNumberField(_eccCtrl, l10n.pet_metric_ecc, Icons.straighten, isInteger: true),
-                    Row(
-                      children: [
-                        Expanded(child: _buildNumberField(_abdCircCtrl, l10n.pet_metric_abd_circ, Icons.architecture)),
-                        const SizedBox(width: 8),
-                        Expanded(child: _buildNumberField(_neckCircCtrl, l10n.pet_metric_neck_circ, Icons.checkroom)),
-                      ],
-                    ),
-                    _buildNumberField(_heightCtrl, l10n.pet_metric_height, Icons.height),
-
-                    // C. HIDRATAÇÃO E EXCREÇÃO
-                    _buildSectionHeader(l10n.pet_metric_section_hydration),
-                    _buildNumberField(_waterCtrl, l10n.pet_metric_water, Icons.local_drink, isInteger: true),
-                    _buildTextField(_urineVolCtrl, l10n.pet_metric_urine_vol, Icons.opacity),
-                    _buildNumberField(_urineDensCtrl, l10n.pet_metric_urine_dens, Icons.science),
-
-                    // D. ATIVIDADE E BIOMETRIA
-                    _buildSectionHeader(l10n.pet_metric_section_activity),
-                    Row(
-                      children: [
-                        Expanded(child: _buildNumberField(_distanceCtrl, l10n.pet_metric_distance, Icons.directions_run)),
-                        const SizedBox(width: 8),
-                        Expanded(child: _buildNumberField(_speedCtrl, l10n.pet_metric_speed, Icons.speed)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: _buildNumberField(_sleepCtrl, l10n.pet_metric_sleep, Icons.nightlight_round)),
-                        const SizedBox(width: 8),
-                        Expanded(child: _buildNumberField(_latencyCtrl, l10n.pet_metric_stand_latency, Icons.timer_off)),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          // MEDICATION ACTION BUTTON
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => PetMedicationScreen(petId: widget.petId, petName: widget.petName)));
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.petPrimary,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.black, width: 2),
+                    boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(3, 3))],
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.medication, color: Colors.black, size: 32),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(l10n.pet_med_save, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 16)),
+                            const SizedBox(height: 4),
+                            Text("Agendar e gerenciar tratamentos", style: TextStyle(color: Colors.black.withValues(alpha: 0.7), fontSize: 12, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ),
+                      const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
           
-          // SAVING BAR
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: AppColors.petBackgroundDark,
-              border: Border(top: BorderSide(color: Colors.white12)),
-            ),
-            child: SafeArea(
-              child: SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.petPrimary,
-                    foregroundColor: Colors.black,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  ),
-                  onPressed: _isLoading ? null : _saveMetrics,
-                  icon: _isLoading 
-                      ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.black, strokeWidth: 2)) 
-                      : const Icon(Icons.check, color: Colors.black),
-                  label: Text(
-                    l10n.common_save, 
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+          _buildSectionHeader(l10n.pet_metric_section_vitals), _buildGrid(vitals),
+          _buildSectionHeader(l10n.pet_metric_section_structure), _buildGrid(structure),
+          _buildSectionHeader(l10n.pet_metric_section_hydration), _buildGrid(hydration),
+          _buildSectionHeader(l10n.pet_metric_section_activity), _buildGrid(activity),
+          const SliverPadding(padding: EdgeInsets.only(bottom: 40)),
+        ]
+      )
     );
   }
 }

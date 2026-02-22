@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 import 'dart:io';
-import 'package:http/http.dart' as http; // Dynamic Config
-import 'dart:convert'; // JSON
+// Dynamic Config
+// JSON
 import 'package:shared_preferences/shared_preferences.dart'; // Cache
-import 'package:flutter_dotenv/flutter_dotenv.dart'; // Env
+// Env
 // import 'dart:typed_data'; // Analyzer says unused
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -25,17 +25,17 @@ import 'package:scannutplus/features/pet/agenda/presentation/pet_map_styles.dart
 import '../../services/pet_ai_service.dart'; // Real AI Service
 import 'package:scannutplus/features/pet/agenda/services/pet_vocal_ai_service.dart'; // Dedicated Vocal AI Service
 import 'package:scannutplus/features/pet/agenda/services/pet_video_ai_service.dart'; // Dedicated Video AI Service
-import 'package:scannutplus/core/services/env_service.dart'; // Env Access
-import 'package:scannutplus/core/constants/ai_prompts.dart'; // Prompts
-import 'package:scannutplus/core/constants/app_keys.dart'; // App Keys
+// Env Access
+// Prompts
+// App Keys
 
 import 'package:scannutplus/l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart';
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
-import 'package:scannutplus/features/pet/agenda/logic/pet_friend_manager.dart'; // Micro App Import
+// Micro App Import
 import 'package:uuid/uuid.dart'; // REQUIRED for Uuid().v4()
+import 'package:gal/gal.dart'; // Added for saving camera captures to gallery
 
 enum PetMediaSource { camera, gallery, none }
 
@@ -76,7 +76,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
   // Legacy Fields restored for compatibility
   PetMediaSource _mediaSource = PetMediaSource.none;
   final PetEventRepository _repository = PetEventRepository();
-  String _darkMapStyle = PetMapStyles.darkMapStyle; // Corrected constant name
+  final String _darkMapStyle = PetMapStyles.darkMapStyle; // Corrected constant name
   
   final DateTime _selectedDate = DateTime.now();
   final TimeOfDay _selectedTime = TimeOfDay.now();
@@ -300,6 +300,16 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
     try {
       final XFile? image = await picker.pickImage(source: source);
       if (image != null) {
+        // Save to gallery if taken with camera
+        if (source == ImageSource.camera) {
+           try {
+              await Gal.putImage(image.path);
+              if (kDebugMode) debugPrint('[GAL] Saved photo to gallery: ${image.path}');
+           } catch (e) {
+              if (kDebugMode) debugPrint('[GAL_ERROR] Failed to save photo to gallery: $e');
+           }
+        }
+
         setState(() {
           _capturedImage = image;
           _capturedVideo = null; // Exclusive: Clear video
@@ -408,6 +418,14 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       );
       
       if (video != null) {
+        // Save video to gallery
+        try {
+           await Gal.putVideo(video.path);
+           if (kDebugMode) debugPrint('[GAL] Saved video to gallery: ${video.path}');
+        } catch (e) {
+           if (kDebugMode) debugPrint('[GAL_ERROR] Failed to save video to gallery: $e');
+        }
+
         setState(() {
           _capturedVideo = video;
           // MUTEX
@@ -771,7 +789,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                           scale: 0.8,
                                           child: Switch(
                                             value: _isFriendPresent,
-                                            activeColor: Colors.greenAccent,
+                                            activeThumbColor: Colors.greenAccent,
                                             inactiveTrackColor: Colors.grey[800],
                                             onChanged: (val) {
                                               HapticFeedback.lightImpact();
@@ -814,7 +832,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                             icon: const Icon(Icons.people, color: Colors.black),
                                          ),
                                          hint: Text(l10n.pet_friend_select, style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, shadows: [])),
-                                         value: _selectedFriend,
+                                         initialValue: _selectedFriend,
                                          dropdownColor: Colors.white,
                                          items: [
                                            // Option: New Friend
@@ -825,7 +843,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                            ..._knownFriends.map((f) => DropdownMenuItem(
                                                value: f,
                                                child: Text("${f['friend']} (${f['tutor']})", style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, shadows: [])),
-                                           )).toList()
+                                           ))
                                          ],
                                          onChanged: (val) {
                                             setState(() {

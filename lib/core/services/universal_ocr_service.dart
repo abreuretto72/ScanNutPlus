@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:scannutplus/core/services/env_service.dart';
+import 'package:scannutplus/l10n/app_localizations.dart';
 
 /// MOTOR 2: UNIVERSAL OCR SERVICE (Data Extraction)
 /// Responsible for: Lab Exams, Prescriptions, Labels, and Botanical Reports.
@@ -23,11 +24,12 @@ class UniversalOcrService {
     required String expertise,
     required String languageCode,
     String? targetFields,
+    required AppLocalizations l10n,
   }) async {
     try {
       await _syncConfigFromServer();
 
-      final targetModel = _activeModelName ?? 'gemini-1.5-pro';
+      final targetModel = _activeModelName ?? 'gemini-2.5-pro';
       debugPrint('[UNIVERSAL_OCR_LOG] Active Model: $targetModel');
       
       if (_model == null || _lastUsedModel != targetModel) {
@@ -150,6 +152,12 @@ class UniversalOcrService {
 
     } catch (e) {
       debugPrint('[UNIVERSAL_OCR_ERROR]: $e');
+      final errorStr = e.toString();
+      
+      if (errorStr.contains('Unhandled format') || errorStr.contains('Google Generative AI SDK')) {
+           return "[CARD_START]\nTITLE: ${l10n.pet_label_info}\nICON: info\nCONTENT: ${l10n.pet_error_ai_unhandled_format}\n[CARD_END]";
+      }
+      
       return "[CARD_START]\nTITLE: System Error\nICON: error\nCONTENT: Exception during OCR Analysis:\n$e\n[CARD_END]";
     }
   }
@@ -166,7 +174,13 @@ class UniversalOcrService {
     try {
       final baseUrl = dotenv.env['SITE_BASE_URL'];
       if (baseUrl == null) return;
-      final response = await http.get(Uri.parse(baseUrl)).timeout(const Duration(seconds: 5));
+      final response = await http.get(
+        Uri.parse(baseUrl),
+        headers: {
+          'User-Agent': 'ScanNutApp/1.0',
+          'Accept': 'application/json',
+        },
+      ).timeout(const Duration(seconds: 5));
       if (response.statusCode == 200) {
         final config = json.decode(response.body);
         _activeModelName = config['active_model'];

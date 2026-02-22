@@ -13,7 +13,7 @@ class PetMapScreen extends StatefulWidget {
 
 class _PetMapScreenState extends State<PetMapScreen> {
   // Controlador para manipular o mapa
-  Completer<GoogleMapController> _mapController = Completer<GoogleMapController>();
+  final Completer<GoogleMapController> _mapController = Completer<GoogleMapController>();
   
   // Estado da localização
   Position? _currentPosition;

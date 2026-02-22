@@ -1,5 +1,4 @@
 // ignore_for_file: l10n_custom_check, l10n_ignore_strings
-import 'package:scannutplus/features/pet/data/pet_constants.dart';
 
 class PetMapStyles {
   // Estilo Dark (Waze-like)

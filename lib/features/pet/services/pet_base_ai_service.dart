@@ -7,7 +7,10 @@ import 'package:scannutplus/core/services/env_service.dart';
 import 'package:scannutplus/core/constants/app_keys.dart';
 import 'package:scannutplus/core/constants/ai_prompts.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart'; 
+import 'package:flutter/material.dart' show Locale; // For Locale usage
+import 'package:scannutplus/l10n/app_localizations.dart'; // For L10N mapping
 import 'dart:convert';
+import 'dart:async'; // Add for TimeoutException
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -25,7 +28,7 @@ abstract class PetBaseAiService {
   // O modelo agora é inicializado como nulo para forçar a carga do servidor.
   String? _activeModelName;
   
-  String _apiEndpoint = 'https://generativelanguage.googleapis.com/v1beta/models/';
+  final String _apiEndpoint = 'https://generativelanguage.googleapis.com/v1beta/models/';
 
   PetBaseAiService();
 
@@ -110,12 +113,21 @@ abstract class PetBaseAiService {
       }
 
       return responseText;
+    } on SocketException catch (e) {
+      debugPrint('[PET_ERROR_SOCKET] Network/Socket: $e');
+      final l10n = lookupAppLocalizations(Locale(languageCode.split('_').first));
+      return "[CARD_START]\nTITLE: ${l10n.pet_error_no_internet_title}\nICON: wifi_off\nCONTENT: ${l10n.pet_error_no_internet_content}\n[CARD_END]";
+    } on TimeoutException catch (e) {
+      debugPrint('[PET_ERROR_TIMEOUT] Timeout: $e');
+      final l10n = lookupAppLocalizations(Locale(languageCode.split('_').first));
+      return "[CARD_START]\nTITLE: ${l10n.pet_error_timeout_title}\nICON: timer_off\nCONTENT: ${l10n.pet_error_timeout_content}\n[CARD_END]";
     } catch (e) {
       if (kDebugMode) debugPrint('[PET_ERROR_RAW] $e');
       if (e.toString().contains('500') || e.toString().contains('overload')) {
          throw PetAiOverloadException();
       }
-      throw Exception('${AppKeys.errorAiUnavailable}$e');
+      final l10n = lookupAppLocalizations(Locale(languageCode.split('_').first));
+      return "[CARD_START]\nTITLE: ${l10n.pet_error_technical_title}\nICON: error_outline\nCONTENT: ${l10n.pet_error_technical_content}\n[CARD_END]";
     }
   }
 

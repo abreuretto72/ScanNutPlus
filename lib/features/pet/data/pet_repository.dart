@@ -1,4 +1,4 @@
-import 'package:objectbox/objectbox.dart'; // Required for Store/Box/Query
+// Required for Store/Box/Query
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -198,7 +198,8 @@ class PetRepository {
     }
     
     final query = _historyBox.query(
-        PetHistoryEntry_.petUuid.equals(uuid)
+        PetHistoryEntry_.petUuid.equals(uuid) & 
+        PetHistoryEntry_.category.notEquals(PetConstants.catNutritionPlan)
     ).order(PetHistoryEntry_.timestamp, flags: Order.descending).build();
     
     final entries = query.find();
@@ -217,6 +218,19 @@ class PetRepository {
         PetConstants.fieldName: e.petName,
         // Add other fields
     }).toList();
+  }
+
+  /// 4.1 Get Latest Nutrition Plan for a Specific Pet
+  Future<String?> getLatestNutritionPlan(String uuid) async {
+    final query = _historyBox.query(
+        PetHistoryEntry_.petUuid.equals(uuid) &
+        PetHistoryEntry_.category.equals(PetConstants.catNutritionPlan)
+    ).order(PetHistoryEntry_.timestamp, flags: Order.descending).build();
+
+    final entry = query.findFirst();
+    query.close();
+
+    return entry?.rawJson;
   }
 
   /// 5. Get Friend Pets (Module 2026)
@@ -516,12 +530,8 @@ class PetRepository {
 
       final resultId = await repo.saveEvent(event);
       
-      if (resultId != null) {
-         if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Evento criado: ${event.id} | Title: $eventTitle');
-      } else {
-         if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Falha ao criar evento.');
-      }
-    } catch (e) {
+       if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Evento criado: ${event.id} | Title: $eventTitle');
+        } catch (e) {
       if (kDebugMode) debugPrint('${PetConstants.logTagPetData} [AGENDA_SYNC] Erro crítico: $e');
     }
   }

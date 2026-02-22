@@ -1,0 +1,52 @@
+O problema de compilação no GitHub Actions está acontecendo porque o Flutter não consegue encontrar o arquivo de assets 
+
+assets/.env
+. Em ambientes de CI/CD (integração contínua), arquivos como o 
+
+.env
+ geralmente são ignorados pelo .gitignore para não expor chaves de API e segredos, e por isso o build falha ao tentar empacotar o APK, pois o arquivo não existe na máquina virtual do GitHub.
+
+Para resolver esse problema, eu atualizei o arquivo de workflow 
+
+.github/workflows/release.yml
+ adicionando um passo que cria um arquivo 
+
+.env
+ dinamicamente antes de executar o comando flutter build apk --release.
+
+O trecho adicionado foi esse:
+
+yaml
+- name: Create .env
+        run: |
+          mkdir -p assets
+          touch assets/.env
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> assets/.env
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> assets/.env
+          echo "GOOGLE_PLACES_API_KEY=${{ secrets.GOOGLE_PLACES_API_KEY }}" >> assets/.env
+          echo "REVENUECAT_ANDROID_KEY=${{ secrets.REVENUECAT_ANDROID_KEY }}" >> assets/.env
+          echo "REVENUECAT_IOS_KEY=${{ secrets.REVENUECAT_IOS_KEY }}" >> assets/.env
+          echo "REVENUECAT_API_KEY=${{ secrets.REVENUECAT_API_KEY }}" >> assets/.env
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> assets/.env
+          echo "SITE_BASE_URL=${{ secrets.SITE_BASE_URL }}" >> assets/.env
+O que você precisa fazer agora:
+Para que o seu aplicativo tenha acesso a todas as chaves de API durante e após a execução do build que vai para a loja/release, você precisa ir até o GitHub e cadastrar os "Secrets" do repositório:
+
+Vá no seu repositório no GitHub.
+Acesse Settings > Secrets and variables > Actions.
+Adicione os seguintes Repository secrets (com os mesmos valores do seu 
+
+.env
+ local):
+GEMINI_API_KEY
+GOOGLE_API_KEY
+GOOGLE_PLACES_API_KEY
+REVENUECAT_ANDROID_KEY
+REVENUECAT_IOS_KEY
+REVENUECAT_API_KEY
+OPENAI_API_KEY
+SITE_BASE_URL
+Se não quiser preencher os secrets agora, o build vai passar do mesmo jeito (porque o arquivo será criado com valores vazios), mas o app poderá se comportar de forma instável nas features que dependem de rede ao ser usado no aparelho da versão final.
+
+Faça o push (ou envie a pasta commitada) no Github e essa nova execução do Actions compilará com sucesso.
+

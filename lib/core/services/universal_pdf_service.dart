@@ -7,6 +7,8 @@ import 'package:printing/printing.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:intl/intl.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path/path.dart' as p;
 
 class UniversalPdfService {
   // PDF Base Colors (Always White Background for printing/reading)
@@ -31,16 +33,33 @@ class UniversalPdfService {
     // Default to Strong Pink (#FC2D7C) if no dynamic color is provided
     final accentColor = colorValue != null ? PdfColor.fromInt(colorValue) : PdfColor.fromInt(0xFFFC2D7C);
     
-    // Load Image (Optional)
+    // Load Image (Optional) or Generate Thumbnail
     pw.MemoryImage? image;
+    bool isAudio = false;
+    
     if (filePath != null && filePath.isNotEmpty) {
       final file = File(filePath);
       if (file.existsSync()) {
+         final extension = p.extension(filePath).toLowerCase().replaceAll('.', '');
+         final isVideo = PetConstants.videoExtensions.contains(extension);
+         isAudio = PetConstants.audioExtensions.contains(extension);
+         
          try {
-           final imageBytes = await file.readAsBytes();
-           image = pw.MemoryImage(imageBytes);
+           if (isVideo) {
+              final uint8list = await VideoThumbnail.thumbnailData(
+                video: filePath,
+                imageFormat: ImageFormat.JPEG,
+                quality: 25,
+              );
+              if (uint8list != null) {
+                 image = pw.MemoryImage(uint8list);
+              }
+           } else if (!isAudio) {
+              final imageBytes = await file.readAsBytes();
+              image = pw.MemoryImage(imageBytes);
+           }
          } catch (e) {
-           debugPrint('[PDF_WARN] Could not load image (likely video or unsupported format): $e');
+           debugPrint('[PDF_WARN] Could not load image/thumbnail: $e');
            image = null;
          }
       }
@@ -105,8 +124,29 @@ class UniversalPdfService {
                  borderRadius: pw.BorderRadius.circular(8),
               ),
               child: pw.Image(image, fit: pw.BoxFit.contain),
-            ),
-          if (image != null) pw.SizedBox(height: 20),
+            )
+          else if (isAudio)
+            // Audio Placeholder Header
+             pw.Container(
+               height: 120,
+               width: double.infinity,
+               alignment: pw.Alignment.center,
+               decoration: pw.BoxDecoration(
+                  color: _colorCardBg,
+                  border: pw.Border.all(color: accentColor, width: 2),
+                  borderRadius: pw.BorderRadius.circular(8),
+               ),
+               child: pw.Column(
+                  mainAxisAlignment: pw.MainAxisAlignment.center,
+                  children: [
+                     pw.Icon(pw.IconData(0xe050), size: 48, color: accentColor), // Graphic Eq / Megaphone generic icon fallback using standard unicode (mic = 0xe029) => Just an indicator
+                     pw.SizedBox(height: 8),
+                     pw.Text("Análise de Áudio (Vocalização)", style: pw.TextStyle(color: accentColor, fontSize: 16, fontWeight: pw.FontWeight.bold)),
+                  ]
+               ),
+             ),
+             
+          if (image != null || isAudio) pw.SizedBox(height: 20),
           
           // 2. Identity Section
           pw.Container(
@@ -269,15 +309,153 @@ class UniversalPdfService {
         ),
         
         // 2. Content (Flowable) - Direct child of MultiPage allows splitting!
-        pw.Padding(
-          padding: const pw.EdgeInsets.only(top: 8, bottom: 12),
-          child: pw.Text(
-            _sanitizeText(card['content'] ?? ''), 
-            style: const pw.TextStyle(color: _colorText, fontSize: 10, lineSpacing: 1.5),
-            textAlign: pw.TextAlign.justify
-          ),
-        ),
+        ..._buildCardContent(card['content'] ?? '', accentColor),
     ];
+  }
+
+  static List<pw.Widget> _buildCardContent(String text, PdfColor accentColor) {
+     final widgets = <pw.Widget>[];
+     final lines = text.split('\n');
+     
+     List<pw.TableRow> currentTableRows = [];
+
+     void flushTable() {
+       if (currentTableRows.isNotEmpty) {
+          widgets.add(
+             pw.Container(
+               margin: const pw.EdgeInsets.symmetric(vertical: 8),
+               child: pw.Table(
+                  border: pw.TableBorder.all(color: PdfColors.grey400, width: 0.5),
+                  children: currentTableRows,
+               )
+             )
+          );
+          currentTableRows = [];
+       }
+     }
+
+     for (String line in lines) {
+        String cleanLine = line.trim();
+        
+        // Remove internal AI tracking prefixes from content
+        cleanLine = cleanLine.replaceAll(RegExp(r'(?:TITLE|TÍTULO):|(?:ICON|ÍCONE|ICONE):|(?:CONTENT|CONTEÚDO|CONTEUDO):', caseSensitive: false), '').trim();
+        
+        if (cleanLine.isEmpty) {
+           flushTable();
+           widgets.add(pw.SizedBox(height: 4));
+           continue;
+        }
+
+        // Table logic (rudimentary markdown table)
+        if (cleanLine.startsWith('|') && cleanLine.endsWith('|')) {
+           final parts = cleanLine.substring(1, cleanLine.length - 1).split('|').map((s) => s.trim()).toList();
+           
+           // Skip separator rows (e.g. |---|---|)
+           if (parts.isNotEmpty && parts.every((p) => p.isEmpty || RegExp(r'^-+$').hasMatch(p) || p.contains('---'))) {
+              continue;
+           }
+
+           final isHeader = currentTableRows.isEmpty;
+           
+           currentTableRows.add(
+              pw.TableRow(
+                 decoration: isHeader ? const pw.BoxDecoration(color: _colorCardBg) : null,
+                 children: parts.map((cell) {
+                    return pw.Container(
+                       padding: const pw.EdgeInsets.all(6),
+                       alignment: pw.Alignment.center,
+                       child: _buildTableCell(cell, isHeader, accentColor),
+                    );
+                 }).toList(),
+              )
+           );
+        } else {
+           flushTable();
+           
+           // Bullet points
+           if (cleanLine.startsWith('- ') || cleanLine.startsWith('* ')) {
+              widgets.add(
+                 pw.Padding(
+                   padding: const pw.EdgeInsets.only(left: 10, bottom: 4),
+                   child: pw.Row(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                         pw.Text('• ', style: const pw.TextStyle(color: _colorText, fontSize: 10)),
+                         pw.Expanded(child: _buildRichText(cleanLine.substring(2).trim(), false, pw.TextAlign.left)),
+                      ]
+                   )
+                 )
+              );
+           } else {
+              // Standard text
+              widgets.add(
+                pw.Padding(
+                  padding: const pw.EdgeInsets.only(bottom: 4),
+                  child: _buildRichText(cleanLine, false, pw.TextAlign.justify),
+                )
+              );
+           }
+        }
+     }
+     flushTable();
+     
+     if (widgets.isNotEmpty) {
+        widgets.insert(0, pw.SizedBox(height: 8));
+        widgets.add(pw.SizedBox(height: 12));
+     }
+     
+     return widgets;
+  }
+
+  static pw.Widget _buildTableCell(String text, bool isHeader, PdfColor accentColor) {
+      PdfColor? dotColor;
+      if (text.contains('🔴') || text.contains('🟥')) {
+        dotColor = PdfColors.red;
+      } else if (text.contains('🟢') || text.contains('🟩')) dotColor = PdfColors.green;
+      else if (text.contains('🟡') || text.contains('🟨')) dotColor = PdfColors.amber;
+      
+      if (dotColor != null && text.length < 5) {
+         return pw.Container(
+           width: 8,
+           height: 8,
+           decoration: pw.BoxDecoration(
+             color: dotColor,
+             shape: pw.BoxShape.circle,
+           ),
+         );
+      }
+      return _buildRichText(text, isHeader, pw.TextAlign.center);
+  }
+
+  static pw.Widget _buildRichText(String line, bool forceBold, pw.TextAlign align) {
+      String cleanLine = line.replaceAll(RegExp(r'\[CARD_START\]|\[CARD_END\]|\[VISUAL_SUMMARY\]|\[END_SUMMARY\]|\[SOURCES\]|\[END_SOURCES\]|\[METADATA\]|\[END_METADATA\]', caseSensitive: false), '');
+      
+      if (!cleanLine.contains('**') && !forceBold) {
+         return pw.Text(cleanLine, style: pw.TextStyle(color: _colorText, fontSize: 10, lineSpacing: 1.5, fontWeight: forceBold ? pw.FontWeight.bold : pw.FontWeight.normal), textAlign: align);
+      }
+      
+      final spans = <pw.TextSpan>[];
+      final regex = RegExp(r'\*\*(.*?)\*\*');
+      int start = 0;
+      
+      for (var match in regex.allMatches(cleanLine)) {
+         if (match.start > start) {
+            spans.add(pw.TextSpan(text: cleanLine.substring(start, match.start), style: pw.TextStyle(fontWeight: forceBold ? pw.FontWeight.bold : pw.FontWeight.normal)));
+         }
+         spans.add(pw.TextSpan(text: match.group(1), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)));
+         start = match.end;
+      }
+      
+      if (start < cleanLine.length) {
+         spans.add(pw.TextSpan(text: cleanLine.substring(start), style: pw.TextStyle(fontWeight: forceBold ? pw.FontWeight.bold : pw.FontWeight.normal)));
+      }
+      return pw.RichText(
+         text: pw.TextSpan(
+            style: const pw.TextStyle(color: _colorText, fontSize: 10, lineSpacing: 1.5),
+            children: spans,
+         ),
+         textAlign: align
+      );
   }
 
   static String _getIconSymbol(String? iconName) {
@@ -330,20 +508,15 @@ class UniversalPdfService {
     try {
       final start = rawResponse.indexOf('[SOURCES]') + '[SOURCES]'.length;
       int end = rawResponse.indexOf('[END_SOURCES]');
+      
       if (end == -1) {
-         // Fallback: Check for Metadata start or End of string logic
          end = rawResponse.indexOf('[METADATA]');
       }
       if (end == -1) {
-         // Final Fallback: End of String (if reasonable length)
-         if (rawResponse.length - start < 500) { 
-            end = rawResponse.length;
-         } else {
-             return []; // Too risky
-         }
+         end = rawResponse.length; // Accept until end of file just like UI
       }
       
-      if (end < start) return [];
+      if (end <= start) return [];
       
       final sourceBlock = rawResponse.substring(start, end).trim();
       List<String> rawList;

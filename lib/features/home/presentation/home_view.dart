@@ -8,7 +8,6 @@ import 'package:scannutplus/features/food/presentation/food_dashboard.dart';
 import 'package:scannutplus/features/navigation/presentation/pets_navigation_page.dart';
 import 'package:scannutplus/features/home/presentation/widgets/app_drawer.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:scannutplus/features/pet/presentation/pet_capture_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

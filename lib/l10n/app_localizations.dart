@@ -935,6 +935,96 @@ abstract class AppLocalizations {
   /// **'Eyes Health'**
   String get help_section_eyes_title;
 
+  /// No description provided for @pet_med_drug_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Drug Name'**
+  String get pet_med_drug_name;
+
+  /// No description provided for @pet_med_dosage.
+  ///
+  /// In en, this message translates to:
+  /// **'Dosage'**
+  String get pet_med_dosage;
+
+  /// No description provided for @pet_med_unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get pet_med_unit;
+
+  /// No description provided for @pet_med_route.
+  ///
+  /// In en, this message translates to:
+  /// **'Route'**
+  String get pet_med_route;
+
+  /// No description provided for @pet_med_oral.
+  ///
+  /// In en, this message translates to:
+  /// **'Oral'**
+  String get pet_med_oral;
+
+  /// No description provided for @pet_med_injectable.
+  ///
+  /// In en, this message translates to:
+  /// **'Injectable'**
+  String get pet_med_injectable;
+
+  /// No description provided for @pet_med_topical.
+  ///
+  /// In en, this message translates to:
+  /// **'Topical'**
+  String get pet_med_topical;
+
+  /// No description provided for @pet_med_drops.
+  ///
+  /// In en, this message translates to:
+  /// **'Drops'**
+  String get pet_med_drops;
+
+  /// No description provided for @pet_med_duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration (Days)'**
+  String get pet_med_duration;
+
+  /// No description provided for @pet_med_interval.
+  ///
+  /// In en, this message translates to:
+  /// **'Interval (Hours)'**
+  String get pet_med_interval;
+
+  /// No description provided for @pet_med_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Treatment'**
+  String get pet_med_save;
+
+  /// No description provided for @pet_med_take_dose.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Dose'**
+  String get pet_med_take_dose;
+
+  /// No description provided for @pet_med_empty_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Drug name is required.'**
+  String get pet_med_empty_error;
+
+  /// No description provided for @pet_med_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication scheduled successfully!'**
+  String get pet_med_success;
+
+  /// No description provided for @pet_med_taken_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Dose recorded successfully!'**
+  String get pet_med_taken_success;
+
   /// No description provided for @help_section_eyes_desc.
   ///
   /// In en, this message translates to:
@@ -2254,6 +2344,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'CBC, Biochemistry, Urine, Stool'**
   String get pet_module_lab_programs;
+
+  /// No description provided for @pet_error_ai_unhandled_format.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI generated a complex response on this attempt. Please click analyze again.'**
+  String get pet_error_ai_unhandled_format;
 
   /// No description provided for @pet_module_food_bowl_programs.
   ///
@@ -3650,7 +3746,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_initial_assessment.
   ///
   /// In en, this message translates to:
-  /// **'Initial Assessment'**
+  /// **'New Profile'**
   String get pet_initial_assessment;
 
   /// No description provided for @pet_hint_select_type.
@@ -3944,7 +4040,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_analysis_title.
   ///
   /// In en, this message translates to:
-  /// **'Analysis: {name}'**
+  /// **'New Profile: {name}'**
   String pet_analysis_title(Object name);
 
   /// No description provided for @label_file.
@@ -5078,7 +5174,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_title_initial_eval.
   ///
   /// In en, this message translates to:
-  /// **'Initial Evaluation'**
+  /// **'New Profile'**
   String get pet_title_initial_eval;
 
   /// No description provided for @pet_title_health_summary.
@@ -6032,7 +6128,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_error_summary.
   ///
   /// In en, this message translates to:
-  /// **'Could not generate summary right now. Try again later.'**
+  /// **'We couldn\'t generate the summary right now. Please try again later.'**
   String get pet_error_summary;
 
   /// No description provided for @pet_health_based_on_history.
@@ -6040,6 +6136,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Based on Pet\'s Clinical History'**
   String get pet_health_based_on_history;
+
+  /// No description provided for @pet_metric_last_recorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Last: {value}'**
+  String pet_metric_last_recorded(String value);
+
+  /// No description provided for @pet_metric_save_quick.
+  ///
+  /// In en, this message translates to:
+  /// **'Save {metric}'**
+  String pet_metric_save_quick(String metric);
+
+  /// No description provided for @pet_metric_empty_state.
+  ///
+  /// In en, this message translates to:
+  /// **'No records'**
+  String get pet_metric_empty_state;
+
+  /// No description provided for @pet_metric_quick_action_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get pet_metric_quick_action_title;
+
+  /// No description provided for @pet_error_no_internet_title.
+  ///
+  /// In en, this message translates to:
+  /// **'No Internet Connection'**
+  String get pet_error_no_internet_title;
+
+  /// No description provided for @pet_error_no_internet_content.
+  ///
+  /// In en, this message translates to:
+  /// **'Oops! It looks like your phone is offline or the signal dropped. Please check your internet connection and try again.'**
+  String get pet_error_no_internet_content;
+
+  /// No description provided for @pet_error_timeout_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Server Busy'**
+  String get pet_error_timeout_title;
+
+  /// No description provided for @pet_error_timeout_content.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI took too long to respond this time. This usually happens when the server is busy. Please wait a few seconds and try again.'**
+  String get pet_error_timeout_content;
+
+  /// No description provided for @pet_error_technical_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to Analyze'**
+  String get pet_error_technical_title;
+
+  /// No description provided for @pet_error_technical_content.
+  ///
+  /// In en, this message translates to:
+  /// **'We encountered a small technical issue while reading your data. Don\'t worry, just try again.'**
+  String get pet_error_technical_content;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

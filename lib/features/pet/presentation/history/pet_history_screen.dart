@@ -7,8 +7,8 @@ import 'package:scannutplus/core/data/objectbox_manager.dart'; // ObjectBox
 import 'package:scannutplus/objectbox.g.dart';
 
 import 'package:scannutplus/l10n/app_localizations.dart';
-import 'package:scannutplus/features/pet/presentation/pet_analysis_result_view.dart';
 import 'package:scannutplus/core/services/universal_result_view.dart'; // Universal Video/Image Viewer
+import 'package:scannutplus/core/services/universal_ocr_result_view.dart'; // Universal OCR Viewer
 
 import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
@@ -166,8 +166,24 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
 
                        final ext = pet.imagePath.split('.').last.toLowerCase();
                        final isVideo = PetConstants.videoExtensions.contains(ext);
+                       final isOcr = pet.category == PetConstants.typeLabel || pet.category == PetConstants.typeLab || pet.category == PetConstants.typeLabel.toLowerCase() || pet.category == PetConstants.typeLab.toLowerCase();
 
-                       if (isVideo) {
+                       if (isOcr) {
+                           // Use UniversalOcrResultView for OCR/Labels
+                           Navigator.of(context).push(
+                             MaterialPageRoute(
+                               builder: (_) => UniversalOcrResultView(
+                                 imagePath: pet.imagePath,
+                                 ocrResult: pet.rawJson,
+                                 petDetails: {
+                                    PetConstants.fieldName: pet.petName,
+                                    PetConstants.fieldBreed: breed,
+                                    PetConstants.keyPageTitle: "${pet.category.toCategoryDisplay(context)}: ${pet.petName}",
+                                 },
+                               ),
+                             ),
+                           );
+                       } else if (isVideo) {
                            // Use UniversalResultView for Video Playback
                            Navigator.of(context).push(
                              MaterialPageRoute(
@@ -179,6 +195,7 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                                     PetConstants.fieldBreed: breed,
                                     PetConstants.keyIsFriend: 'false', // History assumes own pets? Or check category
                                     PetConstants.keyTutorName: '',
+                                    PetConstants.keyPageTitle: "${pet.category.toCategoryDisplay(context)}: ${pet.petName}",
                                  },
                                  onRetake: () => Navigator.of(context).pop(), 
                                  onShare: () {
@@ -191,7 +208,7 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                                            petDetails: {
                                               PetConstants.fieldName: pet.petName,
                                               PetConstants.fieldBreed: breed,
-                                              PetConstants.keyPageTitle: l10n.pet_analysis_result_title,
+                                              PetConstants.keyPageTitle: pet.category.toCategoryDisplay(context),
                                            },
                                          ),
                                        ),
@@ -201,19 +218,33 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                              ),
                            );
                        } else {
-                           // Use Standard Result View for Images
+                           // Use UniversalResultView for Images/Text
                            Navigator.of(context).push(
                              MaterialPageRoute(
-                               builder: (_) => PetAnalysisResultView(
-                                 imagePath: pet.imagePath,
+                               builder: (_) => UniversalResultView(
+                                 filePath: pet.imagePath,
                                  analysisResult: pet.rawJson,
                                  petDetails: {
                                      PetConstants.fieldName: pet.petName, 
                                      PetConstants.fieldBreed: breed,      
+                                     PetConstants.keyPageTitle: "${pet.category.toCategoryDisplay(context)}: ${pet.petName}",
                                  },
                                  onRetake: () => Navigator.of(context).pop(), 
                                  onShare: () {
-                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_share_not_implemented)));
+                                     Navigator.push(
+                                       context,
+                                       MaterialPageRoute(
+                                         builder: (context) => UniversalPdfPreviewScreen(
+                                           filePath: pet.imagePath,
+                                           analysisResult: pet.rawJson,
+                                           petDetails: {
+                                              PetConstants.fieldName: pet.petName,
+                                              PetConstants.fieldBreed: breed,
+                                              PetConstants.keyPageTitle: pet.category.toCategoryDisplay(context),
+                                           },
+                                         ),
+                                       ),
+                                     );
                                  },
                                ),
                              ),
@@ -245,7 +276,7 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                               ),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.delete_outline, color: Colors.black, size: 28),
+                              icon: const Icon(Icons.delete_outline, color: Colors.redAccent, size: 28),
                               onPressed: () => _confirmDelete(context, pet.id),
                             ),
                           ],
@@ -376,3 +407,4 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
       }
   }
 }
+

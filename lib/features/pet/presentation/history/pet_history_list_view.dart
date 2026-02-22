@@ -113,6 +113,7 @@ class _PetHistoryListViewState extends State<PetHistoryListView> {
                   petDetails: {
                     PetConstants.fieldName: entry.petName,
                     PetConstants.fieldBreed: speciesDisplay, // Using display species as breed fallback or fetch real breed if needed
+                    PetConstants.keyPageTitle: "${entry.category.toCategoryDisplay(context)}: ${entry.petName}",
                   },
                 ),
               ),

@@ -13,8 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:scannutplus/features/pet/presentation/my_pets_view.dart';
 import 'package:scannutplus/features/pet/presentation/pet_dashboard_view.dart';
 import 'package:scannutplus/features/pet/presentation/pet_capture_view.dart';
-import 'package:scannutplus/features/pet/presentation/pet_analysis_result_view.dart';
-import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_model.dart';
@@ -130,7 +128,7 @@ void _handleGlobalError(Object error, StackTrace? stack) {
             ],
           ),
           backgroundColor: Colors.redAccent, // Feedback Visual Crítico em Vermelho
-          behavior: SnackBarBehavior.floating, // Ao alcance do polegar
+          behavior: SnackBarBehavior.fixed, // Layout Seguro para Telas com FAB
           action: SnackBarAction(
             label: l10n?.error_button_retry ?? 'Tentar Novamente',
             textColor: Colors.white,
@@ -188,13 +186,6 @@ class _ScanNutAppState extends State<ScanNutApp> with WidgetsBindingObserver {
         '/my_pets': (context) => const MyPetsView(),
         '/pet_dashboard': (context) => const PetDashboardView(),
         '/pet_capture': (context) => const PetCaptureView(),
-        '/pet_analysis_result': (context) => PetAnalysisResultView(
-          imagePath: (ModalRoute.of(context)!.settings.arguments as Map)[PetConstants.argImagePath],
-          analysisResult: (ModalRoute.of(context)!.settings.arguments as Map)[PetConstants.argResult],
-          onRetake: () => Navigator.pop(context),
-          onShare: () {}, // Handled internally or needs callback
-          petDetails: (ModalRoute.of(context)!.settings.arguments as Map)[PetConstants.argPetDetails] as Map<String, String>?,
-        ),
       },
       home: const SplashScreen(),
     );

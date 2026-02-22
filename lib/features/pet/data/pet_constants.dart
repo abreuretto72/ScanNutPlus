@@ -459,7 +459,8 @@ User Question: {question}
   - Source 2
   - Source 3
   [END_SOURCES]
-  5. [METADATA] breed_name: ... | species: ... [END_METADATA]''';
+  5. [METADATA] breed_name: ... | species: ... [END_METADATA]
+  * CRITICAL: For plants, 'breed_name' MUST be the Popular Name ONLY. Do NOT include the scientific name or parenthesis. ''';
 
   static const String visualSummary = 'Summary: Technical & Concise.';
   static const String multimodalInstruction = 'Task: Analyze Image/Text.';

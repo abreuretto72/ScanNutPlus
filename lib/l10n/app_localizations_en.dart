@@ -431,6 +431,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get help_section_eyes_title => 'Eyes Health';
 
   @override
+  String get pet_med_drug_name => 'Drug Name';
+
+  @override
+  String get pet_med_dosage => 'Dosage';
+
+  @override
+  String get pet_med_unit => 'Unit';
+
+  @override
+  String get pet_med_route => 'Route';
+
+  @override
+  String get pet_med_oral => 'Oral';
+
+  @override
+  String get pet_med_injectable => 'Injectable';
+
+  @override
+  String get pet_med_topical => 'Topical';
+
+  @override
+  String get pet_med_drops => 'Drops';
+
+  @override
+  String get pet_med_duration => 'Duration (Days)';
+
+  @override
+  String get pet_med_interval => 'Interval (Hours)';
+
+  @override
+  String get pet_med_save => 'Schedule Treatment';
+
+  @override
+  String get pet_med_take_dose => 'Take Dose';
+
+  @override
+  String get pet_med_empty_error => 'Drug name is required.';
+
+  @override
+  String get pet_med_success => 'Medication scheduled successfully!';
+
+  @override
+  String get pet_med_taken_success => 'Dose recorded successfully!';
+
+  @override
   String get help_section_eyes_desc => 'Detects secretion, redness, cloudiness (opacity), and potential irritation signs.';
 
   @override
@@ -1109,6 +1154,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pet_module_lab_programs => 'CBC, Biochemistry, Urine, Stool';
+
+  @override
+  String get pet_error_ai_unhandled_format => 'The AI generated a complex response on this attempt. Please click analyze again.';
 
   @override
   String get pet_module_food_bowl_programs => 'Kibble Quality, Natural Food';
@@ -1851,7 +1899,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_created_at_label => 'Created at';
 
   @override
-  String get pet_initial_assessment => 'Initial Assessment';
+  String get pet_initial_assessment => 'New Profile';
 
   @override
   String get pet_hint_select_type => 'Select Type';
@@ -2009,7 +2057,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String pet_analysis_title(Object name) {
-    return 'Analysis: $name';
+    return 'New Profile: $name';
   }
 
   @override
@@ -2579,7 +2627,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_title_plants => 'Plants';
 
   @override
-  String get pet_title_initial_eval => 'Initial Evaluation';
+  String get pet_title_initial_eval => 'New Profile';
 
   @override
   String get pet_title_health_summary => 'Health Summary';
@@ -3078,8 +3126,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_error_nutrition_plan => 'Error generating nutritional plan.';
 
   @override
-  String get pet_error_summary => 'Could not generate summary right now. Try again later.';
+  String get pet_error_summary => 'We couldn\'t generate the summary right now. Please try again later.';
 
   @override
   String get pet_health_based_on_history => 'Based on Pet\'s Clinical History';
+
+  @override
+  String pet_metric_last_recorded(String value) {
+    return 'Last: $value';
+  }
+
+  @override
+  String pet_metric_save_quick(String metric) {
+    return 'Save $metric';
+  }
+
+  @override
+  String get pet_metric_empty_state => 'No records';
+
+  @override
+  String get pet_metric_quick_action_title => 'Quick Actions';
+
+  @override
+  String get pet_error_no_internet_title => 'No Internet Connection';
+
+  @override
+  String get pet_error_no_internet_content => 'Oops! It looks like your phone is offline or the signal dropped. Please check your internet connection and try again.';
+
+  @override
+  String get pet_error_timeout_title => 'Server Busy';
+
+  @override
+  String get pet_error_timeout_content => 'The AI took too long to respond this time. This usually happens when the server is busy. Please wait a few seconds and try again.';
+
+  @override
+  String get pet_error_technical_title => 'Unable to Analyze';
+
+  @override
+  String get pet_error_technical_content => 'We encountered a small technical issue while reading your data. Don\'t worry, just try again.';
 }

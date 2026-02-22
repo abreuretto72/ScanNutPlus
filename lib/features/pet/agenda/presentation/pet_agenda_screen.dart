@@ -4,8 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 
-import 'package:uuid/uuid.dart'; 
-import 'package:scannutplus/core/services/universal_ai_service.dart'; 
 
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart';
@@ -36,6 +34,7 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
   late Future<List<PetEvent>> _futureEvents;
   Key _scheduledTabKey = UniqueKey();
   Key _historyTabKey = UniqueKey();
+  DateTime? _selectedDate;
 
   @override
   void initState() {
@@ -195,6 +194,9 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                                    return PetActivityCalendar(
                                      events: events,
                                      onDateSelected: (date) {
+                                       setState(() {
+                                          _selectedDate = date;
+                                       });
                                        Navigator.pop(context); 
                                      },
                                    );
@@ -262,31 +264,71 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
         
         body: Padding(
           padding: const EdgeInsets.only(top: 16.0),
-          child: TabBarView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              PetScheduledEventsScreen(
-                key: _scheduledTabKey,
-                petId: widget.petId, 
-                showAppBar: false
-              ),
-              PetHistoryTab(
-                key: _historyTabKey,
-                petId: widget.petId,
-                petName: widget.petName,
-                onDelete: (ctx, event) async {
-                    _confirmDelete(ctx, event);
-                },
-              ),
-              PetRecordsTab(
-                petId: widget.petId,
-                petName: widget.petName,
-                onRecordSaved: () {
-                  setState(() {
-                    _futureEvents = _loadEvents(); 
-                    _historyTabKey = UniqueKey();
-                  });
-                },
-              ),
+               if (_selectedDate != null)
+                 Padding(
+                   padding: const EdgeInsets.only(bottom: 16.0, left: 16, right: 16),
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       Container(
+                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                         decoration: BoxDecoration(
+                           color: const Color(0xFFFFD1DC),
+                           borderRadius: BorderRadius.circular(20),
+                           border: Border.all(color: Colors.black, width: 2),
+                         ),
+                         child: Row(
+                           mainAxisSize: MainAxisSize.min,
+                           children: [
+                             Text(
+                               "Filtro: ${DateFormat('dd/MM/yyyy').format(_selectedDate!)}",
+                               style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 14),
+                             ),
+                             const SizedBox(width: 8),
+                             InkWell(
+                               onTap: () => setState(() => _selectedDate = null),
+                               child: const Icon(Icons.close, color: Colors.black, size: 20),
+                             ),
+                           ],
+                         ),
+                       ),
+                     ],
+                   ),
+                 ),
+               Expanded(
+                 child: TabBarView(
+                   children: [
+                     PetScheduledEventsScreen(
+                       key: _scheduledTabKey,
+                       petId: widget.petId, 
+                       showAppBar: false,
+                       filterDate: _selectedDate,
+                     ),
+                     PetHistoryTab(
+                       key: _historyTabKey,
+                       petId: widget.petId,
+                       petName: widget.petName,
+                       filterDate: _selectedDate,
+                       onDelete: (ctx, event) async {
+                           _confirmDelete(ctx, event);
+                       },
+                     ),
+                     PetRecordsTab(
+                       petId: widget.petId,
+                       petName: widget.petName,
+                       onRecordSaved: () {
+                         setState(() {
+                           _futureEvents = _loadEvents(); 
+                           _historyTabKey = UniqueKey();
+                         });
+                       },
+                     ),
+                   ],
+                 ),
+               ),
             ],
           ),
         ),

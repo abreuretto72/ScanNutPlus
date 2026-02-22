@@ -6,6 +6,8 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:scannutplus/core/services/env_service.dart';
 import 'package:path/path.dart' as p;
+import 'package:scannutplus/l10n/app_localizations.dart';
+import 'dart:async'; // Added for TimeoutException
 
 class UniversalAiService {
   static final UniversalAiService _instance = UniversalAiService._internal();
@@ -23,8 +25,10 @@ class UniversalAiService {
     required String context,
     required String languageCode,
     String? petName,
+    required AppLocalizations l10n,
   }) async {
     try {
+      debugPrint('[VOCAL_TRACE] Entering UniversalAiService.analyze(...)');
       // Sincroniza configuração com o servidor de controle
       await _syncConfigFromServer();
       
@@ -52,8 +56,9 @@ class UniversalAiService {
       String mediaTypeTask = 'IMAGE. Observe clinical signs, lesions, or physical characteristics.';
 
       if (['.mp4', '.mov', '.avi', '.wmv'].contains(extension)) {
-        if (extension == '.mov') mimeType = 'video/quicktime';
-        else if (extension == '.avi') mimeType = 'video/x-msvideo';
+        if (extension == '.mov') {
+          mimeType = 'video/quicktime';
+        } else if (extension == '.avi') mimeType = 'video/x-msvideo';
         else mimeType = 'video/mp4';
         
         // [SMART DETECT]
@@ -65,8 +70,9 @@ class UniversalAiService {
             mediaTypeTask = 'VIDEO. Observe movements, gait, behavior, and any visible clinical signs over time.';
         }
       } else if (['.mp3', '.wav', '.m4a', '.aac', '.ogg'].contains(extension)) {
-        if (extension == '.wav') mimeType = 'audio/wav';
-        else if (extension == '.m4a') mimeType = 'audio/mp4'; // m4a is audio/mp4 often accepted
+        if (extension == '.wav') {
+          mimeType = 'audio/wav';
+        } else if (extension == '.m4a') mimeType = 'audio/mp4'; // m4a is audio/mp4 often accepted
         else if (extension == '.ogg') mimeType = 'audio/ogg';
         else mimeType = 'audio/mpeg';
         mediaTypeTask = 'AUDIO/VOCALIZATION. Listen carefully to coughs, breathing patterns, barks, or meows. Identify frequency and clinical respiratory sounds.';
@@ -100,8 +106,10 @@ class UniversalAiService {
         FINAL COMMAND: Strictly use the markers [CARD_START] and [CARD_END].
       ''';
 
+      debugPrint('[VOCAL_TRACE] Reading file bytes: ${file.path}');
       final fileBytes = await file.readAsBytes();
       final fileSizeMb = fileBytes.lengthInBytes / (1024 * 1024);
+      debugPrint('[VOCAL_TRACE] File bytes read successfully. Size: ${fileSizeMb.toStringAsFixed(2)} MB');
 
       debugPrint('[AI_DEBUG] ----------------------------------------------------------------');
       debugPrint('[AI_DEBUG] Analyzing File: ${file.path}');
@@ -117,16 +125,31 @@ class UniversalAiService {
       final content = [Content.multi([TextPart(systemPrompt), DataPart(mimeType, fileBytes)])];
 
       // Chamada com Log de Resposta Raw para Debug
+      debugPrint('[VOCAL_TRACE] Sending Content to _model!.generateContent()');
       final response = await _model!.generateContent(content);
+      debugPrint('[VOCAL_TRACE] Received Response from _model!.generateContent()');
       final rawText = response.text ?? "Error generating report.";
       
       debugPrint('[AI_RAW_RESPONSE_START]\n$rawText\n[AI_RAW_RESPONSE_END]');
       
       return _sanitizeOutput(rawText);
       
+    } on SocketException catch (e) {
+      debugPrint('[UNIVERSAL_AI_ERROR] Network/Socket: $e');
+      return "[CARD_START]\nTITLE: ${l10n.pet_error_no_internet_title}\nICON: wifi_off\nCONTENT: ${l10n.pet_error_no_internet_content}\n[CARD_END]";
+    } on TimeoutException catch (e) {
+      debugPrint('[UNIVERSAL_AI_ERROR] Timeout: $e');
+      return "[CARD_START]\nTITLE: ${l10n.pet_error_timeout_title}\nICON: timer_off\nCONTENT: ${l10n.pet_error_timeout_content}\n[CARD_END]";
     } catch (e) {
       debugPrint('[UNIVERSAL_AI_ERROR]: $e');
-      return "Technical error during analysis: $e";
+      final errorStr = e.toString();
+      
+      if (errorStr.contains('Unhandled format') || errorStr.contains('Google Generative AI SDK')) {
+           return "[CARD_START]\nTITLE: ${l10n.pet_label_info}\nICON: info\nCONTENT: ${l10n.pet_error_ai_unhandled_format}\n[CARD_END]";
+      }
+      
+      // Fallback amigável em caso de erro bizarro sem cair no loop
+      return "[CARD_START]\nTITLE: ${l10n.pet_error_technical_title}\nICON: error_outline\nCONTENT: ${l10n.pet_error_technical_content}\n[CARD_END]";
     }
   }
 
@@ -135,6 +158,7 @@ class UniversalAiService {
     required String systemPrompt,
     required String userPrompt,
     String? modelName,
+    required AppLocalizations l10n,
   }) async {
     try {
       await _syncConfigFromServer();
@@ -158,9 +182,20 @@ class UniversalAiService {
       final response = await _model!.generateContent(content);
       return _sanitizeOutput(response.text ?? "Error generating text report.");
 
+    } on SocketException catch (e) {
+      debugPrint('[UNIVERSAL_AI_ERROR] RAG Network/Socket: $e');
+      return "[CARD_START]\nTITLE: ${l10n.pet_error_no_internet_title}\nICON: wifi_off\nCONTENT: ${l10n.pet_error_no_internet_content}\n[CARD_END]";
+    } on TimeoutException catch (e) {
+      debugPrint('[UNIVERSAL_AI_ERROR] RAG Timeout: $e');
+      return "[CARD_START]\nTITLE: ${l10n.pet_error_timeout_title}\nICON: timer_off\nCONTENT: ${l10n.pet_error_timeout_content}\n[CARD_END]";
     } catch (e) {
       debugPrint('[UNIVERSAL_AI_ERROR] RAG Failed: $e');
-      return "Technical error during text analysis: $e";
+      final errorStr = e.toString();
+      
+      if (errorStr.contains('Unhandled format') || errorStr.contains('Google Generative AI SDK')) {
+           return "[CARD_START]\nTITLE: ${l10n.pet_label_info}\nICON: info\nCONTENT: ${l10n.pet_error_ai_unhandled_format}\n[CARD_END]";
+      }
+      return "[CARD_START]\nTITLE: ${l10n.pet_error_technical_title}\nICON: error_outline\nCONTENT: ${l10n.pet_error_technical_content}\n[CARD_END]";
     }
   }
 

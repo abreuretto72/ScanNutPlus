@@ -1,8 +1,9 @@
 import 'package:scannutplus/features/pet/data/pet_repository.dart';
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart'; // Correct Repo
 import 'package:scannutplus/pet/agenda/pet_event.dart'; // Correct Model
-import 'package:scannutplus/core/services/universal_ai_service.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:scannutplus/core/services/universal_ai_service.dart';
+import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:flutter/foundation.dart';
 
 class PetHealthService {
@@ -10,7 +11,7 @@ class PetHealthService {
   final PetEventRepository _eventRepo = PetEventRepository();
   final UniversalAiService _aiService = UniversalAiService();
 
-  Future<String> generateHealthSummary(String petUuid) async {
+  Future<String> generateHealthSummary(String petUuid, {required AppLocalizations l10n}) async {
     try {
       // 1. Gather Data (RAG Source)
       debugPrint('[PetHealthService] Generating Summary for UUID: $petUuid');
@@ -104,6 +105,7 @@ Language: Portuguese (Brasil).
 Be concise, professional, and empathetic. Do NOT use ## Headers outside cards.
 """,
         userPrompt: sb.toString(),
+        l10n: l10n,
       );
       
       // [ARCHIVE] Save to History & Agenda
@@ -121,6 +123,7 @@ Be concise, professional, and empathetic. Do NOT use ## Headers outside cards.
   Future<String> generateNutritionPlan(String petUuid, {
     String dietType = 'Híbrida (Ração + Natural)',
     String goal = 'Manter Peso (Equilíbrio)',
+    required AppLocalizations l10n,
   }) async {
     try {
       debugPrint('[PetHealthService] Generating Nutrition Plan for UUID: $petUuid (Type: $dietType, Goal: $goal)');
@@ -170,17 +173,54 @@ CONTENT:
 [CARD_END]
 
 [CARD_START]
-TITLE: Cardápio Semanal 📅
-ICON: doc
+TITLE: Segunda-Feira 📅
+ICON: food
 CONTENT:
-CONTENT:
-(Detailed 7-day plan. IMPORTANT: Structure by days. Use this exact format:
-DIA 1:
+(Refeições da Segunda-Feira. Formato:
 * 08:00 - Item
-* 12:00 - Item
-DIA 2:
-...
-If days are identical, write "TODOS OS DIAS:" followed by the schedule).
+* 12:00 - Item)
+[CARD_END]
+
+[CARD_START]
+TITLE: Terça-Feira 📅
+ICON: food
+CONTENT:
+(Refeições da Terça-Feira)
+[CARD_END]
+
+[CARD_START]
+TITLE: Quarta-Feira 📅
+ICON: food
+CONTENT:
+(Refeições da Quarta-Feira)
+[CARD_END]
+
+[CARD_START]
+TITLE: Quinta-Feira 📅
+ICON: food
+CONTENT:
+(Refeições da Quinta-Feira)
+[CARD_END]
+
+[CARD_START]
+TITLE: Sexta-Feira 📅
+ICON: food
+CONTENT:
+(Refeições da Sexta-Feira)
+[CARD_END]
+
+[CARD_START]
+TITLE: Sábado 📅
+ICON: food
+CONTENT:
+(Refeições do Sábado)
+[CARD_END]
+
+[CARD_START]
+TITLE: Domingo 📅
+ICON: food
+CONTENT:
+(Refeições do Domingo)
 [CARD_END]
 
 [CARD_START]
@@ -204,12 +244,15 @@ CONTENT:
 Language: Portuguese (Brasil).
 """,
         userPrompt: "Create plan for ${profile[PetConstants.fieldName]} with diet: $dietType and goal: $goal.",
+        l10n: l10n,
       );
 
       // [ARCHIVE] Save to History & Agenda
-      if (result.isNotEmpty && !result.startsWith("Error")) {
-          await _petRepo.saveNutritionPlan(petUuid, result);
-      }
+      // DISABLED: The user explicitly requested that Nutrition Plans
+      // DO NOT generate cards in the analysis history timeline.
+      // if (result.isNotEmpty && !result.startsWith("Error")) {
+      //     await _petRepo.saveNutritionPlan(petUuid, result);
+      // }
 
       return result;
     } catch (e) {
@@ -217,4 +260,9 @@ Language: Portuguese (Brasil).
        return "Erro ao gerar plano nutricional.";
     }
   }
+
+  Future<String?> getLatestNutritionPlan(String petUuid) async {
+    return await _petRepo.getLatestNutritionPlan(petUuid);
+  }
 }
+

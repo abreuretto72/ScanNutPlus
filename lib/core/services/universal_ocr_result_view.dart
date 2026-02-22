@@ -1,13 +1,10 @@
 import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
-import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
-import 'package:scannutplus/core/services/universal_ocr_pdf_service.dart';
 
 class UniversalOcrResultView extends StatelessWidget {
   final String imagePath;
@@ -51,7 +48,7 @@ class UniversalOcrResultView extends StatelessWidget {
                     petDetails: {
                       PetConstants.fieldName: displayPetName,
                       PetConstants.fieldBreed: displayBreed,
-                      PetConstants.keyPageTitle: appL10n.pet_initial_assessment,
+                      PetConstants.keyPageTitle: petDetails?[PetConstants.keyPageTitle] ?? appL10n.pet_initial_assessment,
                     },
                   ),
                 ),
@@ -79,6 +76,23 @@ class UniversalOcrResultView extends StatelessWidget {
                 ),
               ),
             ),
+            
+            // [ANALYSIS TYPE LABEL]
+            if (petDetails?[PetConstants.keyPageTitle] != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 12, bottom: 4),
+                child: Center(
+                  child: Text(
+                    petDetails![PetConstants.keyPageTitle]!.toUpperCase(),
+                    style: const TextStyle(
+                      color: AppColors.petPrimary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 2.0,
+                    ),
+                  ),
+                ),
+              ),
 
             // Badge de Identidade (Rosa Pastel + Texto Preto)
             Padding(

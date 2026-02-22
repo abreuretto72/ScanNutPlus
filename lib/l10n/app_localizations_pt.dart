@@ -431,6 +431,51 @@ class AppLocalizationsPt extends AppLocalizations {
   String get help_section_eyes_title => 'Saúde dos Olhos';
 
   @override
+  String get pet_med_drug_name => 'Nome do Fármaco';
+
+  @override
+  String get pet_med_dosage => 'Dosagem';
+
+  @override
+  String get pet_med_unit => 'Unidade';
+
+  @override
+  String get pet_med_route => 'Via de Adm.';
+
+  @override
+  String get pet_med_oral => 'Oral';
+
+  @override
+  String get pet_med_injectable => 'Injetável';
+
+  @override
+  String get pet_med_topical => 'Tópica';
+
+  @override
+  String get pet_med_drops => 'Colírio/Gotas';
+
+  @override
+  String get pet_med_duration => 'Duração (Dias)';
+
+  @override
+  String get pet_med_interval => 'Intervalo (Horas)';
+
+  @override
+  String get pet_med_save => 'Agendar Tratamento';
+
+  @override
+  String get pet_med_take_dose => 'Dar Dose';
+
+  @override
+  String get pet_med_empty_error => 'O nome do remédio é obrigatório.';
+
+  @override
+  String get pet_med_success => 'Medicação agendada com sucesso!';
+
+  @override
+  String get pet_med_taken_success => 'Dose registrada com sucesso!';
+
+  @override
   String get help_section_eyes_desc => 'Detecta secreção e vermelhidão.';
 
   @override
@@ -1109,6 +1154,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_module_lab_programs => 'Hemograma, Bioquímico, Urina, Fezes';
+
+  @override
+  String get pet_error_ai_unhandled_format => 'A inteligência artificial gerou uma resposta complexa demais nesta tentativa. Por favor, clique em analisar novamente.';
 
   @override
   String get pet_module_food_bowl_programs => 'Qualidade da Ração, Comida Natural';
@@ -1851,7 +1899,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_created_at_label => 'Criado em';
 
   @override
-  String get pet_initial_assessment => 'Avaliação Inicial';
+  String get pet_initial_assessment => 'Novo Perfil';
 
   @override
   String get pet_hint_select_type => 'Selecione';
@@ -2009,7 +2057,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String pet_analysis_title(Object name) {
-    return 'Analysis: $name';
+    return 'Novo Perfil: $name';
   }
 
   @override
@@ -2579,7 +2627,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_title_plants => 'Plantas';
 
   @override
-  String get pet_title_initial_eval => 'Avaliação Inicial';
+  String get pet_title_initial_eval => 'Novo Perfil';
 
   @override
   String get pet_title_health_summary => 'Resumo de Saúde';
@@ -3082,4 +3130,38 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_health_based_on_history => 'Baseado no Histórico Clínico do Pet';
+
+  @override
+  String pet_metric_last_recorded(String value) {
+    return 'Último: $value';
+  }
+
+  @override
+  String pet_metric_save_quick(String metric) {
+    return 'Salvar $metric';
+  }
+
+  @override
+  String get pet_metric_empty_state => 'S/ Reg.';
+
+  @override
+  String get pet_metric_quick_action_title => 'Ações Rápidas';
+
+  @override
+  String get pet_error_no_internet_title => 'Sem Conexão com a Internet';
+
+  @override
+  String get pet_error_no_internet_content => 'Ops! Parece que o seu celular está sem internet ou o sinal caiu. Verifique a sua conexão e clique em tentar novamente.';
+
+  @override
+  String get pet_error_timeout_title => 'Servidor Ocupado';
+
+  @override
+  String get pet_error_timeout_content => 'A Inteligência Artificial demorou muito para responder desta vez. Isso acontece quando há muitos acessos ao mesmo tempo. Por favor, aguarde alguns segundos e tente novamente.';
+
+  @override
+  String get pet_error_technical_title => 'Não foi possível analisar';
+
+  @override
+  String get pet_error_technical_content => 'Tivemos uma pequena falha técnica ao analisar seus dados. Não se preocupe, pode tentar novamente.';
 }
