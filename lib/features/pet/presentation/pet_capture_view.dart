@@ -49,6 +49,7 @@ class _PetCaptureViewState extends State<PetCaptureView> {
   bool _isFriend = false;
   String? _tutorName;
   bool _isNewFriend = false;
+  String? _ownerName;
 
   final ImagePicker _picker = ImagePicker();
   String? _errorMessage; // State to track analysis errors for Retry UI
@@ -88,9 +89,13 @@ class _PetCaptureViewState extends State<PetCaptureView> {
       _isAddingNewPet = args[PetConstants.argIsAddingNewPet] ?? false; // Extract State Flag
       
       // Friend Logic (Module 2026)
-      _isFriend = args['is_friend'] ?? false;
-      _tutorName = args['tutor_name'];
-      _isNewFriend = args['is_new_friend'] ?? false;
+      final l10n = AppLocalizations.of(context)!;
+      _isFriend = args[l10n.tech_is_friend] ?? false;
+      _tutorName = args[l10n.tech_tutor_name];
+      _isNewFriend = args[l10n.tech_is_new_friend] ?? false;
+      _ownerName = args[l10n.tech_my_pet_name];
+      
+      debugPrint('[TUTOR_TRACE] Capture recebeu: $_tutorName usando chave ${l10n.tech_tutor_name}');
 
       final source = args[PetConstants.argSource] as String?;
       
@@ -290,6 +295,19 @@ class _PetCaptureViewState extends State<PetCaptureView> {
              
              debugPrint('[UNIVERSAL_OCR_TRACE] Step 3: OCR Analysis Complete. Length: ${result.length}');
 
+             // [FRIEND METADATA DICTIONARY KEY FOR OCR]
+             // Force metadata string into raw JSON so History Tab reg-ex can pull it
+             if (_isFriend) {
+                 result += '\n\n[METADATA]';
+                 if (_tutorName != null && _tutorName!.isNotEmpty) {
+                     result += '\ntutor_name: ${_tutorName!}';
+                 }
+                 if (_ownerName != null && _ownerName!.isNotEmpty) {
+                     result += '\nmy_pet_name: ${_ownerName!}';
+                 }
+                 result += '\n[END_METADATA]';
+             }
+
              // [AUTO-SAVE] Save to History (Critical Fix 2026)
              try {
                 final repo = PetRepository();
@@ -303,12 +321,13 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                 await repo.saveAnalysis(
                   petUuid: uuidToUse,
                   petName: nameToUse,
-                  analysisResult: result, // Save the FULL raw result including [SOURCES]
+                  analysisResult: result, // Save the FULL raw result including [SOURCES] and new [METADATA]
                   sources: extractedSources,
                   imagePath: _imagePath!,
                   breed: breedToUse,
                   analysisType: type == PetImageType.label ? PetConstants.typeLabel : PetConstants.typeLab,
                   tutorName: _tutorName,
+                  isFriend: _isFriend,
                 );
                 debugPrint('[UNIVERSAL_OCR_TRACE] Step 3.1: Analysis saved to History.');
              } catch (e) {
@@ -327,6 +346,10 @@ class _PetCaptureViewState extends State<PetCaptureView> {
                   petDetails: {
                     PetConstants.fieldName: nameToUse,
                     PetConstants.fieldBreed: breedToUse,
+                    PetConstants.keyIsFriend: _isFriend.toString(),
+                    if (_isFriend) 'my_pet_name': _ownerName ?? '',
+                    PetConstants.keyTutorName: _tutorName ?? '',
+                    PetConstants.keyPageTitle: AppLocalizations.of(context)!.general_analysis,
                   },
                 ),
               ),
@@ -516,6 +539,20 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
            }
         }
 
+        // [FRIEND METADATA DICTIONARY KEY]
+        // Força a injeção do nome do tutor e do pet dono no arquivo bruto
+        // para que a tela de histórico consiga resgatar via regex.
+        if (_isFriend) {
+            cleanResult += '\n\n[METADATA]';
+            if (_tutorName != null && _tutorName!.isNotEmpty) {
+                cleanResult += '\ntutor_name: ${_tutorName!}';
+            }
+            if (_ownerName != null && _ownerName!.isNotEmpty) {
+                cleanResult += '\nmy_pet_name: ${_ownerName!}';
+            }
+            cleanResult += '\n[END_METADATA]';
+        }
+
         // Determine final Identity values
         final finalName = foundName.isNotEmpty ? foundName : nameToUse;
         final finalBreed = extractedBreed.isNotEmpty ? extractedBreed : (_existingBreed ?? PetConstants.valueUnknown);
@@ -533,8 +570,9 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
             sources: [], 
             imagePath: _imagePath!,
             breed: finalBreed, // Pass extracted breed for New Profile Creation
-            analysisType: _isFriend ? PetConstants.typeFriend : finalType, // Ensure validation checks match
+            analysisType: finalType, // Preserve actual analysis type
             tutorName: _tutorName, // Pass Tutor Name
+            isFriend: _isFriend,
           );
            
            if (kDebugMode) debugPrint('[PET_STEP_3]: Auto-saved to SharedPreferences.');
@@ -559,6 +597,7 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
                     PetConstants.fieldName: finalName,
                     PetConstants.fieldBreed: finalBreed,
                     PetConstants.keyIsFriend: _isFriend.toString(),
+                    if (_isFriend) 'my_pet_name': _ownerName ?? '',
                     PetConstants.keyTutorName: _tutorName ?? '',
                     PetConstants.keyPageTitle: _getAnalysisTitle(type, AppLocalizations.of(context)!),
                   },
@@ -579,6 +618,7 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
                 PetConstants.fieldName: foundName.isNotEmpty ? foundName : nameToUse,
                 PetConstants.fieldBreed: finalBreed,
                 PetConstants.keyIsFriend: _isFriend.toString(),
+                if (_isFriend) 'my_pet_name': _ownerName ?? '',
                 PetConstants.keyTutorName: _tutorName ?? '',
                 PetConstants.keyPageTitle: _getAnalysisTitle(type, AppLocalizations.of(context)!),
              }

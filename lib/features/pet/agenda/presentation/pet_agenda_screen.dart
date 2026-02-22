@@ -254,7 +254,7 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                        side: const BorderSide(color: Colors.black, width: 3)
                     ),
                     icon: const Icon(Icons.add_rounded, color: Colors.black, size: 28),
-                    label: const Text('NOVO', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 16, letterSpacing: 0.5)),
+                    label: Text(l10n.common_new.toUpperCase(), style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 16, letterSpacing: 0.5)),
                   ),
                 );
               }

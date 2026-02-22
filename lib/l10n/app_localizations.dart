@@ -317,6 +317,24 @@ abstract class AppLocalizations {
   /// **'Get Started'**
   String get onboarding_button_start;
 
+  /// No description provided for @onboarding_tou_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytical Terms of Use'**
+  String get onboarding_tou_title;
+
+  /// No description provided for @onboarding_tou_body.
+  ///
+  /// In en, this message translates to:
+  /// **'ScanNut+ provides you with an Artificial Intelligence-based Veterinary Specialist trained at a high cost.\n\n⚠️ Attention:\nNo image analysis is free. Processing each photo generates real operation costs. Therefore, we DO NOT pre-analyze images to save traffic and speed up response times. It is entirely your responsibility to be accurate in the selected category. Out-of-context photographs will generate absurd or out-of-context reports.\n\nRemember: AI is just a virtual assistant and can make mistakes. The generated report does not replace, under any circumstances, a face-to-face evaluation by a Veterinarian or Specialist. Always consult a trusted professional to evaluate exams.'**
+  String get onboarding_tou_body;
+
+  /// No description provided for @onboarding_tou_accept.
+  ///
+  /// In en, this message translates to:
+  /// **'I understand and agree'**
+  String get onboarding_tou_accept;
+
   /// No description provided for @debug_nav_login_forced.
   ///
   /// In en, this message translates to:
@@ -3191,6 +3209,30 @@ abstract class AppLocalizations {
   /// **'Friend'**
   String get label_friend_name;
 
+  /// No description provided for @pet_friend_prefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend'**
+  String get pet_friend_prefix;
+
+  /// No description provided for @pet_friend_of_prefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend of'**
+  String get pet_friend_of_prefix;
+
+  /// No description provided for @pdf_friend_name_prefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend\'s name'**
+  String get pdf_friend_name_prefix;
+
+  /// No description provided for @pdf_my_pet_name_prefix.
+  ///
+  /// In en, this message translates to:
+  /// **'My pet\'s name'**
+  String get pdf_my_pet_name_prefix;
+
   /// No description provided for @label_tutor_name.
   ///
   /// In en, this message translates to:
@@ -3274,6 +3316,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OK'**
   String get common_ok;
+
+  /// No description provided for @common_new.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get common_new;
 
   /// No description provided for @pet_journal_analyzed_by_nano.
   ///
@@ -4288,6 +4336,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'tutor_name'**
   String get tech_tutor_name;
+
+  /// No description provided for @tech_my_pet_name.
+  ///
+  /// In en, this message translates to:
+  /// **'my_pet_name'**
+  String get tech_my_pet_name;
 
   /// No description provided for @tech_is_new_friend.
   ///

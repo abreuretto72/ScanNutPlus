@@ -25,6 +25,14 @@ class UniversalOcrResultView extends StatelessWidget {
     // Identidade do Pet (Seguindo seu protocolo de Badge Rosa)
     final String displayPetName = petDetails?[PetConstants.fieldName] ?? appL10n.pet_unknown;
     final String displayBreed = petDetails?[PetConstants.fieldBreed] ?? appL10n.pet_breed_unknown;
+    
+    // [FALLBACK PROTOCOLO 2026] Absolute Friend State Recovery
+    bool isFriend = petDetails?[PetConstants.keyIsFriend] == 'true';
+    if (!isFriend && ocrResult.contains('[METADATA]')) {
+       isFriend = true;
+    }
+    
+    final String tutorName = petDetails?[PetConstants.keyTutorName] ?? '';
 
     return Scaffold(
       backgroundColor: AppColors.petBackgroundDark,
@@ -39,6 +47,26 @@ class UniversalOcrResultView extends StatelessWidget {
             icon: const Icon(Icons.picture_as_pdf, color: AppColors.petPrimary),
             tooltip: appL10n.action_generate_pdf,
             onPressed: () {
+              // Extract Variables Fallback Protocol 2026
+              bool isFriend = petDetails?[PetConstants.keyIsFriend] == 'true';
+              if (!isFriend && ocrResult.contains('[METADATA]')) isFriend = true;
+              
+              String tutorName = petDetails?[PetConstants.keyTutorName] ?? '';
+              String myPetName = petDetails?['my_pet_name'] ?? '';
+              
+              if (isFriend && (tutorName.isEmpty || myPetName.isEmpty)) {
+                 if (ocrResult.contains('[METADATA]')) {
+                    if (tutorName.isEmpty) {
+                       final tutorMatch = RegExp(r'tutor_name:\s*(.*?)(?=\n|$)').firstMatch(ocrResult);
+                       if (tutorMatch != null) tutorName = tutorMatch.group(1)?.trim() ?? '';
+                    }
+                    if (myPetName.isEmpty) {
+                       final myPetMatch = RegExp(r'my_pet_name:\s*(.*?)(?=\n|$)').firstMatch(ocrResult);
+                       if (myPetMatch != null) myPetName = myPetMatch.group(1)?.trim() ?? '';
+                    }
+                 }
+              }
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -49,6 +77,12 @@ class UniversalOcrResultView extends StatelessWidget {
                       PetConstants.fieldName: displayPetName,
                       PetConstants.fieldBreed: displayBreed,
                       PetConstants.keyPageTitle: petDetails?[PetConstants.keyPageTitle] ?? appL10n.pet_initial_assessment,
+                      if (isFriend) ...{
+                         PetConstants.keyIsFriend: 'true',
+                         PetConstants.keyTutorName: tutorName,
+                         'friend_name': displayPetName,
+                         'my_pet_name': myPetName,
+                      }
                     },
                   ),
                 ),
@@ -97,7 +131,7 @@ class UniversalOcrResultView extends StatelessWidget {
             // Badge de Identidade (Rosa Pastel + Texto Preto)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
-              child: _buildIdentityBadge(displayPetName, displayBreed),
+              child: _buildIdentityBadge(context, displayPetName, displayBreed, isFriend: isFriend, tutorName: tutorName),
             ),
 
             // Título da Seção de Resultados
@@ -242,7 +276,31 @@ class UniversalOcrResultView extends StatelessWidget {
     );
   }
 
-  Widget _buildIdentityBadge(String name, String breed) {
+  Widget _buildIdentityBadge(BuildContext context, String name, String breed, {bool isFriend = false, String tutorName = ''}) {
+    final String analysisName = petDetails?[PetConstants.keyPageTitle] ?? AppLocalizations.of(context)!.general_analysis;
+    String myPetName = petDetails?['my_pet_name'] ?? '';
+    
+    // [FALLBACK PROTOCOLO 2026]
+    // If dictionary arguments are dropped by the Route navigator, we forcefully rip them from the raw AI result.
+    // Ensure isFriend is overridden if metadata exists
+    if (ocrResult.contains('[METADATA]')) {
+       isFriend = true;
+    }
+    
+    if (isFriend && (tutorName.isEmpty || myPetName.isEmpty)) {
+       final resultText = ocrResult;
+       if (resultText.contains('[METADATA]')) {
+          if (tutorName.isEmpty) {
+             final tutorMatch = RegExp(r'tutor_name:\s*(.*?)(?=\n|$)').firstMatch(resultText);
+             if (tutorMatch != null) tutorName = tutorMatch.group(1)?.trim() ?? '';
+          }
+          if (myPetName.isEmpty) {
+             final myPetMatch = RegExp(r'my_pet_name:\s*(.*?)(?=\n|$)').firstMatch(resultText);
+             if (myPetMatch != null) myPetName = myPetMatch.group(1)?.trim() ?? '';
+          }
+       }
+    }
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -252,14 +310,37 @@ class UniversalOcrResultView extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.assignment_ind, color: AppColors.petText),
-          const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(name, style: const TextStyle(color: AppColors.petText, fontWeight: FontWeight.bold, fontSize: 16)),
-              Text(breed, style: const TextStyle(color: AppColors.petText, fontSize: 13, fontStyle: FontStyle.italic)),
-            ],
+          const Icon(Icons.assignment_ind, color: AppColors.petText, size: 24),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (isFriend) ...[
+                   // Linha 1: [nome da analise]: [nome do pet amigo] (Anti-duplicidade)
+                   Text(
+                       analysisName.toLowerCase().contains(name.toLowerCase()) ? analysisName : "$analysisName: $name", 
+                       style: const TextStyle(color: AppColors.petText, fontWeight: FontWeight.bold, fontSize: 16)
+                   ),
+                   // Linha 2: [nome do tutor]
+                   if (tutorName.isNotEmpty)
+                     Padding(
+                       padding: const EdgeInsets.only(top: 4.0),
+                       child: Text("${AppLocalizations.of(context)!.label_tutor_name}: $tutorName", style: const TextStyle(color: AppColors.petText, fontSize: 14, fontStyle: FontStyle.italic)),
+                     ),
+                   // Linha 3: [nome do meu pet]
+                   if (myPetName.isNotEmpty)
+                     Padding(
+                       padding: const EdgeInsets.only(top: 2.0),
+                       child: Text("${AppLocalizations.of(context)!.pdf_my_pet_name_prefix}: $myPetName", style: const TextStyle(color: AppColors.petText, fontSize: 14, fontStyle: FontStyle.italic)),
+                     ),
+                ] else ...[
+                   Text(name, style: const TextStyle(color: AppColors.petText, fontWeight: FontWeight.bold, fontSize: 16)),
+                   if (breed.isNotEmpty)
+                     Text(breed, style: const TextStyle(color: AppColors.petText, fontSize: 13, fontStyle: FontStyle.italic)),
+                ],
+              ],
+            ),
           ),
         ],
       ),

@@ -1,0 +1,24 @@
+Running Gradle task 'assembleDebug'...                          
+lib/features/pet/agenda/presentation/pet_agenda_screen.dart:257:38: Error: The getter 'common_new' isn't defined for the type 'AppLocalizations'.
+ - 'AppLocalizations' is from 'package:scannutplus/l10n/app_localizations.dart' ('lib/l10n/app_localizations.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'common_new'.
+                    label: Text(l10n.common_new.toUpperCase(), style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 16, letterSpacing: 0.5)),
+                                     ^^^^^^^^^^
+Target kernel_snapshot_program failed: Exception
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileFlutterBuildDebug'.
+> Process 'command 'C:\Users\Abreu\flutter\bin\flutter.bat'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 8s
+Running Gradle task 'assembleDebug'...                              8,7s
+Gradle task assembleDebug failed with exit code 1

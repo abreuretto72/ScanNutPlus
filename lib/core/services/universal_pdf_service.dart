@@ -76,6 +76,10 @@ class UniversalPdfService {
     final breed = petDetails[PetConstants.fieldBreed] ?? l10n.pdf_unknown_breed;
     final dateStr = DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now());
     
+    final isFriend = petDetails[PetConstants.keyIsFriend] == 'true';
+    final myPetName = petDetails['my_pet_name'] ?? '';
+    final tutorName = petDetails[PetConstants.keyTutorName] ?? '';
+    
     // Dynamic Title (e.g. "ScanNut+: Avaliação da Condição Corporal" or fallback)
     final moduleName = petDetails[PetConstants.keyPageTitle];
     final pageTitle = moduleName != null 
@@ -158,24 +162,29 @@ class UniversalPdfService {
             ),
             child: pw.Column(
               children: [
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Text('Nome: $name', style: pw.TextStyle(color: _colorText, fontSize: 14, fontWeight: pw.FontWeight.bold)),
-                    pw.Text('Raça: $breed', style: pw.TextStyle(color: _colorText, fontSize: 14)),
-                  ],
-                ),
-                if (petDetails.containsKey('friend_name')) ...[
-                   pw.Divider(color: accentColor, thickness: 0.5),
-                   pw.Row(
-                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                     children: [
-                        pw.Text(l10n.pdf_friend_present(petDetails['friend_name']!), style: pw.TextStyle(color: _colorText, fontSize: 13, fontWeight: pw.FontWeight.bold)),
-                        if (petDetails.containsKey('tutor_name'))
-                          pw.Text(l10n.pdf_tutor(petDetails['tutor_name']!), style: pw.TextStyle(color: _colorText, fontSize: 12)),
-                     ]
-                   )
-                ]
+                if (isFriend)
+                  pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text('${l10n.pdf_friend_name_prefix}: $name', style: pw.TextStyle(color: _colorText, fontSize: 13, fontWeight: pw.FontWeight.bold)),
+                      if (tutorName.isNotEmpty) ...[
+                        pw.SizedBox(height: 4),
+                        pw.Text('${l10n.label_tutor_name}: $tutorName', style: pw.TextStyle(color: _colorText, fontSize: 13, fontWeight: pw.FontWeight.bold)),
+                      ],
+                      if (myPetName.isNotEmpty) ...[
+                        pw.SizedBox(height: 2),
+                        pw.Text('${l10n.pdf_my_pet_name_prefix}: $myPetName', style: pw.TextStyle(color: _colorText, fontSize: 13, fontWeight: pw.FontWeight.bold)),
+                      ]
+                    ],
+                  )
+                else
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text('Nome: $name', style: pw.TextStyle(color: _colorText, fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                      pw.Text('Raça: $breed', style: pw.TextStyle(color: _colorText, fontSize: 14)),
+                    ],
+                  ),
               ]
             ),
           ),
@@ -234,12 +243,11 @@ class UniversalPdfService {
       child: pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
-          pw.Text(title, style: pw.TextStyle(color: accentColor, fontSize: 20, fontWeight: pw.FontWeight.bold)),
+          pw.Text(title, style: pw.TextStyle(color: accentColor, fontSize: 16, fontWeight: pw.FontWeight.bold)),
           pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.end,
             children: [
                pw.Text(l10n.pdf_date(date), style: pw.TextStyle(color: _colorText, fontSize: 10)),
-               pw.Text(l10n.pdf_master_protocol_2026, style: pw.TextStyle(color: _colorTextDim, fontSize: 8)),
             ]
           )
         ],

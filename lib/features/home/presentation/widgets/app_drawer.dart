@@ -70,7 +70,7 @@ class AppDrawer extends StatelessWidget {
                              border: Border.all(color: const Color(0xFF1F3A5F), width: 2),
                              image: userPhoto != null 
                                 ? DecorationImage(
-                                    image: FileImage(File(userPhoto)),
+                                    image: ResizeImage(FileImage(File(userPhoto)), width: 250),
                                     fit: BoxFit.cover,
                                   )
                                 : null,

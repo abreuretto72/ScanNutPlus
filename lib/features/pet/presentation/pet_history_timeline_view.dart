@@ -85,6 +85,20 @@ class _PetHistoryTimelineViewState extends State<PetHistoryTimelineView> {
        return;
     }
 
+    // Parse Friend metadata seamlessly from Analysis Result block
+    String? tutorName;
+    String? myPetName;
+    bool isFriend = false;
+    
+    if (result.contains('[METADATA]')) {
+      isFriend = true;
+      final tutorMatch = RegExp(r'tutor_name:\s*(.*?)(?=\n|$)').firstMatch(result);
+      if (tutorMatch != null) tutorName = tutorMatch.group(1)?.trim();
+      
+      final myPetMatch = RegExp(r'my_pet_name:\s*(.*?)(?=\n|$)').firstMatch(result);
+      if (myPetMatch != null) myPetName = myPetMatch.group(1)?.trim();
+    }
+
     // Unified Routing (Protocol 2026 - Golden Standard)
     Navigator.of(context).pushNamed(
       '/pet_analysis_result',
@@ -96,10 +110,13 @@ class _PetHistoryTimelineViewState extends State<PetHistoryTimelineView> {
          PetConstants.argName: widget.petName,
          PetConstants.argBreed: (entry[PetConstants.fieldBreed] ?? '').toString(),
          
-         // Fix: Ensure explicitly Map<String, String>
+         // Fix: Ensure explicitly Map<String, String> (Restoring Friend Flags for view & PDF)
          PetConstants.argPetDetails: <String, String>{
             PetConstants.fieldName: widget.petName,
             PetConstants.fieldBreed: (entry[PetConstants.fieldBreed] ?? '').toString(),
+            if (isFriend) 'is_friend': 'true',
+            if (tutorName != null && tutorName.isNotEmpty) 'tutor_name': tutorName,
+            if (myPetName != null && myPetName.isNotEmpty) 'my_pet_name': myPetName,
          }
       }
     );

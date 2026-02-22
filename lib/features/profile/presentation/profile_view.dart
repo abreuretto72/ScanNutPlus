@@ -165,7 +165,7 @@ class _ProfileViewState extends State<ProfileView> {
                           border: Border.all(color: Colors.black, width: 3),
                           image: _userPhotoPath != null
                               ? DecorationImage(
-                                  image: FileImage(File(_userPhotoPath!)),
+                                  image: ResizeImage(FileImage(File(_userPhotoPath!)), width: 250),
                                   fit: BoxFit.cover,
                                 )
                               : null,

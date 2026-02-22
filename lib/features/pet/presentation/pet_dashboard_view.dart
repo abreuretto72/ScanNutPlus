@@ -5,6 +5,7 @@ import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/data/pet_repository.dart';
 import 'package:scannutplus/features/pet/data/models/pet_entity.dart';
+import 'package:scannutplus/features/pet/presentation/history/pet_history_screen.dart'; // Added missing import
 
 
 
@@ -32,6 +33,20 @@ class _PetDashboardViewState extends State<PetDashboardView> {
   void initState() {
     super.initState();
     _loadFriends();
+  }
+
+  bool _isInitialized = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInitialized) {
+       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+       if (args != null && args['is_friend_tab'] == true) {
+           _isFriendMode = true;
+       }
+       _isInitialized = true;
+    }
   }
 
   Future<void> _loadFriends() async {
@@ -200,34 +215,34 @@ class _PetDashboardViewState extends State<PetDashboardView> {
                 const SizedBox(height: 12),
                 
                 // --- NEW FRIEND INPUTS ---
-                if (isNewFriend) ...[
-                   TextField(
-                     controller: _friendNameController,
-                     style: const TextStyle(color: Colors.white),
-                     decoration: InputDecoration(
-                        labelText: l10n.label_friend_name,
-                        labelStyle: const TextStyle(color: Colors.white70),
-                        prefixIcon: const Icon(Icons.pets, color: Colors.white70),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.white24)),
-                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.petPrimary)),
-                     ),
-                   ),
-                   const SizedBox(height: 12),
-                   TextField(
-                     controller: _tutorNameController,
-                     style: const TextStyle(color: Colors.white),
-                     decoration: InputDecoration(
-                        labelText: l10n.pet_label_tutor,
-                        labelStyle: const TextStyle(color: Colors.white70),
-                        prefixIcon: const Icon(Icons.person, color: Colors.white70),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.white24)),
-                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.petPrimary)),
-                     ),
-                   ),
-                   const SizedBox(height: 16),
-                ],
-                const Divider(color: Colors.white24),
-                const SizedBox(height: 16),
+               if (isNewFriend) ...[
+                  TextField(
+                    controller: _friendNameController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                       labelText: l10n.label_friend_name,
+                       labelStyle: const TextStyle(color: Colors.white70),
+                       prefixIcon: const Icon(Icons.pets, color: Colors.white70),
+                       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.white24)),
+                       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.petPrimary)),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _tutorNameController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                       labelText: l10n.pet_label_tutor,
+                       labelStyle: const TextStyle(color: Colors.white70),
+                       prefixIcon: const Icon(Icons.person, color: Colors.white70),
+                       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.white24)),
+                       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.petPrimary)),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+               ],
+               const Divider(color: Colors.white24),
+               const SizedBox(height: 16),
             ],
 
             Text(l10n.pet_select_context, 
@@ -317,6 +332,9 @@ class _PetDashboardViewState extends State<PetDashboardView> {
                       finalName = friend.name ?? l10n.pet_unknown;
                    }
                 }
+                
+                final outTutorName = _isFriendMode ? (_selectedFriendUuid == PetConstants.valNewFriend ? _tutorNameController.text : _friendPets.firstWhere((p) => p.uuid == _selectedFriendUuid).tutorName) : null;
+                debugPrint('[TUTOR_TRACE] Dashboard enviando: $outTutorName para chave ${l10n.tech_tutor_name}');
 
                 Navigator.pushNamed(context, '/pet_capture', arguments: {
                   PetConstants.argUuid: finalUuid,
@@ -326,7 +344,8 @@ class _PetDashboardViewState extends State<PetDashboardView> {
                   PetConstants.argImagePath: imagePath,
                   // New Arguments for Friend Logic
                   l10n.tech_is_friend: _isFriendMode,
-                  l10n.tech_tutor_name: _isFriendMode ? (_selectedFriendUuid == PetConstants.valNewFriend ? _tutorNameController.text : _friendPets.firstWhere((p) => p.uuid == _selectedFriendUuid).tutorName) : null,
+                  l10n.tech_my_pet_name: name, // Injetando explicitamente o nome do dono original usando l10n seguro
+                  l10n.tech_tutor_name: outTutorName,
                   l10n.tech_is_new_friend: _isFriendMode && _selectedFriendUuid == PetConstants.valNewFriend,
                 }).then((_) {
                    setState(() {

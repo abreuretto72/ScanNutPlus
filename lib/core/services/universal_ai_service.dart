@@ -100,6 +100,10 @@ class UniversalAiService {
            [SOURCES]
            (Bibliographic references).
 
+           [METADATA]
+           breed_name: (Identified Breed)
+           [END_METADATA]
+
         3. OUTPUT LANGUAGE: You must generate the entire response strictly in the language: $languageCode.
         
         IMPORTANT: No Markdown code blocks. Output language is $languageCode.

@@ -10,13 +10,62 @@ class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   Future<void> _completeOnboarding(BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(AppKeys.onboardingCompleted, true);
+    final l10n = AppLocalizations.of(context)!;
+    
+    // First-Launch Terms of Use Modal (Protocol 2026)
+    final bool? accepted = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false, // Force explicit decision
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          backgroundColor: const Color(0xFF1E1E1E), // Dark theme to match UI
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: Row(
+            children: [
+               const Icon(Icons.gavel, color: Colors.orangeAccent),
+               const SizedBox(width: 10),
+               Expanded(
+                 child: Text(
+                   l10n.onboarding_tou_title,
+                   style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                 ),
+               ),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: Text(
+              l10n.onboarding_tou_body,
+              style: const TextStyle(color: Colors.white70, fontSize: 14, height: 1.4),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+              child: Text(MaterialLocalizations.of(context).cancelButtonLabel, style: const TextStyle(color: Colors.white54)),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(dialogContext).pop(true),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF6A4D8C), // Purple branding
+                foregroundColor: Colors.white,
+              ),
+              child: Text(l10n.onboarding_tou_accept, style: const TextStyle(fontWeight: FontWeight.bold)),
+            ),
+          ],
+        );
+      },
+    );
 
-    if (context.mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
+    // Only proceed if explicitly accepted
+    if (accepted == true) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(AppKeys.onboardingCompleted, true);
+
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      }
     }
   }
 
@@ -50,13 +99,11 @@ class OnboardingScreen extends StatelessWidget {
               
               // Logo or Image Placeholder could go here, but let's stick to text as requested
                Center(
-                  child: ClipOval(
                   child: Image.asset(
-                    'assets/images/logo_scannut.jpg',
+                    'assets/images/logo_scannut.png',
                     height: 120,
                     width: 120,
                   ),
-                ),
               ),
               const SizedBox(height: 48),
 

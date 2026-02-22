@@ -61,12 +61,24 @@ class PetEventDetailScreen extends StatelessWidget {
                                 ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
                                 : type.label(l10n);
 
-    // Friend Detection
-    final RegExp friendRegex = RegExp(r'\[Amigo: (.*?) \| Tutor: (.*?)\]');
-    final friendMatch = event.notes != null ? friendRegex.firstMatch(event.notes!) : null;
-    final String? friendName = friendMatch?.group(1);
-    final String? tutorName = friendMatch?.group(2);
-    final String displayNotes = event.notes?.replaceAll(friendRegex, '').trim() ?? '';
+    // Friend Detection via [METADATA] Protocol 2026
+    String? tutorName;
+    String? myPetName;
+    bool isFriend = false;
+    
+    if (event.hasAIAnalysis && event.metrics?[PetConstants.keyAiSummary] != null) {
+      final summaryStr = event.metrics![PetConstants.keyAiSummary] as String;
+      if (summaryStr.contains('[METADATA]')) {
+         isFriend = true; // The presence of metadata guarantees it's an analysis with extended vars
+         final tutorMatch = RegExp(r'tutor_name:\s*(.*?)(?=\n|$)').firstMatch(summaryStr);
+         if (tutorMatch != null) tutorName = tutorMatch.group(1)?.trim();
+         
+         final myPetMatch = RegExp(r'my_pet_name:\s*(.*?)(?=\n|$)').firstMatch(summaryStr);
+         if (myPetMatch != null) myPetName = myPetMatch.group(1)?.trim();
+      }
+    }
+    
+    final String displayNotes = event.notes ?? '';
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -89,8 +101,12 @@ class PetEventDetailScreen extends StatelessWidget {
                  petDetails: {
                    PetConstants.fieldName: petName,
                    PetConstants.keyPageTitle: displayTitle,
-                   if (friendName != null) 'friend_name': friendName,
-                   if (tutorName != null) 'tutor_name': tutorName,
+                   // Protocol 2026: Inject true Friend Flags so PDF renders the 3-line layout
+                   if (tutorName != null) ...{
+                      'is_friend': 'true',
+                      'tutor_name': tutorName,
+                      if (myPetName != null) 'my_pet_name': myPetName,
+                   }
                  },
                )));
             },
@@ -194,7 +210,7 @@ class PetEventDetailScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Friend Info Block
-            if (friendName != null && tutorName != null)
+            if (isFriend && tutorName != null && tutorName.isNotEmpty)
               Container(
                 margin: const EdgeInsets.only(bottom: 24),
                 padding: const EdgeInsets.all(16),
@@ -212,7 +228,7 @@ class PetEventDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${l10n.pet_friend_name_label}: $friendName",
+                            "${l10n.pet_friend_name_label}: $petName",
                             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           const SizedBox(height: 4),

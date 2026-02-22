@@ -61,6 +61,7 @@ class PetRepository {
     String breed = PetConstants.valueUnknown,
     String analysisType = PetConstants.typeClinical,
     String? tutorName, // Added for Friend Pet
+    bool isFriend = false, // Prevents syncing to agenda
   }) async {
     // [GUARD] Prevent saving analysis for nameless pets
     if (petName.isEmpty || petName == PetConstants.valNull) {
@@ -139,7 +140,10 @@ class PetRepository {
     }
 
     // C. Sync to Agenda (Protocol 2026 - Active Repository)
-    await _syncToAgenda(historyEntry);
+    // BLOCK FRIEND EVENTS: Do not generate agenda events for friend analyses.
+    if (!isFriend && analysisType != PetConstants.typeFriend) {
+      await _syncToAgenda(historyEntry);
+    }
   }
 
   /// 3. Get All Registered Profiles (Source of Truth: ObjectBox)

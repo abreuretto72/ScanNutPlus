@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:scannutplus/core/data/objectbox_manager.dart';
+import 'package:scannutplus/features/pet/data/models/pet_entity.dart';
+import 'package:scannutplus/objectbox.g.dart';
 import 'package:video_player/video_player.dart'; // Necessário para o preview de vídeo
 import 'package:path/path.dart' as p;
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
@@ -92,10 +95,22 @@ class _UniversalResultViewState extends State<UniversalResultView> {
     final isFriend = widget.petDetails?[PetConstants.keyIsFriend] == 'true';
     final tutorName = widget.petDetails?[PetConstants.keyTutorName] ?? '';
 
+    String finalMyPetName = appL10n.pet_mode_my_pet;
+    
     if (isFriend) {
-       displayTitle = appL10n.pet_result_title_friend_pet(displayPetName, tutorName);
+       // O topo da tela deve ser Meu Pet: [nome do meu pet]
+       String? fallbackOwnerName;
+       try {
+           final box = ObjectBoxManager.currentStore.box<PetEntity>();
+           final ownerPet = box.query(PetEntity_.type.notEquals(PetConstants.typeFriend)).build().findFirst();
+           fallbackOwnerName = ownerPet?.name;
+       } catch (e) {
+           debugPrint('[PET_ERROR]: Falha ao resgatar owner: $e');
+       }
+       
+       finalMyPetName = widget.petDetails?['my_pet_name'] ?? args?[PetConstants.argName]?.toString() ?? fallbackOwnerName ?? appL10n.pet_mode_my_pet;
+       displayTitle = "${appL10n.pet_mode_my_pet}: $finalMyPetName";
     } else {
-       // Only use My Pet format if explicitly standard, else generic
        displayTitle = appL10n.pet_result_title_my_pet(displayPetName);
     }
 
@@ -124,6 +139,9 @@ class _UniversalResultViewState extends State<UniversalResultView> {
                        PetConstants.fieldBreed: displayBreed,
                        PetConstants.keyTutorName: tutorName,
                        PetConstants.keyPageTitle: widget.petDetails?[PetConstants.keyPageTitle] ?? displayTitle, // Use calculated title fallback
+                       PetConstants.keyIsFriend: isFriend ? 'true' : 'false',
+                       if (isFriend) 'friend_name': displayPetName,
+                       if (isFriend) 'my_pet_name': finalMyPetName,
                     },
                   ),
                 ),
@@ -161,7 +179,7 @@ class _UniversalResultViewState extends State<UniversalResultView> {
             // Badge de Identidade (Rosa Pastel + Texto Preto)
             Padding(
               padding: const EdgeInsets.only(top: 12, bottom: 24),
-              child: _buildIdentityBadge(context, displayPetName, displayBreed),
+              child: _buildIdentityBadge(context, displayPetName, displayBreed, isFriend: isFriend, tutorName: tutorName),
             ),
             
             // Cards Dinâmicos do Laudo
@@ -354,7 +372,29 @@ class _UniversalResultViewState extends State<UniversalResultView> {
     );
   }
 
-  Widget _buildIdentityBadge(BuildContext context, String name, String breed) {
+  Widget _buildIdentityBadge(BuildContext context, String name, String breed, {bool isFriend = false, String tutorName = ''}) {
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final String analysisName = widget.petDetails?[PetConstants.keyPageTitle] 
+                                ?? args?[PetConstants.argType]?.toString() // Fallback if type was passed
+                                ?? AppLocalizations.of(context)!.general_analysis;
+    String myPetName = widget.petDetails?['my_pet_name'] ?? '';
+    
+    // [FALLBACK PROTOCOLO 2026]
+    // If dictionary arguments are dropped by the Route navigator, we forcefully rip them from the raw AI result.
+    if (isFriend && (tutorName.isEmpty || myPetName.isEmpty)) {
+       final resultText = widget.analysisResult;
+       if (resultText.contains('[METADATA]')) {
+          if (tutorName.isEmpty) {
+             final tutorMatch = RegExp(r'tutor_name:\s*(.*?)(?=\n|$)').firstMatch(resultText);
+             if (tutorMatch != null) tutorName = tutorMatch.group(1)?.trim() ?? '';
+          }
+          if (myPetName.isEmpty) {
+             final myPetMatch = RegExp(r'my_pet_name:\s*(.*?)(?=\n|$)').firstMatch(resultText);
+             if (myPetMatch != null) myPetName = myPetMatch.group(1)?.trim() ?? '';
+          }
+       }
+    }
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -371,9 +411,29 @@ class _UniversalResultViewState extends State<UniversalResultView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: const TextStyle(color: AppColors.petText, fontWeight: FontWeight.bold, fontSize: 16)),
-                if (breed.isNotEmpty)
-                  Text(breed, style: const TextStyle(color: AppColors.petText, fontSize: 13, fontStyle: FontStyle.italic)),
+                if (isFriend) ...[
+                   // Linha 1: [nome da analise]: [nome do pet amigo] (Anti-duplicidade)
+                   Text(
+                       analysisName.toLowerCase().contains(name.toLowerCase()) ? analysisName : "$analysisName: $name", 
+                       style: const TextStyle(color: AppColors.petText, fontWeight: FontWeight.bold, fontSize: 16)
+                   ),
+                   // Linha 2: [nome do tutor]
+                   if (tutorName.isNotEmpty)
+                     Padding(
+                       padding: const EdgeInsets.only(top: 4.0),
+                       child: Text("${AppLocalizations.of(context)!.label_tutor_name}: $tutorName", style: const TextStyle(color: AppColors.petText, fontSize: 14, fontStyle: FontStyle.italic)),
+                     ),
+                   // Linha 3: [nome do meu pet]
+                   if (myPetName.isNotEmpty)
+                     Padding(
+                       padding: const EdgeInsets.only(top: 2.0),
+                       child: Text("${AppLocalizations.of(context)!.pdf_my_pet_name_prefix}: $myPetName", style: const TextStyle(color: AppColors.petText, fontSize: 14, fontStyle: FontStyle.italic)),
+                     ),
+                ] else ...[
+                   Text(name, style: const TextStyle(color: AppColors.petText, fontWeight: FontWeight.bold, fontSize: 16)),
+                   if (breed.isNotEmpty)
+                     Text(breed, style: const TextStyle(color: AppColors.petText, fontSize: 13, fontStyle: FontStyle.italic)),
+                ],
               ],
             ),
           ),

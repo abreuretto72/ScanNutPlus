@@ -112,30 +112,37 @@ void _handleGlobalError(Object error, StackTrace? stack) {
   if (context != null) {
       final l10n = AppLocalizations.of(context);
       
-      // Exibição humanizada (Ergonomia SM A256E)
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               Text(
-                 l10n?.error_generic_title ?? 'Ops! Algo não saiu como esperado', 
-                 style: const TextStyle(fontWeight: FontWeight.bold)
-               ),
-               const SizedBox(height: 4),
-               Text(l10n?.error_generic_message ?? 'O sistema teve um pequeno tropeço técnico. Já estamos verificando!'),
-            ],
-          ),
-          backgroundColor: Colors.redAccent, // Feedback Visual Crítico em Vermelho
-          behavior: SnackBarBehavior.fixed, // Layout Seguro para Telas com FAB
-          action: SnackBarAction(
-            label: l10n?.error_button_retry ?? 'Tentar Novamente',
-            textColor: Colors.white,
-            onPressed: () {}, // Fechará automaticamente e indicará que pode tentar novamente
-          ),
-        ),
-      );
+      // Exibição humanizada (Ergonomia SM A256E) - Protected via PostFrameCallback
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Double check mounted equivalent or just try catch if navigator context is dead
+        try {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                   Text(
+                     l10n?.error_generic_title ?? 'Ops! Algo não saiu como esperado', 
+                     style: const TextStyle(fontWeight: FontWeight.bold)
+                   ),
+                   const SizedBox(height: 4),
+                   Text(l10n?.error_generic_message ?? 'O sistema teve um pequeno tropeço técnico. Já estamos verificando!'),
+                ],
+              ),
+              backgroundColor: Colors.redAccent, // Feedback Visual Crítico em Vermelho
+              behavior: SnackBarBehavior.fixed, // Layout Seguro para Telas com FAB
+              action: SnackBarAction(
+                label: l10n?.error_button_retry ?? 'Tentar Novamente',
+                textColor: Colors.white,
+                onPressed: () {}, // Fechará automaticamente e indicará que pode tentar novamente
+              ),
+            ),
+          );
+        } catch (e) {
+            debugPrint('[SCAN_NUT_CRASH] Failed to show error SnackBar: $e');
+        }
+      });
   }
 }
 

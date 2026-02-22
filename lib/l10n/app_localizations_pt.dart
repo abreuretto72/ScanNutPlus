@@ -120,6 +120,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get onboarding_button_start => 'Começar';
 
   @override
+  String get onboarding_tou_title => 'Termos de Uso Analítico';
+
+  @override
+  String get onboarding_tou_body => 'O ScanNut+ fornece a você um Especialista Veterinário baseado em Inteligência Artificial treinada em alto custo.\n\n⚠️ Atenção:\nNenhuma análise de imagem é de graça. O processamento de cada foto gera custos reais de operação. Por isso, NÃO analisamos previamente as imagens para poupar tráfego e acelerar a resposta. É de sua inteira responsabilidade ser preciso na categoria selecionada. Fotografias fora de contexto gerarão laudos absurdos ou fora de contexto.\n\nLembre-se: A IA é apenas um assistente virtual e pode cometer erros. O laudo gerado não substitui, em hipótese alguma, a avaliação presencial de um Médico Veterinário ou Especialista. Consulte sempre um profissional de confiança para laudar exames.';
+
+  @override
+  String get onboarding_tou_accept => 'Eu entendi e concordo';
+
+  @override
   String get debug_nav_login_forced => 'NAVIGATE_TO_LOGIN_DEBUG';
 
   @override
@@ -1607,6 +1616,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get label_friend_name => 'Amigo';
 
   @override
+  String get pet_friend_prefix => 'Amigo';
+
+  @override
+  String get pet_friend_of_prefix => 'Amigo do';
+
+  @override
+  String get pdf_friend_name_prefix => 'Nome do amigo';
+
+  @override
+  String get pdf_my_pet_name_prefix => 'Nome do meu pet';
+
+  @override
   String get label_tutor_name => 'Tutor';
 
   @override
@@ -1647,6 +1668,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get common_ok => 'OK';
+
+  @override
+  String get common_new => 'Novo';
 
   @override
   String get pet_journal_analyzed_by_nano => 'Análise Nano Banana';
@@ -2182,6 +2206,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tech_tutor_name => 'tutor_name';
+
+  @override
+  String get tech_my_pet_name => 'my_pet_name';
 
   @override
   String get tech_is_new_friend => 'is_new_friend';
