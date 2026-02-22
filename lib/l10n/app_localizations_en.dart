@@ -1569,7 +1569,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String pet_walk_title_dynamic(String petName) {
-    return 'Passeio: $petName';
+    return 'Walk: $petName';
+  }
+
+  @override
+  String pet_friend_walk_title_dynamic(String petName) {
+    return 'Friend Walk: $petName';
   }
 
   @override

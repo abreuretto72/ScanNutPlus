@@ -450,10 +450,29 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.pet_walk_title_dynamic(widget.petName)), // "Passeio: {name}"
-        actions: [
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(l10n.pet_walk_title_dynamic(widget.petName)), // "Passeio: {name}"
+          bottom: TabBar(
+            indicator: BoxDecoration(
+              color: const Color(0xFFFFD1DC), // Rosa Pastel 
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.black, width: 2),
+            ),
+            indicatorPadding: const EdgeInsets.symmetric(horizontal: -8, vertical: 6),
+            labelColor: Colors.black,
+            labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
+            unselectedLabelColor: Colors.white54,
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+            dividerColor: Colors.transparent,
+            tabs: [
+              Tab(text: l10n.pet_my_pets_title.toUpperCase()),
+              Tab(text: l10n.pet_friend_list_label.toUpperCase()),
+            ],
+          ),
+          actions: [
           // WALK SUMMARY ACTION (Only shows if there are events)
           FutureBuilder<List<PetEvent>>(
             future: _futureEvents,
@@ -565,219 +584,248 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                     return true;
                  }).toList();
 
-          if (events.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                   const Icon(Icons.directions_walk, size: 64, color: Colors.grey),
-                   const SizedBox(height: 16),
-                   Text(l10n.pet_walk_empty_history, style: const TextStyle(color: Colors.grey)), 
-                ],
-              ),
-            );
-          }
-
-          final grouped = _groupByDay(events);
-          final days = grouped.keys.toList()
-            ..sort((a, b) => b.compareTo(a)); 
-
-          return ListView.builder(
-            padding: const EdgeInsets.only(bottom: 80),
-            itemCount: days.length,
-            itemBuilder: (context, index) {
-              final day = days[index];
-              final dayEvents = grouped[day]!;
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // 📅 Cabeçalho do dia
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                    child: Text(
-                      _dayLabel(day, l10n),
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ),
-
-                  // 📋 Eventos do dia
-                  ...dayEvents.map((event) {
+                 // Split events into myPets and Friends
+                 final myPetsEvents = events.where((event) {
                     final type = event.eventTypeIndex.toPetEventType();
-                    // Google Event Logic
-                    final isSummary = event.metrics != null && event.metrics!['is_summary'] == true;
-                    final isGoogleEvent = event.metrics != null && event.metrics!['is_google_event'] == true;
-                    final isFriendEvent = event.notes != null && event.notes!.contains('[Amigo:');
-                    
-                    // Card Color
-                    final cardColor = isSummary ? const Color(0xFFFFF9C4) // Light Yellow/Gold for Summary
-                                    : isGoogleEvent ? const Color(0xFFE3F2FD) // Light Blue for Google
-                                    : isFriendEvent ? const Color(0xFFB9FBC0) // Light Mint Green for Friends
-                                    : const Color(0xFFFFD1DC); 
-                    final textColor = Colors.black;
+                    final isFriendByType = type == PetEventType.friend || (event.metrics != null && event.metrics!['event_type'] == 'FRIEND');
+                    final isFriendByNotes = (event.notes != null && event.notes!.contains('[${l10n.pet_friend_prefix}:'));
+                    final isFriend = isFriendByType || isFriendByNotes;
+                    return !isFriend;
+                 }).toList();
 
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: cardColor, 
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.black, width: 3),
-                        boxShadow: const [
-                          BoxShadow(color: Colors.black, offset: Offset(5, 5))
-                        ],
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(20),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => PetEventDetailScreen(
-                                  event: event,
-                                  petName: widget.petName,
-                                ),
-                              ),
-                            ).then((_) {
-                               setState(() {
-                                 _futureEvents = _loadEvents(); // Refresh on return
-                               });
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Icon (Chunky)
-                                Container(
-                                  width: 56,
-                                  height: 56,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(color: Colors.black, width: 2),
-                                  ),
-                                  child: isSummary 
-                                      ? Icon(Icons.auto_awesome_rounded, size: 28, color: Colors.amber[800]) // Summary Icon
-                                      : isGoogleEvent
-                                          ? const Icon(Icons.map_rounded, size: 28, color: Color(0xFF4285F4)) // Google Maps Icon (Blue)
-                                          : isFriendEvent
-                                              ? const Icon(Icons.pets, size: 28, color: Colors.black) // Friend Walk Icon
-                                              : const Icon(Icons.directions_walk_rounded, size: 28, color: Colors.black), // Walk Icon
-                                ),
-                                const SizedBox(width: 16),
-                                
-                                // Content
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // Title
-                                      Text(
-                                         (event.metrics != null && event.metrics!['is_metric_record'] == true) 
-                                            ? "Métricas Clínicas: ${event.metrics!['custom_title'] ?? l10n.pet_event_walk}"
-                                         : (event.metrics != null && event.metrics!.containsKey('custom_title'))
-                                            ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
-                                            : l10n.pet_event_walk, 
-                                         style: const TextStyle(fontWeight: FontWeight.w900, color: Colors.black, fontSize: 18, letterSpacing: -0.3),
-                                         overflow: TextOverflow.ellipsis,
-                                         maxLines: 2,
-                                      ),
-                                      const SizedBox(height: 6),
-                                      
-                                      // Date
-                                      Text(
-                                        DateFormat("dd/MM/yyyy • HH:mm").format(event.startDateTime),
-                                        style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 13),
-                                      ),
-                                      
-                                      // Notes
-                                      if (event.notes != null && event.notes!.isNotEmpty) ...[
-                                         const SizedBox(height: 8),
-                                         Text(
-                                           event.notes!,
-                                           style: const TextStyle(
-                                             fontSize: 13, 
-                                             color: Colors.black87,
-                                             fontWeight: FontWeight.w600,
-                                           ),
-                                           maxLines: 4, 
-                                           overflow: TextOverflow.ellipsis,
-                                         ),
-                                      ],
-          
-                                      // Address
-                                      if (event.address != null && event.address!.isNotEmpty) ...[
-                                         const SizedBox(height: 8),
-                                         Row(
-                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                           children: [
-                                              const Icon(Icons.location_on_rounded, size: 14, color: Colors.black),
-                                              const SizedBox(width: 4),
-                                              Expanded(
-                                                child: Text(
-                                                  event.address!,
-                                                  style: const TextStyle(fontSize: 12, color: Colors.black87, fontWeight: FontWeight.w600),
-                                                  maxLines: 2, 
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                           ],
-                                         ),
-                                      ],
-                                    ],
-                                  ),
-                                ),
-                                
-                                 if (event.metrics != null && event.metrics!['is_medication'] == true && event.metrics!['status'] == 'pending')
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 8),
-                                      width: double.infinity,
-                                      child: ElevatedButton.icon(
-                                        onPressed: () => _markMedicationAsTaken(context, event),
-                                        icon: const Icon(Icons.check, color: Colors.white, size: 18),
-                                        label: Text(l10n.pet_med_take_dose, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color(0xFF10AC84), // Plant Green
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Colors.black, width: 2)),
-                                          elevation: 0,
-                                        ),
-                                      ),
-                                    ),
-                                 
-                                // Delete Action
-                                Container(
-                                  margin: const EdgeInsets.only(left: 8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(color: Colors.black, width: 2),
-                                  ),
-                                  child: IconButton(
-                                    icon: const Icon(Icons.delete_rounded, color: Colors.redAccent, size: 20),
-                                    padding: const EdgeInsets.all(6),
-                                    constraints: const BoxConstraints(),
-                                    onPressed: () => _confirmDelete(context, event),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-                ],
-              );
-            },
-          );
+                 final friendEvents = events.where((event) {
+                    final type = event.eventTypeIndex.toPetEventType();
+                    final isFriendByType = type == PetEventType.friend || (event.metrics != null && event.metrics!['event_type'] == 'FRIEND');
+                    final isFriendByNotes = (event.notes != null && event.notes!.contains('[${l10n.pet_friend_prefix}:'));
+                    final isFriend = isFriendByType || isFriendByNotes;
+                    return isFriend;
+                 }).toList();
+
+                 return TabBarView(
+                   children: [
+                     _buildEventList(myPetsEvents, l10n),
+                     _buildEventList(friendEvents, l10n, isFriendTab: true),
+                   ],
+                 );
         },
       ),
               ),
             ],
           ),
-        );
-      }
+        ),
+      );
     }
+
+  Widget _buildEventList(List<PetEvent> events, AppLocalizations l10n, {bool isFriendTab = false}) {
+    if (events.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+             const Icon(Icons.directions_walk, size: 64, color: Colors.grey),
+             const SizedBox(height: 16),
+             Text(l10n.pet_walk_empty_history, style: const TextStyle(color: Colors.grey)), 
+          ],
+        ),
+      );
+    }
+
+    final grouped = _groupByDay(events);
+    final days = grouped.keys.toList()
+      ..sort((a, b) => b.compareTo(a)); 
+
+    return ListView.builder(
+      padding: const EdgeInsets.only(bottom: 80),
+      itemCount: days.length,
+      itemBuilder: (context, index) {
+        final day = days[index];
+        final dayEvents = grouped[day]!;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 📅 Cabeçalho do dia
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: Text(
+                _dayLabel(day, l10n),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+
+            // 📋 Eventos do dia
+            ...dayEvents.map((event) {
+              final type = event.eventTypeIndex.toPetEventType();
+              // Google Event Logic
+              final isSummary = event.metrics != null && event.metrics!['is_summary'] == true;
+              final isGoogleEvent = event.metrics != null && event.metrics!['is_google_event'] == true;
+              final isFriendEvent = event.notes != null && event.notes!.contains('[Amigo:');
+              
+              // Card Color
+              final cardColor = isSummary ? const Color(0xFFFFF9C4) // Light Yellow/Gold for Summary
+                              : isGoogleEvent ? const Color(0xFFE3F2FD) // Light Blue for Google
+                              : isFriendEvent ? const Color(0xFFB9FBC0) // Light Mint Green for Friends
+                              : const Color(0xFFFFD1DC); 
+
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: cardColor, 
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.black, width: 3),
+                  boxShadow: const [
+                    BoxShadow(color: Colors.black, offset: Offset(5, 5))
+                  ],
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(20),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PetEventDetailScreen(
+                            event: event,
+                            petName: widget.petName,
+                          ),
+                        ),
+                      ).then((_) {
+                         setState(() {
+                           _futureEvents = _loadEvents(); // Refresh on return
+                         });
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Icon (Chunky)
+                          Container(
+                            width: 56,
+                            height: 56,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: Colors.black, width: 2),
+                            ),
+                            child: isSummary 
+                                ? Icon(Icons.auto_awesome_rounded, size: 28, color: Colors.amber[800]) // Summary Icon
+                                : isGoogleEvent
+                                    ? const Icon(Icons.map_rounded, size: 28, color: Color(0xFF4285F4)) // Google Maps Icon (Blue)
+                                    : isFriendEvent
+                                        ? const Icon(Icons.pets, size: 28, color: Colors.black) // Friend Walk Icon
+                                        : const Icon(Icons.directions_walk_rounded, size: 28, color: Colors.black), // Walk Icon
+                          ),
+                          const SizedBox(width: 16),
+                          
+                          // Content
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Title
+                                Text(
+                                   // isFriendTab prepend "Amigo: " to title if it's the friend tab
+                                   isFriendTab 
+                                      ? '${l10n.pet_friend_prefix.toUpperCase()}: ${(event.metrics != null && event.metrics!['is_metric_record'] == true) ? event.metrics!['custom_title'] ?? l10n.pet_event_walk : (event.metrics != null && event.metrics!.containsKey('custom_title')) ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context) : l10n.pet_event_walk}'
+                                      : ((event.metrics != null && event.metrics!['is_metric_record'] == true) 
+                                        ? "Métricas Clínicas: ${event.metrics!['custom_title'] ?? l10n.pet_event_walk}"
+                                     : (event.metrics != null && event.metrics!.containsKey('custom_title'))
+                                        ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
+                                        : l10n.pet_event_walk), 
+                                   style: const TextStyle(fontWeight: FontWeight.w900, color: Colors.black, fontSize: 18, letterSpacing: -0.3),
+                                   overflow: TextOverflow.ellipsis,
+                                   maxLines: 2,
+                                ),
+                                const SizedBox(height: 6),
+                                
+                                // Date
+                                Text(
+                                  DateFormat("dd/MM/yyyy • HH:mm").format(event.startDateTime),
+                                  style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 13),
+                                ),
+                                
+                                // Notes
+                                if (event.notes != null && event.notes!.isNotEmpty) ...[
+                                   const SizedBox(height: 8),
+                                   Text(
+                                     event.notes!,
+                                     style: const TextStyle(
+                                       fontSize: 13, 
+                                       color: Colors.black87,
+                                       fontWeight: FontWeight.w600,
+                                     ),
+                                     maxLines: 4, 
+                                     overflow: TextOverflow.ellipsis,
+                                   ),
+                                ],
+
+                                // Address
+                                if (event.address != null && event.address!.isNotEmpty) ...[
+                                   const SizedBox(height: 8),
+                                   Row(
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                     children: [
+                                        const Icon(Icons.location_on_rounded, size: 14, color: Colors.black),
+                                        const SizedBox(width: 4),
+                                        Expanded(
+                                          child: Text(
+                                            event.address!,
+                                            style: const TextStyle(fontSize: 12, color: Colors.black87, fontWeight: FontWeight.w600),
+                                            maxLines: 2, 
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                     ],
+                                   ),
+                                ],
+                              ],
+                            ),
+                          ),
+                          
+                           if (event.metrics != null && event.metrics!['is_medication'] == true && event.metrics!['status'] == 'pending')
+                              Container(
+                                margin: const EdgeInsets.only(top: 8),
+                                width: double.infinity,
+                                child: ElevatedButton.icon(
+                                  onPressed: () => _markMedicationAsTaken(context, event),
+                                  icon: const Icon(Icons.check, color: Colors.white, size: 18),
+                                  label: Text(l10n.pet_med_take_dose, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF10AC84), // Plant Green
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Colors.black, width: 2)),
+                                    elevation: 0,
+                                  ),
+                                ),
+                              ),
+                           
+                          // Delete Action
+                          Container(
+                            margin: const EdgeInsets.only(left: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.black, width: 2),
+                            ),
+                            child: IconButton(
+                              icon: const Icon(Icons.delete_rounded, color: Colors.redAccent, size: 20),
+                              padding: const EdgeInsets.all(6),
+                              constraints: const BoxConstraints(),
+                              onPressed: () => _confirmDelete(context, event),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }),
+          ],
+        );
+      },
+    );
+  }
+}

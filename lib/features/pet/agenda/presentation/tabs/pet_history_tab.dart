@@ -191,7 +191,9 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
         // EXCLUIR EVENTOS DE AMIGOS (E LEGADOS) DA AGENDA
         final myPetsEvents = events.where((event) {
            final type = event.eventTypeIndex.toPetEventType();
-           final isFriend = type == PetEventType.friend || (event.metrics != null && event.metrics!['event_type'] == 'FRIEND');
+           final isFriendByType = type == PetEventType.friend || (event.metrics != null && event.metrics!['event_type'] == 'FRIEND');
+           final isFriendByNotes = (event.notes != null && event.notes!.contains('[${l10n.pet_friend_prefix}:'));
+           final isFriend = isFriendByType || isFriendByNotes;
            return !isFriend;
         }).toList();
 
@@ -278,6 +280,12 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // TRACE LOG PARA DEBUGAR A IMAGEM DO PASSEIO
+                              if (kDebugMode && type == PetEventType.activity)
+                                Builder(builder: (context) {
+                                  debugPrint('APP_TRACE_PASSEIO_ID: ${event.id} | MEDIAPATHS: ${event.mediaPaths}');
+                                  return const SizedBox.shrink();
+                                }),
                               // Icon or Image (Chunky)
                               Container(
                                 width: 64,
@@ -309,13 +317,14 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                     Row(
                                       children: [
                                          Expanded(
-                                           child: Text(
-                                             isFriend ? (event.metrics?['guest_pet_name'] ?? l10n.history_guest) 
-                                             : (event.metrics != null && event.metrics!['is_metric_record'] == true)
-                                                ? "Métricas Clínicas: ${event.metrics!['custom_title'] ?? type.label(l10n)}"
-                                             : (event.metrics != null && event.metrics!.containsKey('custom_title'))
-                                                ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
-                                                : type.label(l10n), 
+                                            child: Text(
+                                              (event.metrics != null && event.metrics!['is_metric_record'] == true)
+                                                 ? "Métricas Clínicas: ${event.metrics!['custom_title'] ?? type.label(l10n)}"
+                                              : (event.metrics != null && event.metrics!.containsKey('custom_title'))
+                                                 ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
+                                                 : (type == PetEventType.activity)
+                                                    ? (isFriend ? l10n.pet_friend_walk_title_dynamic(event.metrics?['guest_pet_name'] ?? l10n.pet_unknown_name) : l10n.pet_walk_title_dynamic(widget.petName))
+                                                    : (isFriend ? (event.metrics?['guest_pet_name'] ?? l10n.history_guest) : type.label(l10n)), 
                                              style: const TextStyle(fontWeight: FontWeight.w900, color: Colors.black, fontSize: 18, letterSpacing: -0.3),
                                              overflow: TextOverflow.ellipsis,
                                              maxLines: 2,

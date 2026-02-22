@@ -276,10 +276,10 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                        cleanResult = pet.rawJson.replaceAll(RegExp(r'\[METADATA\](.*?)\[END_METADATA\]', dotAll: true), '').trim();
                        
                        // Safe extraction of injected identities
-                       final petNameMatch = RegExp(r'(?i)my_pet_name:\s*([^\|\n]*)').firstMatch(pet.rawJson);
+                       final petNameMatch = RegExp(r'my_pet_name:\s*([^\|\n]*)', caseSensitive: false).firstMatch(pet.rawJson);
                        safeMyPetName = petNameMatch?.group(1)?.trim() ?? '';
 
-                       final tutorNameMatch = RegExp(r'(?i)tutor_name:\s*([^\|\n]*)').firstMatch(pet.rawJson);
+                       final tutorNameMatch = RegExp(r'tutor_name:\s*([^\|\n]*)', caseSensitive: false).firstMatch(pet.rawJson);
                        safeTutorName = tutorNameMatch?.group(1)?.trim() ?? '';
                        
                        // OVERRIDE: Resgata o Tutor Real e fidedigno direto do banco de dados (ignorando problemas de parse do OCR)
@@ -353,6 +353,8 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                                           PetConstants.fieldName: pet.petName,
                                           PetConstants.fieldBreed: breed,
                                           PetConstants.keyPageTitle: pet.category.toCategoryDisplay(context),
+                                          PetConstants.keyTutorName: safeTutorName,
+                                          PetConstants.keyIsFriend: isFriendTab ? 'true' : 'false',
                                        },
                                      ),
                                    ),
@@ -388,6 +390,8 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                                           PetConstants.fieldName: pet.petName,
                                           PetConstants.fieldBreed: breed,
                                           PetConstants.keyPageTitle: pet.category.toCategoryDisplay(context),
+                                          PetConstants.keyTutorName: safeTutorName,
+                                          PetConstants.keyIsFriend: isFriendTab ? 'true' : 'false',
                                        },
                                      ),
                                    ),

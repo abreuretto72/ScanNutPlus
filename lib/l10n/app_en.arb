@@ -616,13 +616,22 @@
         }
     }
   },
-  "pet_walk_title_dynamic": "Passeio: {petName}",
+  "pet_walk_title_dynamic": "Walk: {petName}",
   "@pet_walk_title_dynamic": {
     "description": "Title for the Pet Walk screen with dynamic pet name",
     "placeholders": {
         "petName": {
             "type": "String"
         }
+    }
+  },
+  "pet_friend_walk_title_dynamic": "Friend Walk: {petName}",
+  "@pet_friend_walk_title_dynamic": {
+    "description": "Dynamic friend walk title",
+    "placeholders": {
+      "petName": {
+        "type": "String"
+      }
     }
   },
   "pet_agenda_empty": "Empty Agenda",

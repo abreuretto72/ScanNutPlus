@@ -253,10 +253,10 @@ class PetConstants {
 
   // --- REGEX ---
   static const String regexCardStart = r'\[CARD_START\]\s*(.*?)\s*(?:\[CARD_END\]|\[SOURCES\]|$)';
-  static const String regexTitle = r'TITLE:\s*(.*?)(?:\s*ICON:|\s*CONTENT:|\n|$)';
-  static const String regexContent = r'CONTENT:\s*(.*?)$';
-  static const String regexIcon = r'ICON:\s*(.*?)(?:\s*CONTENT:|\n|$)';
-  static const String regexBreed = r'\[BREED\]:\s*(.*?)(?:\n|$)';
+  static const String regexTitle = r'(?:TITLE|TÍTULO|TITULO):\s*(.*?)(?:\s*(?:ICON|ÍCONE|ICONE):|\s*(?:CONTENT|CONTEÚDO|CONTEUDO):|\n|$)';
+  static const String regexContent = r'(?:CONTENT|CONTEÚDO|CONTEUDO):\s*(.*?)$';
+  static const String regexIcon = r'(?:ICON|ÍCONE|ICONE):\s*(.*?)(?:\s*(?:CONTENT|CONTEÚDO|CONTEUDO):|\n|$)';
+  static const String regexBreed = r'\[(?:BREED|RAÇA|RACA)\]:\s*(.*?)(?:\n|$)';
 
 
   // --- CONFIGURAÇÕES ---
@@ -351,7 +351,7 @@ class PetConstants {
   // --- HARDCODED STRING REPLACEMENTS (Pilar 0) ---
   static const String typeNewProfileLegacy = 'PetImageType.newProfile'; // For legacy check
   static const String tagContent = 'CONTENT:';
-  static const String regexTitleIcon = r'TITLE:|ICON:';
+  static const String regexTitleIcon = r'(?:TITLE|TÍTULO|TITULO):|(?:ICON|ÍCONE|ICONE):';
   static const String regexLegacyFinalBreed = r'FINAL_BREED:\s*(.*?)(?:$|\n)';
   static const String regexBreedPt = r'Raça:\s*([^\n]*)';
   static const String regexBreedEn = r'Race:\s*([^\n]*)';

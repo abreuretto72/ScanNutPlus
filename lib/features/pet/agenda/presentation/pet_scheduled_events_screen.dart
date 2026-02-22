@@ -12,12 +12,14 @@ import 'package:scannutplus/features/pet/agenda/logic/pet_notification_manager.d
 
 class PetScheduledEventsScreen extends StatefulWidget {
   final String petId;
+  final String petName;
   final bool showAppBar;
   final DateTime? filterDate;
 
   const PetScheduledEventsScreen({
     super.key,
     required this.petId,
+    required this.petName,
     this.showAppBar = true,
     this.filterDate,
   });
@@ -133,8 +135,16 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
 
             final event = _appointments[index];
             final rawTitle = event.metrics?['custom_title']?.toString();
+            
+            final type = PetEventType.values.firstWhere(
+                (e) => e.index == event.eventTypeIndex,
+                orElse: () => PetEventType.activity);
+
             final title =
-                rawTitle ?? l10n.pet_appointment_tab_data;
+                rawTitle ?? (type == PetEventType.activity 
+                    ? l10n.pet_walk_title_dynamic(widget.petName) 
+                    : l10n.pet_appointment_tab_data);
+            
             final professional =
                 event.metrics?['professional']?.toString() ?? '';
             final leadTime =

@@ -140,10 +140,8 @@ class PetRepository {
     }
 
     // C. Sync to Agenda (Protocol 2026 - Active Repository)
-    // BLOCK FRIEND EVENTS: Do not generate agenda events for friend analyses.
-    if (!isFriend && analysisType != PetConstants.typeFriend) {
-      await _syncToAgenda(historyEntry);
-    }
+    // ALLOW FRIEND EVENTS: Friends now have their own tab in the History screen so we MUST sync them to the agenda database.
+    await _syncToAgenda(historyEntry);
   }
 
   /// 3. Get All Registered Profiles (Source of Truth: ObjectBox)

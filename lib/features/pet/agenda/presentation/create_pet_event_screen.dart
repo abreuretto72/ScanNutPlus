@@ -11,7 +11,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart'; // Reverse Geocoding
 import 'package:file_picker/file_picker.dart';
-// import 'utils/pet_map_markers.dart' as map_markers; // REMOVED: Inlined due to build error
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 import 'package:flutter/foundation.dart'; // For kDebugMode
 import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
@@ -1443,9 +1444,42 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
           }
       }
 
+      // HELPER: Copy media from temporary cache to permanent app storage
+      Future<String> secureMedia(String sourcePath) async {
+         try {
+            final appDir = await getApplicationDocumentsDirectory();
+            final mediaDir = Directory('${appDir.path}/pet_event_media');
+            if (!mediaDir.existsSync()) {
+               mediaDir.createSync(recursive: true);
+            }
+            final ext = path.extension(sourcePath);
+            final newFileName = '${eventId}_${DateTime.now().millisecondsSinceEpoch}$ext';
+            final targetPath = '${mediaDir.path}/$newFileName';
+            await File(sourcePath).copy(targetPath);
+            return targetPath;
+         } catch (e) {
+            debugPrint('[MEDIA_TRACE] Failed to secure media file: $e');
+            return sourcePath; // Fallback to original
+         }
+      }
+
+      String? finalImagePath;
+      String? finalVideoPath;
+      String? finalAudioPath;
+
+      if (_capturedImage != null) {
+          finalImagePath = await secureMedia(_capturedImage!.path);
+      }
+      if (_capturedVideo != null) {
+          finalVideoPath = await secureMedia(_capturedVideo!.path);
+      }
+      if (_selectedAudioFile != null) {
+          finalAudioPath = await secureMedia(_selectedAudioFile!);
+      }
+
        // FLUXO NORMAL (PET PRINCIPAL)
       PetEvent newEventToSave = PetEvent(
-        id: const Uuid().v4(),
+        id: eventId,
         startDateTime: DateTime.now(), 
         petIds: [widget.petId], 
         eventTypeIndex: detectedType.index, // Respect detected/initial type
@@ -1456,12 +1490,12 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
           PetConstants.keyLatitude: _currentPos.latitude,
           PetConstants.keyLongitude: _currentPos.longitude,
           PetConstants.keyAddress: _currentAddress, 
-          if (_selectedAudioFile != null) PetConstants.keyAudioPath: _selectedAudioFile, 
-          if (_capturedVideo != null) PetConstants.keyVideoPath: _capturedVideo!.path, 
+          if (finalAudioPath != null) PetConstants.keyAudioPath: finalAudioPath, 
+          if (finalVideoPath != null) PetConstants.keyVideoPath: finalVideoPath, 
           if (aiSummary != null) PetConstants.keyAiSummary: aiSummary,
           'source': widget.initialEventType == PetEventType.activity ? 'walk_journal' : 'journal', // Tag source for filtering
         },
-        mediaPaths: _capturedImage != null ? [_capturedImage!.path] : null,
+        mediaPaths: finalImagePath != null ? [finalImagePath] : null,
       );
 
       // Inject the 'Friend' keyword automatically if the switch is ON.
@@ -1477,8 +1511,9 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
             tutorName = _tutorNameController.text.trim().isNotEmpty ? _tutorNameController.text.trim() : "?";
         }
         
+        final l10n = AppLocalizations.of(context)!;
         newEventToSave = newEventToSave.copyWith(
-          notes: "${newEventToSave.notes ?? ''} [Amigo: $friendName | Tutor: $tutorName]",
+          notes: "${newEventToSave.notes ?? ''} [${l10n.pet_friend_prefix}: $friendName | ${l10n.pet_label_tutor}: $tutorName]",
         );
       }
 

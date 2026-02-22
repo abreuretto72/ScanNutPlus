@@ -65,13 +65,16 @@ class PetEventDetailScreen extends StatelessWidget {
     String? tutorName;
     String? myPetName;
     bool isFriend = false;
+    String? friendName;
     
     if (event.hasAIAnalysis && event.metrics?[PetConstants.keyAiSummary] != null) {
       final summaryStr = event.metrics![PetConstants.keyAiSummary] as String;
       if (summaryStr.contains('[METADATA]')) {
-         isFriend = true; // The presence of metadata guarantees it's an analysis with extended vars
          final tutorMatch = RegExp(r'tutor_name:\s*(.*?)(?=\n|$)').firstMatch(summaryStr);
-         if (tutorMatch != null) tutorName = tutorMatch.group(1)?.trim();
+         if (tutorMatch != null) {
+            tutorName = tutorMatch.group(1)?.trim();
+            isFriend = true; // Only guarantee friend if tutor is explicitly in metadata
+         }
          
          final myPetMatch = RegExp(r'my_pet_name:\s*(.*?)(?=\n|$)').firstMatch(summaryStr);
          if (myPetMatch != null) myPetName = myPetMatch.group(1)?.trim();
@@ -80,11 +83,55 @@ class PetEventDetailScreen extends StatelessWidget {
     
     final String displayNotes = event.notes ?? '';
 
+    // Walk Journal Fallback Regex for Friend Detection
+    if (!isFriend && displayNotes.contains('[${l10n.pet_friend_prefix}:')) {
+       isFriend = true;
+       myPetName = petName; // the petName passed is the main pet
+       final regex = RegExp(r'\[' '${RegExp.escape(l10n.pet_friend_prefix)}' r':\s*(.*?)\s*\|\s*' '${RegExp.escape(l10n.pet_label_tutor)}' r':\s*(.*?)\]');
+       final match = regex.firstMatch(displayNotes);
+       if (match != null) {
+          friendName = match.group(1)?.trim();
+          tutorName = match.group(2)?.trim();
+       }
+    }
+
+    // Determine AppBar Title
+    final String screenTitle = type == PetEventType.activity 
+            ? (isFriend ? l10n.pet_friend_walk_title_dynamic(friendName ?? l10n.pet_unknown_name) : l10n.pet_walk_title_dynamic(petName)) 
+            : l10n.pet_agenda_title_dynamic(petName);
+
+    // Assemble the complete analysis payload (including injected UI cards like Notes) BEFORE building the scaffold
+    // so both the UI Renderer and the PDF Generator receive the exact same sequence of data.
+    String? finalSummary;
+    if (event.metrics?[PetConstants.keyAiSummary] != null) {
+       finalSummary = event.metrics![PetConstants.keyAiSummary]!;
+       
+       if (type == PetEventType.activity && displayNotes.isNotEmpty) {
+          String noteContent = displayNotes;
+          if (isFriend && friendName != null) {
+             noteContent = noteContent.replaceAll(RegExp(r'\[' '${RegExp.escape(l10n.pet_friend_prefix)}' r':.*?\]'), '').trim();
+             noteContent += '\n\n**${l10n.pet_label_tutor}:** ${tutorName ?? l10n.value_unknown}';
+             noteContent += '\n**${l10n.pet_my_pets_title}:** ${myPetName ?? petName}';
+          }
+
+          final noteCard = '''
+[CARD_START]
+ICON: info
+TITLE: ${l10n.pet_event_note}
+CONTENT:
+$noteContent
+[CARD_END]
+
+''';
+          finalSummary = noteCard + finalSummary!;
+       }
+    }
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(l10n.pet_agenda_title_dynamic(petName), style: const TextStyle(color: Colors.white)),
+        title: Text(screenTitle, style: const TextStyle(color: Colors.white)),
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
@@ -92,19 +139,17 @@ class PetEventDetailScreen extends StatelessWidget {
             onPressed: () {
                // Generate PDF PREVIEW using the Standardized Screen
                Navigator.push(context, MaterialPageRoute(builder: (_) => UniversalPdfPreviewScreen(
-                 title: displayTitle,
+                 title: screenTitle,
                  filePath: event.mediaPaths?.isNotEmpty == true ? event.mediaPaths!.first : null,
-                 // CONTENT: Use AI summary if present, otherwise Notes
-                 analysisResult: (event.hasAIAnalysis && event.metrics?[PetConstants.keyAiSummary] != null) 
-                    ? event.metrics![PetConstants.keyAiSummary] 
-                    : (event.notes ?? ''),
+                 // CONTENT: Use the fully assembled AI summary if present, otherwise Notes
+                 analysisResult: finalSummary ?? displayNotes,
                  petDetails: {
-                   PetConstants.fieldName: petName,
-                   PetConstants.keyPageTitle: displayTitle,
+                   PetConstants.fieldName: isFriend && friendName != null ? friendName : petName,
+                   PetConstants.keyPageTitle: screenTitle,
                    // Protocol 2026: Inject true Friend Flags so PDF renders the 3-line layout
                    if (tutorName != null) ...{
-                      'is_friend': 'true',
-                      'tutor_name': tutorName,
+                      PetConstants.keyIsFriend: 'true',
+                      PetConstants.keyTutorName: tutorName,
                       if (myPetName != null) 'my_pet_name': myPetName,
                    }
                  },
@@ -304,10 +349,12 @@ class PetEventDetailScreen extends StatelessWidget {
                   children: [
                      // Removed "Resumo IA" header and green box
                      // In a real scenario, this would check 'metrics' for the stored analysis text
-                    if (event.metrics?[PetConstants.keyAiSummary] != null)
-                      PetAiCardsRenderer(
-                        analysisResult: event.metrics![PetConstants.keyAiSummary]!,
-                      )
+                    if (finalSummary != null) 
+                      Builder(builder: (context) {
+                         return PetAiCardsRenderer(
+                           analysisResult: finalSummary!,
+                         );
+                      })
                     else
                       Text(
                         l10n.pet_analysis_data_not_found,

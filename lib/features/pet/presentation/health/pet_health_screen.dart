@@ -636,10 +636,10 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
     for (var match in matches) {
       final body = match.group(1) ?? '';
       
-      final title = RegExp(PetConstants.regexTitle).firstMatch(body)?.group(1) ?? 'Análise';
-      final content = RegExp(PetConstants.regexContent, dotAll: true).firstMatch(body)?.group(1) ?? '';
-      final cleanContent = content.replaceAll(RegExp(r'(ICON:|CONTENT:)'), '').trim();
-      final iconName = RegExp(PetConstants.regexIcon).firstMatch(body)?.group(1) ?? 'info';
+      final title = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(body)?.group(1) ?? 'Análise';
+      final content = RegExp(PetConstants.regexContent, dotAll: true, caseSensitive: false).firstMatch(body)?.group(1) ?? '';
+      final cleanContent = content.replaceAll(RegExp(r'(?:ICON|ÍCONE|ICONE|CONTENT|CONTEÚDO|CONTEUDO):', caseSensitive: false), '').trim();
+      final iconName = RegExp(PetConstants.regexIcon, caseSensitive: false).firstMatch(body)?.group(1) ?? 'info';
 
       if (cleanContent.isNotEmpty) {
          blocks.add(_AnalysisBlock(title: title.trim(), content: cleanContent, icon: _getIconData(iconName.trim())));

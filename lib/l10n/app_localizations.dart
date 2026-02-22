@@ -3128,8 +3128,14 @@ abstract class AppLocalizations {
   /// Title for the Pet Walk screen with dynamic pet name
   ///
   /// In en, this message translates to:
-  /// **'Passeio: {petName}'**
+  /// **'Walk: {petName}'**
   String pet_walk_title_dynamic(String petName);
+
+  /// Dynamic friend walk title
+  ///
+  /// In en, this message translates to:
+  /// **'Friend Walk: {petName}'**
+  String pet_friend_walk_title_dynamic(String petName);
 
   /// No description provided for @pet_agenda_empty.
   ///

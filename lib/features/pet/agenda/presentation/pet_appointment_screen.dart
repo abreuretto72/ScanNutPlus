@@ -371,7 +371,7 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                onPressed: () {
                  Navigator.push(
                    context,
-                   MaterialPageRoute(builder: (context) => PetScheduledEventsScreen(petId: widget.petId)),
+                   MaterialPageRoute(builder: (context) => PetScheduledEventsScreen(petId: widget.petId, petName: widget.petName)),
                  );
                },
              ),

@@ -1573,6 +1573,11 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String pet_friend_walk_title_dynamic(String petName) {
+    return 'Passeio Amigo: $petName';
+  }
+
+  @override
   String get pet_agenda_empty => 'Agenda vazia';
 
   @override

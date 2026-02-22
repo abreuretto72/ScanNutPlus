@@ -604,6 +604,15 @@
       }
     }
   },
+  "pet_friend_walk_title_dynamic": "Passeio Amigo: {petName}",
+  "@pet_friend_walk_title_dynamic": {
+    "description": "Título dinâmico para passeio de amigo",
+    "placeholders": {
+      "petName": {
+        "type": "String"
+      }
+    }
+  },
   "pet_agenda_empty": "Agenda vazia",
   "pet_agenda_add_event_dynamic": "Evento para {petName}",
   "@pet_agenda_add_event_dynamic": {

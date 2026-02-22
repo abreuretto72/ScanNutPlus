@@ -304,6 +304,7 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                      PetScheduledEventsScreen(
                        key: _scheduledTabKey,
                        petId: widget.petId, 
+                       petName: widget.petName,
                        showAppBar: false,
                        filterDate: _selectedDate,
                      ),

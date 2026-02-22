@@ -210,7 +210,7 @@ extension PetHistoryEntryExt on PetHistoryEntry {
       // 2. Fallback: Parse from Raw Text (Legacy / Fallback for Toxicity)
       // If we still don't have toxicity status, check rawJson
       if (!isToxic) {
-         final iconMatch = RegExp(PetConstants.regexIcon).firstMatch(rawJson);
+         final iconMatch = RegExp(PetConstants.regexIcon, caseSensitive: false).firstMatch(rawJson);
          if (iconMatch != null) {
             final iconStr = iconMatch.group(1)?.trim() ?? '';
             isToxic = iconStr == l10n.tech_warning || iconStr == '⚠️' || iconStr == '☠️' || iconStr == '💀';
@@ -219,7 +219,7 @@ extension PetHistoryEntryExt on PetHistoryEntry {
 
       // 3. Last resort for name
       if (plantName.isEmpty) {
-         final titleMatch = RegExp(PetConstants.regexTitle).firstMatch(rawJson);
+         final titleMatch = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(rawJson);
          if (titleMatch != null) {
             plantName = titleMatch.group(1)?.trim() ?? '';
          }

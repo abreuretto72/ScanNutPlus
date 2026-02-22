@@ -137,23 +137,23 @@ class PetAiCardsRenderer extends StatelessWidget {
     for (var match in matches) {
       final body = match.group(1) ?? '';
       
-      final title = RegExp(PetConstants.regexTitle).firstMatch(body)?.group(1) ?? PetConstants.keyAnalyse;
-      final content = RegExp(PetConstants.regexContent, dotAll: true).firstMatch(body)?.group(1) ?? '';
+      final title = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(body)?.group(1) ?? PetConstants.keyAnalyse;
+      final content = RegExp(PetConstants.regexContent, dotAll: true, caseSensitive: false).firstMatch(body)?.group(1) ?? '';
       
       // [SANITIZER] Remove structural tags from the content to be displayed
-      final cleanContent = content.replaceAll(RegExp(r'(ICON:|CONTENT:)'), '').trim();
+      final cleanContent = content.replaceAll(RegExp(r'(?:ICON|ÍCONE|ICONE|CONTENT|CONTEÚDO|CONTEUDO):', caseSensitive: false), '').trim();
 
-      final iconName = RegExp(PetConstants.regexIcon).firstMatch(body)?.group(1) ?? PetConstants.keyInfo;
+      final iconName = RegExp(PetConstants.regexIcon, caseSensitive: false).firstMatch(body)?.group(1) ?? PetConstants.keyInfo;
 
       if (cleanContent.isEmpty && body.contains(PetConstants.tagContent)) {
          var fallbackContent = body.split(PetConstants.tagContent).last.trim();
-         fallbackContent = fallbackContent.replaceAll(RegExp(r'(ICON:|CONTENT:)'), '').trim();
+         fallbackContent = fallbackContent.replaceAll(RegExp(r'(?:ICON|ÍCONE|ICONE|CONTENT|CONTEÚDO|CONTEUDO):', caseSensitive: false), '').trim();
          blocks.add(_AnalysisBlock(title: title.trim(), content: fallbackContent, icon: _getIconData(iconName.trim())));
       } else if (cleanContent.isNotEmpty) {
          blocks.add(_AnalysisBlock(title: title.trim(), content: cleanContent, icon: _getIconData(iconName.trim())));
       } else {
          if (body.length > 20) {
-             blocks.add(_AnalysisBlock(title: title.trim(), content: body.replaceAll(RegExp(PetConstants.regexTitleIcon), '').trim(), icon: _getIconData(iconName.trim())));
+             blocks.add(_AnalysisBlock(title: title.trim(), content: body.replaceAll(RegExp(PetConstants.regexTitleIcon, caseSensitive: false), '').trim(), icon: _getIconData(iconName.trim())));
          }
       }
     }
