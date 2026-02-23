@@ -540,20 +540,30 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
         ],
       ),
       
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.black, width: 3),
-          boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
-        ),
-        child: FloatingActionButton(
-          onPressed: _onAddEventPressed,
-          tooltip: l10n.pet_agenda_add_event,
-          backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel (Domain Color)
-          elevation: 0,
-          shape: const CircleBorder(),
-          child: const Icon(Icons.add, color: Colors.black, size: 32),
-        ),
+      floatingActionButton: Builder(
+        builder: (context) {
+          final tabController = DefaultTabController.of(context);
+          return AnimatedBuilder(
+            animation: tabController,
+            builder: (context, child) {
+              return Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.black, width: 3),
+                  boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
+                ),
+                child: FloatingActionButton(
+                  onPressed: _onAddEventPressed,
+                  tooltip: l10n.pet_agenda_add_event,
+                  backgroundColor: tabController.index == 1 ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Lilac for Friends, Pink for Pets
+                  elevation: 0,
+                  shape: const CircleBorder(),
+                  child: const Icon(Icons.add, color: Colors.black, size: 32),
+                ),
+              );
+            }
+          );
+        }
       ),
       
       body: Column(
