@@ -437,6 +437,24 @@ body::after {
     color: var(--accent-core);
 }
 
+.friend-card:hover {
+    border-color: rgba(52, 152, 219, 0.4);
+}
+
+.friend-card .card-icon {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+.chat-card:hover {
+    border-color: rgba(241, 196, 15, 0.4);
+}
+
+.chat-card .card-icon {
+    background: rgba(241, 196, 15, 0.1);
+    color: #f1c40f;
+}
+
 .bento-card h3 {
     font-size: 1.5rem;
     font-weight: 700;
@@ -720,7 +738,9 @@ footer p {
     .card-small,
     .food-card,
     .plant-card,
-    .walk-card {
+    .walk-card,
+    .friend-card,
+    .chat-card {
         grid-column: span 1;
         grid-row: span 1;
     }
