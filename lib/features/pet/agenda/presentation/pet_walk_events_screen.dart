@@ -45,7 +45,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
   }
 
   /// Mostra tela cheia para criar novo evento (Journal Mode - Walk specific context)
-  void _onAddEventPressed() {
+  void _onAddEventPressed(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -53,6 +53,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
           petId: widget.petId,
           petName: widget.petName,
           initialEventType: PetEventType.activity, // FORCE WALK CONTEXT
+          isFriendFlow: DefaultTabController.of(context).index == 1, // Detects current tab
           // Could pre-select 'Activity' type if possible, but strict separation is done via filtering
           onEventSaved: () {
             setState(() {
@@ -345,6 +346,21 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
       await _captureRealTelemetryHidden(l10n);
       debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Background Telemetry Finished.");
 
+      // Calculate Total Walk Distance and Duration from all events
+      final double totalDistanceKm = walkEvents.fold(0.0, (sum, e) => sum + ((e.metrics?['walk_distance_km'] as num?)?.toDouble() ?? 0.0));
+      final int totalDurationSeconds = walkEvents.fold(0, (sum, e) => sum + ((e.metrics?['walk_duration_seconds'] as num?)?.toInt() ?? 0));
+      
+      final int hours = totalDurationSeconds ~/ 3600;
+      final int minutes = (totalDurationSeconds % 3600) ~/ 60;
+      final int seconds = totalDurationSeconds % 60;
+      final String timeString = hours > 0 
+          ? '${hours.toString().padLeft(2, '0')}h ${minutes.toString().padLeft(2, '0')}m'
+          : '${minutes.toString().padLeft(2, '0')}m ${seconds.toString().padLeft(2, '0')}s';
+
+      final String metricsText = totalDistanceKm > 0 || totalDurationSeconds > 0 
+          ? " (🗺 ${totalDistanceKm.toStringAsFixed(2)}km • ⏱ $timeString)" 
+          : "";
+
       final eventsText = walkEvents.map((e) {
         final time = DateFormat.Hm(l10n.localeName).format(e.startDateTime);
         final notes = e.notes ?? l10n.walk_no_notes;
@@ -354,12 +370,12 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
         return "- $time [$typeStr]: $notes";
       }).join("\n");
 
-      final prompt = "${PetPrompts.promptWalkSummary}\n\nCONTEXT: Pet Name: ${widget.petName}\n\nEVENTS LOG:\n$eventsText";
+      final prompt = "${PetPrompts.promptWalkSummary}\n\nCONTEXT: Pet Name: ${widget.petName}\nTotal Distance: ${totalDistanceKm.toStringAsFixed(2)} km\nTotal Time: $timeString\n\nEVENTS LOG:\n$eventsText";
 
       debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Calling UniversalAiService to analyzeText...");
       final summary = await UniversalAiService().analyzeText(
         systemPrompt: prompt,
-        userPrompt: "Generate the Walk Summary now.",
+        userPrompt: "Generate the Walk Summary now. Take into account the total distance and time when generating the report.",
         l10n: l10n,
       );
       debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] AI Response Received");
@@ -367,7 +383,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
       final summaryTitle = l10n.pet_walk_summary_title_generated(
         DateFormat.Hm(l10n.localeName).format(startDateTime),
         DateFormat.Hm(l10n.localeName).format(endDateTime)
-      );
+      ) + metricsText;
       
       final newEvent = PetEvent(
         id: const Uuid().v4(),
@@ -380,6 +396,8 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
           'custom_title': summaryTitle, 
           'is_summary': true,
           PetConstants.keyAiSummary: summary,
+          'walk_distance_km': totalDistanceKm,
+          'walk_duration_seconds': totalDurationSeconds,
           'source': 'walk', // Origin: Walk Summary 
         },
       );
@@ -550,7 +568,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                   boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
                 ),
                 child: FloatingActionButton(
-                  onPressed: _onAddEventPressed,
+                  onPressed: () => _onAddEventPressed(context),
                   tooltip: l10n.pet_agenda_add_event,
                   backgroundColor: tabController.index == 1 ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Lilac for Friends, Pink for Pets
                   elevation: 0,
