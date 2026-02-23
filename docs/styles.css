@@ -374,11 +374,19 @@ body::after {
     grid-column: span 1.5;
 }
 
+.card-small {
+    grid-column: span 1;
+}
+
 .food-card {
-    grid-column: span 2;
+    grid-column: span 1;
 }
 
 .plant-card {
+    grid-column: span 1;
+}
+
+.walk-card {
     grid-column: span 1;
 }
 
@@ -418,6 +426,15 @@ body::after {
 .plant-card .card-icon {
     background: rgba(29, 209, 161, 0.1);
     color: var(--accent-plant);
+}
+
+.walk-card:hover {
+    border-color: rgba(95, 39, 205, 0.4);
+}
+
+.walk-card .card-icon {
+    background: rgba(95, 39, 205, 0.1);
+    color: var(--accent-core);
 }
 
 .bento-card h3 {
@@ -700,8 +717,10 @@ footer p {
 
     .card-large,
     .card-medium,
+    .card-small,
     .food-card,
-    .plant-card {
+    .plant-card,
+    .walk-card {
         grid-column: span 1;
         grid-row: span 1;
     }
