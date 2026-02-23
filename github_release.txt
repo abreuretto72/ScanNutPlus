@@ -1,9 +1,18 @@
 # Release Notes
 
-## Correções e Melhorias (Histórico e PDFs)
-- **Correção da lógica de Passeio Amigo:** Ajustado o reconhecimento e associação do evento "Passeio Amigo" quando capturado pelas Anotações, impedindo falsos positivos na identificação de "Amigos" devido ao bloco `[METADATA]` vindo do modelo Gemini.
-- **Renderização Exata no PDF Universal:** O nome do amigo e do tutor não são mais apagados/escondidos do PDF quando o registro possui as flags `[Amigo:... | Tutor: ...]`, garantindo que os dados originais (ex. Nome: Lebun -> Amigo: Loi) sejam exibidos de maneira correta no cabeçalho e na caixinha do documento.
+## Correções e Melhorias (UI e Localização)
+- **Refatoração Visual (Novo Compromisso):** Remoção de labels flutuantes (`labelText`) nos formulários, substituindo-os por `hintText` interno nativo para um visual mais limpo e sem recortes nas bordas grossas. Adaptação ergonômica voltada ao padrão "Anti-Gravity 2026".
+- **Design de Navegação (TabBars):** Todos os `TabBar` estilizados como caixas maciças (via `BoxDecoration`) em detalhes de passeios, agendas e histórico foram simplificados para `indicatorWeight: 4` (Underline discreto). Manutenção da lógica cromática (Rosa para Pets, Lilás para Amigos).
+- **Adequação Global de Localização de Datas:** Substituição de `substring` arbitrários e recortes estáticos em arquivos de Histórico (`pet_history_screen.dart`, `pet_history_tab.dart`, `pet_history_detail_screen.dart`) forçando a exibição `DateFormat.yMd().add_Hm()` no padrão do dispositivo de destino.
+- **Correção da Lógica de Passeio Amigo & Histórico:** Ajustado o reconhecimento e associação do evento "Passeio Amigo". O nome do pet visitante (`friendName`) agora é interpretado corretamente no topo do card e nos detalhes da UI, interrompendo a injeção forçada do nome do pet titular.
+- **Renderização Exata no PDF Universal:** O nome do amigo e do tutor não são mais apagados/escondidos do PDF quando o registro possui as flags `[Amigo:... | Tutor: ...]`, garantindo que os dados originais sejam exibidos de maneira correta no cabeçalho.
 - **Limpeza Visual de Eventos:** Removida a renderização explícita da string de metadados `[Amigo: ... | Tutor: ...]` presente nas notas, passando a integrar as informações organicamente dentro do layout do cartão e nos detalhes do relatório PDF.
 
 ## Arquivos Modificados
+- `lib/features/pet/agenda/presentation/pet_appointment_screen.dart`
+- `lib/features/pet/agenda/presentation/pet_agenda_screen.dart`
+- `lib/features/pet/agenda/presentation/pet_walk_events_screen.dart`
+- `lib/features/pet/presentation/history/pet_history_screen.dart`
+- `lib/features/pet/agenda/presentation/tabs/pet_history_tab.dart`
+- `lib/features/pet/presentation/history/pet_history_detail_screen.dart`
 - `lib/features/pet/agenda/presentation/pet_event_detail_screen.dart`

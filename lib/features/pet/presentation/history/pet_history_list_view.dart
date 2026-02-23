@@ -80,7 +80,7 @@ class _PetHistoryListViewState extends State<PetHistoryListView> {
 
   Widget _buildHistoryTile(BuildContext context, PetHistoryEntry entry) {
     final l10n = AppLocalizations.of(context)!;
-    final dateStr = DateFormat('dd/MM/yyyy HH:mm').format(entry.timestamp);
+    final dateStr = DateFormat.yMd(l10n.localeName).add_Hm().format(entry.timestamp);
     
     // Species Lookup (ObjectBox)
     String speciesDisplay = l10n.value_unknown;

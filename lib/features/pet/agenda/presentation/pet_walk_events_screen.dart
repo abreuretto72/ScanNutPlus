@@ -235,7 +235,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                   const SizedBox(height: 16),
                   ListTile(
                     leading: const Icon(Icons.calendar_today),
-                    title: Text(DateFormat('dd/MM/yyyy').format(selectedDate)),
+                    title: Text(DateFormat.yMd(l10n.localeName).format(selectedDate)),
                     onTap: () async {
                       final date = await showDatePicker(
                         context: context,
@@ -346,7 +346,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
       debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Background Telemetry Finished.");
 
       final eventsText = walkEvents.map((e) {
-        final time = DateFormat('HH:mm').format(e.startDateTime);
+        final time = DateFormat.Hm(l10n.localeName).format(e.startDateTime);
         final notes = e.notes ?? l10n.walk_no_notes;
         final typeStr = e.eventTypeIndex == 0 ? "Food" : 
                         e.eventTypeIndex == 3 ? "Hygiene/Stool/Urine" : 
@@ -365,8 +365,8 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
       debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] AI Response Received");
 
       final summaryTitle = l10n.pet_walk_summary_title_generated(
-        DateFormat('HH:mm').format(startDateTime),
-        DateFormat('HH:mm').format(endDateTime)
+        DateFormat.Hm(l10n.localeName).format(startDateTime),
+        DateFormat.Hm(l10n.localeName).format(endDateTime)
       );
       
       final newEvent = PetEvent(
@@ -465,13 +465,10 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                   animation: tabController,
                   builder: (context, child) {
                     return TabBar(
-                      indicator: BoxDecoration(
-                        color: tabController.index == 1 ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Lilac for Friends, Pink for Pets 
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.black, width: 2),
-                      ),
-                      indicatorPadding: const EdgeInsets.symmetric(horizontal: -8, vertical: 6),
-                      labelColor: Colors.black,
+                      indicatorWeight: 4,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      indicatorColor: tabController.index == 1 ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Lilac for Friends, Pink for Pets 
+                      labelColor: Colors.white,
                       labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
                       unselectedLabelColor: Colors.white54,
                       unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
@@ -586,7 +583,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                        mainAxisSize: MainAxisSize.min,
                        children: [
                          Text(
-                           "Filtro: ${DateFormat('dd/MM/yyyy').format(_selectedDate!)}",
+                           "Filtro: ${DateFormat.yMd(l10n.localeName).format(_selectedDate!)}",
                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 14),
                          ),
                          const SizedBox(width: 8),
@@ -791,22 +788,36 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                                 
                                 // Date
                                 Text(
-                                  DateFormat("dd/MM/yyyy • HH:mm").format(event.startDateTime),
+                                  "${DateFormat.yMd(l10n.localeName).format(event.startDateTime)} • ${DateFormat.Hm(l10n.localeName).format(event.startDateTime)}",
                                   style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 13),
                                 ),
                                 
                                 // Notes
                                 if (event.notes != null && event.notes!.isNotEmpty) ...[
                                    const SizedBox(height: 8),
-                                   Text(
-                                     event.notes!,
-                                     style: const TextStyle(
-                                       fontSize: 13, 
-                                       color: Colors.black87,
-                                       fontWeight: FontWeight.w600,
-                                     ),
-                                     maxLines: 4, 
-                                     overflow: TextOverflow.ellipsis,
+                                   Builder(
+                                     builder: (context) {
+                                       String displayNotes = event.notes!;
+                                       if (displayNotes.contains('[VISUAL_SUMMARY]')) {
+                                          final match = RegExp(r'\[VISUAL_SUMMARY\](.*?)\[END_SUMMARY\]', dotAll: true).firstMatch(displayNotes);
+                                          if (match != null) {
+                                              displayNotes = match.group(1)?.trim() ?? displayNotes;
+                                          } else {
+                                              displayNotes = displayNotes.replaceAll('[VISUAL_SUMMARY]', '').replaceAll('[END_SUMMARY]', '').trim();
+                                              displayNotes = displayNotes.split('[CARD_START]').first.trim();
+                                          }
+                                       }
+                                       return Text(
+                                         displayNotes,
+                                         style: const TextStyle(
+                                           fontSize: 13, 
+                                           color: Colors.black87,
+                                           fontWeight: FontWeight.w600,
+                                         ),
+                                         maxLines: 4, 
+                                         overflow: TextOverflow.ellipsis,
+                                       );
+                                     }
                                    ),
                                 ],
 

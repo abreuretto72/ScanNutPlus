@@ -124,7 +124,7 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  DateFormat('dd/MM/yyyy HH:mm').format(event.startDateTime),
+                  "${DateFormat.yMd(l10n.localeName).format(event.startDateTime)} ${DateFormat.Hm(l10n.localeName).format(event.startDateTime)}",
                   style: const TextStyle(color: Colors.white70),
                 ),
                 if (professional.isNotEmpty)

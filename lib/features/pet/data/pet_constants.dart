@@ -478,7 +478,10 @@ User Question: {question}
   INPUT DATA:
   - List of events with: Time, Type (Urine, Stool, Water, Photo), and Notes.
   - SPECIAL EVENTS: Look for "Google" tags (Telemetry, Altimetry, Weather).
-  - Context: [Pet Name], [Breed], [Age].
+  - CONTEXT: 
+    * MAIN PET (Yours): [Pet Name], [Breed], [Age].
+    * GUEST PET (Friend): Check the NOTES for "[Amigo: Name | Tutor: Name]". 
+    * IMPORTANT: If a Guest Pet is present, the analysis is about THEM. Do NOT mix up the Main Pet's name with the Guest Pet's name in the summary.
 
   OUTPUT OBJECTIVES:
   1. TELEMETRY: Mention Distance & Pace if available (e.g., "Active walk: 3.2km").

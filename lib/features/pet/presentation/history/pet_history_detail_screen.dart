@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-// import 'package:lucide_icons/lucide_icons.dart'; // Removed
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
@@ -96,7 +97,7 @@ class PetHistoryDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                _formatDate(entry.timestamp),
+                _formatDate(context, entry.timestamp),
                 style: const TextStyle(color: Colors.white, fontSize: 12),
               ),
             ),
@@ -217,7 +218,7 @@ class PetHistoryDetailScreen extends StatelessWidget {
     }
   }
 
-  String _formatDate(DateTime date) {
-    return '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
+  String _formatDate(BuildContext context, DateTime date) {
+    return DateFormat.yMd(Localizations.localeOf(context).languageCode).add_Hm().format(date);
   }
 }

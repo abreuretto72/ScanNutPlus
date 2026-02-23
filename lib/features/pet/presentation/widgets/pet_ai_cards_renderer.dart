@@ -137,7 +137,10 @@ class PetAiCardsRenderer extends StatelessWidget {
     for (var match in matches) {
       final body = match.group(1) ?? '';
       
-      final title = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(body)?.group(1) ?? PetConstants.keyAnalyse;
+      String title = RegExp(PetConstants.regexTitle, caseSensitive: false).firstMatch(body)?.group(1) ?? PetConstants.keyAnalyse;
+      if (title.contains('[VISUAL_SUMMARY]') || title.contains('VISUAL_SUMMARY')) {
+          title = AppLocalizations.of(context)!.pet_analysis_visual_title;
+      }
       final content = RegExp(PetConstants.regexContent, dotAll: true, caseSensitive: false).firstMatch(body)?.group(1) ?? '';
       
       // [SANITIZER] Remove structural tags from the content to be displayed
@@ -164,7 +167,7 @@ class PetAiCardsRenderer extends StatelessWidget {
     
     if (blocks.isEmpty && rawResponse.isNotEmpty) {
        // Only if NO cards were found at all, we fallback to showing cleaned text as a summary card
-       String clean = rawResponse.replaceAll(RegExp(r'\[SYSTEM\]|\[URGENCY\]|\[SUMMARY\]'), '').trim();
+       String clean = rawResponse.replaceAll(RegExp(r'\[SYSTEM\]|\[URGENCY\]|\[SUMMARY\]|\[VISUAL_SUMMARY\]|\[END_SUMMARY\]'), '').trim();
        blocks.add(_AnalysisBlock(title: PetConstants.keyAnalysisSummary, content: clean, icon: Icons.description));
     }
 

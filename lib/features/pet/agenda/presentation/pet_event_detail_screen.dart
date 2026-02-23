@@ -76,8 +76,17 @@ class PetEventDetailScreen extends StatelessWidget {
             isFriend = true; // Only guarantee friend if tutor is explicitly in metadata
          }
          
-         final myPetMatch = RegExp(r'my_pet_name:\s*(.*?)(?=\n|$)').firstMatch(summaryStr);
-         if (myPetMatch != null) myPetName = myPetMatch.group(1)?.trim();
+         // AI sometimes outputs the Guest Pet's name as 'my_pet_name' by mistake.
+         // If a tutor is present, the 'my_pet_name' from AI metadata is actually the guest.
+         final aiPetMatch = RegExp(r'my_pet_name:\s*(.*?)(?=\n|$)').firstMatch(summaryStr);
+         if (aiPetMatch != null) {
+            String aiExtractedName = aiPetMatch.group(1)?.trim() ?? '';
+            if (isFriend && aiExtractedName.isNotEmpty) {
+               friendName = aiExtractedName;
+            } else {
+               myPetName = aiExtractedName;
+            }
+         }
       }
     }
     
@@ -93,6 +102,13 @@ class PetEventDetailScreen extends StatelessWidget {
           friendName = match.group(1)?.trim();
           tutorName = match.group(2)?.trim();
        }
+    }
+    
+    // Safety Fallback (If friendName was caught by AI Summary but NOT notes, UI still needs it)
+    if (isFriend && friendName == null && event.metrics?[PetConstants.keyAiSummary] != null) {
+        // AI might have output my_pet_name as the friend if the master prompt was confusing it
+        // Let's assume petName is ALWAYS the main pet.
+        myPetName = petName; 
     }
 
     // Determine AppBar Title
@@ -273,7 +289,7 @@ $noteContent
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${l10n.pet_friend_name_label}: $petName",
+                            "${l10n.pet_friend_name_label}: ${friendName ?? l10n.history_guest}",
                             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           const SizedBox(height: 4),

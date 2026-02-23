@@ -377,20 +377,17 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
              ),
           ],
           bottom: TabBar(
-            indicator: BoxDecoration(
-              color: const Color(0xFFFFD1DC), // Rosa Pastel 
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black, width: 2),
-            ),
-            indicatorPadding: const EdgeInsets.symmetric(horizontal: -8, vertical: 6),
-            labelColor: Colors.black,
+            indicatorWeight: 4,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: AppColors.petPrimary, // Rosa Pastel
+            labelColor: Colors.white,
             labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
             unselectedLabelColor: Colors.white54,
             unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
             dividerColor: Colors.transparent,
             tabs: [
-              Tab(text: l10n.pet_appointment_tab_data.toUpperCase(), icon: const Icon(Icons.calendar_today)),
-              Tab(text: l10n.pet_appointment_tab_partner.toUpperCase(), icon: const Icon(Icons.store)),
+              Tab(text: l10n.pet_appointment_tab_data.toUpperCase(), icon: const Icon(Icons.calendar_today, size: 20)),
+              Tab(text: l10n.pet_appointment_tab_partner.toUpperCase(), icon: const Icon(Icons.store, size: 20)),
             ],
           ),
         ),
@@ -409,13 +406,13 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           // CATEGORY DROPDOWN
-                          _buildLabeledField(l10n.pet_apt_select_category, DropdownButtonFormField<String>(
+                          DropdownButtonFormField<String>(
                             // ignore: deprecated_member_use
                             value: _selectedCategory,
                             isExpanded: true,
                             decoration: _inputDecoration(l10n.pet_apt_select_category, Icons.category),
                             dropdownColor: AppColors.petPrimary,
-                            style: const TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
                             items: [
                               DropdownMenuItem(value: 'health', child: Text(l10n.pet_appointment_cat_health, style: const TextStyle(color: Colors.black))),
                               DropdownMenuItem(value: 'nutrition', child: Text(l10n.pet_appointment_cat_nutrition, style: const TextStyle(color: Colors.black))),
@@ -432,17 +429,17 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                                  });
                                }
                             },
-                          )),
+                          ),
                           const SizedBox(height: 16),
 
                           // SUB-TYPE DROPDOWN
-                          _buildLabeledField(l10n.pet_apt_select_type, DropdownButtonFormField<String>(
+                          DropdownButtonFormField<String>(
                             // ignore: deprecated_member_use
                             value: _selectedType,
                             isExpanded: true,
                             decoration: _inputDecoration(l10n.pet_apt_select_type, Icons.info_outline),
                             dropdownColor: AppColors.petPrimary,
-                            style: const TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
                             items: _typesByCategory[_selectedCategory]?.map((type) {
                               return DropdownMenuItem(
                                 value: type,
@@ -450,23 +447,24 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                               );
                             }).toList() ?? [],
                             onChanged: (val) => setState(() => _selectedType = val!),
-                          )),
+                          ),
                           const SizedBox(height: 16),
 
                           // "WHAT TO DO?" (TITLE)
-                          _buildLabeledField(l10n.pet_field_what_to_do, TextFormField(
+                          TextFormField(
                             controller: _titleController,
-                            style: const TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
                             decoration: _inputDecoration(l10n.pet_field_what_to_do, Icons.edit).copyWith(
                               suffixIcon: IconButton(
                                 icon: Icon(
                                   _activeVoiceController == _titleController ? Icons.mic : Icons.mic_none,
-                                  color: _activeVoiceController == _titleController ? Colors.redAccent : Colors.black,
+                                  color: _activeVoiceController == _titleController ? Colors.redAccent : Colors.black87,
+                                  size: 20,
                                 ),
                                 onPressed: () => _toggleVoiceInput(_titleController),
                               ),
                             ),
-                          )),
+                          ),
                           const SizedBox(height: 16),
 
                           // DATE & TIME
@@ -475,20 +473,20 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                               Expanded(
                                 child: InkWell(
                                   onTap: () => _selectDate(context),
-                                  child: _buildLabeledField(l10n.pet_agenda_event_date, InputDecorator(
+                                  child: InputDecorator(
                                     decoration: _inputDecoration(l10n.pet_agenda_event_date, Icons.calendar_today),
-                                    child: Text(DateFormat('dd/MM/yyyy').format(_selectedDate), style: const TextStyle(color: Colors.black, fontSize: 16)),
-                                  )),
+                                    child: Text(DateFormat.yMd(Localizations.localeOf(context).languageCode).format(_selectedDate), style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold)),
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
                                 child: InkWell(
                                   onTap: () => _selectTime(context),
-                                  child: _buildLabeledField(l10n.pet_field_time, InputDecorator(
+                                  child: InputDecorator(
                                     decoration: _inputDecoration(l10n.pet_field_time, Icons.access_time),
-                                    child: Text(_selectedTime.format(context), style: const TextStyle(color: Colors.black, fontSize: 16)),
-                                  )),
+                                    child: Text(_selectedTime.format(context), style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold)),
+                                  ),
                                 ),
                               ),
                             ],
@@ -496,11 +494,11 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                           const SizedBox(height: 16),
 
                           // NOTIFICATION
-                          _buildLabeledField(l10n.pet_notification_label, DropdownButtonFormField<String>(
+                          DropdownButtonFormField<String>(
                             initialValue: _selectedLeadTime,
                             decoration: _inputDecoration(l10n.pet_notification_label, Icons.notifications),
                             dropdownColor: AppColors.petPrimary,
-                            style: const TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
                             items: [
                                DropdownMenuItem(value: 'none', child: Text(l10n.pet_notification_none, style: const TextStyle(color: Colors.black))),
                                DropdownMenuItem(value: '1h', child: Text(l10n.pet_notification_1h, style: const TextStyle(color: Colors.black))),
@@ -509,7 +507,7 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                                DropdownMenuItem(value: '1w', child: Text(l10n.pet_notification_1w, style: const TextStyle(color: Colors.black))),
                             ],
                             onChanged: (val) => setState(() => _selectedLeadTime = val!),
-                          )),
+                          ),
                           const SizedBox(height: 16),
                         ],
                       ),
@@ -523,13 +521,13 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                          crossAxisAlignment: CrossAxisAlignment.stretch,
                          children: [
                             // PARTNER DROPDOWN
-                            _buildLabeledField(l10n.pet_field_partner_name, DropdownButtonFormField<String>(
+                            DropdownButtonFormField<String>(
                               initialValue: _selectedPartner,
                               isExpanded: true,
                               decoration: _inputDecoration(l10n.pet_field_partner_name, Icons.business),
                               dropdownColor: AppColors.petPrimary,
-                              style: const TextStyle(color: Colors.black, fontSize: 16),
-                              hint: Text(l10n.pet_field_partner_name, style: const TextStyle(color: Colors.black)),
+                              style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                              hint: Text(l10n.pet_field_partner_name, style: const TextStyle(color: Colors.black54)),
                               items: [
                                 DropdownMenuItem(
                                   value: 'NEW_PARTNER',
@@ -568,45 +566,45 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                                    }
                                 });
                               },
-                            )),
+                            ),
                             
                             // CONDITIONAL NEW PARTNER LOGIC
                             if (_isNewPartner) ...[
                                const SizedBox(height: 16),
-                               _buildLabeledField("${l10n.pet_appointment_new_partner} *", TextFormField(
+                               TextFormField(
                                   controller: _professionalController,
                                   decoration: _inputDecoration("${l10n.pet_appointment_new_partner} *", Icons.edit),
-                                  style: const TextStyle(color: Colors.black, fontSize: 16),
-                               )),
+                                  style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                               ),
                             ],
 
                             const SizedBox(height: 16),
-                            _buildLabeledField(l10n.pet_field_contact_person, TextFormField(
+                            TextFormField(
                               controller: _partnerContactController,
                               decoration: _inputDecoration(l10n.pet_field_contact_person, Icons.person),
-                              style: const TextStyle(color: Colors.black, fontSize: 16),
-                            )),
+                              style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
                             const SizedBox(height: 16),
-                            _buildLabeledField(l10n.pet_field_phone, TextFormField(
+                            TextFormField(
                               controller: _partnerPhoneController,
                               decoration: _inputDecoration(l10n.pet_field_phone, Icons.phone),
                               keyboardType: TextInputType.phone,
-                              style: const TextStyle(color: Colors.black, fontSize: 16),
-                            )),
+                              style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
                             const SizedBox(height: 16),
-                            _buildLabeledField(l10n.pet_field_whatsapp, TextFormField(
+                            TextFormField(
                               controller: _partnerWhatsappController,
                               decoration: _inputDecoration(l10n.pet_field_whatsapp, Icons.chat),
                               keyboardType: TextInputType.phone,
-                              style: const TextStyle(color: Colors.black, fontSize: 16),
-                            )),
+                              style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
                             const SizedBox(height: 16),
-                            _buildLabeledField(l10n.pet_field_email, TextFormField(
+                            TextFormField(
                               controller: _partnerEmailController,
                               decoration: _inputDecoration(l10n.pet_field_email, Icons.email),
                               keyboardType: TextInputType.emailAddress,
-                              style: const TextStyle(color: Colors.black, fontSize: 16),
-                            )),
+                              style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
 
                          ],
                       ),
@@ -723,51 +721,23 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
     }
   }
 
-  Widget _buildLabeledField(String labelText, Widget child) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10), // Reduced from 12 to bring the field up slightly
-          child: child,
-        ),
-        Positioned(
-          left: 24, // Shifted away from the 16px border-radius curve exactly onto the flat line
-          top: 3, // Pushed down exactly to center over the Y=10 border outline
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2), // Thinner height so it doesn't invade
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(4),
-              // Border width 0 removed to eliminate subpixel white aliasing (the "teeth")
-            ),
-            child: Text(
-              labelText.toUpperCase(),
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
-                fontSize: 11,
-                letterSpacing: 1.0,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   InputDecoration _inputDecoration(String labelText, IconData icon) {
     return InputDecoration(
-      hintText: labelText,
-      hintStyle: const TextStyle(color: Colors.black),
-      floatingLabelBehavior: FloatingLabelBehavior.always, // Prevent overlapping empty state
-      prefixIcon: Icon(icon, color: Colors.black),
+      hintText: labelText.toUpperCase(),
+      hintStyle: const TextStyle(
+        color: Colors.black87,
+        fontWeight: FontWeight.w900,
+        fontSize: 12,
+        letterSpacing: 0.5,
+      ),
+      prefixIcon: Icon(icon, color: Colors.black87, size: 20),
       filled: true,
       fillColor: AppColors.petPrimary,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Colors.black, width: 3)),
-      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Colors.black, width: 3)),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: AppColors.petPrimary, width: 3)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.black, width: 2)),
+      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.black, width: 2)),
+      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.black, width: 3)),
+      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.red, width: 2)),
     );
   }
 }

@@ -133,14 +133,10 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
           centerTitle: true,
           iconTheme: const IconThemeData(color: Colors.white),
           bottom: TabBar(
-            indicator: BoxDecoration(
-              color: const Color(0xFFFFD1DC), // Rosa Pastel 
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black, width: 2),
-              // shadow isn't natively supported easy inside tabbar indicator without custom painters, but we can fake weight via border
-            ),
-            indicatorPadding: const EdgeInsets.symmetric(horizontal: -8, vertical: 6),
-            labelColor: Colors.black,
+            indicatorWeight: 4,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: const Color(0xFFFFD1DC), // Rosa Pastel
+            labelColor: Colors.white,
             labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
             unselectedLabelColor: Colors.white54,
             unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),

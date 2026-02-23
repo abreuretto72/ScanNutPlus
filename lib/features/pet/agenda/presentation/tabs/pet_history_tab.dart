@@ -340,10 +340,10 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                       ],
                                     ),
                                     const SizedBox(height: 4),
-                                    Text(
-                                      DateFormat("dd/MM/yyyy • HH:mm").format(event.startDateTime),
-                                      style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 13),
-                                    ),
+                                     Text(
+                                       "${DateFormat.yMd(l10n.localeName).format(event.startDateTime)} • ${DateFormat.Hm(l10n.localeName).format(event.startDateTime)}",
+                                       style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 13),
+                                     ),
                                     const SizedBox(height: 6),
                                     
                                     // Source Badge

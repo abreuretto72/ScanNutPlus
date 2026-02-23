@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // kDebugMode
+import 'package:intl/intl.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
 import 'package:scannutplus/features/pet/data/models/pet_entity.dart';
@@ -95,13 +96,10 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                   animation: tabController,
                   builder: (context, child) {
                     return TabBar(
-                      indicator: BoxDecoration(
-                        color: tabController.index == 1 ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Lilac for Friends, Pink for Pets 
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.black, width: 2),
-                      ),
-                      indicatorPadding: const EdgeInsets.symmetric(horizontal: -8, vertical: 6),
-                      labelColor: Colors.black,
+                      indicatorWeight: 4,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      indicatorColor: tabController.index == 1 ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Lilac for Friends, Pink for Pets 
+                      labelColor: Colors.white,
                       labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
                       unselectedLabelColor: Colors.white54,
                       unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
@@ -445,7 +443,7 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                '${pet.petName} • ${pet.timestamp.toString().substring(0, 16)}',
+                                '${pet.petName} • ${DateFormat.yMd(l10n.localeName).add_Hm().format(pet.timestamp)}',
                                 style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w800, fontSize: 13),
                               ),
                             ],

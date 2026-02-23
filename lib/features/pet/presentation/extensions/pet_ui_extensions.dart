@@ -110,6 +110,7 @@ extension CategoryStringExt on String {
     if (lower == 'pet_title_general_checkup') return l10n.pet_title_general_checkup;
     if (lower == 'pet_title_clinical_summary') return l10n.pet_title_clinical_summary;
     if (lower == 'pet_title_planned_meal') return l10n.pet_title_planned_meal;
+    if (lower.contains('visual_summary') || lower == '[visual_summary]') return l10n.pet_analysis_visual_title;
 
     return this; 
   }
