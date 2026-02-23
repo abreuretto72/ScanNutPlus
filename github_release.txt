@@ -1,4 +1,4 @@
-# Release Notes
+# Release Notes (v2.2.5)
 
 ## Correções e Melhorias (UI e Localização)
 - **Refatoração Visual (Novo Compromisso):** Remoção de labels flutuantes (`labelText`) nos formulários, substituindo-os por `hintText` interno nativo para um visual mais limpo e sem recortes nas bordas grossas. Adaptação ergonômica voltada ao padrão "Anti-Gravity 2026".
