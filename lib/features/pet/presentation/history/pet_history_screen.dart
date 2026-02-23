@@ -86,22 +86,35 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
           iconTheme: const IconThemeData(color: Colors.white, size: 28),
           centerTitle: true,
           elevation: 0,
-          bottom: TabBar(
-            indicator: BoxDecoration(
-              color: const Color(0xFFFFD1DC), // Rosa Pastel 
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black, width: 2),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
+            child: Builder(
+              builder: (context) {
+                final tabController = DefaultTabController.of(context);
+                return AnimatedBuilder(
+                  animation: tabController,
+                  builder: (context, child) {
+                    return TabBar(
+                      indicator: BoxDecoration(
+                        color: tabController.index == 1 ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Lilac for Friends, Pink for Pets 
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.black, width: 2),
+                      ),
+                      indicatorPadding: const EdgeInsets.symmetric(horizontal: -8, vertical: 6),
+                      labelColor: Colors.black,
+                      labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
+                      unselectedLabelColor: Colors.white54,
+                      unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                      dividerColor: Colors.transparent,
+                      tabs: [
+                         Tab(text: l10n.pet_my_pets_title.toUpperCase()),
+                         Tab(text: l10n.pet_friend_list_label.toUpperCase()),
+                      ],
+                    );
+                  }
+                );
+              }
             ),
-            indicatorPadding: const EdgeInsets.symmetric(horizontal: -8, vertical: 6),
-            labelColor: Colors.black,
-            labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
-            unselectedLabelColor: Colors.white54,
-            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
-            dividerColor: Colors.transparent,
-            tabs: [
-               Tab(text: l10n.pet_my_pets_title.toUpperCase()),
-               Tab(text: l10n.pet_friend_list_label.toUpperCase()),
-            ],
           ),
         ),
         // Use StreamBuilder to listen to ObjectBox changes
@@ -215,7 +228,7 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: isFriendTab ? const Color(0xFFB9FBC0) : const Color(0xFFFFD1DC), // Domain Colors: Mint for Friends, Pink for Pets
+                color: isFriendTab ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Domain Colors: Lilac for Friends, Pink for Pets
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.black, width: 3),
                 boxShadow: const [

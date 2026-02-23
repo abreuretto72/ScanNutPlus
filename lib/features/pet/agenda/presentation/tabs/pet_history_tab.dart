@@ -243,8 +243,8 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                   // Custom Logic for FRIEND type
                   final isFriend = type == PetEventType.friend || (event.metrics != null && event.metrics!['event_type'] == 'FRIEND');
      
-                  // Card Color: Green for Friend, Pink for Normal
-                  final cardColor = isFriend ? const Color(0xFFB9FBC0) // Domain Color Mint
+                  // Card Color: Lilac for Friend, Pink for Normal
+                  final cardColor = isFriend ? const Color(0xFFE0BBE4) // Domain Color Lilac
                                   : const Color(0xFFFFD1DC); 
                   final textColor = Colors.black;
 
