@@ -130,14 +130,20 @@ class _MyPetsViewState extends State<MyPetsView> {
         },
       ),
       // Botão Flutuante (FAB) - Rosa Pastel com Ícone Preto e Borda
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.petPrimary, 
-        foregroundColor: AppColors.petText,
-        shape: CircleBorder(side: BorderSide(color: AppColors.petText, width: 1.0)), // Contrast Border
-        elevation: 6,
-        onPressed: () async {
-          // STEP 0: Request Name BEFORE Camera (Protocol 2026)
-          final String? petName = await _showNameInputDialog(context);
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.black, width: 3),
+          boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
+        ),
+        child: FloatingActionButton(
+          backgroundColor: AppColors.petPrimary, 
+          foregroundColor: AppColors.petText,
+          shape: const CircleBorder(),
+          elevation: 0,
+          onPressed: () async {
+            // STEP 0: Request Name BEFORE Camera (Protocol 2026)
+            final String? petName = await _showNameInputDialog(context);
           
           if (petName != null && petName.isNotEmpty) {
              // Generates UUID here to bind identity immediately
@@ -158,6 +164,7 @@ class _MyPetsViewState extends State<MyPetsView> {
           }
         },
         child: const Icon(Icons.add, size: 32),
+        ),
       ),
     );
   }

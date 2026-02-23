@@ -186,25 +186,34 @@ class _PetHistoryScreenState extends State<PetHistoryScreen> {
           },
         ),
 
-        floatingActionButton: widget.petUuid != null ? FloatingActionButton(
-          onPressed: () {
-            // Navigate to New Analysis Screen (Dashboard)
-            final tabController = DefaultTabController.of(context);
-            Navigator.pushNamed(
-              context, 
-              '/pet_dashboard', // The screen with the dropdown
-              arguments: {
-                PetConstants.argUuid: widget.petUuid,
-                PetConstants.argName: widget.petName,
-                PetConstants.argBreed: widget.petBreed,
-                PetConstants.argImagePath: widget.petImagePath,
-                'my_pet_name': widget.petName, // Route the owner's name downstream
-                'is_friend_tab': tabController.index == 1, // Pass Active Tab State
-              },
-            ).then((_) => setState(() {})); // Refresh history on return
-          },
-          backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel (Domain Color)
-          child: const Icon(Icons.add, color: Colors.black), // Black Icon
+        floatingActionButton: widget.petUuid != null ? Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.black, width: 3),
+            boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
+          ),
+          child: FloatingActionButton(
+            onPressed: () {
+              // Navigate to New Analysis Screen (Dashboard)
+              final tabController = DefaultTabController.of(context);
+              Navigator.pushNamed(
+                context, 
+                '/pet_dashboard', // The screen with the dropdown
+                arguments: {
+                  PetConstants.argUuid: widget.petUuid,
+                  PetConstants.argName: widget.petName,
+                  PetConstants.argBreed: widget.petBreed,
+                  PetConstants.argImagePath: widget.petImagePath,
+                  'my_pet_name': widget.petName, // Route the owner's name downstream
+                  'is_friend_tab': tabController.index == 1, // Pass Active Tab State
+                },
+              ).then((_) => setState(() {})); // Refresh history on return
+            },
+            backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel (Domain Color)
+            elevation: 0,
+            shape: const CircleBorder(),
+            child: const Icon(Icons.add, color: Colors.black, size: 32),
+          ), 
         ) : null,
       ),
     );

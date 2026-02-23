@@ -226,7 +226,7 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                 
                   return Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    shape: BoxShape.circle,
                     border: Border.all(color: Colors.black, width: 3),
                     boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
                   ),
@@ -250,7 +250,7 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                     tooltip: l10n.pet_agenda_add_event,
                     elevation: 0,
                     backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: const CircleBorder(),
                     child: const Icon(Icons.add, color: Colors.black, size: 32),
                   ),
                 );
