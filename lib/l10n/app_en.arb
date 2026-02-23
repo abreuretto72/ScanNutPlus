@@ -377,7 +377,7 @@
   "error_file_too_large": "This file is too large (Max 20MB).",
   "pet_journal_searching_address": "Searching address...",
   "pet_journal_address_not_found": "Address not found",
-  "pet_journal_report_action": "Activity Report",
+  "pet_journal_report_action": "Show",
   "pet_journal_question": "What is the pet doing?",
   "pet_journal_hint_text": "Write observations here...",
   "pet_journal_register_button": "Register Event",
@@ -701,7 +701,7 @@
   "label_map_type": "Map",
   "pet_journal_hint_text": "Write here...",
   "pet_journal_register_button": "Register",
-  "pet_journal_report_action": "Report",
+  "pet_journal_report_action": "Show",
   "map_alert_dog": "Angry Dog",
   "map_alert_poison": "Poison",
   "map_alert_noise": "Noise",
@@ -1284,5 +1284,21 @@
   "pet_error_timeout_title": "Server Busy",
   "pet_error_timeout_content": "The AI took too long to respond this time. This usually happens when the server is busy. Please wait a few seconds and try again.",
   "pet_error_technical_title": "Unable to Analyze",
-  "pet_error_technical_content": "We encountered a small technical issue while reading your data. Don't worry, just try again."
+  "pet_error_technical_content": "We encountered a small technical issue while reading your data. Don't worry, just try again.",
+  "pet_journal_bg_evaluating": "Analyzing in background...",
+  "pet_journal_bg_ready": "Analysis Ready - Summary below",
+  "pet_journal_bg_error": "Analysis Error",
+  "pet_journal_bg_saved": "Media saved. Analyzing...",
+  "pet_journal_bg_resuming": "Resuming intelligence evaluations... ({count})",
+  "@pet_journal_bg_resuming": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "pet_journal_bg_fatal": "Critical error in background processing.",
+  "pet_journal_bg_save_fail": "Failed to save event to database.",
+  "pet_journal_saved_friend": "Friend Event Saved in Agenda!",
+  "pet_journal_saved_own": "Event Saved!",
+  "pet_journal_friend_label": "Friend",
+  "pet_btn_ok": "OK"
 }

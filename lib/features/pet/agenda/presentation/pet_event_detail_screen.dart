@@ -61,39 +61,17 @@ class PetEventDetailScreen extends StatelessWidget {
                                 ? (event.metrics!['custom_title'] as String).toCategoryDisplay(context)
                                 : type.label(l10n);
 
-    // Friend Detection via [METADATA] Protocol 2026
+    // Friend Detection via explicit Notes Tag (Protocol 2026)
+    // We STRICTLY evaluate Friendship via the injected '[Amigo: Foo | Tutor: Bar]' tag in the notes.
+    // Do NOT rely on AI metadata here, as the AI might mistakenly extract the owner's name and flag it.
     String? tutorName;
     String? myPetName;
     bool isFriend = false;
     String? friendName;
     
-    if (event.hasAIAnalysis && event.metrics?[PetConstants.keyAiSummary] != null) {
-      final summaryStr = event.metrics![PetConstants.keyAiSummary] as String;
-      if (summaryStr.contains('[METADATA]')) {
-         final tutorMatch = RegExp(r'tutor_name:\s*(.*?)(?=\n|$)').firstMatch(summaryStr);
-         if (tutorMatch != null) {
-            tutorName = tutorMatch.group(1)?.trim();
-            isFriend = true; // Only guarantee friend if tutor is explicitly in metadata
-         }
-         
-         // AI sometimes outputs the Guest Pet's name as 'my_pet_name' by mistake.
-         // If a tutor is present, the 'my_pet_name' from AI metadata is actually the guest.
-         final aiPetMatch = RegExp(r'my_pet_name:\s*(.*?)(?=\n|$)').firstMatch(summaryStr);
-         if (aiPetMatch != null) {
-            String aiExtractedName = aiPetMatch.group(1)?.trim() ?? '';
-            if (isFriend && aiExtractedName.isNotEmpty) {
-               friendName = aiExtractedName;
-            } else {
-               myPetName = aiExtractedName;
-            }
-         }
-      }
-    }
-    
     final String displayNotes = event.notes ?? '';
 
-    // Walk Journal Fallback Regex for Friend Detection
-    if (!isFriend && displayNotes.contains('[${l10n.pet_friend_prefix}:')) {
+    if (displayNotes.contains('[${l10n.pet_friend_prefix}:')) {
        isFriend = true;
        myPetName = petName; // the petName passed is the main pet
        final regex = RegExp(r'\[' '${RegExp.escape(l10n.pet_friend_prefix)}' r':\s*(.*?)\s*\|\s*' '${RegExp.escape(l10n.pet_label_tutor)}' r':\s*(.*?)\]');
@@ -102,13 +80,6 @@ class PetEventDetailScreen extends StatelessWidget {
           friendName = match.group(1)?.trim();
           tutorName = match.group(2)?.trim();
        }
-    }
-    
-    // Safety Fallback (If friendName was caught by AI Summary but NOT notes, UI still needs it)
-    if (isFriend && friendName == null && event.metrics?[PetConstants.keyAiSummary] != null) {
-        // AI might have output my_pet_name as the friend if the master prompt was confusing it
-        // Let's assume petName is ALWAYS the main pet.
-        myPetName = petName; 
     }
 
     // Determine AppBar Title

@@ -1,5 +1,11 @@
-# Release Notes (v2.2.5)
+# Release Notes (v2.2.6)
 
+## Correções Críticas (AI e OpenGL/Mapas)
+- **Correção da Truncagem do Resumo AI:** Corrigido um mega-bug do motor ECMAScript do Dart onde o Regex de corte (`\Z`) interceptava erroneamente a letra minúscula 'z' no meio de palavras longas geradas pela inteligência artificial. Isso impedia a exibição completa do laudo em tela.
+- **Estabilização Severa do Android SurfaceView:** Removidos wrappers condicionais (`_isGpsLoading`) e `GlobalKey` em torno do widget `GoogleMap`. O componente local agora inicializa com view travada nativamente como `MapType.normal`. Isso impede que flutuações de Layout remontem o Mapa, solucionando integralmente os crashes nativos (`Failed to allocate (4 x 4) format 56` e bibliotecas `Dynamite`) do driver Gralloc/OpenGL no hardware host.
+- **Atualização Semântica:** Modificada a string global de espera de Background AI de "Avaliando em 2º plano..." para a nomenclatura solicitada "Analisando em 2º plano...".
+
+# Release Notes (v2.2.5)
 ## Correções e Melhorias (UI e Localização)
 - **Refatoração Visual (Novo Compromisso):** Remoção de labels flutuantes (`labelText`) nos formulários, substituindo-os por `hintText` interno nativo para um visual mais limpo e sem recortes nas bordas grossas. Adaptação ergonômica voltada ao padrão "Anti-Gravity 2026".
 - **Design de Navegação (TabBars):** Todos os `TabBar` estilizados como caixas maciças (via `BoxDecoration`) em detalhes de passeios, agendas e histórico foram simplificados para `indicatorWeight: 4` (Underline discreto). Manutenção da lógica cromática (Rosa para Pets, Lilás para Amigos).

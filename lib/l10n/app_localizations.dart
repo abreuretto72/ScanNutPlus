@@ -2210,7 +2210,7 @@ abstract class AppLocalizations {
   /// No description provided for @pet_journal_report_action.
   ///
   /// In en, this message translates to:
-  /// **'Report'**
+  /// **'Show'**
   String get pet_journal_report_action;
 
   /// No description provided for @pet_journal_question.
@@ -6256,6 +6256,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We encountered a small technical issue while reading your data. Don\'t worry, just try again.'**
   String get pet_error_technical_content;
+
+  /// No description provided for @pet_journal_bg_evaluating.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing in background...'**
+  String get pet_journal_bg_evaluating;
+
+  /// No description provided for @pet_journal_bg_ready.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis Ready - Summary below'**
+  String get pet_journal_bg_ready;
+
+  /// No description provided for @pet_journal_bg_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis Error'**
+  String get pet_journal_bg_error;
+
+  /// No description provided for @pet_journal_bg_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Media saved. Analyzing...'**
+  String get pet_journal_bg_saved;
+
+  /// No description provided for @pet_journal_bg_resuming.
+  ///
+  /// In en, this message translates to:
+  /// **'Resuming intelligence evaluations... ({count})'**
+  String pet_journal_bg_resuming(int count);
+
+  /// No description provided for @pet_journal_bg_fatal.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical error in background processing.'**
+  String get pet_journal_bg_fatal;
+
+  /// No description provided for @pet_journal_bg_save_fail.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save event to database.'**
+  String get pet_journal_bg_save_fail;
+
+  /// No description provided for @pet_journal_saved_friend.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend Event Saved in Agenda!'**
+  String get pet_journal_saved_friend;
+
+  /// No description provided for @pet_journal_saved_own.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Saved!'**
+  String get pet_journal_saved_own;
+
+  /// No description provided for @pet_journal_friend_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend'**
+  String get pet_journal_friend_label;
+
+  /// No description provided for @pet_btn_ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get pet_btn_ok;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

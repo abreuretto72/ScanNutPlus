@@ -693,7 +693,7 @@
   "label_map_type": "Mapa",
   "pet_journal_hint_text": "Escreva aqui...",
   "pet_journal_register_button": "Registrar",
-  "pet_journal_report_action": "Relatar",
+  "pet_journal_report_action": "Mostrar",
   "map_alert_title": "Reportar",
   "map_alert_dog": "Cão Bravo",
   "map_alert_poison": "Veneno",
@@ -1262,5 +1262,21 @@
     "placeholders": {
       "name": { "type": "Object" }
     }
-  }
+  },
+  "pet_journal_bg_evaluating": "Analisando em 2º plano...",
+  "pet_journal_bg_ready": "Análise Pronta - Resumo abaixo",
+  "pet_journal_bg_error": "Erro na análise",
+  "pet_journal_bg_saved": "Mídia salva. Analisando...",
+  "pet_journal_bg_resuming": "Resumindo avaliações da inteligência... ({count})",
+  "@pet_journal_bg_resuming": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "pet_journal_bg_fatal": "Erro Crítico no processamento em tela de fundo.",
+  "pet_journal_bg_save_fail": "Falha ao gravar evento no banco de dados.",
+  "pet_journal_saved_friend": "Evento de Amigo Salvo na Agenda!",
+  "pet_journal_saved_own": "Evento Salvo!",
+  "pet_journal_friend_label": "Amigo",
+  "pet_btn_ok": "OK"
 }

@@ -1079,7 +1079,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_journal_address_not_found => 'Não achado';
 
   @override
-  String get pet_journal_report_action => 'Relatar';
+  String get pet_journal_report_action => 'Mostrar';
 
   @override
   String get pet_journal_question => 'O que houve?';
@@ -3196,4 +3196,39 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_error_technical_content => 'Tivemos uma pequena falha técnica ao analisar seus dados. Não se preocupe, pode tentar novamente.';
+
+  @override
+  String get pet_journal_bg_evaluating => 'Analisando em 2º plano...';
+
+  @override
+  String get pet_journal_bg_ready => 'Análise Pronta - Resumo abaixo';
+
+  @override
+  String get pet_journal_bg_error => 'Erro na análise';
+
+  @override
+  String get pet_journal_bg_saved => 'Mídia salva. Analisando...';
+
+  @override
+  String pet_journal_bg_resuming(int count) {
+    return 'Resumindo avaliações da inteligência... ($count)';
+  }
+
+  @override
+  String get pet_journal_bg_fatal => 'Erro Crítico no processamento em tela de fundo.';
+
+  @override
+  String get pet_journal_bg_save_fail => 'Falha ao gravar evento no banco de dados.';
+
+  @override
+  String get pet_journal_saved_friend => 'Evento de Amigo Salvo na Agenda!';
+
+  @override
+  String get pet_journal_saved_own => 'Evento Salvo!';
+
+  @override
+  String get pet_journal_friend_label => 'Amigo';
+
+  @override
+  String get pet_btn_ok => 'OK';
 }

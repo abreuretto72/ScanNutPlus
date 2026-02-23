@@ -1079,7 +1079,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_journal_address_not_found => 'Address not found';
 
   @override
-  String get pet_journal_report_action => 'Report';
+  String get pet_journal_report_action => 'Show';
 
   @override
   String get pet_journal_question => 'What happened?';
@@ -3196,4 +3196,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pet_error_technical_content => 'We encountered a small technical issue while reading your data. Don\'t worry, just try again.';
+
+  @override
+  String get pet_journal_bg_evaluating => 'Analyzing in background...';
+
+  @override
+  String get pet_journal_bg_ready => 'Analysis Ready - Summary below';
+
+  @override
+  String get pet_journal_bg_error => 'Analysis Error';
+
+  @override
+  String get pet_journal_bg_saved => 'Media saved. Analyzing...';
+
+  @override
+  String pet_journal_bg_resuming(int count) {
+    return 'Resuming intelligence evaluations... ($count)';
+  }
+
+  @override
+  String get pet_journal_bg_fatal => 'Critical error in background processing.';
+
+  @override
+  String get pet_journal_bg_save_fail => 'Failed to save event to database.';
+
+  @override
+  String get pet_journal_saved_friend => 'Friend Event Saved in Agenda!';
+
+  @override
+  String get pet_journal_saved_own => 'Event Saved!';
+
+  @override
+  String get pet_journal_friend_label => 'Friend';
+
+  @override
+  String get pet_btn_ok => 'OK';
 }

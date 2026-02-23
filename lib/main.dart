@@ -17,6 +17,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_model.dart';
 import 'package:scannutplus/features/pet/map/data/models/pet_map_alert.dart';
+import 'package:scannutplus/features/pet/agenda/data/models/pending_analysis.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart' as legacy_event;
 
 
@@ -47,6 +48,7 @@ void main() {
     Hive.registerAdapter(PetEventAdapter()); // New Model (202)
     Hive.registerAdapter(legacy_event.PetEventAdapter()); // Legacy Model (201)
     Hive.registerAdapter(PetMapAlertAdapter()); // Map Alerts (20)
+    Hive.registerAdapter(PendingAnalysisAdapter()); // Background Resiliency (203)
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -127,7 +129,12 @@ void _handleGlobalError(Object error, StackTrace? stack) {
                      style: const TextStyle(fontWeight: FontWeight.bold)
                    ),
                    const SizedBox(height: 4),
-                   Text(l10n?.error_generic_message ?? 'O sistema teve um pequeno tropeço técnico. Já estamos verificando!'),
+                   Text(
+                      error.toString(),
+                      style: const TextStyle(fontSize: 12, color: Colors.white),
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                   ),
                 ],
               ),
               backgroundColor: Colors.redAccent, // Feedback Visual Crítico em Vermelho

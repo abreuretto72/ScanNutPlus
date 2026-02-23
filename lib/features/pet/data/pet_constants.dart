@@ -10,6 +10,7 @@ class PetConstants {
   static const String boxPetHistory = 'pet_history';
   static const String boxPetRagIdentity = 'pet_rag_identity';
   static const String boxPetAnalyses = 'pet_analyses_storage';
+  static const String boxPendingAnalyses = 'pet_pending_analyses';
 
   // --- CAMPOS DE DADOS (FIELDS) ---
   static const String fieldUuid = 'pet_uuid';
@@ -451,7 +452,7 @@ User Question: {question}
 
   static const String sourceMandatory = '''
   OUTPUT FORMAT (Strict):
-  1. Urgency: [Low/Med/High]
+  1. [URGENCY] [EXCELENTE/BOM/ATENÇÃO/ALERTA/GRAVE] [/URGENCY]
   2. [VISUAL_SUMMARY] ... [END_SUMMARY]
   3. [CARD_START] TITLE:... ICON:... CONTENT:... [CARD_END] (Max 4 cards)
   4. [SOURCES]
@@ -490,6 +491,7 @@ User Question: {question}
   4. PHYSIOLOGY: Correlate Weather (Temp/UV) with hydration needs.
   5. HIGHLIGHT anomalies (e.g., loose stool, lethargy).
   6. FORMAT:
+     - Use [URGENCY] ALERTA [/URGENCY] (Choose: EXCELENTE/BOM/ATENÇÃO/ALERTA/RUIM/GRAVE) at the very start of the analysis.
      - Use [VISUAL_SUMMARY] ... [END_SUMMARY] for a brief overview (2-3 lines).
      - Use [CARD_START] TITLE:... ICON:... CONTENT:... [CARD_END] for detailed sections (Telemetry, Effort, Environment, Health).
      - Icons: 'map' (Telemetry), 'fire' (Calories/Effort), 'tree' (Context), 'heart' (Physiology).

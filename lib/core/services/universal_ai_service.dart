@@ -88,6 +88,10 @@ class UniversalAiService {
         1. SCIENTIFIC TRUTH: Base your analysis on clinical facts. Cite real scientific sources (e.g., Merck Manual, WSAVA).
         2. STRUCTURE: Use the exact markers below:
            
+           [URGENCY]
+           (Strictly choose ONE: EXCELENTE, BOM, ATENÇÃO, ALERTA, RUIM, GRAVE or CRÍTICO. Do not translate this tag or its values)
+           [/URGENCY]
+           
            [VISUAL_SUMMARY]
            (3-line summary about breed, state, and findings from the provided media).
 

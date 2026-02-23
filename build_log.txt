@@ -1,0 +1,680 @@
+[  +61 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[        ] executing: [C:\Users\Abreu\flutter/] git -c log.showSignature=false log HEAD -n 1 --pretty=format:%ad --date=iso
+[  +51 ms] Exit code 0 from: git -c log.showSignature=false log HEAD -n 1 --pretty=format:%ad --date=iso
+[        ] 2026-02-18 13:54:59 -0800
+[  +10 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +33 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[   +4 ms] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[  +51 ms] Skipping pub get: version match.
+[  +93 ms] Found plugin video_thumbnail at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_thumbnail-0.5.6\
+[   +3 ms] Found plugin video_player at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player-2.10.1\
+[        ] Found plugin video_player_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_web-2.4.0\
+[   +2 ms] Found plugin video_player_avfoundation at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_avfoundation-2.9.3\
+[   +1 ms] Found plugin video_player_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_android-2.9.1\
+[   +2 ms] Found plugin url_launcher at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[        ] Found plugin url_launcher_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.5\
+[   +1 ms] Found plugin url_launcher_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.2\
+[        ] Found plugin url_launcher_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.5\
+[        ] Found plugin url_launcher_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.2\
+[   +1 ms] Found plugin url_launcher_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.4.0\
+[        ] Found plugin url_launcher_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\
+[  +12 ms] Found plugin shared_preferences at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.4\
+[        ] Found plugin shared_preferences_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +1 ms] Found plugin path_provider_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +2 ms] Found plugin shared_preferences_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[        ] Found plugin shared_preferences_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[        ] Found plugin path_provider_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +1 ms] Found plugin shared_preferences_foundation at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.6\
+[        ] Found plugin shared_preferences_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.20\
+[        ] Found plugin path_provider at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +1 ms] Found plugin path_provider_foundation at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[   +3 ms] Found plugin path_provider_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[        ] Found plugin app_links at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\app_links-6.4.1\
+[        ] Found plugin app_links_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_web-1.0.4\
+[   +1 ms] Found plugin app_links_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_linux-1.0.3\
+[        ] Found plugin gtk at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\gtk-2.1.0\
+[        ] Found plugin speech_to_text at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\speech_to_text-7.3.0\
+[        ] Found plugin speech_to_text_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\speech_to_text_windows-1.0.0+beta.8\
+[   +2 ms] Found plugin printing at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\printing-5.14.2\
+[   +6 ms] Found plugin permission_handler at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler-11.4.0\
+[        ] Found plugin permission_handler_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_windows-0.2.1\
+[   +1 ms] Found plugin permission_handler_html at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_html-0.1.3+5\
+[        ] Found plugin permission_handler_apple at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_apple-9.4.7\
+[        ] Found plugin permission_handler_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-12.1.0\
+[        ] Found plugin package_info_plus at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\
+[   +3 ms] Found plugin objectbox_flutter_libs at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\objectbox_flutter_libs-4.1.0\
+[   +2 ms] Found plugin local_auth at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth-2.3.0\
+[        ] Found plugin local_auth_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth_windows-1.0.11\
+[   +1 ms] Found plugin local_auth_darwin at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth_darwin-1.6.1\
+[   +1 ms] Found plugin local_auth_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth_android-1.0.56\
+[        ] Found plugin flutter_plugin_android_lifecycle at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.33\
+[   +1 ms] Found plugin just_audio at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\just_audio-0.10.5\
+[   +1 ms] Found plugin just_audio_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\just_audio_web-0.4.16\
+[   +1 ms] Found plugin audio_session at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\audio_session-0.2.2\
+[        ] Found plugin image_picker at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker-1.2.1\
+[        ] Found plugin image_picker_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_windows-0.2.2\
+[   +1 ms] Found plugin file_selector_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_windows-0.9.3+5\
+[   +1 ms] Found plugin image_picker_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_macos-0.2.2+1\
+[        ] Found plugin file_selector_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_macos-0.9.5\
+[        ] Found plugin image_picker_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_linux-0.2.2\
+[        ] Found plugin file_selector_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_linux-0.9.4\
+[        ] Found plugin image_picker_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_ios-0.8.13+6\
+[        ] Found plugin image_picker_for_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_for_web-3.1.1\
+[        ] Found plugin image_picker_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+13\
+[   +2 ms] Found plugin google_maps_flutter at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter-2.14.0\
+[        ] Found plugin google_maps_flutter_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_web-0.5.14+3\
+[   +4 ms] Found plugin google_maps_flutter_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_ios-2.17.3\
+[   +1 ms] Found plugin google_maps_flutter_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_android-2.18.12\
+[   +2 ms] Found plugin geolocator at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator-14.0.2\
+[        ] Found plugin geolocator_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_windows-0.2.5\
+[   +1 ms] Found plugin geolocator_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_web-4.1.3\
+[   +1 ms] Found plugin geolocator_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_linux-0.2.4\
+[   +2 ms] Found plugin geolocator_apple at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_apple-2.3.13\
+[        ] Found plugin geolocator_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-5.0.2\
+[        ] Found plugin geocoding at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding-4.0.0\
+[   +1 ms] Found plugin geocoding_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_ios-3.1.0\
+[        ] Found plugin geocoding_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_android-4.0.1\
+[        ] Found plugin gal at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\gal-2.3.2\
+[   +5 ms] Found plugin flutter_image_compress at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress-2.4.0\
+[   +1 ms] Found plugin flutter_image_compress_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_web-0.1.5\
+[   +1 ms] Found plugin flutter_image_compress_ohos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_ohos-0.0.3\
+[   +1 ms] Found plugin flutter_image_compress_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_macos-1.0.3\
+[        ] Found plugin flutter_image_compress_common at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_common-1.0.6\
+[   +1 ms] Found plugin file_picker at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-10.3.10\
+[  +70 ms] Found plugin video_thumbnail at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_thumbnail-0.5.6\
+[        ] Found plugin video_player at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player-2.10.1\
+[        ] Found plugin video_player_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_web-2.4.0\
+[   +2 ms] Found plugin video_player_avfoundation at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_avfoundation-2.9.3\
+[        ] Found plugin video_player_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_android-2.9.1\
+[   +2 ms] Found plugin url_launcher at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[        ] Found plugin url_launcher_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.5\
+[   +1 ms] Found plugin url_launcher_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.2\
+[        ] Found plugin url_launcher_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.5\
+[   +1 ms] Found plugin url_launcher_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.2\
+[        ] Found plugin url_launcher_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.4.0\
+[        ] Found plugin url_launcher_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\
+[   +9 ms] Found plugin shared_preferences at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.4\
+[   +1 ms] Found plugin shared_preferences_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +1 ms] Found plugin path_provider_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +1 ms] Found plugin shared_preferences_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[        ] Found plugin shared_preferences_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[        ] Found plugin path_provider_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +1 ms] Found plugin shared_preferences_foundation at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.6\
+[        ] Found plugin shared_preferences_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.20\
+[        ] Found plugin path_provider at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[        ] Found plugin path_provider_foundation at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[   +2 ms] Found plugin path_provider_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[        ] Found plugin app_links at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\app_links-6.4.1\
+[        ] Found plugin app_links_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_web-1.0.4\
+[   +1 ms] Found plugin app_links_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_linux-1.0.3\
+[        ] Found plugin gtk at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\gtk-2.1.0\
+[        ] Found plugin speech_to_text at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\speech_to_text-7.3.0\
+[        ] Found plugin speech_to_text_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\speech_to_text_windows-1.0.0+beta.8\
+[   +1 ms] Found plugin printing at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\printing-5.14.2\
+[   +6 ms] Found plugin permission_handler at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler-11.4.0\
+[        ] Found plugin permission_handler_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_windows-0.2.1\
+[   +1 ms] Found plugin permission_handler_html at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_html-0.1.3+5\
+[        ] Found plugin permission_handler_apple at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_apple-9.4.7\
+[        ] Found plugin permission_handler_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-12.1.0\
+[        ] Found plugin package_info_plus at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\
+[   +1 ms] Found plugin objectbox_flutter_libs at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\objectbox_flutter_libs-4.1.0\
+[   +1 ms] Found plugin local_auth at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth-2.3.0\
+[        ] Found plugin local_auth_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth_windows-1.0.11\
+[        ] Found plugin local_auth_darwin at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth_darwin-1.6.1\
+[        ] Found plugin local_auth_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth_android-1.0.56\
+[        ] Found plugin flutter_plugin_android_lifecycle at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.33\
+[        ] Found plugin just_audio at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\just_audio-0.10.5\
+[   +1 ms] Found plugin just_audio_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\just_audio_web-0.4.16\
+[   +1 ms] Found plugin audio_session at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\audio_session-0.2.2\
+[        ] Found plugin image_picker at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker-1.2.1\
+[        ] Found plugin image_picker_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_windows-0.2.2\
+[   +1 ms] Found plugin file_selector_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_windows-0.9.3+5\
+[        ] Found plugin image_picker_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_macos-0.2.2+1\
+[        ] Found plugin file_selector_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_macos-0.9.5\
+[        ] Found plugin image_picker_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_linux-0.2.2\
+[        ] Found plugin file_selector_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_linux-0.9.4\
+[        ] Found plugin image_picker_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_ios-0.8.13+6\
+[        ] Found plugin image_picker_for_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_for_web-3.1.1\
+[        ] Found plugin image_picker_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+13\
+[   +1 ms] Found plugin google_maps_flutter at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter-2.14.0\
+[        ] Found plugin google_maps_flutter_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_web-0.5.14+3\
+[   +1 ms] Found plugin google_maps_flutter_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_ios-2.17.3\
+[        ] Found plugin google_maps_flutter_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_android-2.18.12\
+[   +1 ms] Found plugin geolocator at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator-14.0.2\
+[        ] Found plugin geolocator_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_windows-0.2.5\
+[   +1 ms] Found plugin geolocator_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_web-4.1.3\
+[        ] Found plugin geolocator_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_linux-0.2.4\
+[   +1 ms] Found plugin geolocator_apple at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_apple-2.3.13\
+[        ] Found plugin geolocator_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-5.0.2\
+[        ] Found plugin geocoding at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding-4.0.0\
+[   +1 ms] Found plugin geocoding_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_ios-3.1.0\
+[        ] Found plugin geocoding_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_android-4.0.1\
+[        ] Found plugin gal at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\gal-2.3.2\
+[   +3 ms] Found plugin flutter_image_compress at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress-2.4.0\
+[        ] Found plugin flutter_image_compress_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_web-0.1.5\
+[   +1 ms] Found plugin flutter_image_compress_ohos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_ohos-0.0.3\
+[        ] Found plugin flutter_image_compress_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_macos-1.0.3\
+[        ] Found plugin flutter_image_compress_common at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_common-1.0.6\
+[   +1 ms] Found plugin file_picker at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-10.3.10\
+[   +8 ms] Skipping generating web_plugin_registrant.dart because it is up-to-date.
+[  +38 ms] Found plugin video_thumbnail at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_thumbnail-0.5.6\
+[        ] Found plugin video_player at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player-2.10.1\
+[        ] Found plugin video_player_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_web-2.4.0\
+[   +1 ms] Found plugin video_player_avfoundation at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_avfoundation-2.9.3\
+[        ] Found plugin video_player_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_android-2.9.1\
+[   +1 ms] Found plugin url_launcher at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher-6.3.2\
+[        ] Found plugin url_launcher_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_windows-3.1.5\
+[   +1 ms] Found plugin url_launcher_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_web-2.4.2\
+[        ] Found plugin url_launcher_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_macos-3.2.5\
+[        ] Found plugin url_launcher_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_linux-3.2.2\
+[        ] Found plugin url_launcher_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_ios-6.4.0\
+[        ] Found plugin url_launcher_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\
+[   +6 ms] Found plugin shared_preferences at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.4\
+[        ] Found plugin shared_preferences_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +1 ms] Found plugin path_provider_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +1 ms] Found plugin shared_preferences_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[        ] Found plugin shared_preferences_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[        ] Found plugin path_provider_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[        ] Found plugin shared_preferences_foundation at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.6\
+[        ] Found plugin shared_preferences_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.20\
+[        ] Found plugin path_provider at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[        ] Found plugin path_provider_foundation at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[   +2 ms] Found plugin path_provider_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[        ] Found plugin app_links at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\app_links-6.4.1\
+[        ] Found plugin app_links_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_web-1.0.4\
+[   +1 ms] Found plugin app_links_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\app_links_linux-1.0.3\
+[        ] Found plugin gtk at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\gtk-2.1.0\
+[        ] Found plugin speech_to_text at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\speech_to_text-7.3.0\
+[        ] Found plugin speech_to_text_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\speech_to_text_windows-1.0.0+beta.8\
+[   +1 ms] Found plugin printing at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\printing-5.14.2\
+[   +5 ms] Found plugin permission_handler at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler-11.4.0\
+[        ] Found plugin permission_handler_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_windows-0.2.1\
+[        ] Found plugin permission_handler_html at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_html-0.1.3+5\
+[        ] Found plugin permission_handler_apple at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_apple-9.4.7\
+[        ] Found plugin permission_handler_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-12.1.0\
+[        ] Found plugin package_info_plus at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\
+[   +1 ms] Found plugin objectbox_flutter_libs at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\objectbox_flutter_libs-4.1.0\
+[   +1 ms] Found plugin local_auth at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth-2.3.0\
+[        ] Found plugin local_auth_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth_windows-1.0.11\
+[        ] Found plugin local_auth_darwin at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth_darwin-1.6.1\
+[        ] Found plugin local_auth_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth_android-1.0.56\
+[        ] Found plugin flutter_plugin_android_lifecycle at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.33\
+[        ] Found plugin just_audio at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\just_audio-0.10.5\
+[   +1 ms] Found plugin just_audio_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\just_audio_web-0.4.16\
+[        ] Found plugin audio_session at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\audio_session-0.2.2\
+[        ] Found plugin image_picker at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker-1.2.1\
+[        ] Found plugin image_picker_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_windows-0.2.2\
+[   +1 ms] Found plugin file_selector_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_windows-0.9.3+5\
+[        ] Found plugin image_picker_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_macos-0.2.2+1\
+[        ] Found plugin file_selector_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_macos-0.9.5\
+[        ] Found plugin image_picker_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_linux-0.2.2\
+[        ] Found plugin file_selector_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_selector_linux-0.9.4\
+[        ] Found plugin image_picker_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_ios-0.8.13+6\
+[        ] Found plugin image_picker_for_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_for_web-3.1.1\
+[        ] Found plugin image_picker_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+13\
+[        ] Found plugin google_maps_flutter at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter-2.14.0\
+[        ] Found plugin google_maps_flutter_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_web-0.5.14+3\
+[   +2 ms] Found plugin google_maps_flutter_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_ios-2.17.3\
+[        ] Found plugin google_maps_flutter_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_android-2.18.12\
+[   +1 ms] Found plugin geolocator at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator-14.0.2\
+[        ] Found plugin geolocator_windows at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_windows-0.2.5\
+[        ] Found plugin geolocator_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_web-4.1.3\
+[        ] Found plugin geolocator_linux at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_linux-0.2.4\
+[   +1 ms] Found plugin geolocator_apple at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_apple-2.3.13\
+[        ] Found plugin geolocator_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-5.0.2\
+[        ] Found plugin geocoding at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding-4.0.0\
+[        ] Found plugin geocoding_ios at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_ios-3.1.0\
+[        ] Found plugin geocoding_android at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_android-4.0.1\
+[        ] Found plugin gal at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\gal-2.3.2\
+[   +3 ms] Found plugin flutter_image_compress at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress-2.4.0\
+[        ] Found plugin flutter_image_compress_web at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_web-0.1.5\
+[        ] Found plugin flutter_image_compress_ohos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_ohos-0.0.3\
+[        ] Found plugin flutter_image_compress_macos at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_macos-1.0.3\
+[        ] Found plugin flutter_image_compress_common at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_common-1.0.6\
+[        ] Found plugin file_picker at C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-10.3.10\
+[   +6 ms] Generating E:\antigravity_projetos\ScanNutPlus\android\app\src\main\java\io\flutter\plugins\GeneratedPluginRegistrant.java
+[   +1 ms] Skipping generating GeneratedPluginRegistrant.java because it is up-to-date.
+[   +4 ms] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[        ] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[        ] Skipping generating generated_plugins.cmake because it is up-to-date.
+[   +1 ms] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[        ] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[        ] Skipping generating generated_plugins.cmake because it is up-to-date.
+[   +1 ms] Skipping generating GeneratedPluginRegistrant.h because it is up-to-date.
+[        ] Skipping generating GeneratedPluginRegistrant.m because it is up-to-date.
+[   +1 ms] Skipping generating GeneratedPluginRegistrant.swift because it is up-to-date.
+[  +88 ms] executing: E:\androidstudio2021\jbr\bin\java -version
+[  +77 ms] Exit code 0 from: E:\androidstudio2021\jbr\bin\java -version
+[        ] openjdk version "17.0.6" 2023-01-17
+           OpenJDK Runtime Environment (build 17.0.6+0-b2043.56-9586694)
+           OpenJDK 64-Bit Server VM (build 17.0.6+0-b2043.56-9586694, mixed mode)
+[   +6 ms] Top-level Gradle build file not found, skipping migration of task "clean".
+[   +1 ms] executing: E:\androidstudio2021\jbr\bin\java --version
+[  +77 ms] Exit code 0 from: E:\androidstudio2021\jbr\bin\java --version
+[        ] openjdk 17.0.6 2023-01-17
+           OpenJDK Runtime Environment (build 17.0.6+0-b2043.56-9586694)
+           OpenJDK 64-Bit Server VM (build 17.0.6+0-b2043.56-9586694, mixed mode)
+[   +4 ms] CMake project not found, skipping support Android 15 16k page size migration.
+[   +3 ms] Using gradle from E:\antigravity_projetos\ScanNutPlus\android\gradlew.bat.
+[   +6 ms] LocalFile: 'E:\antigravity_projetos\ScanNutPlus\android\build.gradle.kts' doesn't provide an AGP version. Checking settings.
+[        ] LocalFile: 'E:\antigravity_projetos\ScanNutPlus\android\settings.gradle.kts' provides AGP version: 8.11.1
+[  +16 ms] Running Gradle task 'assembleRelease'...
+[   +1 ms] executing: [E:\antigravity_projetos\ScanNutPlus\android/] E:\antigravity_projetos\ScanNutPlus\android\gradlew.bat --full-stacktrace --info -Pverbose=true -Ptarget-platform=android-arm,android-arm64,android-x64 -Ptarget=lib\main.dart -Pbase-application-name=android.app.Application -Pdart-defines=RkxVVFRFUl9WRVJTSU9OPTMuNDEuMg==,RkxVVFRFUl9DSEFOTkVMPXN0YWJsZQ==,RkxVVFRFUl9HSVRfVVJMPWh0dHBzOi8vZ2l0aHViLmNvbS9mbHV0dGVyL2ZsdXR0ZXIuZ2l0,RkxVVFRFUl9GUkFNRVdPUktfUkVWSVNJT049OTA2NzNhNGVlZg==,RkxVVFRFUl9FTkdJTkVfUkVWSVNJT049NmMwYmFhZWJmNw==,RkxVVFRFUl9EQVJUX1ZFUlNJT049My4xMS4w -Pdart-obfuscation=false -Ptrack-widget-creation=true -Ptree-shake-icons=true assembleRelease
+[ +497 ms] Initialized native services in: C:\Users\Abreu\.gradle\native
+[        ] Initialized jansi services in: C:\Users\Abreu\.gradle\native
+[ +412 ms] The client will now receive all logging from the daemon (pid: 18148). The daemon log file: C:\Users\Abreu\.gradle\daemon\8.14\daemon-18148.out.log
+[        ] Starting 4th build in daemon [uptime: 2 mins 58.372 secs, performance: 100%, GC rate: 0.00/s, heap usage: 0% of 8 GiB, non-heap usage: 2% of 4 GiB]
+[        ] Using 32 worker leases.
+[        ] Now considering [E:\antigravity_projetos\ScanNutPlus\android, C:\Users\Abreu\flutter\packages\flutter_tools\gradle] as hierarchies to watch
+[        ] Watching the file system is configured to be enabled if available
+[        ] File system watching is active
+[        ] Starting Build
+[        ] Now considering [C:\Users\Abreu\flutter\packages\flutter_tools\gradle, E:\antigravity_projetos\ScanNutPlus\android] as hierarchies to watch
+[  +99 ms] > Configure project :gradle
+[        ] Evaluating project ':gradle' using build file 'C:\Users\Abreu\flutter\packages\flutter_tools\gradle\build.gradle.kts'.
+[        ] Resolved plugin [id: 'org.gradle.java-gradle-plugin']
+[        ] Resolved plugin [id: 'org.gradle.groovy']
+[        ] Resolved plugin [id: 'org.gradle.kotlin.kotlin-dsl', version: '5.2.0']
+[        ] Resolved plugin [id: 'org.jetbrains.kotlin.jvm', version: '1.9.20']
+[        ] Using Kotlin Gradle Plugin gradle85 variant
+[        ] kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+[        ] kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+[        ] file or directory 'C:\Users\Abreu\flutter\packages\flutter_tools\gradle\src\main\java', not found
+[        ] Resolved plugin [id: 'dev.flutter.flutter-plugin-loader', version: '1.0.0']
+[        ] Resolved plugin [id: 'com.android.application', version: '8.11.1', apply: false]
+[        ] Resolved plugin [id: 'org.jetbrains.kotlin.android', version: '2.2.20', apply: false]
+[        ] Resolve mutations for :gradle:checkKotlinGradlePluginConfigurationErrors (Thread[Execution worker,5,main]) started.
+[        ] :gradle:checkKotlinGradlePluginConfigurationErrors (Thread[Execution worker,5,main]) started.
+[        ] > Task :gradle:checkKotlinGradlePluginConfigurationErrors SKIPPED
+[        ] Skipping task ':gradle:checkKotlinGradlePluginConfigurationErrors' as task onlyIf 'errorDiagnostics are present' is false.
+[        ] Resolve mutations for :gradle:compileKotlin (Thread[Execution worker,5,main]) started.
+[        ] :gradle:compileKotlin (Thread[Execution worker,5,main]) started.
+[  +97 ms] > Task :gradle:compileKotlin UP-TO-DATE
+[        ] Caching disabled for task ':gradle:compileKotlin' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':gradle:compileKotlin' as it is up-to-date.
+[        ] Resolve mutations for :gradle:compileJava (Thread[Execution worker,5,main]) started.
+[        ] :gradle:compileJava (Thread[Execution worker,5,main]) started.
+[        ] > Task :gradle:compileJava NO-SOURCE
+[        ] Skipping task ':gradle:compileJava' as it has no source files and no previous output files.
+[        ] Resolve mutations for :gradle:compileGroovy (Thread[Execution worker,5,main]) started.
+[        ] :gradle:compileGroovy (Thread[Execution worker,5,main]) started.
+[        ] > Task :gradle:compileGroovy NO-SOURCE
+[        ] Skipping task ':gradle:compileGroovy' as it has no source files and no previous output files.
+[        ] Resolve mutations for :gradle:pluginDescriptors (Thread[Execution worker,5,main]) started.
+[        ] :gradle:pluginDescriptors (Thread[Execution worker Thread 5,5,main]) started.
+[        ] > Task :gradle:pluginDescriptors UP-TO-DATE
+[        ] Caching disabled for task ':gradle:pluginDescriptors' because:
+[        ]   Build cache is disabled
+[        ]   Not worth caching
+[        ] Skipping task ':gradle:pluginDescriptors' as it is up-to-date.
+[        ] Resolve mutations for :gradle:processResources (Thread[Execution worker Thread 5,5,main]) started.
+[        ] :gradle:processResources (Thread[Execution worker Thread 5,5,main]) started.
+[        ] > Task :gradle:processResources UP-TO-DATE
+[        ] Caching disabled for task ':gradle:processResources' because:
+[        ]   Build cache is disabled
+[        ]   Not worth caching
+[        ] Skipping task ':gradle:processResources' as it is up-to-date.
+[        ] Resolve mutations for :gradle:classes (Thread[Execution worker Thread 5,5,main]) started.
+[        ] :gradle:classes (Thread[Execution worker Thread 5,5,main]) started.
+[        ] > Task :gradle:classes UP-TO-DATE
+[        ] Skipping task ':gradle:classes' as it has no actions.
+[        ] Resolve mutations for :gradle:jar (Thread[Execution worker Thread 14,5,main]) started.
+[        ] :gradle:jar (Thread[Execution worker Thread 29,5,main]) started.
+[        ] > Task :gradle:jar UP-TO-DATE
+[        ] Caching disabled for task ':gradle:jar' because:
+[        ]   Build cache is disabled
+[        ]   Not worth caching
+[        ] Skipping task ':gradle:jar' as it is up-to-date.
+[  +96 ms] Settings evaluated using settings file 'E:\antigravity_projetos\ScanNutPlus\android\settings.gradle.kts'.
+[        ] Projects loaded. Root project using build file 'E:\antigravity_projetos\ScanNutPlus\android\build.gradle.kts'.
+[        ] Included projects: [root project 'android', project ':app', project ':app_links', project ':audio_session', project ':file_picker', project ':flutter_image_compress_common', project ':flutter_plugin_android_lifecycle', project ':gal', project ':geocoding_android', project ':geolocator_android', project ':google_maps_flutter_android', project ':image_picker_android', project ':just_audio', project ':local_auth_android', project ':objectbox_flutter_libs', project ':package_info_plus', project ':path_provider_android', project ':permission_handler_android', project ':printing', project ':shared_preferences_android', project ':speech_to_text', project ':url_launcher_android', project ':video_player_android', project ':video_thumbnail']
+[  +99 ms] > Configure project :app
+[        ] Evaluating project ':app' using build file 'E:\antigravity_projetos\ScanNutPlus\android\app\build.gradle.kts'.
+[        ] Resolved plugin [id: 'com.android.application']
+[        ] Resolved plugin [id: 'kotlin-android']
+[        ] Resolved plugin [id: 'dev.flutter.flutter-gradle-plugin']
+[        ] Using default execution profile
+[        ] Build dfe659a3-cfb3-408a-b8d0-09441367e367 is started
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is E:\android_sdk
+[        ] > Configure project :
+[        ] Evaluating root project 'android' using build file 'E:\antigravity_projetos\ScanNutPlus\android\build.gradle.kts'.
+[        ] > Configure project :app_links
+[        ] Evaluating project ':app_links' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\app_links-6.4.1\android\build.gradle'.
+[        ] Using default execution profile
+[  +92 ms] > Configure project :audio_session
+[        ] Evaluating project ':audio_session' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\audio_session-0.2.2\android\build.gradle'.
+[        ] Using default execution profile
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[  +99 ms] > Configure project :file_picker
+[        ] Evaluating project ':file_picker' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-10.3.10\android\build.gradle'.
+[        ] Using default execution profile
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[        ] > Configure project :flutter_image_compress_common
+[        ] Evaluating project ':flutter_image_compress_common' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_image_compress_common-1.0.6\android\build.gradle'.
+[        ] Using default execution profile
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[  +99 ms] > Configure project :flutter_plugin_android_lifecycle
+[        ] Evaluating project ':flutter_plugin_android_lifecycle' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_plugin_android_lifecycle-2.0.33\android\build.gradle'.
+[        ] Using default execution profile
+[        ] > Configure project :gal
+[        ] Evaluating project ':gal' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\gal-2.3.2\android\build.gradle'.
+[        ] Using default execution profile
+[        ] > Configure project :geocoding_android
+[        ] Evaluating project ':geocoding_android' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geocoding_android-4.0.1\android\build.gradle'.
+[        ] Using default execution profile
+[  +98 ms] > Configure project :geolocator_android
+[        ] Evaluating project ':geolocator_android' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\geolocator_android-5.0.2\android\build.gradle'.
+[        ] Using default execution profile
+[        ] > Configure project :google_maps_flutter_android
+[        ] Evaluating project ':google_maps_flutter_android' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\google_maps_flutter_android-2.18.12\android\build.gradle'.
+[        ] Using default execution profile
+[        ] > Configure project :image_picker_android
+[        ] Evaluating project ':image_picker_android' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+13\android\build.gradle'.
+[        ] Using default execution profile
+[        ] > Configure project :just_audio
+[        ] Evaluating project ':just_audio' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\just_audio-0.10.5\android\build.gradle'.
+[        ] Using default execution profile
+[  +99 ms] > Configure project :local_auth_android
+[        ] Evaluating project ':local_auth_android' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\local_auth_android-1.0.56\android\build.gradle'.
+[        ] Using default execution profile
+[  +99 ms] > Configure project :objectbox_flutter_libs
+[        ] Evaluating project ':objectbox_flutter_libs' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\objectbox_flutter_libs-4.1.0\android\build.gradle'.
+[        ] Using default execution profile
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[        ] > Configure project :package_info_plus
+[        ] Evaluating project ':package_info_plus' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\android\build.gradle'.
+[        ] Using default execution profile
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[  +98 ms] > Configure project :path_provider_android
+[        ] Evaluating project ':path_provider_android' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\android\build.gradle'.
+[        ] Using default execution profile
+[        ] > Configure project :permission_handler_android
+[        ] Evaluating project ':permission_handler_android' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-12.1.0\android\build.gradle'.
+[        ] Using default execution profile
+[  +99 ms] > Configure project :printing
+[        ] Evaluating project ':printing' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\printing-5.14.2\android\build.gradle'.
+[        ] Using default execution profile
+[        ] > Configure project :shared_preferences_android
+[        ] Evaluating project ':shared_preferences_android' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.20\android\build.gradle'.
+[        ] Using default execution profile
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[        ] > Configure project :speech_to_text
+[        ] Evaluating project ':speech_to_text' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\speech_to_text-7.3.0\android\build.gradle'.
+[        ] Using default execution profile
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[  +99 ms] > Configure project :url_launcher_android
+[        ] Evaluating project ':url_launcher_android' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\android\build.gradle'.
+[        ] Using default execution profile
+[        ] > Configure project :video_player_android
+[        ] Evaluating project ':video_player_android' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_android-2.9.1\android\build.gradle'.
+[        ] Using default execution profile
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[  +99 ms] > Configure project :video_thumbnail
+[        ] Evaluating project ':video_thumbnail' using build file 'C:\Users\Abreu\AppData\Local\Pub\Cache\hosted\pub.dev\video_thumbnail-0.5.6\android\build.gradle'.
+[        ] Using default execution profile
+[        ] All projects evaluated.
+[        ] Task name matched 'assembleRelease'
+[        ] Selected primary task 'assembleRelease' from project :
+[ +304 ms] Tasks to be executed: [task ':app:ReleaseMinSdkCheck', task ':app:compileFlutterBuildRelease', task ':app:packJniLibsflutterBuildRelease', task ':app:preBuild', task ':app:preReleaseBuild', task ':app:configureCMakeRelease[arm64-v8a]', task ':app:buildCMakeRelease[arm64-v8a]', task ':app:configureCMakeRelease[armeabi-v7a]', task ':app:buildCMakeRelease[armeabi-v7a]', task ':app:configureCMakeRelease[x86_64]', task ':app:buildCMakeRelease[x86_64]', task ':app:mergeReleaseJniLibFolders', task ':app_links:preBuild', task ':app_links:preReleaseBuild', task ':app_links:mergeReleaseJniLibFolders', task ':app_links:mergeReleaseNativeLibs', task ':app_links:copyReleaseJniLibsProjectOnly', task ':audio_session:preBuild', task ':audio_session:preReleaseBuild', task ':audio_session:mergeReleaseJniLibFolders', task ':audio_session:mergeReleaseNativeLibs', task ':audio_session:copyReleaseJniLibsProjectOnly', task ':file_picker:preBuild', task ':file_picker:preReleaseBuild', task ':file_picker:mergeReleaseJniLibFolders', task ':file_picker:mergeReleaseNativeLibs', task ':file_picker:copyReleaseJniLibsProjectOnly', task ':flutter_image_compress_common:preBuild', task ':flutter_image_compress_common:preReleaseBuild', task ':flutter_image_compress_common:mergeReleaseJniLibFolders', task ':flutter_image_compress_common:mergeReleaseNativeLibs', task ':flutter_image_compress_common:copyReleaseJniLibsProjectOnly', task ':flutter_plugin_android_lifecycle:preBuild', task ':flutter_plugin_android_lifecycle:preReleaseBuild', task ':flutter_plugin_android_lifecycle:mergeReleaseJniLibFolders', task ':flutter_plugin_android_lifecycle:mergeReleaseNativeLibs', task ':flutter_plugin_android_lifecycle:copyReleaseJniLibsProjectOnly', task ':gal:preBuild', task ':gal:preReleaseBuild', task ':gal:mergeReleaseJniLibFolders', task ':gal:mergeReleaseNativeLibs', task ':gal:copyReleaseJniLibsProjectOnly', task ':geocoding_android:preBuild', task ':geocoding_android:preReleaseBuild', task ':geocoding_android:mergeReleaseJniLibFolders', task ':geocoding_android:mergeReleaseNativeLibs', task ':geocoding_android:copyReleaseJniLibsProjectOnly', task ':geolocator_android:preBuild', task ':geolocator_android:preReleaseBuild', task ':geolocator_android:mergeReleaseJniLibFolders', task ':geolocator_android:mergeReleaseNativeLibs', task ':geolocator_android:copyReleaseJniLibsProjectOnly', task ':google_maps_flutter_android:preBuild', task ':google_maps_flutter_android:preReleaseBuild', task ':google_maps_flutter_android:mergeReleaseJniLibFolders', task ':google_maps_flutter_android:mergeReleaseNativeLibs', task ':google_maps_flutter_android:copyReleaseJniLibsProjectOnly', task ':image_picker_android:preBuild', task ':image_picker_android:preReleaseBuild', task ':image_picker_android:mergeReleaseJniLibFolders', task ':image_picker_android:mergeReleaseNativeLibs', task ':image_picker_android:copyReleaseJniLibsProjectOnly', task ':just_audio:preBuild', task ':just_audio:preReleaseBuild', task ':just_audio:mergeReleaseJniLibFolders', task ':just_audio:mergeReleaseNativeLibs', task ':just_audio:copyReleaseJniLibsProjectOnly', task ':local_auth_android:preBuild', task ':local_auth_android:preReleaseBuild', task ':local_auth_android:mergeReleaseJniLibFolders', task ':local_auth_android:mergeReleaseNativeLibs', task ':local_auth_android:copyReleaseJniLibsProjectOnly', task ':objectbox_flutter_libs:preBuild', task ':objectbox_flutter_libs:preReleaseBuild', task ':objectbox_flutter_libs:mergeReleaseJniLibFolders', task ':objectbox_flutter_libs:mergeReleaseNativeLibs', task ':objectbox_flutter_libs:copyReleaseJniLibsProjectOnly', task ':package_info_plus:preBuild', task ':package_info_plus:preReleaseBuild', task ':package_info_plus:mergeReleaseJniLibFolders', task ':package_info_plus:mergeReleaseNativeLibs', task ':package_info_plus:copyReleaseJniLibsProjectOnly', task ':path_provider_android:preBuild', task ':path_provider_android:preReleaseBuild', task ':path_provider_android:mergeReleaseJniLibFolders', task ':path_provider_android:mergeReleaseNativeLibs', task ':path_provider_android:copyReleaseJniLibsProjectOnly', task ':permission_handler_android:preBuild', task ':permission_handler_android:preReleaseBuild', task ':permission_handler_android:mergeReleaseJniLibFolders', task ':permission_handler_android:mergeReleaseNativeLibs', task ':permission_handler_android:copyReleaseJniLibsProjectOnly', task ':printing:preBuild', task ':printing:preReleaseBuild', task ':printing:mergeReleaseJniLibFolders', task ':printing:mergeReleaseNativeLibs', task ':printing:copyReleaseJniLibsProjectOnly', task ':shared_preferences_android:preBuild', task ':shared_preferences_android:preReleaseBuild', task ':shared_preferences_android:mergeReleaseJniLibFolders', task ':shared_preferences_android:mergeReleaseNativeLibs', task ':shared_preferences_android:copyReleaseJniLibsProjectOnly', task ':speech_to_text:preBuild', task ':speech_to_text:preReleaseBuild', task ':speech_to_text:mergeReleaseJniLibFolders', task ':speech_to_text:mergeReleaseNativeLibs', task ':speech_to_text:copyReleaseJniLibsProjectOnly', task ':url_launcher_android:preBuild', task ':url_launcher_android:preReleaseBuild', task ':url_launcher_android:mergeReleaseJniLibFolders', task ':url_launcher_android:mergeReleaseNativeLibs', task ':url_launcher_android:copyReleaseJniLibsProjectOnly', task ':video_player_android:preBuild', task ':video_player_android:preReleaseBuild', task ':video_player_android:mergeReleaseJniLibFolders', task ':video_player_android:mergeReleaseNativeLibs', task ':video_player_android:copyReleaseJniLibsProjectOnly', task ':video_thumbnail:preBuild', task ':video_thumbnail:preReleaseBuild', task ':video_thumbnail:mergeReleaseJniLibFolders', task ':video_thumbnail:mergeReleaseNativeLibs', task ':video_thumbnail:copyReleaseJniLibsProjectOnly', task ':app:mergeReleaseNativeLibs', task ':app:stripReleaseDebugSymbols', task ':app:extractReleaseNativeSymbolTables', task ':app:mergeReleaseNativeDebugMetadata', task ':app_links:generateReleaseResValues', task ':app_links:generateReleaseResources', task ':app_links:packageReleaseResources', task ':app_links:parseReleaseLocalResources', task ':app_links:generateReleaseRFile', task ':app_links:javaPreCompileRelease', task ':app_links:compileReleaseJavaWithJavac', task ':app_links:mergeReleaseGeneratedProguardFiles', task ':app_links:exportReleaseConsumerProguardFiles', task ':audio_session:checkKotlinGradlePluginConfigurationErrors', task ':audio_session:generateReleaseResValues', task ':audio_session:generateReleaseResources', task ':audio_session:packageReleaseResources', task ':audio_session:parseReleaseLocalResources', task ':audio_session:generateReleaseRFile', task ':audio_session:compileReleaseKotlin', task ':audio_session:javaPreCompileRelease', task ':audio_session:compileReleaseJavaWithJavac', task ':audio_session:bundleLibCompileToJarRelease', task ':just_audio:generateReleaseResValues', task ':just_audio:generateReleaseResources', task ':just_audio:packageReleaseResources', task ':just_audio:parseReleaseLocalResources', task ':just_audio:generateReleaseRFile', task ':just_audio:javaPreCompileRelease', task ':just_audio:compileReleaseJavaWithJavac', task ':just_audio:mergeReleaseGeneratedProguardFiles', task ':just_audio:exportReleaseConsumerProguardFiles', task ':audio_session:mergeReleaseGeneratedProguardFiles', task ':audio_session:exportReleaseConsumerProguardFiles', task ':file_picker:checkKotlinGradlePluginConfigurationErrors', task ':file_picker:generateReleaseResValues', task ':file_picker:generateReleaseResources', task ':file_picker:packageReleaseResources', task ':file_picker:parseReleaseLocalResources', task ':file_picker:generateReleaseRFile', task ':flutter_plugin_android_lifecycle:generateReleaseResValues', task ':flutter_plugin_android_lifecycle:generateReleaseResources', task ':flutter_plugin_android_lifecycle:packageReleaseResources', task ':flutter_plugin_android_lifecycle:parseReleaseLocalResources', task ':flutter_plugin_android_lifecycle:generateReleaseRFile', task ':flutter_plugin_android_lifecycle:javaPreCompileRelease', task ':flutter_plugin_android_lifecycle:compileReleaseJavaWithJavac', task ':flutter_plugin_android_lifecycle:bundleLibCompileToJarRelease', task ':file_picker:compileReleaseKotlin', task ':file_picker:javaPreCompileRelease', task ':file_picker:compileReleaseJavaWithJavac', task ':file_picker:mergeReleaseGeneratedProguardFiles', task ':file_picker:exportReleaseConsumerProguardFiles', task ':flutter_image_compress_common:checkKotlinGradlePluginConfigurationErrors', task ':flutter_image_compress_common:generateReleaseResValues', task ':flutter_image_compress_common:generateReleaseResources', task ':flutter_image_compress_common:packageReleaseResources', task ':flutter_image_compress_common:parseReleaseLocalResources', task ':flutter_image_compress_common:generateReleaseRFile', task ':flutter_image_compress_common:compileReleaseKotlin', task ':flutter_image_compress_common:javaPreCompileRelease', task ':flutter_image_compress_common:compileReleaseJavaWithJavac', task ':flutter_image_compress_common:mergeReleaseGeneratedProguardFiles', task ':flutter_image_compress_common:exportReleaseConsumerProguardFiles', task ':google_maps_flutter_android:generateReleaseResValues', task ':google_maps_flutter_android:generateReleaseResources', task ':google_maps_flutter_android:packageReleaseResources', task ':google_maps_flutter_android:parseReleaseLocalResources', task ':google_maps_flutter_android:generateReleaseRFile', task ':google_maps_flutter_android:javaPreCompileRelease', task ':google_maps_flutter_android:compileReleaseJavaWithJavac', task ':google_maps_flutter_android:mergeReleaseGeneratedProguardFiles', task ':google_maps_flutter_android:exportReleaseConsumerProguardFiles', task ':image_picker_android:generateReleaseResValues', task ':image_picker_android:generateReleaseResources', task ':image_picker_android:packageReleaseResources', task ':image_picker_android:parseReleaseLocalResources', task ':image_picker_android:generateReleaseRFile', task ':image_picker_android:javaPreCompileRelease', task ':image_picker_android:compileReleaseJavaWithJavac', task ':image_picker_android:mergeReleaseGeneratedProguardFiles', task ':image_picker_android:exportReleaseConsumerProguardFiles', task ':local_auth_android:generateReleaseResValues', task ':local_auth_android:generateReleaseResources', task ':local_auth_android:packageReleaseResources', task ':local_auth_android:parseReleaseLocalResources', task ':local_auth_android:generateReleaseRFile', task ':local_auth_android:javaPreCompileRelease', task ':local_auth_android:compileReleaseJavaWithJavac', task ':local_auth_android:mergeReleaseGeneratedProguardFiles', task ':local_auth_android:exportReleaseConsumerProguardFiles', task ':flutter_plugin_android_lifecycle:mergeReleaseGeneratedProguardFiles', task ':flutter_plugin_android_lifecycle:exportReleaseConsumerProguardFiles', task ':gal:generateReleaseResValues', task ':gal:generateReleaseResources', task ':gal:packageReleaseResources', task ':gal:parseReleaseLocalResources', task ':gal:generateReleaseRFile', task ':gal:javaPreCompileRelease', task ':gal:compileReleaseJavaWithJavac', task ':gal:mergeReleaseGeneratedProguardFiles', task ':gal:exportReleaseConsumerProguardFiles', task ':geocoding_android:generateReleaseResValues', task ':geocoding_android:generateReleaseResources', task ':geocoding_android:packageReleaseResources', task ':geocoding_android:parseReleaseLocalResources', task ':geocoding_android:generateReleaseRFile', task ':geocoding_android:javaPreCompileRelease', task ':geocoding_android:compileReleaseJavaWithJavac', task ':geocoding_android:mergeReleaseGeneratedProguardFiles', task ':geocoding_android:exportReleaseConsumerProguardFiles', task ':geolocator_android:generateReleaseResValues', task ':geolocator_android:generateReleaseResources', task ':geolocator_android:packageReleaseResources', task ':geolocator_android:parseReleaseLocalResources', task ':geolocator_android:generateReleaseRFile', task ':geolocator_android:javaPreCompileRelease', task ':geolocator_android:compileReleaseJavaWithJavac', task ':geolocator_android:mergeReleaseGeneratedProguardFiles', task ':geolocator_android:exportReleaseConsumerProguardFiles', task ':objectbox_flutter_libs:checkKotlinGradlePluginConfigurationErrors', task ':objectbox_flutter_libs:generateReleaseResValues', task ':objectbox_flutter_libs:generateReleaseResources', task ':objectbox_flutter_libs:packageReleaseResources', task ':objectbox_flutter_libs:parseReleaseLocalResources', task ':objectbox_flutter_libs:generateReleaseRFile', task ':objectbox_flutter_libs:compileReleaseKotlin', task ':objectbox_flutter_libs:javaPreCompileRelease', task ':objectbox_flutter_libs:compileReleaseJavaWithJavac', task ':objectbox_flutter_libs:mergeReleaseGeneratedProguardFiles', task ':objectbox_flutter_libs:exportReleaseConsumerProguardFiles', task ':package_info_plus:checkKotlinGradlePluginConfigurationErrors', task ':package_info_plus:generateReleaseResValues', task ':package_info_plus:generateReleaseResources', task ':package_info_plus:packageReleaseResources', task ':package_info_plus:parseReleaseLocalResources', task ':package_info_plus:generateReleaseRFile', task ':package_info_plus:compileReleaseKotlin', task ':package_info_plus:javaPreCompileRelease', task ':package_info_plus:compileReleaseJavaWithJavac', task ':package_info_plus:mergeReleaseGeneratedProguardFiles', task ':package_info_plus:exportReleaseConsumerProguardFiles', task ':path_provider_android:generateReleaseResValues', task ':path_provider_android:generateReleaseResources', task ':path_provider_android:packageReleaseResources', task ':path_provider_android:parseReleaseLocalResources', task ':path_provider_android:generateReleaseRFile', task ':path_provider_android:javaPreCompileRelease', task ':path_provider_android:compileReleaseJavaWithJavac', task ':path_provider_android:mergeReleaseGeneratedProguardFiles', task ':path_provider_android:exportReleaseConsumerProguardFiles', task ':permission_handler_android:generateReleaseResValues', task ':permission_handler_android:generateReleaseResources', task ':permission_handler_android:packageReleaseResources', task ':permission_handler_android:parseReleaseLocalResources', task ':permission_handler_android:generateReleaseRFile', task ':permission_handler_android:javaPreCompileRelease', task ':permission_handler_android:compileReleaseJavaWithJavac', task ':permission_handler_android:mergeReleaseGeneratedProguardFiles', task ':permission_handler_android:exportReleaseConsumerProguardFiles', task ':printing:generateReleaseResValues', task ':printing:generateReleaseResources', task ':printing:packageReleaseResources', task ':printing:parseReleaseLocalResources', task ':printing:generateReleaseRFile', task ':printing:javaPreCompileRelease', task ':printing:compileReleaseJavaWithJavac', task ':printing:mergeReleaseGeneratedProguardFiles', task ':printing:exportReleaseConsumerProguardFiles', task ':shared_preferences_android:checkKotlinGradlePluginConfigurationErrors', task ':shared_preferences_android:generateReleaseResValues', task ':shared_preferences_android:generateReleaseResources', task ':shared_preferences_android:packageReleaseResources', task ':shared_preferences_android:parseReleaseLocalResources', task ':shared_preferences_android:generateReleaseRFile', task ':shared_preferences_android:compileReleaseKotlin', task ':shared_preferences_android:javaPreCompileRelease', task ':shared_preferences_android:compileReleaseJavaWithJavac', task ':shared_preferences_android:mergeReleaseGeneratedProguardFiles', task ':shared_preferences_android:exportReleaseConsumerProguardFiles', task ':speech_to_text:checkKotlinGradlePluginConfigurationErrors', task ':speech_to_text:generateReleaseResValues', task ':speech_to_text:generateReleaseResources', task ':speech_to_text:packageReleaseResources', task ':speech_to_text:parseReleaseLocalResources', task ':speech_to_text:generateReleaseRFile', task ':speech_to_text:compileReleaseKotlin', task ':speech_to_text:javaPreCompileRelease', task ':speech_to_text:compileReleaseJavaWithJavac', task ':speech_to_text:mergeReleaseGeneratedProguardFiles', task ':speech_to_text:exportReleaseConsumerProguardFiles', task ':url_launcher_android:generateReleaseBuildConfig', task ':url_launcher_android:generateReleaseResValues', task ':url_launcher_android:generateReleaseResources', task ':url_launcher_android:packageReleaseResources', task ':url_launcher_android:parseReleaseLocalResources', task ':url_launcher_android:generateReleaseRFile', task ':url_launcher_android:javaPreCompileRelease', task ':url_launcher_android:compileReleaseJavaWithJavac', task ':url_launcher_android:mergeReleaseGeneratedProguardFiles', task ':url_launcher_android:exportReleaseConsumerProguardFiles', task ':video_player_android:checkKotlinGradlePluginConfigurationErrors', task ':video_player_android:generateReleaseResValues', task ':video_player_android:generateReleaseResources', task ':video_player_android:packageReleaseResources', task ':video_player_android:parseReleaseLocalResources', task ':video_player_android:generateReleaseRFile', task ':video_player_android:compileReleaseKotlin', task ':video_player_android:javaPreCompileRelease', task ':video_player_android:compileReleaseJavaWithJavac', task ':video_player_android:mergeReleaseGeneratedProguardFiles', task ':video_player_android:exportReleaseConsumerProguardFiles', task ':video_thumbnail:generateReleaseResValues', task ':video_thumbnail:generateReleaseResources', task ':video_thumbnail:packageReleaseResources', task ':video_thumbnail:parseReleaseLocalResources', task ':video_thumbnail:generateReleaseRFile', task ':video_thumbnail:javaPreCompileRelease', task ':video_thumbnail:compileReleaseJavaWithJavac', task ':video_thumbnail:mergeReleaseGeneratedProguardFiles', task ':video_thumbnail:exportReleaseConsumerProguardFiles', task ':app:buildKotlinToolingMetadata', task ':app:checkReleaseDuplicateClasses', task ':app:checkKotlinGradlePluginConfigurationErrors', task ':app_links:writeReleaseAarMetadata', task ':audio_session:writeReleaseAarMetadata', task ':file_picker:writeReleaseAarMetadata', task ':flutter_image_compress_common:writeReleaseAarMetadata', task ':flutter_plugin_android_lifecycle:writeReleaseAarMetadata', task ':gal:writeReleaseAarMetadata', task ':geocoding_android:writeReleaseAarMetadata', task ':geolocator_android:writeReleaseAarMetadata', task ':google_maps_flutter_android:writeReleaseAarMetadata', task ':image_picker_android:writeReleaseAarMetadata', task ':just_audio:writeReleaseAarMetadata', task ':local_auth_android:writeReleaseAarMetadata', task ':objectbox_flutter_libs:writeReleaseAarMetadata', task ':package_info_plus:writeReleaseAarMetadata', task ':path_provider_android:writeReleaseAarMetadata', task ':permission_handler_android:writeReleaseAarMetadata', task ':printing:writeReleaseAarMetadata', task ':shared_preferences_android:writeReleaseAarMetadata', task ':speech_to_text:writeReleaseAarMetadata', task ':url_launcher_android:writeReleaseAarMetadata', task ':video_player_android:writeReleaseAarMetadata', task ':video_thumbnail:writeReleaseAarMetadata', task ':app:checkReleaseAarMetadata', task ':app:cleanMergeReleaseAssets', task ':app:mergeReleaseShaders', task ':app:compileReleaseShaders', task ':app:generateReleaseAssets', task ':app_links:mergeReleaseShaders', task ':app_links:compileReleaseShaders', task ':app_links:generateReleaseAssets', task ':app_links:mergeReleaseAssets', task ':audio_session:mergeReleaseShaders', task ':audio_session:compileReleaseShaders', task ':audio_session:generateReleaseAssets', task ':audio_session:mergeReleaseAssets', task ':file_picker:mergeReleaseShaders', task ':file_picker:compileReleaseShaders', task ':file_picker:generateReleaseAssets', task ':file_picker:mergeReleaseAssets', task ':flutter_image_compress_common:mergeReleaseShaders', task ':flutter_image_compress_common:compileReleaseShaders', task ':flutter_image_compress_common:generateReleaseAssets', task ':flutter_image_compress_common:mergeReleaseAssets', task ':flutter_plugin_android_lifecycle:mergeReleaseShaders', task ':flutter_plugin_android_lifecycle:compileReleaseShaders', task ':flutter_plugin_android_lifecycle:generateReleaseAssets', task ':flutter_plugin_android_lifecycle:mergeReleaseAssets', task ':gal:mergeReleaseShaders', task ':gal:compileReleaseShaders', task ':gal:generateReleaseAssets', task ':gal:mergeReleaseAssets', task ':geocoding_android:mergeReleaseShaders', task ':geocoding_android:compileReleaseShaders', task ':geocoding_android:generateReleaseAssets', task ':geocoding_android:mergeReleaseAssets', task ':geolocator_android:mergeReleaseShaders', task ':geolocator_android:compileReleaseShaders', task ':geolocator_android:generateReleaseAssets', task ':geolocator_android:mergeReleaseAssets', task ':google_maps_flutter_android:mergeReleaseShaders', task ':google_maps_flutter_android:compileReleaseShaders', task ':google_maps_flutter_android:generateReleaseAssets', task ':google_maps_flutter_android:mergeReleaseAssets', task ':image_picker_android:mergeReleaseShaders', task ':image_picker_android:compileReleaseShaders', task ':image_picker_android:generateReleaseAssets', task ':image_picker_android:mergeReleaseAssets', task ':just_audio:mergeReleaseShaders', task ':just_audio:compileReleaseShaders', task ':just_audio:generateReleaseAssets', task ':just_audio:mergeReleaseAssets', task ':local_auth_android:mergeReleaseShaders', task ':local_auth_android:compileReleaseShaders', task ':local_auth_android:generateReleaseAssets', task ':local_auth_android:mergeReleaseAssets', task ':objectbox_flutter_libs:mergeReleaseShaders', task ':objectbox_flutter_libs:compileReleaseShaders', task ':objectbox_flutter_libs:generateReleaseAssets', task ':objectbox_flutter_libs:mergeReleaseAssets', task ':package_info_plus:mergeReleaseShaders', task ':package_info_plus:compileReleaseShaders', task ':package_info_plus:generateReleaseAssets', task ':package_info_plus:mergeReleaseAssets', task ':path_provider_android:mergeReleaseShaders', task ':path_provider_android:compileReleaseShaders', task ':path_provider_android:generateReleaseAssets', task ':path_provider_android:mergeReleaseAssets', task ':permission_handler_android:mergeReleaseShaders', task ':permission_handler_android:compileReleaseShaders', task ':permission_handler_android:generateReleaseAssets', task ':permission_handler_android:mergeReleaseAssets', task ':printing:mergeReleaseShaders', task ':printing:compileReleaseShaders', task ':printing:generateReleaseAssets', task ':printing:mergeReleaseAssets', task ':shared_preferences_android:mergeReleaseShaders', task ':shared_preferences_android:compileReleaseShaders', task ':shared_preferences_android:generateReleaseAssets', task ':shared_preferences_android:mergeReleaseAssets', task ':speech_to_text:mergeReleaseShaders', task ':speech_to_text:compileReleaseShaders', task ':speech_to_text:generateReleaseAssets', task ':speech_to_text:mergeReleaseAssets', task ':url_launcher_android:mergeReleaseShaders', task ':url_launcher_android:compileReleaseShaders', task ':url_launcher_android:generateReleaseAssets', task ':url_launcher_android:mergeReleaseAssets', task ':video_player_android:mergeReleaseShaders', task ':video_player_android:compileReleaseShaders', task ':video_player_android:generateReleaseAssets', task ':video_player_android:mergeReleaseAssets', task ':video_thumbnail:mergeReleaseShaders', task ':video_thumbnail:compileReleaseShaders', task ':video_thumbnail:generateReleaseAssets', task ':video_thumbnail:mergeReleaseAssets', task ':app:mergeReleaseAssets', task ':app:copyFlutterAssetsRelease', task ':app:generateReleaseResValues', task ':app:mapReleaseSourceSetPaths', task ':app:generateReleaseResources', task ':app:mergeReleaseResources', task ':app:packageReleaseResources', task ':app:parseReleaseLocalResources', task ':app:createReleaseCompatibleScreenManifests', task ':app:extractDeepLinksRelease', task ':app_links:extractDeepLinksRelease', task ':app_links:processReleaseManifest', task ':audio_session:extractDeepLinksRelease', task ':audio_session:processReleaseManifest', task ':file_picker:extractDeepLinksRelease', task ':file_picker:processReleaseManifest', task ':flutter_image_compress_common:extractDeepLinksRelease', task ':flutter_image_compress_common:processReleaseManifest', task ':flutter_plugin_android_lifecycle:extractDeepLinksRelease', task ':flutter_plugin_android_lifecycle:processReleaseManifest', task ':gal:extractDeepLinksRelease', task ':gal:processReleaseManifest', task ':geocoding_android:extractDeepLinksRelease', task ':geocoding_android:processReleaseManifest', task ':geolocator_android:extractDeepLinksRelease', task ':geolocator_android:processReleaseManifest', task ':google_maps_flutter_android:extractDeepLinksRelease', task ':google_maps_flutter_android:processReleaseManifest', task ':image_picker_android:extractDeepLinksRelease', task ':image_picker_android:processReleaseManifest', task ':just_audio:extractDeepLinksRelease', task ':just_audio:processReleaseManifest', task ':local_auth_android:extractDeepLinksRelease', task ':local_auth_android:processReleaseManifest', task ':objectbox_flutter_libs:extractDeepLinksRelease', task ':objectbox_flutter_libs:processReleaseManifest', task ':package_info_plus:extractDeepLinksRelease', task ':package_info_plus:processReleaseManifest', task ':path_provider_android:extractDeepLinksRelease', task ':path_provider_android:processReleaseManifest', task ':permission_handler_android:extractDeepLinksRelease', task ':permission_handler_android:processReleaseManifest', task ':printing:extractDeepLinksRelease', task ':printing:processReleaseManifest', task ':shared_preferences_android:extractDeepLinksRelease', task ':shared_preferences_android:processReleaseManifest', task ':speech_to_text:extractDeepLinksRelease', task ':speech_to_text:processReleaseManifest', task ':url_launcher_android:extractDeepLinksRelease', task ':url_launcher_android:processReleaseManifest', task ':video_player_android:extractDeepLinksRelease', task ':video_player_android:processReleaseManifest', task ':video_thumbnail:extractDeepLinksRelease', task ':video_thumbnail:processReleaseManifest', task ':app:processReleaseMainManifest', task ':app:outputReleaseAppLinkSettings', task ':app:processReleaseManifest', task ':app:processReleaseManifestForPackage', task ':app:processReleaseResources', task ':app_links:bundleLibCompileToJarRelease', task ':file_picker:bundleLibCompileToJarRelease', task ':flutter_image_compress_common:bundleLibCompileToJarRelease', task ':gal:bundleLibCompileToJarRelease', task ':geocoding_android:bundleLibCompileToJarRelease', task ':geolocator_android:bundleLibCompileToJarRelease', task ':google_maps_flutter_android:bundleLibCompileToJarRelease', task ':image_picker_android:bundleLibCompileToJarRelease', task ':just_audio:bundleLibCompileToJarRelease', task ':local_auth_android:bundleLibCompileToJarRelease', task ':objectbox_flutter_libs:bundleLibCompileToJarRelease', task ':package_info_plus:bundleLibCompileToJarRelease', task ':path_provider_android:bundleLibCompileToJarRelease', task ':permission_handler_android:bundleLibCompileToJarRelease', task ':printing:bundleLibCompileToJarRelease', task ':shared_preferences_android:bundleLibCompileToJarRelease', task ':speech_to_text:bundleLibCompileToJarRelease', task ':url_launcher_android:bundleLibCompileToJarRelease', task ':video_player_android:bundleLibCompileToJarRelease', task ':video_thumbnail:bundleLibCompileToJarRelease', task ':app:compileReleaseKotlin', task ':app:javaPreCompileRelease', task ':app:compileReleaseJavaWithJavac', task ':app_links:prepareReleaseArtProfile', task ':audio_session:prepareReleaseArtProfile', task ':file_picker:prepareReleaseArtProfile', task ':flutter_image_compress_common:prepareReleaseArtProfile', task ':flutter_plugin_android_lifecycle:prepareReleaseArtProfile', task ':gal:prepareReleaseArtProfile', task ':geocoding_android:prepareReleaseArtProfile', task ':geolocator_android:prepareReleaseArtProfile', task ':google_maps_flutter_android:prepareReleaseArtProfile', task ':image_picker_android:prepareReleaseArtProfile', task ':just_audio:prepareReleaseArtProfile', task ':local_auth_android:prepareReleaseArtProfile', task ':objectbox_flutter_libs:prepareReleaseArtProfile', task ':package_info_plus:prepareReleaseArtProfile', task ':path_provider_android:prepareReleaseArtProfile', task ':permission_handler_android:prepareReleaseArtProfile', task ':printing:prepareReleaseArtProfile', task ':shared_preferences_android:prepareReleaseArtProfile', task ':speech_to_text:prepareReleaseArtProfile', task ':url_launcher_android:prepareReleaseArtProfile', task ':video_player_android:prepareReleaseArtProfile', task ':video_thumbnail:prepareReleaseArtProfile', task ':app:mergeReleaseArtProfile', task ':app_links:bundleLibRuntimeToJarRelease', task ':audio_session:bundleLibRuntimeToJarRelease', task ':file_picker:bundleLibRuntimeToJarRelease', task ':flutter_image_compress_common:bundleLibRuntimeToJarRelease', task ':flutter_plugin_android_lifecycle:bundleLibRuntimeToJarRelease', task ':gal:bundleLibRuntimeToJarRelease', task ':geocoding_android:bundleLibRuntimeToJarRelease', task ':geolocator_android:bundleLibRuntimeToJarRelease', task ':google_maps_flutter_android:bundleLibRuntimeToJarRelease', task ':image_picker_android:bundleLibRuntimeToJarRelease', task ':just_audio:bundleLibRuntimeToJarRelease', task ':local_auth_android:bundleLibRuntimeToJarRelease', task ':objectbox_flutter_libs:bundleLibRuntimeToJarRelease', task ':package_info_plus:bundleLibRuntimeToJarRelease', task ':path_provider_android:bundleLibRuntimeToJarRelease', task ':permission_handler_android:bundleLibRuntimeToJarRelease', task ':printing:bundleLibRuntimeToJarRelease', task ':shared_preferences_android:bundleLibRuntimeToJarRelease', task ':speech_to_text:bundleLibRuntimeToJarRelease', task ':url_launcher_android:bundleLibRuntimeToJarRelease', task ':video_player_android:bundleLibRuntimeToJarRelease', task ':video_thumbnail:bundleLibRuntimeToJarRelease', task ':app:expandReleaseArtProfileWildcards', task ':app:extractProguardFiles', task ':app:mergeReleaseGeneratedProguardFiles', task ':app:processReleaseJavaRes', task ':app_links:processReleaseJavaRes', task ':audio_session:processReleaseJavaRes', task ':file_picker:processReleaseJavaRes', task ':flutter_image_compress_common:processReleaseJavaRes', task ':flutter_plugin_android_lifecycle:processReleaseJavaRes', task ':gal:processReleaseJavaRes', task ':geocoding_android:processReleaseJavaRes', task ':geolocator_android:processReleaseJavaRes', task ':google_maps_flutter_android:processReleaseJavaRes', task ':image_picker_android:processReleaseJavaRes', task ':just_audio:processReleaseJavaRes', task ':local_auth_android:processReleaseJavaRes', task ':objectbox_flutter_libs:processReleaseJavaRes', task ':package_info_plus:processReleaseJavaRes', task ':path_provider_android:processReleaseJavaRes', task ':permission_handler_android:processReleaseJavaRes', task ':printing:processReleaseJavaRes', task ':shared_preferences_android:processReleaseJavaRes', task ':speech_to_text:processReleaseJavaRes', task ':url_launcher_android:processReleaseJavaRes', task ':video_player_android:processReleaseJavaRes', task ':video_thumbnail:processReleaseJavaRes', task ':app:mergeReleaseJavaResource', task ':app:mergeReleaseStartupProfile', task ':app:minifyReleaseWithR8', task ':app:compileReleaseArtProfile', task ':app:compressReleaseAssets', task ':app:extractReleaseVersionControlInfo', task ':app_links:createFullJarRelease', task ':app_links:extractProguardFiles', task ':app_links:generateReleaseLintModel', task ':app_links:prepareLintJarForPublish', task ':audio_session:createFullJarRelease', task ':audio_session:extractProguardFiles', task ':audio_session:generateReleaseLintModel', task ':audio_session:prepareLintJarForPublish', task ':file_picker:createFullJarRelease', task ':file_picker:extractProguardFiles', task ':flutter_plugin_android_lifecycle:createFullJarRelease', task ':flutter_plugin_android_lifecycle:extractProguardFiles', task ':flutter_plugin_android_lifecycle:generateReleaseLintModel', task ':flutter_plugin_android_lifecycle:prepareLintJarForPublish', task ':file_picker:generateReleaseLintModel', task ':file_picker:prepareLintJarForPublish', task ':flutter_image_compress_common:createFullJarRelease', task ':flutter_image_compress_common:extractProguardFiles', task ':flutter_image_compress_common:generateReleaseLintModel', task ':flutter_image_compress_common:prepareLintJarForPublish', task ':gal:createFullJarRelease', task ':gal:extractProguardFiles', task ':gal:generateReleaseLintModel', task ':gal:prepareLintJarForPublish', task ':geocoding_android:createFullJarRelease', task ':geocoding_android:extractProguardFiles', task ':geocoding_android:generateReleaseLintModel', task ':geocoding_android:prepareLintJarForPublish', task ':geolocator_android:createFullJarRelease', task ':geolocator_android:extractProguardFiles', task ':geolocator_android:generateReleaseLintModel', task ':geolocator_android:prepareLintJarForPublish', task ':google_maps_flutter_android:createFullJarRelease', task ':google_maps_flutter_android:extractProguardFiles', task ':google_maps_flutter_android:generateReleaseLintModel', task ':google_maps_flutter_android:prepareLintJarForPublish', task ':image_picker_android:createFullJarRelease', task ':image_picker_android:extractProguardFiles', task ':image_picker_android:generateReleaseLintModel', task ':image_picker_android:prepareLintJarForPublish', task ':just_audio:createFullJarRelease', task ':just_audio:extractProguardFiles', task ':just_audio:generateReleaseLintModel', task ':just_audio:prepareLintJarForPublish', task ':local_auth_android:createFullJarRelease', task ':local_auth_android:extractProguardFiles', task ':local_auth_android:generateReleaseLintModel', task ':local_auth_android:prepareLintJarForPublish', task ':objectbox_flutter_libs:createFullJarRelease', task ':objectbox_flutter_libs:extractProguardFiles', task ':objectbox_flutter_libs:generateReleaseLintModel', task ':objectbox_flutter_libs:prepareLintJarForPublish', task ':package_info_plus:createFullJarRelease', task ':package_info_plus:extractProguardFiles', task ':package_info_plus:generateReleaseLintModel', task ':package_info_plus:prepareLintJarForPublish', task ':path_provider_android:createFullJarRelease', task ':path_provider_android:extractProguardFiles', task ':path_provider_android:generateReleaseLintModel', task ':path_provider_android:prepareLintJarForPublish', task ':permission_handler_android:createFullJarRelease', task ':permission_handler_android:extractProguardFiles', task ':permission_handler_android:generateReleaseLintModel', task ':permission_handler_android:prepareLintJarForPublish', task ':printing:createFullJarRelease', task ':printing:extractProguardFiles', task ':printing:generateReleaseLintModel', task ':printing:prepareLintJarForPublish', task ':shared_preferences_android:createFullJarRelease', task ':shared_preferences_android:extractProguardFiles', task ':shared_preferences_android:generateReleaseLintModel', task ':shared_preferences_android:prepareLintJarForPublish', task ':speech_to_text:createFullJarRelease', task ':speech_to_text:extractProguardFiles', task ':speech_to_text:generateReleaseLintModel', task ':speech_to_text:prepareLintJarForPublish', task ':url_launcher_android:createFullJarRelease', task ':url_launcher_android:extractProguardFiles', task ':url_launcher_android:generateReleaseLintModel', task ':url_launcher_android:prepareLintJarForPublish', task ':video_player_android:createFullJarRelease', task ':video_player_android:extractProguardFiles', task ':video_player_android:generateReleaseLintModel', task ':video_player_android:prepareLintJarForPublish', task ':video_thumbnail:createFullJarRelease', task ':video_thumbnail:extractProguardFiles', task ':video_thumbnail:generateReleaseLintModel', task ':video_thumbnail:prepareLintJarForPublish', task ':app:generateReleaseLintVitalReportModel', task ':app_links:stripReleaseDebugSymbols', task ':app_links:copyReleaseJniLibsProjectAndLocalJars', task ':app_links:extractDeepLinksForAarRelease', task ':app_links:extractReleaseAnnotations', task ':app_links:mergeReleaseConsumerProguardFiles', task ':app_links:mergeReleaseJavaResource', task ':app_links:syncReleaseLibJars', task ':app_links:bundleReleaseLocalLintAar', task ':just_audio:stripReleaseDebugSymbols', task ':just_audio:copyReleaseJniLibsProjectAndLocalJars', task ':just_audio:extractDeepLinksForAarRelease', task ':just_audio:extractReleaseAnnotations', task ':just_audio:mergeReleaseConsumerProguardFiles', task ':just_audio:mergeReleaseJavaResource', task ':just_audio:syncReleaseLibJars', task ':just_audio:bundleReleaseLocalLintAar', task ':audio_session:stripReleaseDebugSymbols', task ':audio_session:copyReleaseJniLibsProjectAndLocalJars', task ':audio_session:extractDeepLinksForAarRelease', task ':audio_session:extractReleaseAnnotations', task ':audio_session:mergeReleaseConsumerProguardFiles', task ':audio_session:mergeReleaseJavaResource', task ':audio_session:syncReleaseLibJars', task ':audio_session:bundleReleaseLocalLintAar', task ':file_picker:stripReleaseDebugSymbols', task ':file_picker:copyReleaseJniLibsProjectAndLocalJars', task ':file_picker:extractDeepLinksForAarRelease', task ':file_picker:extractReleaseAnnotations', task ':file_picker:mergeReleaseConsumerProguardFiles', task ':file_picker:mergeReleaseJavaResource', task ':file_picker:syncReleaseLibJars', task ':file_picker:bundleReleaseLocalLintAar', task ':flutter_image_compress_common:stripReleaseDebugSymbols', task ':flutter_image_compress_common:copyReleaseJniLibsProjectAndLocalJars', task ':flutter_image_compress_common:extractDeepLinksForAarRelease', task ':flutter_image_compress_common:extractReleaseAnnotations', task ':flutter_image_compress_common:mergeReleaseConsumerProguardFiles', task ':flutter_image_compress_common:mergeReleaseJavaResource', task ':flutter_image_compress_common:syncReleaseLibJars', task ':flutter_image_compress_common:bundleReleaseLocalLintAar', task ':google_maps_flutter_android:stripReleaseDebugSymbols', task ':google_maps_flutter_android:copyReleaseJniLibsProjectAndLocalJars', task ':google_maps_flutter_android:extractDeepLinksForAarRelease', task ':google_maps_flutter_android:extractReleaseAnnotations', task ':google_maps_flutter_android:mergeReleaseConsumerProguardFiles', task ':google_maps_flutter_android:mergeReleaseJavaResource', task ':google_maps_flutter_android:syncReleaseLibJars', task ':google_maps_flutter_android:bundleReleaseLocalLintAar', task ':image_picker_android:stripReleaseDebugSymbols', task ':image_picker_android:copyReleaseJniLibsProjectAndLocalJars', task ':image_picker_android:extractDeepLinksForAarRelease', task ':image_picker_android:extractReleaseAnnotations', task ':image_picker_android:mergeReleaseConsumerProguardFiles', task ':image_picker_android:mergeReleaseJavaResource', task ':image_picker_android:syncReleaseLibJars', task ':image_picker_android:bundleReleaseLocalLintAar', task ':local_auth_android:stripReleaseDebugSymbols', task ':local_auth_android:copyReleaseJniLibsProjectAndLocalJars', task ':local_auth_android:extractDeepLinksForAarRelease', task ':local_auth_android:extractReleaseAnnotations', task ':local_auth_android:mergeReleaseConsumerProguardFiles', task ':local_auth_android:mergeReleaseJavaResource', task ':local_auth_android:syncReleaseLibJars', task ':local_auth_android:bundleReleaseLocalLintAar', task ':flutter_plugin_android_lifecycle:stripReleaseDebugSymbols', task ':flutter_plugin_android_lifecycle:copyReleaseJniLibsProjectAndLocalJars', task ':flutter_plugin_android_lifecycle:extractDeepLinksForAarRelease', task ':flutter_plugin_android_lifecycle:extractReleaseAnnotations', task ':flutter_plugin_android_lifecycle:mergeReleaseConsumerProguardFiles', task ':flutter_plugin_android_lifecycle:mergeReleaseJavaResource', task ':flutter_plugin_android_lifecycle:syncReleaseLibJars', task ':flutter_plugin_android_lifecycle:bundleReleaseLocalLintAar', task ':gal:stripReleaseDebugSymbols', task ':gal:copyReleaseJniLibsProjectAndLocalJars', task ':gal:extractDeepLinksForAarRelease', task ':gal:extractReleaseAnnotations', task ':gal:mergeReleaseConsumerProguardFiles', task ':gal:mergeReleaseJavaResource', task ':gal:syncReleaseLibJars', task ':gal:bundleReleaseLocalLintAar', task ':geocoding_android:stripReleaseDebugSymbols', task ':geocoding_android:copyReleaseJniLibsProjectAndLocalJars', task ':geocoding_android:extractDeepLinksForAarRelease', task ':geocoding_android:extractReleaseAnnotations', task ':geocoding_android:mergeReleaseConsumerProguardFiles', task ':geocoding_android:mergeReleaseJavaResource', task ':geocoding_android:syncReleaseLibJars', task ':geocoding_android:bundleReleaseLocalLintAar', task ':geolocator_android:stripReleaseDebugSymbols', task ':geolocator_android:copyReleaseJniLibsProjectAndLocalJars', task ':geolocator_android:extractDeepLinksForAarRelease', task ':geolocator_android:extractReleaseAnnotations', task ':geolocator_android:mergeReleaseConsumerProguardFiles', task ':geolocator_android:mergeReleaseJavaResource', task ':geolocator_android:syncReleaseLibJars', task ':geolocator_android:bundleReleaseLocalLintAar', task ':objectbox_flutter_libs:stripReleaseDebugSymbols', task ':objectbox_flutter_libs:copyReleaseJniLibsProjectAndLocalJars', task ':objectbox_flutter_libs:extractDeepLinksForAarRelease', task ':objectbox_flutter_libs:extractReleaseAnnotations', task ':objectbox_flutter_libs:mergeReleaseConsumerProguardFiles', task ':objectbox_flutter_libs:mergeReleaseJavaResource', task ':objectbox_flutter_libs:syncReleaseLibJars', task ':objectbox_flutter_libs:bundleReleaseLocalLintAar', task ':package_info_plus:stripReleaseDebugSymbols', task ':package_info_plus:copyReleaseJniLibsProjectAndLocalJars', task ':package_info_plus:extractDeepLinksForAarRelease', task ':package_info_plus:extractReleaseAnnotations', task ':package_info_plus:mergeReleaseConsumerProguardFiles', task ':package_info_plus:mergeReleaseJavaResource', task ':package_info_plus:syncReleaseLibJars', task ':package_info_plus:bundleReleaseLocalLintAar', task ':path_provider_android:stripReleaseDebugSymbols', task ':path_provider_android:copyReleaseJniLibsProjectAndLocalJars', task ':path_provider_android:extractDeepLinksForAarRelease', task ':path_provider_android:extractReleaseAnnotations', task ':path_provider_android:mergeReleaseConsumerProguardFiles', task ':path_provider_android:mergeReleaseJavaResource', task ':path_provider_android:syncReleaseLibJars', task ':path_provider_android:bundleReleaseLocalLintAar', task ':permission_handler_android:stripReleaseDebugSymbols', task ':permission_handler_android:copyReleaseJniLibsProjectAndLocalJars', task ':permission_handler_android:extractDeepLinksForAarRelease', task ':permission_handler_android:extractReleaseAnnotations', task ':permission_handler_android:mergeReleaseConsumerProguardFiles', task ':permission_handler_android:mergeReleaseJavaResource', task ':permission_handler_android:syncReleaseLibJars', task ':permission_handler_android:bundleReleaseLocalLintAar', task ':printing:stripReleaseDebugSymbols', task ':printing:copyReleaseJniLibsProjectAndLocalJars', task ':printing:extractDeepLinksForAarRelease', task ':printing:extractReleaseAnnotations', task ':printing:mergeReleaseConsumerProguardFiles', task ':printing:mergeReleaseJavaResource', task ':printing:syncReleaseLibJars', task ':printing:bundleReleaseLocalLintAar', task ':shared_preferences_android:stripReleaseDebugSymbols', task ':shared_preferences_android:copyReleaseJniLibsProjectAndLocalJars', task ':shared_preferences_android:extractDeepLinksForAarRelease', task ':shared_preferences_android:extractReleaseAnnotations', task ':shared_preferences_android:mergeReleaseConsumerProguardFiles', task ':shared_preferences_android:mergeReleaseJavaResource', task ':shared_preferences_android:syncReleaseLibJars', task ':shared_preferences_android:bundleReleaseLocalLintAar', task ':speech_to_text:stripReleaseDebugSymbols', task ':speech_to_text:copyReleaseJniLibsProjectAndLocalJars', task ':speech_to_text:extractDeepLinksForAarRelease', task ':speech_to_text:extractReleaseAnnotations', task ':speech_to_text:mergeReleaseConsumerProguardFiles', task ':speech_to_text:mergeReleaseJavaResource', task ':speech_to_text:syncReleaseLibJars', task ':speech_to_text:bundleReleaseLocalLintAar', task ':url_launcher_android:stripReleaseDebugSymbols', task ':url_launcher_android:copyReleaseJniLibsProjectAndLocalJars', task ':url_launcher_android:extractDeepLinksForAarRelease', task ':url_launcher_android:extractReleaseAnnotations', task ':url_launcher_android:mergeReleaseConsumerProguardFiles', task ':url_launcher_android:mergeReleaseJavaResource', task ':url_launcher_android:syncReleaseLibJars', task ':url_launcher_android:bundleReleaseLocalLintAar', task ':video_player_android:stripReleaseDebugSymbols', task ':video_player_android:copyReleaseJniLibsProjectAndLocalJars', task ':video_player_android:extractDeepLinksForAarRelease', task ':video_player_android:extractReleaseAnnotations', task ':video_player_android:mergeReleaseConsumerProguardFiles', task ':video_player_android:mergeReleaseJavaResource', task ':video_player_android:syncReleaseLibJars', task ':video_player_android:bundleReleaseLocalLintAar', task ':video_thumbnail:stripReleaseDebugSymbols', task ':video_thumbnail:copyReleaseJniLibsProjectAndLocalJars', task ':video_thumbnail:extractDeepLinksForAarRelease', task ':video_thumbnail:extractReleaseAnnotations', task ':video_thumbnail:mergeReleaseConsumerProguardFiles', task ':video_thumbnail:mergeReleaseJavaResource', task ':video_thumbnail:syncReleaseLibJars', task ':video_thumbnail:bundleReleaseLocalLintAar', task ':app_links:lintVitalAnalyzeRelease', task ':app_links:writeReleaseLintModelMetadata', task ':audio_session:lintVitalAnalyzeRelease', task ':audio_session:writeReleaseLintModelMetadata', task ':flutter_plugin_android_lifecycle:writeReleaseLintModelMetadata', task ':file_picker:lintVitalAnalyzeRelease', task ':file_picker:writeReleaseLintModelMetadata', task ':flutter_image_compress_common:lintVitalAnalyzeRelease', task ':flutter_image_compress_common:writeReleaseLintModelMetadata', task ':flutter_plugin_android_lifecycle:lintVitalAnalyzeRelease', task ':gal:lintVitalAnalyzeRelease', task ':gal:writeReleaseLintModelMetadata', task ':geocoding_android:lintVitalAnalyzeRelease', task ':geocoding_android:writeReleaseLintModelMetadata', task ':geolocator_android:lintVitalAnalyzeRelease', task ':geolocator_android:writeReleaseLintModelMetadata', task ':google_maps_flutter_android:lintVitalAnalyzeRelease', task ':google_maps_flutter_android:writeReleaseLintModelMetadata', task ':image_picker_android:lintVitalAnalyzeRelease', task ':image_picker_android:writeReleaseLintModelMetadata', task ':just_audio:lintVitalAnalyzeRelease', task ':just_audio:writeReleaseLintModelMetadata', task ':local_auth_android:lintVitalAnalyzeRelease', task ':local_auth_android:writeReleaseLintModelMetadata', task ':objectbox_flutter_libs:lintVitalAnalyzeRelease', task ':objectbox_flutter_libs:writeReleaseLintModelMetadata', task ':package_info_plus:lintVitalAnalyzeRelease', task ':package_info_plus:writeReleaseLintModelMetadata', task ':path_provider_android:lintVitalAnalyzeRelease', task ':path_provider_android:writeReleaseLintModelMetadata', task ':permission_handler_android:lintVitalAnalyzeRelease', task ':permission_handler_android:writeReleaseLintModelMetadata', task ':printing:lintVitalAnalyzeRelease', task ':printing:writeReleaseLintModelMetadata', task ':shared_preferences_android:lintVitalAnalyzeRelease', task ':shared_preferences_android:writeReleaseLintModelMetadata', task ':speech_to_text:lintVitalAnalyzeRelease', task ':speech_to_text:writeReleaseLintModelMetadata', task ':url_launcher_android:lintVitalAnalyzeRelease', task ':url_launcher_android:writeReleaseLintModelMetadata', task ':video_player_android:lintVitalAnalyzeRelease', task ':video_player_android:writeReleaseLintModelMetadata', task ':video_thumbnail:lintVitalAnalyzeRelease', task ':video_thumbnail:writeReleaseLintModelMetadata', task ':app:lintVitalAnalyzeRelease', task ':app_links:generateReleaseLintVitalModel', task ':audio_session:generateReleaseLintVitalModel', task ':file_picker:generateReleaseLintVitalModel', task ':flutter_image_compress_common:generateReleaseLintVitalModel', task ':flutter_plugin_android_lifecycle:generateReleaseLintVitalModel', task ':gal:generateReleaseLintVitalModel', task ':geocoding_android:generateReleaseLintVitalModel', task ':geolocator_android:generateReleaseLintVitalModel', task ':google_maps_flutter_android:generateReleaseLintVitalModel', task ':image_picker_android:generateReleaseLintVitalModel', task ':just_audio:generateReleaseLintVitalModel', task ':local_auth_android:generateReleaseLintVitalModel', task ':objectbox_flutter_libs:generateReleaseLintVitalModel', task ':package_info_plus:generateReleaseLintVitalModel', task ':path_provider_android:generateReleaseLintVitalModel', task ':permission_handler_android:generateReleaseLintVitalModel', task ':printing:generateReleaseLintVitalModel', task ':shared_preferences_android:generateReleaseLintVitalModel', task ':speech_to_text:generateReleaseLintVitalModel', task ':url_launcher_android:generateReleaseLintVitalModel', task ':video_player_android:generateReleaseLintVitalModel', task ':video_thumbnail:generateReleaseLintVitalModel', task ':app:lintVitalReportRelease', task ':app:lintVitalRelease', task ':app:convertShrunkResourcesToBinaryRelease', task ':app:optimizeReleaseResources', task ':app:collectReleaseDependencies', task ':app:sdkReleaseDependencyData', task ':app:validateSigningRelease', task ':app:writeReleaseAppMetadata', task ':app:writeReleaseSigningConfigVersions', task ':app:packageRelease', task ':app:createReleaseApkListingFileRedirect', task ':app:assembleRelease', task ':app_links:bundleReleaseAar', task ':app_links:mapReleaseSourceSetPaths', task ':app_links:mergeReleaseResources', task ':app_links:verifyReleaseResources', task ':app_links:assembleRelease', task ':audio_session:bundleReleaseAar', task ':audio_session:mapReleaseSourceSetPaths', task ':audio_session:mergeReleaseResources', task ':audio_session:verifyReleaseResources', task ':audio_session:assembleRelease', task ':file_picker:bundleReleaseAar', task ':file_picker:mapReleaseSourceSetPaths', task ':file_picker:mergeReleaseResources', task ':flutter_plugin_android_lifecycle:compileReleaseLibraryResources', task ':file_picker:verifyReleaseResources', task ':file_picker:assembleRelease', task ':flutter_image_compress_common:bundleReleaseAar', task ':flutter_image_compress_common:mapReleaseSourceSetPaths', task ':flutter_image_compress_common:mergeReleaseResources', task ':flutter_image_compress_common:verifyReleaseResources', task ':flutter_image_compress_common:assembleRelease', task ':flutter_plugin_android_lifecycle:bundleReleaseAar', task ':flutter_plugin_android_lifecycle:mapReleaseSourceSetPaths', task ':flutter_plugin_android_lifecycle:mergeReleaseResources', task ':flutter_plugin_android_lifecycle:verifyReleaseResources', task ':flutter_plugin_android_lifecycle:assembleRelease', task ':gal:bundleReleaseAar', task ':gal:mapReleaseSourceSetPaths', task ':gal:mergeReleaseResources', task ':gal:verifyReleaseResources', task ':gal:assembleRelease', task ':geocoding_android:bundleReleaseAar', task ':geocoding_android:mapReleaseSourceSetPaths', task ':geocoding_android:mergeReleaseResources', task ':geocoding_android:verifyReleaseResources', task ':geocoding_android:assembleRelease', task ':geolocator_android:bundleReleaseAar', task ':geolocator_android:mapReleaseSourceSetPaths', task ':geolocator_android:mergeReleaseResources', task ':geolocator_android:verifyReleaseResources', task ':geolocator_android:assembleRelease', task ':google_maps_flutter_android:bundleReleaseAar', task ':google_maps_flutter_android:mapReleaseSourceSetPaths', task ':google_maps_flutter_android:mergeReleaseResources', task ':google_maps_flutter_android:verifyReleaseResources', task ':google_maps_flutter_android:assembleRelease', task ':image_picker_android:bundleReleaseAar', task ':image_picker_android:mapReleaseSourceSetPaths', task ':image_picker_android:mergeReleaseResources', task ':image_picker_android:verifyReleaseResources', task ':image_picker_android:assembleRelease', task ':just_audio:bundleReleaseAar', task ':audio_session:compileReleaseLibraryResources', task ':just_audio:mapReleaseSourceSetPaths', task ':just_audio:mergeReleaseResources', task ':just_audio:verifyReleaseResources', task ':just_audio:assembleRelease', task ':local_auth_android:bundleReleaseAar', task ':local_auth_android:mapReleaseSourceSetPaths', task ':local_auth_android:mergeReleaseResources', task ':local_auth_android:verifyReleaseResources', task ':local_auth_android:assembleRelease', task ':objectbox_flutter_libs:bundleReleaseAar', task ':objectbox_flutter_libs:mapReleaseSourceSetPaths', task ':objectbox_flutter_libs:mergeReleaseResources', task ':objectbox_flutter_libs:verifyReleaseResources', task ':objectbox_flutter_libs:assembleRelease', task ':package_info_plus:bundleReleaseAar', task ':package_info_plus:mapReleaseSourceSetPaths', task ':package_info_plus:mergeReleaseResources', task ':package_info_plus:verifyReleaseResources', task ':package_info_plus:assembleRelease', task ':path_provider_android:bundleReleaseAar', task ':path_provider_android:mapReleaseSourceSetPaths', task ':path_provider_android:mergeReleaseResources', task ':path_provider_android:verifyReleaseResources', task ':path_provider_android:assembleRelease', task ':permission_handler_android:bundleReleaseAar', task ':permission_handler_android:mapReleaseSourceSetPaths', task ':permission_handler_android:mergeReleaseResources', task ':permission_handler_android:verifyReleaseResources', task ':permission_handler_android:assembleRelease', task ':printing:bundleReleaseAar', task ':printing:mapReleaseSourceSetPaths', task ':printing:mergeReleaseResources', task ':printing:verifyReleaseResources', task ':printing:assembleRelease', task ':shared_preferences_android:bundleReleaseAar', task ':shared_preferences_android:mapReleaseSourceSetPaths', task ':shared_preferences_android:mergeReleaseResources', task ':shared_preferences_android:verifyReleaseResources', task ':shared_preferences_android:assembleRelease', task ':speech_to_text:bundleReleaseAar', task ':speech_to_text:mapReleaseSourceSetPaths', task ':speech_to_text:mergeReleaseResources', task ':speech_to_text:verifyReleaseResources', task ':speech_to_text:assembleRelease', task ':url_launcher_android:bundleReleaseAar', task ':url_launcher_android:mapReleaseSourceSetPaths', task ':url_launcher_android:mergeReleaseResources', task ':url_launcher_android:verifyReleaseResources', task ':url_launcher_android:assembleRelease', task ':video_player_android:bundleReleaseAar', task ':video_player_android:mapReleaseSourceSetPaths', task ':video_player_android:mergeReleaseResources', task ':video_player_android:verifyReleaseResources', task ':video_player_android:assembleRelease', task ':video_thumbnail:bundleReleaseAar', task ':video_thumbnail:mapReleaseSourceSetPaths', task ':video_thumbnail:mergeReleaseResources', task ':video_thumbnail:verifyReleaseResources', task ':video_thumbnail:assembleRelease']
+[   +2 ms] Tasks that were excluded: []
+[        ] work action Parameters of FilterShrinkerRulesTransform (Thread[Execution worker,5,main]) started.
+[        ] work action Parameters of ExtractAarTransform (Thread[Execution worker Thread 30,5,main]) started.
+[        ] work action Parameters of ExtractAarTransform (Thread[Execution worker Thread 15,5,main]) started.
+[        ] work action Parameters of ExtractAarTransform (Thread[Execution worker Thread 15,5,main]) started.
+[        ] work action Parameters of ExtractAarTransform (Thread[Execution worker Thread 31,5,main]) started.
+[        ] work action Parameters of ExtractAarTransform (Thread[Execution worker Thread 31,5,main]) started.
+[        ] work action Parameters of ExtractAarTransform (Thread[Execution worker Thread 19,5,main]) started.
+[        ] Resolve mutations for :app:ReleaseMinSdkCheck (Thread[Execution worker Thread 19,5,main]) started.
+[        ] :app:ReleaseMinSdkCheck (Thread[Execution worker Thread 23,5,main]) started.
+[        ] > Task :app:ReleaseMinSdkCheck
+[        ] Caching disabled for task ':app:ReleaseMinSdkCheck' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:ReleaseMinSdkCheck' is not up-to-date because:
+[        ]   Task has not declared any outputs despite executing actions.
+[        ] Resolve mutations for :app:compileFlutterBuildRelease (Thread[Execution worker Thread 23,5,main]) started.
+[        ] :app:compileFlutterBuildRelease (Thread[Execution worker Thread 23,5,main]) started.
+[+1991 ms] > Task :app:compileFlutterBuildRelease
+[        ] Caching disabled for task ':app:compileFlutterBuildRelease' because:
+[        ]   Build cache is disabled
+[        ]   Caching has not been enabled for the task
+[        ] Task ':app:compileFlutterBuildRelease' is not up-to-date because:
+[        ]   Task has failed previously.
+[        ] Starting process 'command 'C:\Users\Abreu\flutter\bin\flutter.bat''. Working directory: E:\antigravity_projetos\ScanNutPlus Command: C:\Users\Abreu\flutter\bin\flutter.bat --verbose assemble --no-version-check --depfile E:\antigravity_projetos\ScanNutPlus\build\app\intermediates\flutter\release/flutter_build.d --output E:\antigravity_projetos\ScanNutPlus\build\app\intermediates\flutter\release -dTargetFile=lib\main.dart -dTargetPlatform=android -dBuildMode=release -dTrackWidgetCreation=true -dTreeShakeIcons=true --DartDefines=RkxVVFRFUl9WRVJTSU9OPTMuNDEuMg==,RkxVVFRFUl9DSEFOTkVMPXN0YWJsZQ==,RkxVVFRFUl9HSVRfVVJMPWh0dHBzOi8vZ2l0aHViLmNvbS9mbHV0dGVyL2ZsdXR0ZXIuZ2l0,RkxVVFRFUl9GUkFNRVdPUktfUkVWSVNJT049OTA2NzNhNGVlZg==,RkxVVFRFUl9FTkdJTkVfUkVWSVNJT049NmMwYmFhZWJmNw==,RkxVVFRFUl9EQVJUX1ZFUlNJT049My4xMS4w -dFlavor= -dAndroidArchs=android-arm android-arm64 android-x64 -dMinSdkVersion=24 android_aot_bundle_release_android-arm android_aot_bundle_release_android-arm64 android_aot_bundle_release_android-x64
+[        ] Successfully started process 'command 'C:\Users\Abreu\flutter\bin\flutter.bat''
+[        ] [  +63 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[        ] [   +6 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] [   +1 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] [  +39 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] [   +1 ms] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[        ] [  +30 ms] Initializing file store
+[        ] [  +19 ms] Done initializing file store
+[        ] [ +130 ms] Skipping target: gen_dart_plugin_registrant
+[        ] [   +2 ms] Skipping target: dart_build
+[        ] [        ] Skipping target: gen_localizations
+[        ] [   +1 ms] Skipping target: install_code_assets
+[        ] [ +701 ms] kernel_snapshot_program: Starting due to {InvalidatedReasonKind.outputSetAddition: The following outputs were added to the output set: E:\antigravity_projetos\ScanNutPlus\.dart_tool\flutter_build\796bb91d150eb6428fabd6b68646c546\app.dill}
+[        ] [  +11 ms] C:\Users\Abreu\flutter\bin\cache\dart-sdk\bin\dartaotruntime.exe C:\Users\Abreu\flutter\bin\cache\dart-sdk\bin\snapshots\frontend_server_aot.dart.snapshot --sdk-root C:\Users\Abreu\flutter\bin\cache\artifacts\engine\common\flutter_patched_sdk_product/ --target=flutter --no-print-incremental-dependencies -DFLUTTER_VERSION=3.41.2 -DFLUTTER_CHANNEL=stable -DFLUTTER_GIT_URL=https://github.com/flutter/flutter.git -DFLUTTER_FRAMEWORK_REVISION=90673a4eef -DFLUTTER_ENGINE_REVISION=6c0baaebf7 -DFLUTTER_DART_VERSION=3.11.0 -DFLUTTER_APP_FLAVOR= -Ddart.vm.profile=false -Ddart.vm.product=true --delete-tostring-package-uri=dart:ui --delete-tostring-package-uri=package:flutter --aot --tfa --target-os android --packages E:\antigravity_projetos\ScanNutPlus\.dart_tool\package_config.json --output-dill E:\antigravity_projetos\ScanNutPlus\.dart_tool\flutter_build\796bb91d150eb6428fabd6b68646c546\app.dill --depfile E:\antigravity_projetos\ScanNutPlus\.dart_tool\flutter_build\796bb91d150eb6428fabd6b68646c546\kernel_snapshot_program.d --source file:///E:/antigravity_projetos/ScanNutPlus/.dart_tool/flutter_build/dart_plugin_registrant.dart --source package:flutter/src/dart_plugin_registrant.dart -Dflutter.dart_plugin_registrant=file:///E:/antigravity_projetos/ScanNutPlus/.dart_tool/flutter_build/dart_plugin_registrant.dart --verbosity=error package:scannutplus/main.dart
+[+10296 ms] [+10385 ms] Persisting file store
+[  +99 ms] [  +16 ms] Done persisting file store
+[        ] [        ] "flutter assemble" took 12.909ms.
+[        ] [        ] Running 1 shutdown hook
+[        ] [        ] Shutdown hooks complete
+[  +95 ms] [ +182 ms] exiting with code 1
+[ +100 ms] > Task :app:compileFlutterBuildRelease FAILED
+[ +678 ms] Build dfe659a3-cfb3-408a-b8d0-09441367e367 is closed
+[        ] [Incubating] Problems report is available at: file:///E:/antigravity_projetos/ScanNutPlus/build/reports/problems/problems-report.html
+[        ] Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+[        ] You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+[        ] For more on this, please refer to https://docs.gradle.org/8.14/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+[        ] 6 actionable tasks: 2 executed, 4 up-to-date
+[        ] Watched directory hierarchies: [C:\Users\Abreu\flutter\packages\flutter_tools\gradle]
+[  +17 ms] Running Gradle task 'assembleRelease'... (completed in 17,3s)
+[  +40 ms] "flutter apk" took 18.282ms.
+[   +1 ms] Running 1 shutdown hook
+[   +1 ms] Shutdown hooks complete
+[ +193 ms] exiting with code 1
