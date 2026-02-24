@@ -1,28 +1,7 @@
-# Release Notes (v2.2.6)
+Release Notes (2026-02-24)
 
-## Correções Críticas (AI e OpenGL/Mapas)
-- **Correção da Truncagem do Resumo AI:** Corrigido um mega-bug do motor ECMAScript do Dart onde o Regex de corte (`\Z`) interceptava erroneamente a letra minúscula 'z' no meio de palavras longas geradas pela inteligência artificial. Isso impedia a exibição completa do laudo em tela.
-- **Estabilização Severa do Android SurfaceView:** Removidos wrappers condicionais (`_isGpsLoading`) e `GlobalKey` em torno do widget `GoogleMap`. O componente local agora inicializa com view travada nativamente como `MapType.normal`. Isso impede que flutuações de Layout remontem o Mapa, solucionando integralmente os crashes nativos (`Failed to allocate (4 x 4) format 56` e bibliotecas `Dynamite`) do driver Gralloc/OpenGL no hardware host.
-- **Atualização Semântica:** Modificada a string global de espera de Background AI de "Avaliando em 2º plano..." para a nomenclatura solicitada "Analisando em 2º plano...".
-
-# Release Notes (v2.2.5)
-## Correções e Melhorias (UI e Localização)
-- **Refatoração Visual (Novo Compromisso):** Remoção de labels flutuantes (`labelText`) nos formulários, substituindo-os por `hintText` interno nativo para um visual mais limpo e sem recortes nas bordas grossas. Adaptação ergonômica voltada ao padrão "Anti-Gravity 2026".
-- **Design de Navegação (TabBars):** Todos os `TabBar` estilizados como caixas maciças (via `BoxDecoration`) em detalhes de passeios, agendas e histórico foram simplificados para `indicatorWeight: 4` (Underline discreto). Manutenção da lógica cromática (Rosa para Pets, Lilás para Amigos).
-- **Adequação Global de Localização de Datas:** Substituição de `substring` arbitrários e recortes estáticos em arquivos de Histórico (`pet_history_screen.dart`, `pet_history_tab.dart`, `pet_history_detail_screen.dart`) forçando a exibição `DateFormat.yMd().add_Hm()` no padrão do dispositivo de destino.
-- **Correção da Lógica de Passeio Amigo & Histórico:** Ajustado o reconhecimento e associação do evento "Passeio Amigo". O nome do pet visitante (`friendName`) agora é interpretado corretamente no topo do card e nos detalhes da UI, interrompendo a injeção forçada do nome do pet titular.
-- **Renderização Exata no PDF Universal:** O nome do amigo e do tutor não são mais apagados/escondidos do PDF quando o registro possui as flags `[Amigo:... | Tutor: ...]`, garantindo que os dados originais sejam exibidos de maneira correta no cabeçalho.
-- **Limpeza Visual de Eventos:** Removida a renderização explícita da string de metadados `[Amigo: ... | Tutor: ...]` presente nas notas, passando a integrar as informações organicamente dentro do layout do cartão e nos detalhes do relatório PDF.
-- **Rastreio de Passeios em Tempo Real:** Substituição do rastreador automático pelo Controle Manual (Play/Stop). Implementação de um `Geolocator PositionStream` otimizado em segundo plano para captar alertas laranjas amigáveis ("Você se esqueceu de apertar o play?") caso detectado deslocamento > 30 metros.
-- **Inteligência Analítica no Walk Summary (GenAI):** O Resumo Inteligente do passeio agora calcula precisamente a distância (Km) e duração (H:M:S) total entre os eventos listados e consolida métricas ricas direto no Prompt da IA e renderização do Card-Title final.
-- **Limpeza do Terreno (Mapa Waze):** A interface superior e lateral do sistema cartonizado foi limpa reduzindo o tamanho vertical (`maxLines: 2`) do _TextField_, centralizando o avatar principal e forçando contraste vibrante Laranja nos botões de Câmera/Voz para ergonomia outdoor no Samsung A256E.
-
-## Arquivos Modificados
-- `lib/features/pet/agenda/presentation/pet_appointment_screen.dart`
-- `lib/features/pet/agenda/presentation/pet_agenda_screen.dart`
-- `lib/features/pet/agenda/presentation/pet_walk_events_screen.dart`
-- `lib/features/pet/presentation/history/pet_history_screen.dart`
-- `lib/features/pet/agenda/presentation/tabs/pet_history_tab.dart`
-- `lib/features/pet/presentation/history/pet_history_detail_screen.dart`
-- `lib/features/pet/agenda/presentation/pet_event_detail_screen.dart`
-- `lib/features/pet/agenda/presentation/create_pet_event_screen.dart`
+- Removed redundant partner name iteration in Scheduled Events list (improving reading clarity).
+- Localized 'appointment_type' raw enum strings into Portuguese using 'toAppointmentTypeDisplay()'.
+- Fixed visual overlap bug on the 'Add Event' FloatingActionButton by rebuilding it with a clean Material/InkWell wrapper on top of exactly aligned Container BoxShadow shapes.
+- Fixed text entry ergonomics on the New Appointment form by granting multiline maxLines=4 to 'what to do' input dialog.
+- Forcing 'arrow_drop_down' icon to Colors.black for high contrast readability over pastel pink Dropdown backgrounds.
