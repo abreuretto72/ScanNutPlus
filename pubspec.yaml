@@ -56,6 +56,7 @@ dependencies:
   video_thumbnail: ^0.5.3
   flutter_markdown: ^0.7.3
   gal: ^2.3.2
+  flutter_tts: ^4.2.5
 
 dev_dependencies:
   flutter_test:

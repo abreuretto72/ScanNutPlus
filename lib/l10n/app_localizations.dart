@@ -6322,6 +6322,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OK'**
   String get pet_btn_ok;
+
+  /// No description provided for @agenda_voice_greeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Beli, what are we scheduling for your pet?'**
+  String get agenda_voice_greeting;
+
+  /// No description provided for @agenda_voice_success_prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'I filled in the details for you. Is everything correct or do you want to adjust something?'**
+  String get agenda_voice_success_prompt;
+
+  /// No description provided for @agenda_voice_listening.
+  ///
+  /// In en, this message translates to:
+  /// **'Beli is listening...'**
+  String get agenda_voice_listening;
+
+  /// No description provided for @agenda_voice_processing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing...'**
+  String get agenda_voice_processing;
+
+  /// No description provided for @agenda_field_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get agenda_field_category;
+
+  /// No description provided for @agenda_field_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get agenda_field_date;
+
+  /// No description provided for @agenda_field_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get agenda_field_time;
+
+  /// No description provided for @agenda_field_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get agenda_field_desc;
+
+  /// No description provided for @agenda_btn_save.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE'**
+  String get agenda_btn_save;
+
+  /// No description provided for @agenda_error_voice.
+  ///
+  /// In en, this message translates to:
+  /// **'I couldn\'t understand, try typing.'**
+  String get agenda_error_voice;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

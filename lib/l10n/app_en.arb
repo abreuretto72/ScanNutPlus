@@ -1300,5 +1300,15 @@
   "pet_journal_saved_friend": "Friend Event Saved in Agenda!",
   "pet_journal_saved_own": "Event Saved!",
   "pet_journal_friend_label": "Friend",
-  "pet_btn_ok": "OK"
+  "pet_btn_ok": "OK",
+  "agenda_voice_greeting": "Beli, what are we scheduling for your pet?",
+  "agenda_voice_success_prompt": "I filled in the details for you. Is everything correct or do you want to adjust something?",
+  "agenda_voice_listening": "Beli is listening...",
+  "agenda_voice_processing": "Processing...",
+  "agenda_field_category": "Category",
+  "agenda_field_date": "Date",
+  "agenda_field_time": "Time",
+  "agenda_field_desc": "Description",
+  "agenda_btn_save": "SAVE",
+  "agenda_error_voice": "I couldn't understand, try typing."
 }

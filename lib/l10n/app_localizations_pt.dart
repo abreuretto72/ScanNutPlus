@@ -3231,4 +3231,34 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_btn_ok => 'OK';
+
+  @override
+  String get agenda_voice_greeting => 'Beli, o que vamos agendar para o seu pet?';
+
+  @override
+  String get agenda_voice_success_prompt => 'Preenchi os detalhes para você. Está tudo correto ou quer ajustar algo?';
+
+  @override
+  String get agenda_voice_listening => 'Beli está escutando...';
+
+  @override
+  String get agenda_voice_processing => 'Processando...';
+
+  @override
+  String get agenda_field_category => 'Categoria';
+
+  @override
+  String get agenda_field_date => 'Data';
+
+  @override
+  String get agenda_field_time => 'Hora';
+
+  @override
+  String get agenda_field_desc => 'Descrição';
+
+  @override
+  String get agenda_btn_save => 'SALVAR';
+
+  @override
+  String get agenda_error_voice => 'Não consegui entender, tente digitar.';
 }
