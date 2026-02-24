@@ -1,4 +1,4 @@
-Release Notes (2026-02-24)
+Release v2.2.7 (2026-02-24)
 
 - Removed redundant partner name iteration in Scheduled Events list (improving reading clarity).
 - Localized 'appointment_type' raw enum strings into Portuguese using 'toAppointmentTypeDisplay()'.
