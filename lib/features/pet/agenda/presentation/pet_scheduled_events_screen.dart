@@ -7,6 +7,7 @@ import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_appointment_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
+import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:scannutplus/features/pet/agenda/logic/pet_notification_manager.dart';
 
@@ -153,7 +154,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
             final appointmentType =
                 event.metrics?['appointment_type']?.toString();
             final typeDisplay =
-                appointmentType;
+                appointmentType?.toAppointmentTypeDisplay(context);
 
             final whatToDo = event.notes ?? '';
 
@@ -319,26 +320,6 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                                 ),
                             ],
                           ),
-                          if (professional.isNotEmpty) ...[
-                            const SizedBox(height: 12),
-                            Row(
-                              children: [
-                                const Icon(Icons.storefront_rounded,
-                                    color: Colors.black, size: 20),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    "${l10n.pet_appointment_tab_partner}: $professional",
-                                    style: const TextStyle(
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 14),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
                         ],
                       ),
                     ),
