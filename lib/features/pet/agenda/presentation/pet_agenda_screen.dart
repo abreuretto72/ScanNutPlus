@@ -17,6 +17,8 @@ import 'package:scannutplus/features/feature_pet_agenda/models/parsed_agenda_int
 import 'package:scannutplus/features/feature_pet_agenda/presentation/agenda_voice_form_screen.dart';
 import 'package:uuid/uuid.dart';
 
+import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
+
 
 class PetAgendaScreen extends StatefulWidget {
   final String petId;
