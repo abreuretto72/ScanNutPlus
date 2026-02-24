@@ -21,6 +21,7 @@ import 'package:intl/intl.dart';
 import 'package:scannutplus/features/pet/map/data/repositories/map_alert_repository.dart';
 import 'package:scannutplus/features/pet/map/data/models/pet_map_alert.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/utils/pet_map_constants.dart';
+import 'package:scannutplus/features/pet/agenda/presentation/utils/pet_map_markers.dart';
 import '../../data/pet_constants.dart'; // Restored for PetPrompts/Logs
 import 'package:scannutplus/features/pet/agenda/presentation/pet_map_styles.dart';
 
@@ -106,6 +107,8 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
   bool _isRecordingVideo = false; // Camera Video
   // _isRecordingAudio is already defined above
 
+  BitmapDescriptor? _petMarkerIcon;
+
   // --- REAL-TIME WALK TRACKING ---
   StreamSubscription<Position>? _positionStream;
   StreamSubscription<Position>? _idlePositionStream; // Watch for unrecorded movement
@@ -136,7 +139,8 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
     _notesController = TextEditingController();
     _friendNameController = TextEditingController();
     _tutorNameController = TextEditingController();
-    _loadMapTypePreference(); // Load map preference
+    _currentMapType = MapType.hybrid; // Mudado para satélite por padrão
+    _initPetMarker();
     _initGPS();
     _loadKnownFriends();
 
@@ -180,10 +184,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
   }
 
   Future<void> _loadMapTypePreference() async {
-    // Force default map view (normal) as per user request
-    setState(() {
-      _currentMapType = MapType.normal;
-    });
+    // Agora configurado dinamicamente via initState (hybrid)
   }
 
   Future<void> _saveMapTypePreference(MapType type) async {
@@ -242,6 +243,30 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
 
   // --- LÓGICA DE SENSORES ---
 
+  Future<void> _initPetMarker() async {
+    _petMarkerIcon = await PetMapMarkers.getMarkerIcon(
+      Icons.pets,
+      Colors.white,
+      Colors.orange,
+      100, // Tamanho do ícone da patinha para rastreamento
+    );
+  }
+
+  void _updatePetMarker(LatLng pos) {
+    if (_petMarkerIcon == null) return;
+    setState(() {
+      _markers.removeWhere((m) => m.markerId.value == 'pet_location');
+      _markers.add(
+        Marker(
+          markerId: const MarkerId('pet_location'),
+          position: pos,
+          icon: _petMarkerIcon!,
+          anchor: const Offset(0.5, 0.5),
+        ),
+      );
+    });
+  }
+
   Future<void> _initGPS() async {
     try {
     // 0. Verifica Permissões e Serviços (CRÍTICO PARA FUNCIONAR FORA DO EMULADOR)
@@ -299,7 +324,8 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
         });
         
         _loadMapAlerts();
-        _mapController?.animateCamera(CameraUpdate.newLatLng(_currentPos));
+        _updatePetMarker(_currentPos);
+        _mapController?.animateCamera(CameraUpdate.newLatLngZoom(_currentPos, 19)); // Zoom mais perto (19)
         
         // Start Reverse Geocoding
         if (position != null) {
@@ -352,6 +378,9 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
             _lastRecordedPosition = position;
             _currentPos = LatLng(position.latitude, position.longitude);
           });
+          _updatePetMarker(_currentPos);
+          // Centraliza a câmera no pet durante o passeio com zoom maior!
+          _mapController?.animateCamera(CameraUpdate.newLatLngZoom(_currentPos, 19));
         }
       } else {
         _lastRecordedPosition = position;
@@ -706,16 +735,16 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
               children: [
                 // ALWAYS render GoogleMap to prevent SurfaceView teardown bugs on Android OpenGLES (Pilar 0)
                 GoogleMap(
-                  initialCameraPosition: CameraPosition(target: _currentPos, zoom: 16),
+                  initialCameraPosition: CameraPosition(target: _currentPos, zoom: 19), // Zoom maior no início (19)
                   onMapCreated: (controller) {
                     _mapController = controller;
                     // 1. Forçar movimento inicial se já tivermos GPS (correção de "Sé")
                     if (_currentPos.latitude != -23.5505) {
-                       controller.animateCamera(CameraUpdate.newLatLng(_currentPos));
+                       controller.animateCamera(CameraUpdate.newLatLngZoom(_currentPos, 19)); // Força zoom maior aqui também
                     }
                     debugPrint('[UI_TRACE] Escala do pino central reduzida para melhor precisão (Radius 7).');
                   },
-                  myLocationEnabled: true,
+                  myLocationEnabled: false, // Oculta o ponto azul nativo em favor do ícone da patinha
                   myLocationButtonEnabled: false, // 2. Botão nativo DESATIVADO para usar customizado
                   zoomControlsEnabled: false,
                   mapType: _currentMapType,
