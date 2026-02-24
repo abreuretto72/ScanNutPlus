@@ -232,8 +232,10 @@ extension PetHistoryEntryExt on PetHistoryEntry {
       plantName = plantName.replaceAll(RegExp(r'[*_:]'), '').replaceAll(RegExp(r'\s*\(.*\)'), '').trim();
 
       // Format: "Name (Toxic/Safe)"
-      final status = isToxic ? l10n.pet_plant_toxic : l10n.pet_plant_safe;
-      return '$plantName ($status)';
+      if (isToxic) {
+        return '☠️ $plantName (${l10n.pet_plant_toxic.toUpperCase()}) ☠️';
+      }
+      return '🌿 $plantName (${l10n.pet_plant_safe})';
   }
 }
 
