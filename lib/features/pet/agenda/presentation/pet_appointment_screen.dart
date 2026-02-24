@@ -410,6 +410,7 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                             // ignore: deprecated_member_use
                             value: _selectedCategory,
                             isExpanded: true,
+                            icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                             decoration: _inputDecoration(l10n.pet_apt_select_category, Icons.category),
                             dropdownColor: AppColors.petPrimary,
                             style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
@@ -437,6 +438,7 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                             // ignore: deprecated_member_use
                             value: _selectedType,
                             isExpanded: true,
+                            icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                             decoration: _inputDecoration(l10n.pet_apt_select_type, Icons.info_outline),
                             dropdownColor: AppColors.petPrimary,
                             style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
@@ -496,6 +498,7 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                           // NOTIFICATION
                           DropdownButtonFormField<String>(
                             initialValue: _selectedLeadTime,
+                            icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                             decoration: _inputDecoration(l10n.pet_notification_label, Icons.notifications),
                             dropdownColor: AppColors.petPrimary,
                             style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
@@ -524,6 +527,7 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                             DropdownButtonFormField<String>(
                               initialValue: _selectedPartner,
                               isExpanded: true,
+                              icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                               decoration: _inputDecoration(l10n.pet_field_partner_name, Icons.business),
                               dropdownColor: AppColors.petPrimary,
                               style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
