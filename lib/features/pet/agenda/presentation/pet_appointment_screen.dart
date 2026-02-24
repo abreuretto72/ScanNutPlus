@@ -455,6 +455,9 @@ class _PetAppointmentScreenState extends State<PetAppointmentScreen> {
                           // "WHAT TO DO?" (TITLE)
                           TextFormField(
                             controller: _titleController,
+                            minLines: 1,
+                            maxLines: 4,
+                            keyboardType: TextInputType.multiline,
                             style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
                             decoration: _inputDecoration(l10n.pet_field_what_to_do, Icons.edit).copyWith(
                               suffixIcon: IconButton(
