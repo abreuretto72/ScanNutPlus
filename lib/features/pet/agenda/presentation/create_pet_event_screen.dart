@@ -247,8 +247,8 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
     _petMarkerIcon = await PetMapMarkers.getMarkerIcon(
       Icons.pets,
       Colors.white,
-      Colors.orange,
-      100, // Tamanho do ícone da patinha para rastreamento
+      Colors.deepOrangeAccent, // Mudado para Laranja Intenso para maior contraste
+      130, // Tamanho do ícone da patinha aumentado para melhor legibilidade
     );
   }
 
@@ -814,18 +814,18 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(2), // Reduced padding further (3->2)
+                            padding: const EdgeInsets.all(4), // Aumentado padding para mais contraste
                             decoration: const BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
                               boxShadow: [
-                                BoxShadow(color: Colors.black26, blurRadius: 5, offset: Offset(0, 2)) // Tighter shadow
+                                BoxShadow(color: Colors.black54, blurRadius: 8, offset: Offset(0, 4)) // Sombra mais forte (54% opacity)
                               ]
                             ),
                             child: const CircleAvatar(
-                              radius: 7, // Master Prompt: 40% smaller (was 11)
-                              backgroundColor: Colors.orange,
-                              child: Icon(Icons.pets, color: Colors.white, size: 8), // Smaller icon
+                              radius: 12, // Um pouco maior (era 7) para destacar no modo satélite
+                              backgroundColor: Colors.deepOrangeAccent, // Laranja mais forte e visível
+                              child: Icon(Icons.pets, color: Colors.white, size: 14), // Ícone maior
                             ),
                           ),
                           Container(
@@ -861,17 +861,17 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
             right: 16,
             child: FloatingActionButton.small(
               heroTag: PetConstants.heroQuickAlertFab,
-              elevation: 0, // Flat
-              backgroundColor: Colors.white.withOpacity(0.15), // Translucent
+              elevation: 4, // Elevação maior para destacar do mapa
+              backgroundColor: Colors.white, // Fundo sólido branco intenso em vez de translúcido
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: Colors.white.withOpacity(0.3), width: 1)
+                side: const BorderSide(color: Colors.deepOrangeAccent, width: 2) // Borda colorida
               ),
               onPressed: () {
                 HapticFeedback.heavyImpact();
                 _showDangerDialog(context);
               },
-              child: const Icon(Icons.report_problem, color: Colors.orange), // Orange Icon
+              child: const Icon(Icons.report_problem, color: Colors.deepOrangeAccent), // Ícone com contraste
             ),
           ),
 
@@ -885,17 +885,17 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                    // LAYERS BUTTON
                    FloatingActionButton.small(
                     heroTag: PetConstants.heroLayersFab,
-                    elevation: 0,
-                    backgroundColor: Colors.white.withOpacity(0.15),
+                    elevation: 4,
+                    backgroundColor: Colors.white, // Fundo branco sólido
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(color: Colors.white.withOpacity(0.3), width: 1)
+                      side: const BorderSide(color: Colors.deepOrangeAccent, width: 2) // Borda colorida
                     ),
                     onPressed: () {
                        HapticFeedback.mediumImpact();
                        _showMapLayersMenu(context);
                     },
-                    child: const Icon(Icons.layers, color: Colors.orange),
+                    child: const Icon(Icons.layers, color: Colors.deepOrangeAccent),
                   ),
 
                 ],
@@ -909,11 +909,11 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                right: 16,
                child: FloatingActionButton.small(
                  heroTag: 'gps_fab',
-                 elevation: 0,
-                 backgroundColor: Colors.black.withOpacity(0.3), // Transparent Black
+                 elevation: 4,
+                 backgroundColor: Colors.white, // Fundo branco sólido para destacar na imagem satélite
                  shape: RoundedRectangleBorder(
                    borderRadius: BorderRadius.circular(12),
-                   side: BorderSide(color: Colors.white.withOpacity(0.1), width: 1)
+                   side: const BorderSide(color: Colors.blueAccent, width: 2) // Borda azul para o botão GPS
                  ),
                  onPressed: () {
                    HapticFeedback.selectionClick();
@@ -921,7 +921,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                       _mapController!.animateCamera(CameraUpdate.newLatLng(_currentPos));
                    }
                  },
-                 child: const Icon(Icons.my_location, color: Colors.white), // White icon on black
+                 child: const Icon(Icons.my_location, color: Colors.blueAccent), // Ícone azul com alto contraste
                ),
              ),
 

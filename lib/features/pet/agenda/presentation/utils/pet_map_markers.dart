@@ -16,11 +16,11 @@ class PetMapMarkers {
     final Paint circlePaint = Paint()..color = backgroundColor;
     canvas.drawCircle(Offset(radius, radius), radius, circlePaint);
 
-    // 2. Desenha um contorno branco para contraste (opcional, estilo Waze)
+    // 2. Desenha um contorno branco mais grosso para extremo contraste (estilo Waze/Pin)
     final Paint borderPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
-      ..strokeWidth = size * 0.05; // 5% do tamanho
+      ..strokeWidth = size * 0.12; // Aumentado de 5% para 12% do tamanho
     canvas.drawCircle(Offset(radius, radius), radius, borderPaint);
 
     // 3. Configura o Ícone de Texto
@@ -31,9 +31,10 @@ class PetMapMarkers {
     textPainter.text = TextSpan(
       text: String.fromCharCode(iconData.codePoint),
       style: TextStyle(
-        fontSize: size * 0.6, // Ícone ocupa 60% do círculo
+        fontSize: size * 0.7, // Ícone ocupa 70% do círculo (era 60%)
         fontFamily: iconData.fontFamily,
         color: color,
+        fontWeight: FontWeight.w900, // Força negrito máximo no ícone
       ),
     );
 
