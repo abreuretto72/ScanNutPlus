@@ -562,18 +562,24 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
             animation: tabController,
             builder: (context, child) {
               return Container(
+                width: 60,
+                height: 60,
                 decoration: BoxDecoration(
+                  color: tabController.index == 1 ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Define color on the Container itself
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.black, width: 3),
                   boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
                 ),
-                child: FloatingActionButton(
-                  onPressed: () => _onAddEventPressed(context),
-                  tooltip: l10n.pet_agenda_add_event,
-                  backgroundColor: tabController.index == 1 ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Lilac for Friends, Pink for Pets
-                  elevation: 0,
-                  shape: const CircleBorder(),
-                  child: const Icon(Icons.add, color: Colors.black, size: 32),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    customBorder: const CircleBorder(),
+                    onTap: () => _onAddEventPressed(context),
+                    child: Tooltip(
+                      message: l10n.pet_agenda_add_event,
+                      child: const Icon(Icons.add, color: Colors.black, size: 32),
+                    ),
+                  ),
                 ),
               );
             }

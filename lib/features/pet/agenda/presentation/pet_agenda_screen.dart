@@ -221,35 +221,41 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                 }
                 
                   return Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.black, width: 3),
-                    boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
-                  ),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => PetAppointmentScreen(
-                            petId: widget.petId,
-                            petName: widget.petName,
-                          ),
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFD1DC), // Pink Pastel
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black, width: 3),
+                      boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        customBorder: const CircleBorder(),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PetAppointmentScreen(
+                                petId: widget.petId,
+                                petName: widget.petName,
+                              ),
+                            ),
+                          ).then((_) {
+                             setState(() {
+                               _scheduledTabKey = UniqueKey();
+                               _futureEvents = _loadEvents();
+                             });
+                          });
+                        },
+                        child: Tooltip(
+                          message: l10n.pet_agenda_add_event,
+                          child: const Icon(Icons.add, color: Colors.black, size: 32),
                         ),
-                      ).then((_) {
-                         setState(() {
-                           _scheduledTabKey = UniqueKey();
-                           _futureEvents = _loadEvents();
-                         });
-                      });
-                    },
-                    tooltip: l10n.pet_agenda_add_event,
-                    elevation: 0,
-                    backgroundColor: const Color(0xFFFFD1DC), // Pink Pastel
-                    shape: const CircleBorder(),
-                    child: const Icon(Icons.add, color: Colors.black, size: 32),
-                  ),
-                );
+                      ),
+                    ),
+                  );
               }
             );
           }
