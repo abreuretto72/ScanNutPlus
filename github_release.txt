@@ -1,7 +1,1 @@
-Release v2.2.7 (2026-02-24)
-
-- Removed redundant partner name iteration in Scheduled Events list (improving reading clarity).
-- Localized 'appointment_type' raw enum strings into Portuguese using 'toAppointmentTypeDisplay()'.
-- Fixed visual overlap bug on the 'Add Event' FloatingActionButton by rebuilding it with a clean Material/InkWell wrapper on top of exactly aligned Container BoxShadow shapes.
-- Fixed text entry ergonomics on the New Appointment form by granting multiline maxLines=4 to 'what to do' input dialog.
-- Forcing 'arrow_drop_down' icon to Colors.black for high contrast readability over pastel pink Dropdown backgrounds.
+Release - Fix Overflow e Auditoria Responsiva
