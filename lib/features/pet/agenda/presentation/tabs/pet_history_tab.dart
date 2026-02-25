@@ -175,10 +175,16 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
            // I will comment out the filter to show EVERYTHING, effectively making it a true Global Timeline.
            // Only separate "Scheduled" (Future).
            
-           // Filter Future Appointments (they are in Tab 1)
+           // Filter Future Appointments and pending Medications (they are in Tab 1)
            final isAppointment = e.metrics?['is_appointment'] == true;
+           final isMedication = e.metrics?['is_medication'] == true;
+           final isTaken = e.metrics?['status'] == 'taken';
            final isFuture = e.startDateTime.isAfter(DateTime.now());
+           
+           // Esconde compromissos normais que ainda vão acontecer
            if (isAppointment && isFuture) return false;
+           // Esconde medicações que ainda não foram tomadas (pendentes, atrasadas ou futuras)
+           if (isMedication && !isTaken) return false;
 
            // Selected Date Filter
            if (widget.filterDate != null) {
@@ -426,20 +432,38 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                  ),
                                ),
                               
-                              // Delete Action
-                              Container(
-                                margin: const EdgeInsets.only(left: 8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: Colors.black, width: 2),
-                                ),
-                                child: IconButton(
-                                  icon: const Icon(Icons.delete_rounded, color: Colors.redAccent, size: 20),
-                                  padding: const EdgeInsets.all(6),
-                                  constraints: const BoxConstraints(),
-                                  onPressed: () => widget.onDelete(context, event),
-                                ),
+                              // Actions Column (Attachment Indicator + Delete)
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  if (event.mediaPaths != null && event.mediaPaths!.isNotEmpty)
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 8, bottom: 8),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: Colors.black, width: 2),
+                                      ),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(6),
+                                        child: Icon(Icons.attach_file_rounded, color: Colors.black87, size: 20),
+                                      ),
+                                    ),
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: Colors.black, width: 2),
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.delete_rounded, color: Colors.redAccent, size: 20),
+                                      padding: const EdgeInsets.all(6),
+                                      constraints: const BoxConstraints(),
+                                      onPressed: () => widget.onDelete(context, event),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

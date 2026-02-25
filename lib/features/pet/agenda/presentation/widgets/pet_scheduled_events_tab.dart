@@ -43,14 +43,26 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
     
     if (result.isSuccess && result.data != null) {
       final now = DateTime.now();
-      // Filter: Only appointments, only future
       final allEvents = result.data!;
+      debugPrint("APP_TRACE: PetScheduledEventsTab recebeu ${allEvents.length} eventos do banco.");
       
       final filtered = allEvents.where((e) {
         final isAppt = e.metrics?['is_appointment'] == true;
+        final isMed = e.metrics?['is_medication'] == true;
+        final isTaken = e.metrics?['status'] == 'taken';
         final isFuture = e.startDateTime.isAfter(now);
-        return isAppt && isFuture;
+        
+        debugPrint("APP_TRACE: Evento ID ${e.id} | Title: ${e.metrics?['custom_title']} | isAppt: $isAppt | isMed: $isMed | isTaken: $isTaken | isFuture: $isFuture (${e.startDateTime}) | metrics: ${e.metrics}");
+        
+        // Se for compromisso normal, mostra apenas futuros
+        if (isAppt) return isFuture;
+        // Se for remédio, mostra se não foi tomado (mesmo atrasado no passado)
+        if (isMed) return !isTaken;
+        
+        return false;
       }).toList();
+      
+      debugPrint("APP_TRACE: PetScheduledEventsTab filtrou para ${filtered.length} eventos visíveis.");
 
       // Sort ascending (nearest first)
       filtered.sort((a, b) => a.startDateTime.compareTo(b.startDateTime));
@@ -71,6 +83,35 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
     await _repository.delete(id);
     _loadAppointments(); // Refresh list
     widget.onEventDeleted?.call();
+  }
+
+  Future<void> _markMedicationAsTaken(BuildContext context, PetEvent event) async {
+    try {
+      final updatedMetrics = Map<String, dynamic>.from(event.metrics ?? {});
+      updatedMetrics['status'] = 'taken';
+
+      final updatedEvent = PetEvent(
+        id: event.id,
+        startDateTime: DateTime.now(), // Log exact moment
+        endDateTime: event.endDateTime,
+        petIds: event.petIds,
+        eventTypeIndex: event.eventTypeIndex,
+        notes: event.notes,
+        metrics: updatedMetrics,
+        mediaPaths: event.mediaPaths,
+        partnerId: event.partnerId,
+        hasAIAnalysis: event.hasAIAnalysis,
+      );
+
+      await _repository.saveEvent(updatedEvent);
+      refresh();
+      if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_med_taken_success), backgroundColor: Colors.green));
+      }
+    } catch (e) {
+      debugPrint("Error marking medication as taken: $e");
+    }
   }
 
   @override
@@ -117,7 +158,10 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
                 color: AppColors.petPrimary.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.calendar_month, color: AppColors.petPrimary),
+              child: Icon(
+                event.metrics?['is_medication'] == true ? Icons.medication : Icons.calendar_month, 
+                color: AppColors.petPrimary
+              ),
             ),
             title: Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
             subtitle: Column(
@@ -139,9 +183,24 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
                   ),
               ],
             ),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete, color: Colors.redAccent),
-              onPressed: () => _confirmDelete(context, event.id),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (event.mediaPaths != null && event.mediaPaths!.isNotEmpty)
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(Icons.attach_file_rounded, color: Colors.white70),
+                  ),
+                if (event.metrics?['is_medication'] == true && event.metrics?['status'] == 'pending')
+                  IconButton(
+                    icon: const Icon(Icons.check_circle_outline, color: Color(0xFF10AC84)),
+                    onPressed: () => _markMedicationAsTaken(context, event),
+                  ),
+                IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.redAccent),
+                  onPressed: () => _confirmDelete(context, event.id),
+                ),
+              ],
             ),
             onTap: () => _showActionOptions(context, event),
           ),
@@ -230,7 +289,20 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
 
   void _showOutcomeDialog(BuildContext context, PetEvent event) {
     final l10n = AppLocalizations.of(context)!;
-    final controller = TextEditingController(text: event.notes);
+    final prefix = l10n.pet_agenda_outcome_prefix;
+    
+    String whatToDo = event.notes ?? '';
+    String existingOutcome = '';
+    
+    if (whatToDo.contains('[$prefix]:')) {
+       final parts = whatToDo.split('[$prefix]:');
+       whatToDo = parts[0].trim();
+       if (parts.length > 1) {
+           existingOutcome = parts[1].trim();
+       }
+    }
+
+    final controller = TextEditingController(text: existingOutcome);
 
     showDialog(
       context: context,
@@ -263,7 +335,7 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
           ElevatedButton(
             onPressed: () {
               Navigator.pop(ctx);
-              _registerOutcome(event, controller.text);
+              _registerOutcome(event, whatToDo, controller.text.trim());
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.petSecondary,
@@ -277,7 +349,17 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
     );
   }
 
-  Future<void> _registerOutcome(PetEvent event, String newNotes) async {
+  Future<void> _registerOutcome(PetEvent event, String originalNotes, String outcome) async {
+    final l10n = AppLocalizations.of(context)!;
+    final prefix = l10n.pet_agenda_outcome_prefix;
+    
+    String updatedNotes = originalNotes;
+    if (outcome.isNotEmpty) {
+        updatedNotes = updatedNotes.isNotEmpty 
+          ? "$updatedNotes\n\n[$prefix]: $outcome"
+          : "[$prefix]: $outcome";
+    }
+
     final updatedEvent = PetEvent(
       id: event.id,
       startDateTime: event.startDateTime,
@@ -285,7 +367,7 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
       petIds: event.petIds,
       eventTypeIndex: event.eventTypeIndex,
       eventSubTypeIndex: event.eventSubTypeIndex,
-      notes: newNotes,
+      notes: updatedNotes.isNotEmpty ? updatedNotes : null,
       metrics: event.metrics,
       mediaPaths: event.mediaPaths,
       partnerId: event.partnerId,
