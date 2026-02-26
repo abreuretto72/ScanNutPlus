@@ -1,6 +1,6 @@
-import 'dart:async'; // For runZonedGuarded
-import 'dart:ui'; // For PlatformDispatcher
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:scannutplus/features/pet/l10n/generated/pet_localizations.dart';
@@ -34,7 +34,7 @@ void main() {
     };
 
     // 2. Captura erros assíncronos (APIs, Gemini, Banco de Dados)
-    PlatformDispatcher.instance.onError = (error, stack) {
+    WidgetsBinding.instance.platformDispatcher.onError = (error, stack) {
       _handleGlobalError(error, stack);
       return true;
     };

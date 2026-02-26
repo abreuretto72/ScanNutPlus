@@ -114,7 +114,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboarding_title => 'Welcome to ScanNut+';
 
   @override
-  String get onboarding_welcome => 'Your AI companion for food, plants, and pets.';
+  String get onboarding_welcome =>
+      'Your AI companion for food, plants, and pets.';
 
   @override
   String get onboarding_button_start => 'Get Started';
@@ -123,7 +124,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboarding_tou_title => 'Analytical Terms of Use';
 
   @override
-  String get onboarding_tou_body => 'ScanNut+ provides you with an Artificial Intelligence-based Veterinary Specialist trained at a high cost.\n\n⚠️ Attention:\nNo image analysis is free. Processing each photo generates real operation costs. Therefore, we DO NOT pre-analyze images to save traffic and speed up response times. It is entirely your responsibility to be accurate in the selected category. Out-of-context photographs will generate absurd or out-of-context reports.\n\nRemember: AI is just a virtual assistant and can make mistakes. The generated report does not replace, under any circumstances, a face-to-face evaluation by a Veterinarian or Specialist. Always consult a trusted professional to evaluate exams.';
+  String get onboarding_tou_body =>
+      'ScanNut+ provides you with an Artificial Intelligence-based Veterinary Specialist trained at a high cost.\n\n⚠️ Attention:\nNo image analysis is free. Processing each photo generates real operation costs. Therefore, we DO NOT pre-analyze images to save traffic and speed up response times. It is entirely your responsibility to be accurate in the selected category. Out-of-context photographs will generate absurd or out-of-context reports.\n\nRemember: AI is just a virtual assistant and can make mistakes. The generated report does not replace, under any circumstances, a face-to-face evaluation by a Veterinarian or Specialist. Always consult a trusted professional to evaluate exams.';
 
   @override
   String get onboarding_tou_accept => 'I understand and agree';
@@ -383,7 +385,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get help_how_to_use => 'How to Use';
 
   @override
-  String get help_pet_scan_tip => 'Scan your pet or food labels for nutritional analysis.';
+  String get help_pet_scan_tip =>
+      'Scan your pet or food labels for nutritional analysis.';
 
   @override
   String get help_privacy_policy => 'Privacy Policy';
@@ -395,7 +398,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get help_dev_info => 'Developed by Multiverso Digital';
 
   @override
-  String get help_privacy_content => 'Your data is processed locally whenever possible. We respect your privacy.';
+  String get help_privacy_content =>
+      'Your data is processed locally whenever possible. We respect your privacy.';
 
   @override
   String get help_email_subject => 'ScanNut+ Support';
@@ -404,37 +408,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get help_story_title => 'Our Story';
 
   @override
-  String get help_origin_story => 'The name of this app is a tribute to my pet, Nut. My idea was to create a tool for complete management of his life, from routine organization to the creation of healthy menus. In daily life, ScanNut helps me record every occurrence. For stool, urine, and blood tests, I use AI to get initial insights through image analysis — a technological support I always share with the vet. Additionally, I included a plant guide to identify toxic species and ensure his safety. Thinking about my own health, I added the Food Scan to monitor calories, vitamins, and generate meal plans with shopping lists. I feel that, now, the app is complete for both of us.';
+  String get help_origin_story =>
+      'The name of this app is a tribute to my pet, Nut. My idea was to create a tool for complete management of his life, from routine organization to the creation of healthy menus. In daily life, ScanNut helps me record every occurrence. For stool, urine, and blood tests, I use AI to get initial insights through image analysis — a technological support I always share with the vet. Additionally, I included a plant guide to identify toxic species and ensure his safety. Thinking about my own health, I added the Food Scan to monitor calories, vitamins, and generate meal plans with shopping lists. I feel that, now, the app is complete for both of us.';
 
   @override
   String get help_analysis_guide_title => 'AI Analysis Guide';
 
   @override
-  String get help_disclaimer => 'This analysis is visual only and does not replace a veterinary evaluation.';
+  String get help_disclaimer =>
+      'This analysis is visual only and does not replace a veterinary evaluation.';
 
   @override
   String get help_section_pet_title => 'General Pet Analysis';
 
   @override
-  String get help_section_pet_desc => 'Analyzes species, size estimate, body posture (pain/comfort signs), and environment safety.';
+  String get help_section_pet_desc =>
+      'Analyzes species, size estimate, body posture (pain/comfort signs), and environment safety.';
 
   @override
   String get help_section_wound_title => 'Wounds & Injuries';
 
   @override
-  String get help_section_wound_desc => 'Evaluates size, visual aspect (pus/blood presence), redness, and signs of inflammation.';
+  String get help_section_wound_desc =>
+      'Evaluates size, visual aspect (pus/blood presence), redness, and signs of inflammation.';
 
   @override
   String get help_section_stool_title => 'Stool Analysis';
 
   @override
-  String get help_section_stool_desc => 'Checks consistency (Bristol scale), color changes, and visible presence of mucus or worms.';
+  String get help_section_stool_desc =>
+      'Checks consistency (Bristol scale), color changes, and visible presence of mucus or worms.';
 
   @override
   String get help_section_mouth_title => 'Dental & Mouth';
 
   @override
-  String get help_section_mouth_desc => 'Inspects gum color (pale/red), tartar buildup, and broken teeth indicators.';
+  String get help_section_mouth_desc =>
+      'Inspects gum color (pale/red), tartar buildup, and broken teeth indicators.';
 
   @override
   String get help_section_eyes_title => 'Eyes Health';
@@ -470,6 +480,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_med_interval => 'Interval (Hours)';
 
   @override
+  String get pet_med_duration_help => 'How many days will the treatment last?';
+
+  @override
+  String get pet_med_interval_help =>
+      'Every how many hours should the pet take the dose?';
+
+  @override
+  String get pet_med_dosage_help => 'Amount to be given per dose?';
+
+  @override
+  String get pet_agenda_event_date_help => 'Treatment start date.';
+
+  @override
+  String get pet_field_time_help => 'Time of the first dose.';
+
+  @override
+  String get pet_med_start_date => 'Start Date';
+
+  @override
+  String get pet_med_start_time => 'Start Time';
+
+  @override
   String get pet_med_save => 'Schedule Treatment';
 
   @override
@@ -485,13 +517,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_med_taken_success => 'Dose recorded successfully!';
 
   @override
-  String get help_section_eyes_desc => 'Detects secretion, redness, cloudiness (opacity), and potential irritation signs.';
+  String get help_section_eyes_desc =>
+      'Detects secretion, redness, cloudiness (opacity), and potential irritation signs.';
 
   @override
   String get help_section_skin_title => 'Skin & Coat';
 
   @override
-  String get help_section_skin_desc => 'Identifies hair loss patches, redness, flakes, and unusual spots or lumps.';
+  String get help_section_skin_desc =>
+      'Identifies hair loss patches, redness, flakes, and unusual spots or lumps.';
 
   @override
   String get help_can_do => 'What AI can detect';
@@ -500,37 +534,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get help_cannot_do => 'Limit: Needs Vet confirmation';
 
   @override
-  String get pet_capture_instructions => 'The AI analyzes images of the pet, wounds, stool, mouth, eyes, and skin. One at a time.';
+  String get pet_capture_instructions =>
+      'The AI analyzes images of the pet, wounds, stool, mouth, eyes, and skin. One at a time.';
 
   @override
   String get help_domain_pet_title => 'An exclusive AI for your Pet.';
 
   @override
-  String get help_domain_pet_desc => 'Your pet has an exclusive intelligence in ScanNut+! Our AI analyzes all collected data to answer your questions and generate detailed health reports. In addition, you can perform visual image analysis to closely monitor your best friend\'s well-being.\n\nYou can also perform the same analyses for your pet\'s friend.\n\nGive your best friend a voice! With ScanNut+\'s exclusive AI, you can clarify all your doubts and receive health reports based on your pet\'s daily life. Also use our image analysis to understand what photos tell about their health and behavior.\n\nScanNut+ offers a smart assistant dedicated to your pet. It transforms data and photos into health reports and immediate answers to your questions. Everything to ensure your friend is always well cared for.';
+  String get help_domain_pet_desc =>
+      'Your pet has an exclusive intelligence in ScanNut+! Our AI analyzes all collected data to answer your questions and generate detailed health reports. In addition, you can perform visual image analysis to closely monitor your best friend\'s well-being.\n\nYou can also perform the same analyses for your pet\'s friend.\n\nGive your best friend a voice! With ScanNut+\'s exclusive AI, you can clarify all your doubts and receive health reports based on your pet\'s daily life. Also use our image analysis to understand what photos tell about their health and behavior.\n\nScanNut+ offers a smart assistant dedicated to your pet. It transforms data and photos into health reports and immediate answers to your questions. Everything to ensure your friend is always well cared for.';
 
   @override
   String get help_domain_food_title => 'Food Domain';
 
   @override
-  String get help_domain_food_desc => 'Your health management: Food scanning, nutrient counting, and healthy meal plan creation.';
+  String get help_domain_food_desc =>
+      'Your health management: Food scanning, nutrient counting, and healthy meal plan creation.';
 
   @override
   String get help_domain_plant_title => 'Plant Domain';
 
   @override
-  String get help_domain_plant_desc => 'Plant Guide: Identify species in your garden or home and know instantly if they are toxic to your pet, based on real botanical data.';
+  String get help_domain_plant_desc =>
+      'Plant Guide: Identify species in your garden or home and know instantly if they are toxic to your pet, based on real botanical data.';
 
   @override
   String get pet_capture_info_title => 'ScanNut+ AI Capabilities';
 
   @override
-  String get pet_capture_capability_labels => 'Food Label & Ingredient Analysis';
+  String get pet_capture_capability_labels =>
+      'Food Label & Ingredient Analysis';
 
   @override
   String get pet_capture_capability_exams => 'Clinical Reports & Lab Exams';
 
   @override
-  String get pet_capture_capability_biometrics => 'Posture & Biometric Monitoring';
+  String get pet_capture_capability_biometrics =>
+      'Posture & Biometric Monitoring';
 
   @override
   String get pet_capture_capability_visual => 'Visual Health Inspection';
@@ -763,7 +803,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_appointment_new_partner => '[New Partner]';
 
   @override
-  String get pet_appointment_searching_partners => 'Searching nearby partners...';
+  String get pet_appointment_searching_partners =>
+      'Searching nearby partners...';
 
   @override
   String get pet_appointment_manual_entry => 'Enter Manually';
@@ -772,7 +813,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_appointment_no_partner_title => 'No Partner Selected';
 
   @override
-  String get pet_appointment_no_partner_msg => 'You haven\'t specified a location or professional. Do you want to save the appointment anyway?';
+  String get pet_appointment_no_partner_msg =>
+      'You haven\'t specified a location or professional. Do you want to save the appointment anyway?';
 
   @override
   String get pet_appointment_no_partner_confirm => 'Save without partner';
@@ -832,7 +874,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_delete_title => 'Delete Pet';
 
   @override
-  String get pet_delete_content => 'Are you sure you want to delete this pet and all its history?';
+  String get pet_delete_content =>
+      'Are you sure you want to delete this pet and all its history?';
 
   @override
   String get pet_delete_confirm => 'Delete';
@@ -844,7 +887,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_history_delete_success => 'History deleted successfully!';
 
   @override
-  String get pet_ai_overloaded_message => 'AI overloaded! Please try again in a few moments.';
+  String get pet_ai_overloaded_message =>
+      'AI overloaded! Please try again in a few moments.';
 
   @override
   String get pet_delete_success => 'Pet deleted successfully';
@@ -883,19 +927,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_analysis_posture => 'Body Condition';
 
   @override
-  String get ai_feedback_no_oral_layout => 'No oral structures visible for analysis.';
+  String get ai_feedback_no_oral_layout =>
+      'No oral structures visible for analysis.';
 
   @override
-  String get ai_feedback_no_derm_abnormalities => 'No dermatological abnormalities detected based on visual evidence.';
+  String get ai_feedback_no_derm_abnormalities =>
+      'No dermatological abnormalities detected based on visual evidence.';
 
   @override
-  String get ai_feedback_invalid_gastro => 'INVALID_CONTEXT: Image does not appear to be gastrointestinal output.';
+  String get ai_feedback_invalid_gastro =>
+      'INVALID_CONTEXT: Image does not appear to be gastrointestinal output.';
 
   @override
-  String get ai_feedback_invalid_lab => 'INVALID_CONTEXT: Image is not a lab report.';
+  String get ai_feedback_invalid_lab =>
+      'INVALID_CONTEXT: Image is not a lab report.';
 
   @override
-  String get ai_feedback_lab_disclaimer => 'Interpretation is based on visible text. Verify with original document.';
+  String get ai_feedback_lab_disclaimer =>
+      'Interpretation is based on visible text. Verify with original document.';
 
   @override
   String get ai_feedback_eyes_not_visible => 'Eyes not fully visible.';
@@ -925,7 +974,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_module_physique => 'Body Condition & Weight';
 
   @override
-  String get pet_module_nutrition_programs => 'Label Analysis, Nutritional Table';
+  String get pet_module_nutrition_programs =>
+      'Label Analysis, Nutritional Table';
 
   @override
   String get pet_module_vocal => 'Vocal';
@@ -995,7 +1045,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_action_delete_friend => 'Delete Friend';
 
   @override
-  String get pet_msg_confirm_delete_friend => 'Are you sure you want to delete this friend?';
+  String get pet_msg_confirm_delete_friend =>
+      'Are you sure you want to delete this friend?';
 
   @override
   String get pet_msg_friend_updated => 'Friend updated successfully!';
@@ -1013,7 +1064,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_plant_safe => 'SAFE ✅';
 
   @override
-  String get pet_msg_confirm_delete_entry => 'Are you sure you want to delete this analysis?';
+  String get pet_msg_confirm_delete_entry =>
+      'Are you sure you want to delete this analysis?';
 
   @override
   String get pet_event_type_activity => 'Walks';
@@ -1109,7 +1161,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get common_delete_confirm_title => 'Confirm Delete';
 
   @override
-  String get common_delete_confirm_message => 'Are you sure you want to delete?';
+  String get common_delete_confirm_message =>
+      'Are you sure you want to delete?';
 
   @override
   String get pet_profile_title_simple => 'Profile';
@@ -1144,16 +1197,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_agenda_view_calendar => 'View Calendar';
 
   @override
-  String get pet_module_dentistry_programs => 'Tartar, Gingivitis, Broken Teeth';
+  String get pet_module_dentistry_programs =>
+      'Tartar, Gingivitis, Broken Teeth';
 
   @override
-  String get pet_module_dermatology_programs => 'Alopecia, Dermatitis, Wounds, Parasites';
+  String get pet_module_dermatology_programs =>
+      'Alopecia, Dermatitis, Wounds, Parasites';
 
   @override
-  String get pet_module_gastro_programs => 'Consistency, Color, Parasites, Blood';
+  String get pet_module_gastro_programs =>
+      'Consistency, Color, Parasites, Blood';
 
   @override
-  String get pet_module_ophthalmology_programs => 'Secretion, Redness, Cataracts, Spots';
+  String get pet_module_ophthalmology_programs =>
+      'Secretion, Redness, Cataracts, Spots';
 
   @override
   String get pet_module_otology_programs => 'Wax, Itching, Odor, Redness';
@@ -1165,7 +1222,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_module_lab_programs => 'CBC, Biochemistry, Urine, Stool';
 
   @override
-  String get pet_error_ai_unhandled_format => 'The AI generated a complex response on this attempt. Please click analyze again.';
+  String get pet_error_ai_unhandled_format =>
+      'The AI generated a complex response on this attempt. Please click analyze again.';
 
   @override
   String get pet_module_food_bowl_programs => 'Kibble Quality, Natural Food';
@@ -1783,49 +1841,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_journal_help_photo_title => 'Camera & Gallery';
 
   @override
-  String get pet_journal_help_photo_desc => 'Take a photo or choose one from your gallery. Use it to log wounds, feces, identify toxic plants on your path, or even analyze pet food labels, food photos, and lab test results. Our AI focuses on the image to generate deep technical analyses. Max size: 20MB.';
+  String get pet_journal_help_photo_desc =>
+      'Take a photo or choose one from your gallery. Use it to log wounds, feces, identify toxic plants on your path, or even analyze pet food labels, food photos, and lab test results. Our AI focuses on the image to generate deep technical analyses. Max size: 20MB.';
 
   @override
   String get pet_journal_help_audio_title => 'Sound Recorder';
 
   @override
-  String get pet_journal_help_audio_desc => 'Press and hold the microphone icon near the camera button to record ambient sounds, barks, cries, or coughing. The AI will listen to the audio to detect stress or pain signals. Max size: 20MB.';
+  String get pet_journal_help_audio_desc =>
+      'Press and hold the microphone icon near the camera button to record ambient sounds, barks, cries, or coughing. The AI will listen to the audio to detect stress or pain signals. Max size: 20MB.';
 
   @override
   String get pet_journal_help_map_title => 'Map & Alerts';
 
   @override
-  String get pet_journal_help_map_desc => 'The map automatically saves your current location. If you see danger on your route (like aggressive dogs or poison), tap the alert icon on the map to log it and warn the community.';
+  String get pet_journal_help_map_desc =>
+      'The map automatically saves your current location. If you see danger on your route (like aggressive dogs or poison), tap the alert icon on the map to log it and warn the community.';
 
   @override
   String get pet_journal_help_notes_title => 'Notes & Voice Typing';
 
   @override
-  String get pet_journal_help_notes_desc => 'You can type details manually in the text box. If you prefer, tap the microphone inside the text field to just speak; the app will transcribe your words automatically.';
+  String get pet_journal_help_notes_desc =>
+      'You can type details manually in the text box. If you prefer, tap the microphone inside the text field to just speak; the app will transcribe your words automatically.';
 
   @override
   String get pet_journal_help_videos_title => 'Short Videos';
 
   @override
-  String get pet_journal_help_videos_desc => 'Record short clips directly in the app. This is perfect for showing the AI vet how your pet is walking (if they\'re limping) or to capture unusual behavior in motion. Max size: 20MB.';
+  String get pet_journal_help_videos_desc =>
+      'Record short clips directly in the app. This is perfect for showing the AI vet how your pet is walking (if they\'re limping) or to capture unusual behavior in motion. Max size: 20MB.';
 
   @override
   String get pet_journal_help_ai_title => 'AI Veterinarian';
 
   @override
-  String get pet_journal_help_ai_desc => 'When you provide any of the items above, our Artificial Intelligence acts like a vet and analyzes the data instantly! It generates a clinical report that is saved right in your pet\'s history.';
+  String get pet_journal_help_ai_desc =>
+      'When you provide any of the items above, our Artificial Intelligence acts like a vet and analyzes the data instantly! It generates a clinical report that is saved right in your pet\'s history.';
 
   @override
   String get pet_journal_help_friends_title => 'Walking with Friends';
 
   @override
-  String get pet_journal_help_friends_desc => 'When the switch is on the friend, the app can perform all available analyses for the friend pet and also issue a PDF report.';
+  String get pet_journal_help_friends_desc =>
+      'When the switch is on the friend, the app can perform all available analyses for the friend pet and also issue a PDF report.';
 
   @override
   String get pet_journal_help_specialized_ai_title => 'Specialized Pet AI';
 
   @override
-  String get pet_journal_help_specialized_ai_desc => 'There is an Artificial Intelligence specially designed to know, learn, and understand all of your pet\'s data (like in Pet Chat). This allows it to answer anything you ask about your pet in a personalized way!';
+  String get pet_journal_help_specialized_ai_desc =>
+      'There is an Artificial Intelligence specially designed to know, learn, and understand all of your pet\'s data (like in Pet Chat). This allows it to answer anything you ask about your pet in a personalized way!';
 
   @override
   String pet_error_ai_analysis_failed(Object error) {
@@ -1863,7 +1929,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_analysis_data_not_found => 'No data.';
 
   @override
-  String get pet_logic_keywords_health => 'poop, feces, stool, pee, urine, vomit, diarrhea, blood, wound, injury, pain, limping, choking';
+  String get pet_logic_keywords_health =>
+      'poop, feces, stool, pee, urine, vomit, diarrhea, blood, wound, injury, pain, limping, choking';
 
   @override
   String get pet_ai_language => 'en_US';
@@ -1973,7 +2040,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_unexpected_title => 'Unexpected Error';
 
   @override
-  String get error_unexpected_message => 'We had a little technical issue. We\'re working on fixing it.';
+  String get error_unexpected_message =>
+      'We had a little technical issue. We\'re working on fixing it.';
 
   @override
   String get error_try_recover => 'Recover';
@@ -2052,6 +2120,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pet_metric_save_success => 'Metrics saved successfully!';
+
+  @override
+  String get pet_metric_source_clinical =>
+      'Origin: Recorded in Clinical Metrics';
 
   @override
   String get pet_metric_empty_fields => 'Please fill in at least one metric.';
@@ -2153,7 +2225,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_notification_none => 'No notification';
 
   @override
-  String get pet_delete_confirmation_title => 'Are you sure you want to delete?';
+  String get pet_delete_confirmation_title =>
+      'Are you sure you want to delete?';
 
   @override
   String get pet_appointment_tab_data => 'Appointment';
@@ -2171,7 +2244,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_appointment_outcome_title => 'Event Outcome';
 
   @override
-  String get pet_appointment_outcome_hint => 'What happened during the appointment? Add notes, recommendations, etc.';
+  String get pet_appointment_outcome_hint =>
+      'What happened during the appointment? Add notes, recommendations, etc.';
 
   @override
   String get pet_appointment_outcome_save => 'Save Outcome';
@@ -2360,7 +2434,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get common_save => 'Save';
 
   @override
-  String get pdf_footer_text => '© 2026 ScanNut Multiverso Digital | contato@multiversodigital.com.br';
+  String get pdf_footer_text =>
+      '© 2026 ScanNut Multiverso Digital | contato@multiversodigital.com.br';
 
   @override
   String get pdf_page_label => 'Page';
@@ -2585,7 +2660,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_walk_summary_dialog_title => 'Walk Summary 🐾';
 
   @override
-  String get pet_walk_summary_dialog_desc => 'Select the interval to generate AI summary.';
+  String get pet_walk_summary_dialog_desc =>
+      'Select the interval to generate AI summary.';
 
   @override
   String get pet_label_start => 'Start';
@@ -2603,7 +2679,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_error_no_events_period => 'No events found in this period.';
 
   @override
-  String get pet_msg_summary_success => 'Summary generated and saved successfully! 🐾';
+  String get pet_msg_summary_success =>
+      'Summary generated and saved successfully! 🐾';
 
   @override
   String get pet_walk_empty_history => 'No walks recorded.';
@@ -2695,6 +2772,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_record_incident => 'Incidents';
 
   @override
+  String get pet_record_expense => 'Expenses';
+
+  @override
   String get pet_record_other => 'Others';
 
   @override
@@ -2711,6 +2791,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pet_field_time => 'Actual Time';
+
+  @override
+  String get pet_field_amount_money => 'Amount';
+
+  @override
+  String get pet_field_currency => 'Currency';
 
   @override
   String get pet_field_observation => 'Observation';
@@ -2839,31 +2925,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get help_pillar_analysis_title => 'Image and Video Analysis';
 
   @override
-  String get help_pillar_analysis_desc => 'Our AI processes photos and videos to identify subtle signs of health, posture, and behavior in your pet.';
+  String get help_pillar_analysis_desc =>
+      'Our AI processes photos and videos to identify subtle signs of health, posture, and behavior in your pet.';
 
   @override
   String get help_pillar_walks_title => 'Walk Monitoring';
 
   @override
-  String get help_pillar_walks_desc => 'Record of what happens during walks, monitoring energy levels, interactions, and predictive routes.';
+  String get help_pillar_walks_desc =>
+      'Record of what happens during walks, monitoring energy levels, interactions, and predictive routes.';
 
   @override
   String get help_pillar_agenda_title => 'Agenda and Occurrences';
 
   @override
-  String get help_pillar_agenda_desc => 'Central hub for appointments and daily records: medication, weight, incidents, and analysis history in one place.';
+  String get help_pillar_agenda_desc =>
+      'Central hub for appointments and daily records: medication, weight, incidents, and analysis history in one place.';
 
   @override
   String get help_pillar_nutrition_title => 'Smart Nutrition';
 
   @override
-  String get help_pillar_nutrition_desc => 'Generation of personalized menus and automatic inclusion of meals in the daily agenda for consumption tracking.';
+  String get help_pillar_nutrition_desc =>
+      'Generation of personalized menus and automatic inclusion of meals in the daily agenda for consumption tracking.';
 
   @override
   String get help_pillar_profile_title => 'Profile and Documentation';
 
   @override
-  String get help_pillar_profile_desc => 'Pet data, health plans, funeral plans, and storage of important documents for quick access.';
+  String get help_pillar_profile_desc =>
+      'Pet data, health plans, funeral plans, and storage of important documents for quick access.';
 
   @override
   String get pet_agenda_tab_history_label => 'History';
@@ -2887,7 +2978,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_field_email => 'E-mail';
 
   @override
-  String get ai_disclaimer_footer => '💡 Analysis generated by Gemini technology. Always consult a specialist.';
+  String get ai_disclaimer_footer =>
+      '💡 Analysis generated by Gemini technology. Always consult a specialist.';
 
   @override
   String get pet_agenda_edit_btn => 'Edit';
@@ -2905,7 +2997,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_agenda_outcome_title => 'Outcome';
 
   @override
-  String get pet_agenda_outcome_hint => 'How did it proceed after the analysis? Did it get worse? Better?';
+  String get pet_agenda_outcome_hint =>
+      'How did it proceed after the analysis? Did it get worse? Better?';
 
   @override
   String get pet_agenda_outcome_prefix => 'Outcome';
@@ -2926,7 +3019,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_generic_title => 'Oops! Something didn\'t go as expected';
 
   @override
-  String get error_generic_message => 'The system had a little technical hiccup. We are already looking into it!';
+  String get error_generic_message =>
+      'The system had a little technical hiccup. We are already looking into it!';
 
   @override
   String get error_button_retry => 'Try Again';
@@ -2935,7 +3029,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_unknown => 'Unknown';
 
   @override
-  String get pdf_report_disclaimer => 'Report generated automatically by ScanNut+ AI. Always consult a veterinarian.';
+  String get pdf_report_disclaimer =>
+      'Report generated automatically by ScanNut+ AI. Always consult a veterinarian.';
 
   @override
   String get pdf_analysis_report => 'ANALYSIS REPORT';
@@ -3022,7 +3117,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_location_denied => 'Location permissions are denied';
 
   @override
-  String get error_location_permanently_denied => 'Location permissions are permanently denied.';
+  String get error_location_permanently_denied =>
+      'Location permissions are permanently denied.';
 
   @override
   String error_fetching_places(String error) {
@@ -3158,7 +3254,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_error_nutrition_plan => 'Error generating nutritional plan.';
 
   @override
-  String get pet_error_summary => 'We couldn\'t generate the summary right now. Please try again later.';
+  String get pet_error_summary =>
+      'We couldn\'t generate the summary right now. Please try again later.';
 
   @override
   String get pet_health_based_on_history => 'Based on Pet\'s Clinical History';
@@ -3183,19 +3280,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_error_no_internet_title => 'No Internet Connection';
 
   @override
-  String get pet_error_no_internet_content => 'Oops! It looks like your phone is offline or the signal dropped. Please check your internet connection and try again.';
+  String get pet_error_no_internet_content =>
+      'Oops! It looks like your phone is offline or the signal dropped. Please check your internet connection and try again.';
 
   @override
   String get pet_error_timeout_title => 'Server Busy';
 
   @override
-  String get pet_error_timeout_content => 'The AI took too long to respond this time. This usually happens when the server is busy. Please wait a few seconds and try again.';
+  String get pet_error_timeout_content =>
+      'The AI took too long to respond this time. This usually happens when the server is busy. Please wait a few seconds and try again.';
 
   @override
   String get pet_error_technical_title => 'Unable to Analyze';
 
   @override
-  String get pet_error_technical_content => 'We encountered a small technical issue while reading your data. Don\'t worry, just try again.';
+  String get pet_error_technical_content =>
+      'We encountered a small technical issue while reading your data. Don\'t worry, just try again.';
 
   @override
   String get pet_journal_bg_evaluating => 'Analyzing in background...';
@@ -3233,10 +3333,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_btn_ok => 'OK';
 
   @override
-  String get agenda_voice_greeting => 'Beli, what are we scheduling for your pet?';
+  String get agenda_voice_greeting =>
+      'Beli, what are we scheduling for your pet?';
 
   @override
-  String get agenda_voice_success_prompt => 'I filled in the details for you. Is everything correct or do you want to adjust something?';
+  String get agenda_voice_success_prompt =>
+      'I filled in the details for you. Is everything correct or do you want to adjust something?';
 
   @override
   String get agenda_voice_listening => 'Beli is listening...';
@@ -3261,4 +3363,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get agenda_error_voice => 'I couldn\'t understand, try typing.';
+
+  @override
+  String get pet_agenda_attach_document => 'Attach Document';
+
+  @override
+  String get pet_agenda_ai_summary => 'Generate AI Summary';
+
+  @override
+  String get pet_agenda_generating_summary => 'Generating Summary...';
+
+  @override
+  String get pet_agenda_file_attached => 'File Attached';
+
+  @override
+  String get pet_agenda_ai_summary_attached => 'AI Summary Attached';
+
+  @override
+  String get pet_journal_bg_processing => 'Processing AI Media...';
+
+  @override
+  String get pet_agenda_delete_attachment_title => 'Delete Attachment';
+
+  @override
+  String get pet_agenda_delete_attachment_msg =>
+      'Are you sure you want to delete this attachment?';
+
+  @override
+  String get pet_agenda_delete_attachment_confirm => 'Delete';
 }

@@ -62,7 +62,8 @@ import 'app_localizations_pt.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -70,7 +71,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -82,7 +84,8 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -1012,6 +1015,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Interval (Hours)'**
   String get pet_med_interval;
+
+  /// No description provided for @pet_med_duration_help.
+  ///
+  /// In en, this message translates to:
+  /// **'How many days will the treatment last?'**
+  String get pet_med_duration_help;
+
+  /// No description provided for @pet_med_interval_help.
+  ///
+  /// In en, this message translates to:
+  /// **'Every how many hours should the pet take the dose?'**
+  String get pet_med_interval_help;
+
+  /// No description provided for @pet_med_dosage_help.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount to be given per dose?'**
+  String get pet_med_dosage_help;
+
+  /// No description provided for @pet_agenda_event_date_help.
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment start date.'**
+  String get pet_agenda_event_date_help;
+
+  /// No description provided for @pet_field_time_help.
+  ///
+  /// In en, this message translates to:
+  /// **'Time of the first dose.'**
+  String get pet_field_time_help;
+
+  /// No description provided for @pet_med_start_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get pet_med_start_date;
+
+  /// No description provided for @pet_med_start_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Time'**
+  String get pet_med_start_time;
 
   /// No description provided for @pet_med_save.
   ///
@@ -4049,6 +4094,12 @@ abstract class AppLocalizations {
   /// **'Metrics saved successfully!'**
   String get pet_metric_save_success;
 
+  /// No description provided for @pet_metric_source_clinical.
+  ///
+  /// In en, this message translates to:
+  /// **'Origin: Recorded in Clinical Metrics'**
+  String get pet_metric_source_clinical;
+
   /// No description provided for @pet_metric_empty_fields.
   ///
   /// In en, this message translates to:
@@ -5303,6 +5354,12 @@ abstract class AppLocalizations {
   /// **'Incidents'**
   String get pet_record_incident;
 
+  /// No description provided for @pet_record_expense.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get pet_record_expense;
+
   /// No description provided for @pet_record_other.
   ///
   /// In en, this message translates to:
@@ -5338,6 +5395,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Actual Time'**
   String get pet_field_time;
+
+  /// No description provided for @pet_field_amount_money.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get pet_field_amount_money;
+
+  /// No description provided for @pet_field_currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get pet_field_currency;
 
   /// No description provided for @pet_field_observation.
   ///
@@ -6382,9 +6451,64 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I couldn\'t understand, try typing.'**
   String get agenda_error_voice;
+
+  /// No description provided for @pet_agenda_attach_document.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach Document'**
+  String get pet_agenda_attach_document;
+
+  /// No description provided for @pet_agenda_ai_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate AI Summary'**
+  String get pet_agenda_ai_summary;
+
+  /// No description provided for @pet_agenda_generating_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating Summary...'**
+  String get pet_agenda_generating_summary;
+
+  /// No description provided for @pet_agenda_file_attached.
+  ///
+  /// In en, this message translates to:
+  /// **'File Attached'**
+  String get pet_agenda_file_attached;
+
+  /// No description provided for @pet_agenda_ai_summary_attached.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Summary Attached'**
+  String get pet_agenda_ai_summary_attached;
+
+  /// No description provided for @pet_journal_bg_processing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing AI Media...'**
+  String get pet_journal_bg_processing;
+
+  /// No description provided for @pet_agenda_delete_attachment_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Attachment'**
+  String get pet_agenda_delete_attachment_title;
+
+  /// No description provided for @pet_agenda_delete_attachment_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this attachment?'**
+  String get pet_agenda_delete_attachment_msg;
+
+  /// No description provided for @pet_agenda_delete_attachment_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get pet_agenda_delete_attachment_confirm;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -6393,25 +6517,25 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['en', 'pt'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en': return AppLocalizationsEn();
-    case 'pt': return AppLocalizationsPt();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'pt':
+      return AppLocalizationsPt();
   }
 
   throw FlutterError(
-    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
+      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

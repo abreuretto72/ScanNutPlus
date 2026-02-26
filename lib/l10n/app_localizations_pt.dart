@@ -60,7 +60,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get error_password_short => 'A senha deve ter pelo menos 8 caracteres';
 
   @override
-  String get error_password_weak => 'Requer maiúscula, número e caractere especial';
+  String get error_password_weak =>
+      'Requer maiúscula, número e caractere especial';
 
   @override
   String get error_password_mismatch => 'As senhas não coincidem';
@@ -114,7 +115,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get onboarding_title => 'Bem-vindo ao ScanNut+';
 
   @override
-  String get onboarding_welcome => 'Seu companheiro de IA para alimentos, plantas e pets.';
+  String get onboarding_welcome =>
+      'Seu companheiro de IA para alimentos, plantas e pets.';
 
   @override
   String get onboarding_button_start => 'Começar';
@@ -123,7 +125,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get onboarding_tou_title => 'Termos de Uso Analítico';
 
   @override
-  String get onboarding_tou_body => 'O ScanNut+ fornece a você um Especialista Veterinário baseado em Inteligência Artificial treinada em alto custo.\n\n⚠️ Atenção:\nNenhuma análise de imagem é de graça. O processamento de cada foto gera custos reais de operação. Por isso, NÃO analisamos previamente as imagens para poupar tráfego e acelerar a resposta. É de sua inteira responsabilidade ser preciso na categoria selecionada. Fotografias fora de contexto gerarão laudos absurdos ou fora de contexto.\n\nLembre-se: A IA é apenas um assistente virtual e pode cometer erros. O laudo gerado não substitui, em hipótese alguma, a avaliação presencial de um Médico Veterinário ou Especialista. Consulte sempre um profissional de confiança para laudar exames.';
+  String get onboarding_tou_body =>
+      'O ScanNut+ fornece a você um Especialista Veterinário baseado em Inteligência Artificial treinada em alto custo.\n\n⚠️ Atenção:\nNenhuma análise de imagem é de graça. O processamento de cada foto gera custos reais de operação. Por isso, NÃO analisamos previamente as imagens para poupar tráfego e acelerar a resposta. É de sua inteira responsabilidade ser preciso na categoria selecionada. Fotografias fora de contexto gerarão laudos absurdos ou fora de contexto.\n\nLembre-se: A IA é apenas um assistente virtual e pode cometer erros. O laudo gerado não substitui, em hipótese alguma, a avaliação presencial de um Médico Veterinário ou Especialista. Consulte sempre um profissional de confiança para laudar exames.';
 
   @override
   String get onboarding_tou_accept => 'Eu entendi e concordo';
@@ -383,7 +386,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get help_how_to_use => 'Como Usar';
 
   @override
-  String get help_pet_scan_tip => 'Escaneie seu pet ou rótulos de alimentos para análise nutricional.';
+  String get help_pet_scan_tip =>
+      'Escaneie seu pet ou rótulos de alimentos para análise nutricional.';
 
   @override
   String get help_privacy_policy => 'Política de Privacidade';
@@ -395,7 +399,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get help_dev_info => 'Desenvolvido por Multiverso Digital';
 
   @override
-  String get help_privacy_content => 'Seus dados são processados localmente sempre que possível.';
+  String get help_privacy_content =>
+      'Seus dados são processados localmente sempre que possível.';
 
   @override
   String get help_email_subject => 'ScanNut+ Support';
@@ -404,13 +409,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get help_story_title => 'Nossa História';
 
   @override
-  String get help_origin_story => 'O nome deste app é uma homenagem ao meu pet, o Nut.';
+  String get help_origin_story =>
+      'O nome deste app é uma homenagem ao meu pet, o Nut.';
 
   @override
   String get help_analysis_guide_title => 'Guia de Análise IA';
 
   @override
-  String get help_disclaimer => 'A análise é apenas visual e não substitui avaliação veterinária.';
+  String get help_disclaimer =>
+      'A análise é apenas visual e não substitui avaliação veterinária.';
 
   @override
   String get help_section_pet_title => 'Análise Geral do Pet';
@@ -440,7 +447,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get help_section_eyes_title => 'Saúde dos Olhos';
 
   @override
-  String get pet_med_drug_name => 'Nome do Fármaco';
+  String get pet_med_drug_name => 'Nome do Remédio';
 
   @override
   String get pet_med_dosage => 'Dosagem';
@@ -468,6 +475,28 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_med_interval => 'Intervalo (Horas)';
+
+  @override
+  String get pet_med_duration_help => 'Quantos dias o tratamento vai durar?';
+
+  @override
+  String get pet_med_interval_help =>
+      'A cada quantas horas a dose deve ser dada?';
+
+  @override
+  String get pet_med_dosage_help => 'Quantidade a ser administrada por dose.';
+
+  @override
+  String get pet_agenda_event_date_help => 'Data de início do tratamento.';
+
+  @override
+  String get pet_field_time_help => 'Horário da primeira dose.';
+
+  @override
+  String get pet_med_start_date => 'Data Inicial';
+
+  @override
+  String get pet_med_start_time => 'Horário Inicial';
 
   @override
   String get pet_med_save => 'Agendar Tratamento';
@@ -500,13 +529,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get help_cannot_do => 'Limite: Requer confirmação vet';
 
   @override
-  String get pet_capture_instructions => 'A IA analisa imagens do pet individualmente.';
+  String get pet_capture_instructions =>
+      'A IA analisa imagens do pet individualmente.';
 
   @override
   String get help_domain_pet_title => 'Uma IA exclusiva para o seu Pet.';
 
   @override
-  String get help_domain_pet_desc => 'Seu pet conta com uma inteligência exclusiva no ScanNut+! Nossa IA analisa todos os dados coletados para responder suas dúvidas e gerar relatórios detalhados sobre a saúde dele. Além disso, você pode realizar análises visuais por imagem para acompanhar de perto o bem-estar do seu grande amigo.\n\nVocê pode ainda fazer as mesmas análises para o amigo do seu pet.\n\nDê uma voz ao seu melhor amigo! Com a IA exclusiva do ScanNut+, você tira todas as suas dúvidas e recebe relatórios de saúde baseados no dia a dia do seu pet. Use também a nossa análise de imagens para entender o que as fotos contam sobre a saúde e o comportamento dele.\n\nO ScanNut+ oferece um assistente inteligente dedicado ao seu pet. Ele transforma dados e fotos em relatórios de saúde e respostas imediatas para suas perguntas. Tudo para garantir que seu amigo esteja sempre bem cuidado.';
+  String get help_domain_pet_desc =>
+      'Seu pet conta com uma inteligência exclusiva no ScanNut+! Nossa IA analisa todos os dados coletados para responder suas dúvidas e gerar relatórios detalhados sobre a saúde dele. Além disso, você pode realizar análises visuais por imagem para acompanhar de perto o bem-estar do seu grande amigo.\n\nVocê pode ainda fazer as mesmas análises para o amigo do seu pet.\n\nDê uma voz ao seu melhor amigo! Com a IA exclusiva do ScanNut+, você tira todas as suas dúvidas e recebe relatórios de saúde baseados no dia a dia do seu pet. Use também a nossa análise de imagens para entender o que as fotos contam sobre a saúde e o comportamento dele.\n\nO ScanNut+ oferece um assistente inteligente dedicado ao seu pet. Ele transforma dados e fotos em relatórios de saúde e respostas imediatas para suas perguntas. Tudo para garantir que seu amigo esteja sempre bem cuidado.';
 
   @override
   String get help_domain_food_title => 'Domínio Food';
@@ -763,7 +794,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_appointment_new_partner => '[Novo Parceiro]';
 
   @override
-  String get pet_appointment_searching_partners => 'Buscando parceiros próximos...';
+  String get pet_appointment_searching_partners =>
+      'Buscando parceiros próximos...';
 
   @override
   String get pet_appointment_manual_entry => 'Preencher Manualmente';
@@ -772,7 +804,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_appointment_no_partner_title => 'Parceiro não informado';
 
   @override
-  String get pet_appointment_no_partner_msg => 'Você não informou o local ou o profissional. Deseja salvar o compromisso mesmo assim?';
+  String get pet_appointment_no_partner_msg =>
+      'Você não informou o local ou o profissional. Deseja salvar o compromisso mesmo assim?';
 
   @override
   String get pet_appointment_no_partner_confirm => 'Salvar sem parceiro';
@@ -889,7 +922,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get ai_feedback_no_derm_abnormalities => 'Sem anormalidades de pele.';
 
   @override
-  String get ai_feedback_invalid_gastro => 'Imagem não é conteúdo gastrointestinal.';
+  String get ai_feedback_invalid_gastro =>
+      'Imagem não é conteúdo gastrointestinal.';
 
   @override
   String get ai_feedback_invalid_lab => 'Imagem não é exame laboratorial.';
@@ -925,7 +959,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_module_physique => 'Condição Corporal';
 
   @override
-  String get pet_module_nutrition_programs => 'Análise de Rótulos, Tabela Nutricional';
+  String get pet_module_nutrition_programs =>
+      'Análise de Rótulos, Tabela Nutricional';
 
   @override
   String get pet_module_vocal => 'Vocalização';
@@ -937,7 +972,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_module_behavior => 'Comportamento';
 
   @override
-  String get pet_module_behavior_programs => 'Raça, Postura, Ansiedade, Tremores';
+  String get pet_module_behavior_programs =>
+      'Raça, Postura, Ansiedade, Tremores';
 
   @override
   String get pet_module_plant => 'Plantas';
@@ -1144,31 +1180,38 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_agenda_view_calendar => 'Ver Calendário';
 
   @override
-  String get pet_module_dentistry_programs => 'Tártaro, Gengivite, Dentes Quebrados';
+  String get pet_module_dentistry_programs =>
+      'Tártaro, Gengivite, Dentes Quebrados';
 
   @override
-  String get pet_module_dermatology_programs => 'Alopecias, Dermatites, Feridas, Parasitas';
+  String get pet_module_dermatology_programs =>
+      'Alopecias, Dermatites, Feridas, Parasitas';
 
   @override
-  String get pet_module_gastro_programs => 'Consistência, Cor, Parasitas, Sangue';
+  String get pet_module_gastro_programs =>
+      'Consistência, Cor, Parasitas, Sangue';
 
   @override
-  String get pet_module_ophthalmology_programs => 'Secreção, Vermelhidão, Catarata, Manchas';
+  String get pet_module_ophthalmology_programs =>
+      'Secreção, Vermelhidão, Catarata, Manchas';
 
   @override
   String get pet_module_otology_programs => 'Cera, Coceira, Odor, Vermelhidão';
 
   @override
-  String get pet_module_physique_programs => 'Escore Corporal, Massa Muscular, Obesidade';
+  String get pet_module_physique_programs =>
+      'Escore Corporal, Massa Muscular, Obesidade';
 
   @override
   String get pet_module_lab_programs => 'Hemograma, Bioquímico, Urina, Fezes';
 
   @override
-  String get pet_error_ai_unhandled_format => 'A inteligência artificial gerou uma resposta complexa demais nesta tentativa. Por favor, clique em analisar novamente.';
+  String get pet_error_ai_unhandled_format =>
+      'A inteligência artificial gerou uma resposta complexa demais nesta tentativa. Por favor, clique em analisar novamente.';
 
   @override
-  String get pet_module_food_bowl_programs => 'Qualidade da Ração, Comida Natural';
+  String get pet_module_food_bowl_programs =>
+      'Qualidade da Ração, Comida Natural';
 
   @override
   String get pet_journal_audio_saved_success => 'Áudio salvo!';
@@ -1783,49 +1826,58 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_journal_help_photo_title => 'Câmera e Galeria';
 
   @override
-  String get pet_journal_help_photo_desc => 'Tire uma foto na hora ou escolha da galeria. Use para registrar feridas, fezes, identificar plantas tóxicas no caminho, ou ainda analisar rótulos de ração, imagens de comida e resultados de exames laboratoriais. A nossa IA foca na imagem para gerar análises profundas. Limite: 20MB.';
+  String get pet_journal_help_photo_desc =>
+      'Tire uma foto na hora ou escolha da galeria. Use para registrar feridas, fezes, identificar plantas tóxicas no caminho, ou ainda analisar rótulos de ração, imagens de comida e resultados de exames laboratoriais. A nossa IA foca na imagem para gerar análises profundas. Limite: 20MB.';
 
   @override
   String get pet_journal_help_audio_title => 'Gravador de Sons';
 
   @override
-  String get pet_journal_help_audio_desc => 'Aperte e segure o ícone de microfone perto do botão de câmera para gravar sons do ambiente, como latidos, choros, tosses ou respiração ofegante. A inteligência artificial ouvirá o áudio para detectar sinais de estresse ou dor. Limite: 20MB.';
+  String get pet_journal_help_audio_desc =>
+      'Aperte e segure o ícone de microfone perto do botão de câmera para gravar sons do ambiente, como latidos, choros, tosses ou respiração ofegante. A inteligência artificial ouvirá o áudio para detectar sinais de estresse ou dor. Limite: 20MB.';
 
   @override
   String get pet_journal_help_map_title => 'Mapa e Alertas';
 
   @override
-  String get pet_journal_help_map_desc => 'O mapa captura automaticamente o local do evento. Se você avistar algum perigo no trajeto (como cães agressivos, veneno ou lixo), clique no ícone de alerta no mapa para registrar e avisar a comunidade.';
+  String get pet_journal_help_map_desc =>
+      'O mapa captura automaticamente o local do evento. Se você avistar algum perigo no trajeto (como cães agressivos, veneno ou lixo), clique no ícone de alerta no mapa para registrar e avisar a comunidade.';
 
   @override
   String get pet_journal_help_notes_title => 'Anotações e Voz';
 
   @override
-  String get pet_journal_help_notes_desc => 'Você pode digitar os detalhes livremente na caixa de texto. Se preferir, clique no microfone dentro do campo de texto para falar. O aplicativo vai digitar tudo o que você disser automaticamente.';
+  String get pet_journal_help_notes_desc =>
+      'Você pode digitar os detalhes livremente na caixa de texto. Se preferir, clique no microfone dentro do campo de texto para falar. O aplicativo vai digitar tudo o que você disser automaticamente.';
 
   @override
   String get pet_journal_help_videos_title => 'Vídeos Curtos';
 
   @override
-  String get pet_journal_help_videos_desc => 'Grave vídeos curtos direto pelo aplicativo. É perfeito para mostrar ao veterinário da IA como o pet está andando (caso esteja mancando) ou registrar um comportamento estranho em movimento. Limite: 20MB.';
+  String get pet_journal_help_videos_desc =>
+      'Grave vídeos curtos direto pelo aplicativo. É perfeito para mostrar ao veterinário da IA como o pet está andando (caso esteja mancando) ou registrar um comportamento estranho em movimento. Limite: 20MB.';
 
   @override
   String get pet_journal_help_ai_title => 'Veterinário IA';
 
   @override
-  String get pet_journal_help_ai_desc => 'Ao preencher qualquer um dos itens acima, nossa Inteligência Artificial atua como um veterinário e analisa os dados na hora! Ela gera um resumo clínico no formato de relatório que fica salvo no histórico do pet.';
+  String get pet_journal_help_ai_desc =>
+      'Ao preencher qualquer um dos itens acima, nossa Inteligência Artificial atua como um veterinário e analisa os dados na hora! Ela gera um resumo clínico no formato de relatório que fica salvo no histórico do pet.';
 
   @override
   String get pet_journal_help_friends_title => 'Passeio com Amigos';
 
   @override
-  String get pet_journal_help_friends_desc => 'Quando a switch estiver no amigo, o app pode fazer todas as análises disponíveis do pet amigo e ainda emitir um relatório PDF.';
+  String get pet_journal_help_friends_desc =>
+      'Quando a switch estiver no amigo, o app pode fazer todas as análises disponíveis do pet amigo e ainda emitir um relatório PDF.';
 
   @override
-  String get pet_journal_help_specialized_ai_title => 'IA Especializada no seu Pet';
+  String get pet_journal_help_specialized_ai_title =>
+      'IA Especializada no seu Pet';
 
   @override
-  String get pet_journal_help_specialized_ai_desc => 'Existe uma Inteligência Artificial especialmente desenvolvida para conhecer, aprender e entender todos os dados do seu pet (como no Pet Chat). Assim, ela é capaz de responder a tudo que você perguntar sobre ele de forma personalizada!';
+  String get pet_journal_help_specialized_ai_desc =>
+      'Existe uma Inteligência Artificial especialmente desenvolvida para conhecer, aprender e entender todos os dados do seu pet (como no Pet Chat). Assim, ela é capaz de responder a tudo que você perguntar sobre ele de forma personalizada!';
 
   @override
   String pet_error_ai_analysis_failed(Object error) {
@@ -1863,7 +1915,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_analysis_data_not_found => 'Sem dados.';
 
   @override
-  String get pet_logic_keywords_health => 'coco, cocô, fezes, xixi, urina, vomito, vômito, diarreia, sangue, machucado, ferida, dor, mancar, engasgo';
+  String get pet_logic_keywords_health =>
+      'coco, cocô, fezes, xixi, urina, vomito, vômito, diarreia, sangue, machucado, ferida, dor, mancar, engasgo';
 
   @override
   String get pet_ai_language => 'pt_BR';
@@ -1973,7 +2026,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get error_unexpected_title => 'Erro Inesperado';
 
   @override
-  String get error_unexpected_message => 'Tivemos um probleminha técnico. Estamos trabalhando para resolver.';
+  String get error_unexpected_message =>
+      'Tivemos um probleminha técnico. Estamos trabalhando para resolver.';
 
   @override
   String get error_try_recover => 'Recuperar';
@@ -2054,7 +2108,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_metric_save_success => 'Métricas salvas com sucesso!';
 
   @override
-  String get pet_metric_empty_fields => 'Por favor, preencha pelo menos uma métrica.';
+  String get pet_metric_source_clinical =>
+      'Origem: Registrado em Métricas Clínicas';
+
+  @override
+  String get pet_metric_empty_fields =>
+      'Por favor, preencha pelo menos uma métrica.';
 
   @override
   String get pet_not_found => 'Pet não encontrado';
@@ -2171,7 +2230,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_appointment_outcome_title => 'Desfecho do Evento';
 
   @override
-  String get pet_appointment_outcome_hint => 'O que aconteceu no compromisso? Adicione notas, recomendações, etc.';
+  String get pet_appointment_outcome_hint =>
+      'O que aconteceu no compromisso? Adicione notas, recomendações, etc.';
 
   @override
   String get pet_appointment_outcome_save => 'Salvar Desfecho';
@@ -2360,7 +2420,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get common_save => 'Salvar';
 
   @override
-  String get pdf_footer_text => '© 2026 ScanNut Multiverso Digital | contato@multiversodigital.com.br';
+  String get pdf_footer_text =>
+      '© 2026 ScanNut Multiverso Digital | contato@multiversodigital.com.br';
 
   @override
   String get pdf_page_label => 'Página';
@@ -2570,13 +2631,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_nutrition_copy_action => 'Copiar refeições para agenda';
 
   @override
-  String get pet_nutrition_select_start_date => 'Selecione a data de início (Segunda-feira)';
+  String get pet_nutrition_select_start_date =>
+      'Selecione a data de início (Segunda-feira)';
 
   @override
   String get pet_nutrition_copy_success => 'Refeições copiadas para a agenda!';
 
   @override
-  String get pet_nutrition_copy_error => 'Erro ao copiar. Verifique o formato do plano.';
+  String get pet_nutrition_copy_error =>
+      'Erro ao copiar. Verifique o formato do plano.';
 
   @override
   String get pet_plan_nutritional => 'Plano Nutricional';
@@ -2585,7 +2648,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_walk_summary_dialog_title => 'Resumo do Passeio 🐾';
 
   @override
-  String get pet_walk_summary_dialog_desc => 'Selecione o intervalo para gerar o resumo com IA.';
+  String get pet_walk_summary_dialog_desc =>
+      'Selecione o intervalo para gerar o resumo com IA.';
 
   @override
   String get pet_label_start => 'Início';
@@ -2600,7 +2664,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_error_fetch_events => 'Erro ao buscar eventos.';
 
   @override
-  String get pet_error_no_events_period => 'Nenhum evento encontrado neste período.';
+  String get pet_error_no_events_period =>
+      'Nenhum evento encontrado neste período.';
 
   @override
   String get pet_msg_summary_success => 'Resumo gerado e salvo com sucesso! 🐾';
@@ -2614,7 +2679,8 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get pet_msg_google_simulated => 'Dados do Google (Simulados) adicionados!';
+  String get pet_msg_google_simulated =>
+      'Dados do Google (Simulados) adicionados!';
 
   @override
   String get pet_title_ophthalmology => 'Oftalmologia';
@@ -2695,10 +2761,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_record_incident => 'Incidentes';
 
   @override
+  String get pet_record_expense => 'Despesas';
+
+  @override
   String get pet_record_other => 'Outros';
 
   @override
-  String get pet_field_drug_name => 'Nome do Fármaco';
+  String get pet_field_drug_name => 'Nome do Remédio';
 
   @override
   String get pet_field_category => 'Categoria';
@@ -2711,6 +2780,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_field_time => 'Horário Real';
+
+  @override
+  String get pet_field_amount_money => 'Valor';
+
+  @override
+  String get pet_field_currency => 'Moeda';
 
   @override
   String get pet_field_observation => 'Observação';
@@ -2839,31 +2914,36 @@ class AppLocalizationsPt extends AppLocalizations {
   String get help_pillar_analysis_title => 'Análises de Imagens e Vídeos';
 
   @override
-  String get help_pillar_analysis_desc => 'Nossa IA processa fotos e vídeos para identificar sinais sutis de saúde, postura e comportamento do seu pet.';
+  String get help_pillar_analysis_desc =>
+      'Nossa IA processa fotos e vídeos para identificar sinais sutis de saúde, postura e comportamento do seu pet.';
 
   @override
   String get help_pillar_walks_title => 'Monitoramento de Passeios';
 
   @override
-  String get help_pillar_walks_desc => 'Registro do que ocorre nos passeios, monitorando níveis de energia, interações e trajetos preditivos.';
+  String get help_pillar_walks_desc =>
+      'Registro do que ocorre nos passeios, monitorando níveis de energia, interações e trajetos preditivos.';
 
   @override
   String get help_pillar_agenda_title => 'Agenda e Ocorrências';
 
   @override
-  String get help_pillar_agenda_desc => 'Central de compromissos e registros diários: medicação, peso, incidentes e histórico de análises em um só lugar.';
+  String get help_pillar_agenda_desc =>
+      'Central de compromissos e registros diários: medicação, peso, incidentes e histórico de análises em um só lugar.';
 
   @override
   String get help_pillar_nutrition_title => 'Nutrição Inteligente';
 
   @override
-  String get help_pillar_nutrition_desc => 'Geração de cardápios personalizados e inclusão automática das refeições na agenda para controle de consumo.';
+  String get help_pillar_nutrition_desc =>
+      'Geração de cardápios personalizados e inclusão automática das refeições na agenda para controle de consumo.';
 
   @override
   String get help_pillar_profile_title => 'Perfil e Documentação';
 
   @override
-  String get help_pillar_profile_desc => 'Dados do pet, planos de saúde, funerário e armazenamento de documentos importantes para acesso rápido.';
+  String get help_pillar_profile_desc =>
+      'Dados do pet, planos de saúde, funerário e armazenamento de documentos importantes para acesso rápido.';
 
   @override
   String get pet_agenda_tab_history_label => 'Histórico';
@@ -2887,7 +2967,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_field_email => 'E-mail';
 
   @override
-  String get ai_disclaimer_footer => '💡 Análise gerada pela tecnologia Gemini. Consulte sempre um especialista.';
+  String get ai_disclaimer_footer =>
+      '💡 Análise gerada pela tecnologia Gemini. Consulte sempre um especialista.';
 
   @override
   String get pet_agenda_edit_btn => 'Editar';
@@ -2905,7 +2986,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_agenda_outcome_title => 'Resultado/Desfecho';
 
   @override
-  String get pet_agenda_outcome_hint => 'Como procedeu após a análise? Piorou? Melhorou?';
+  String get pet_agenda_outcome_hint =>
+      'Como procedeu após a análise? Piorou? Melhorou?';
 
   @override
   String get pet_agenda_outcome_prefix => 'Desfecho';
@@ -2926,7 +3008,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get error_generic_title => 'Ops! Algo não saiu como esperado';
 
   @override
-  String get error_generic_message => 'O sistema teve um pequeno tropeço técnico. Já estamos verificando!';
+  String get error_generic_message =>
+      'O sistema teve um pequeno tropeço técnico. Já estamos verificando!';
 
   @override
   String get error_button_retry => 'Tentar Novamente';
@@ -2935,7 +3018,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get error_unknown => 'Desconhecido';
 
   @override
-  String get pdf_report_disclaimer => 'Relatório gerado automaticamente por ScanNut+ IA. Consulte sempre um veterinário.';
+  String get pdf_report_disclaimer =>
+      'Relatório gerado automaticamente por ScanNut+ IA. Consulte sempre um veterinário.';
 
   @override
   String get pdf_analysis_report => 'RELATÓRIO DE ANÁLISE';
@@ -3022,7 +3106,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get error_location_denied => 'Permissões de localização negadas';
 
   @override
-  String get error_location_permanently_denied => 'Permissões de localização permanentemente negadas.';
+  String get error_location_permanently_denied =>
+      'Permissões de localização permanentemente negadas.';
 
   @override
   String error_fetching_places(String error) {
@@ -3158,10 +3243,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_error_nutrition_plan => 'Erro ao gerar plano nutricional.';
 
   @override
-  String get pet_error_summary => 'Não foi possível gerar o resumo no momento. Tente novamente mais tarde.';
+  String get pet_error_summary =>
+      'Não foi possível gerar o resumo no momento. Tente novamente mais tarde.';
 
   @override
-  String get pet_health_based_on_history => 'Baseado no Histórico Clínico do Pet';
+  String get pet_health_based_on_history =>
+      'Baseado no Histórico Clínico do Pet';
 
   @override
   String pet_metric_last_recorded(String value) {
@@ -3183,19 +3270,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_error_no_internet_title => 'Sem Conexão com a Internet';
 
   @override
-  String get pet_error_no_internet_content => 'Ops! Parece que o seu celular está sem internet ou o sinal caiu. Verifique a sua conexão e clique em tentar novamente.';
+  String get pet_error_no_internet_content =>
+      'Ops! Parece que o seu celular está sem internet ou o sinal caiu. Verifique a sua conexão e clique em tentar novamente.';
 
   @override
   String get pet_error_timeout_title => 'Servidor Ocupado';
 
   @override
-  String get pet_error_timeout_content => 'A Inteligência Artificial demorou muito para responder desta vez. Isso acontece quando há muitos acessos ao mesmo tempo. Por favor, aguarde alguns segundos e tente novamente.';
+  String get pet_error_timeout_content =>
+      'A Inteligência Artificial demorou muito para responder desta vez. Isso acontece quando há muitos acessos ao mesmo tempo. Por favor, aguarde alguns segundos e tente novamente.';
 
   @override
   String get pet_error_technical_title => 'Não foi possível analisar';
 
   @override
-  String get pet_error_technical_content => 'Tivemos uma pequena falha técnica ao analisar seus dados. Não se preocupe, pode tentar novamente.';
+  String get pet_error_technical_content =>
+      'Tivemos uma pequena falha técnica ao analisar seus dados. Não se preocupe, pode tentar novamente.';
 
   @override
   String get pet_journal_bg_evaluating => 'Analisando em 2º plano...';
@@ -3215,10 +3305,12 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get pet_journal_bg_fatal => 'Erro Crítico no processamento em tela de fundo.';
+  String get pet_journal_bg_fatal =>
+      'Erro Crítico no processamento em tela de fundo.';
 
   @override
-  String get pet_journal_bg_save_fail => 'Falha ao gravar evento no banco de dados.';
+  String get pet_journal_bg_save_fail =>
+      'Falha ao gravar evento no banco de dados.';
 
   @override
   String get pet_journal_saved_friend => 'Evento de Amigo Salvo na Agenda!';
@@ -3233,10 +3325,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_btn_ok => 'OK';
 
   @override
-  String get agenda_voice_greeting => 'Beli, o que vamos agendar para o seu pet?';
+  String get agenda_voice_greeting =>
+      'Beli, o que vamos agendar para o seu pet?';
 
   @override
-  String get agenda_voice_success_prompt => 'Preenchi os detalhes para você. Está tudo correto ou quer ajustar algo?';
+  String get agenda_voice_success_prompt =>
+      'Preenchi os detalhes para você. Está tudo correto ou quer ajustar algo?';
 
   @override
   String get agenda_voice_listening => 'Beli está escutando...';
@@ -3261,4 +3355,32 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get agenda_error_voice => 'Não consegui entender, tente digitar.';
+
+  @override
+  String get pet_agenda_attach_document => 'Anexar Documento';
+
+  @override
+  String get pet_agenda_ai_summary => 'Gerar Resumo IA';
+
+  @override
+  String get pet_agenda_generating_summary => 'Gerando Resumo...';
+
+  @override
+  String get pet_agenda_file_attached => 'Arquivo Anexado';
+
+  @override
+  String get pet_agenda_ai_summary_attached => 'Resumo IA Anexado';
+
+  @override
+  String get pet_journal_bg_processing => 'Processando Mídia IA...';
+
+  @override
+  String get pet_agenda_delete_attachment_title => 'Excluir Anexo';
+
+  @override
+  String get pet_agenda_delete_attachment_msg =>
+      'Tem certeza que deseja remover este anexo?';
+
+  @override
+  String get pet_agenda_delete_attachment_confirm => 'Excluir';
 }
