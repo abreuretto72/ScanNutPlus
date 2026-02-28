@@ -18,4 +18,5 @@ class AppColors {
   static const Color petBackgroundDark = Color(0xFF0A0E17);
   static const Color petCardBackground = Color(0xFF1C1C1E);
   static const Color petSecondary = Color(0xFFB0BEC5); // Blue Grey for secondary info
+  static const Color petIconAction = Color(0xFF2B5C9E); // Azul Médio para ícones clicáveis (Padrão)
 }

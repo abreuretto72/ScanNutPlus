@@ -414,9 +414,9 @@ Task: Perform an exhaustive visual inspection of the plant and provide the data 
 REQUIRED OUTPUT STRUCTURE (Strictly follow [CARD_START] ... [CARD_END]):
 
 [CARD_START]
-TITLE: [Scientific Name]
+TITLE: [Common/Popular Name] ([Toxic or Safe for Pets])
 ICON: [If Toxic: "warning" | If Safe: "check_circle"]
-CONTENT: [Common Names] | Family: [Family] | Origin: [Origin] | [Toxic/Safe Status Summary]
+CONTENT: Scientific Name: [Scientific Name] | Family: [Family] | Origin: [Origin] | [Toxic/Safe Status Summary]
 [CARD_END]
 
 [CARD_START]
@@ -448,8 +448,12 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
 - Short Citation 1
 - Short Citation 2
 - Short Citation 3
+
+AT THE VERY END OF YOUR RESPONSE, YOU MUST INCLUDE THESE TWO TAGS EXACTLY:
+[TAG_PLANT_NAME]The popular name of the plant[/TAG_PLANT_NAME]
+[TAG_TOXICITY]Tóxica or Segura[/TAG_TOXICITY]
 ''';
-                debugPrint('[PLANT_FLOW_TRACE] Context Injected: Deep Botanical Protocol (Standard Format)');
+                debugPrint('[PLANT_FLOW_TRACE] Context Injected: Deep Botanical Protocol with Invisible Tags');
             } else if (type == PetImageType.foodBowl) {
                 expertise = 'Veterinary Nutritionist';
                 aiContext = 'Visual Food Analysis (Kibble/Homemade). Analyze quality, texture, color, and ingredients. Estimate nutritional balance. Look for foreign objects or mold. Ignore label text, focus on food appearance.';
@@ -525,6 +529,32 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
         } catch (e) {
            if (kDebugMode) debugPrint('[PET_FATAL]: Metadata Extraction Failed ($e).');
         }
+
+        // --- NEW: INVISIBLE TAG EXTRACTION (PLANT CHECK LOGIC) ---
+        if (type == PetImageType.plantCheck) {
+            try {
+               final plantMatch = RegExp(r'\[TAG_PLANT_NAME\](.*?)\[\/TAG_PLANT_NAME\]', dotAll: true).firstMatch(cleanResult);
+               final toxMatch = RegExp(r'\[TAG_TOXICITY\](.*?)\[\/TAG_TOXICITY\]', dotAll: true).firstMatch(cleanResult);
+               
+               if (plantMatch != null && toxMatch != null) {
+                  final plantName = plantMatch.group(1)?.trim() ?? '';
+                  final toxicity = toxMatch.group(1)?.trim() ?? '';
+                  if (plantName.isNotEmpty) {
+                      // NOTA: NÃO sobrescrevemos o foundName aqui, pois isso substitui o nome do pet dono (Lebun)
+                      // A rotina natural 'getPlantTitle' tratará da extração do nome para exibir no título corretamente.
+                      extractedBreed = 'Botanical Analysis';
+                  }
+
+                  // Strip tags so they don't render visually in markdown viewers
+                  cleanResult = cleanResult.replaceAll(RegExp(r'\[TAG_PLANT_NAME\].*?\[\/TAG_PLANT_NAME\]\n?', dotAll: true), '');
+                  cleanResult = cleanResult.replaceAll(RegExp(r'\[TAG_TOXICITY\].*?\[\/TAG_TOXICITY\]\n?', dotAll: true), '');
+                  cleanResult = cleanResult.trim();
+               }
+            } catch (e) {
+               if (kDebugMode) debugPrint('[PET_WARN]: Failed to extract invisible Plant Tags ($e).');
+            }
+        }
+        // --- END PLANT TAG LOGIC ---
 
         // Secondary Fallback: Keyword Scan
         if (extractedBreed.isEmpty || extractedBreed == PetConstants.valueUnknown) {
@@ -1121,21 +1151,21 @@ REQUIRED: List 3-5 scientific references or authoritative sources (e.g. Embrapa,
                   onPressed: ((!_isAddingNewPet || _selectedSpecies != null) && !_isAnalyzing)
                       ? _processAnalysis 
                       : null,
-                  icon: const Icon(Icons.qr_code_scanner, color: AppColors.petText), // Alert Icon Black
+                  icon: const Icon(Icons.qr_code_scanner, color: Colors.black), // Alert Icon Black
                   label: Text(
                       AppLocalizations.of(context)!.pet_action_new_analysis,
                       style: const TextStyle(fontWeight: FontWeight.bold)
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.petPrimary, // Pink
-                    foregroundColor: AppColors.petText,    // Black
+                    foregroundColor: Colors.black,    // Black
                     shadowColor: Colors.black, // Hard shadow
                     elevation: 6,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     minimumSize: const Size(double.infinity, 56),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: const BorderSide(color: AppColors.petText, width: 1.0),
+                        side: const BorderSide(color: Colors.black, width: 1.0),
                     ),
                   ),
                ),

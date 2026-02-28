@@ -487,6 +487,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_med_dosage_help => 'Quantidade a ser administrada por dose.';
 
   @override
+  String get pet_nutrition_history_title => 'Histórico Nutricional';
+
+  @override
+  String get pet_nutrition_empty_history => 'Nenhum plano gerado ainda.';
+
+  @override
   String get pet_agenda_event_date_help => 'Data de início do tratamento.';
 
   @override
@@ -1966,6 +1972,21 @@ class AppLocalizationsPt extends AppLocalizations {
   String get error_video_too_long => 'Máx 60s';
 
   @override
+  String get pet_expense_scan_btn => 'Escanear Recibo';
+
+  @override
+  String get pet_expense_gallery_btn => 'Galeria';
+
+  @override
+  String get pet_expense_analyzing => 'Extraindo valores...';
+
+  @override
+  String get pet_expense_ocr_success => 'Dados extraídos com sucesso!';
+
+  @override
+  String get pet_expense_ocr_failed => 'Falha na leitura da nota.';
+
+  @override
   String get btn_scan_image => 'Escanear';
 
   @override
@@ -2764,6 +2785,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pet_record_expense => 'Despesas';
 
   @override
+  String get pet_expense_history_title => 'Histórico de Despesas';
+
+  @override
+  String get pet_expense_history_empty => 'Nenhuma despesa registrada.';
+
+  @override
+  String get pet_expense_history_item_deleted => 'Despesa excluída';
+
+  @override
   String get pet_record_other => 'Outros';
 
   @override
@@ -3256,6 +3286,11 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String pet_metric_evolution_title(String label) {
+    return 'Evolução: $label';
+  }
+
+  @override
   String pet_metric_save_quick(String metric) {
     return 'Salvar $metric';
   }
@@ -3383,4 +3418,91 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_agenda_delete_attachment_confirm => 'Excluir';
+
+  @override
+  String get pet_metric_pdf_filter_title => 'Relatório de Métricas';
+
+  @override
+  String get pet_metric_pdf_filter_subtitle =>
+      'Selecione o período para gerar o PDF';
+
+  @override
+  String get pet_metric_pdf_filter_last_7_days => 'Últimos 7 dias';
+
+  @override
+  String get pet_metric_pdf_filter_last_30_days => 'Últimos 30 dias';
+
+  @override
+  String get pet_metric_pdf_filter_last_3_months => 'Últimos 3 meses';
+
+  @override
+  String get pet_metric_pdf_filter_all_time => 'Todo o período';
+
+  @override
+  String get pet_metric_pdf_filter_custom => 'Personalizado';
+
+  @override
+  String get pet_metric_pdf_filter_start_date => 'Data Inicial';
+
+  @override
+  String get pet_metric_pdf_filter_end_date => 'Data Final';
+
+  @override
+  String get pet_metric_pdf_filter_generate => 'Gerar PDF';
+
+  @override
+  String get pet_metric_pdf_filter_cancel => 'Cancelar';
+
+  @override
+  String get pet_metric_pdf_table_value => 'Valor';
+
+  @override
+  String get pet_metric_pdf_empty_data =>
+      'Nenhum registro encontrado neste período.';
+
+  @override
+  String get pet_record_date_label => 'Data';
+
+  @override
+  String get pet_expense_dashboard_title => 'Monitoramento de Despesas';
+
+  @override
+  String get pet_expense_dashboard_empty =>
+      'Ainda não há despesas registradas neste período. Que tal registrar o primeiro mimo do seu pet?';
+
+  @override
+  String get pet_expense_chart_pie_title => 'Distribuição por Categoria';
+
+  @override
+  String get pet_expense_chart_line_title => 'Evolução Mensal';
+
+  @override
+  String get pet_expense_chart_area_title => 'Acúmulo Total';
+
+  @override
+  String get pet_expense_filter_month => 'Mês';
+
+  @override
+  String get pet_expense_filter_year => 'Ano';
+
+  @override
+  String get pet_expense_filter_all => 'Todos';
+
+  @override
+  String get pet_expense_cat_food => 'Alimentação';
+
+  @override
+  String get pet_expense_cat_health => 'Saúde';
+
+  @override
+  String get pet_expense_cat_hygiene => 'Higiene & Estética';
+
+  @override
+  String get pet_expense_cat_meds => 'Medicamentos';
+
+  @override
+  String get pet_expense_cat_treats => 'Mimos & Lazer';
+
+  @override
+  String get pet_expense_cat_services => 'Serviços Extras';
 }

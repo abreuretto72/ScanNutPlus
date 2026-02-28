@@ -125,7 +125,7 @@ class _UniversalResultViewState extends State<UniversalResultView> {
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
-            icon: const Icon(Icons.picture_as_pdf, color: AppColors.petPrimary),
+            icon: const Icon(Icons.picture_as_pdf, color: Colors.blue),
             tooltip: appL10n.action_generate_pdf,
             onPressed: () {
               Navigator.push(

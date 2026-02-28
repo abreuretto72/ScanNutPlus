@@ -30,14 +30,14 @@ class PetAnalysisButton extends StatelessWidget {
           children: [
             const Icon(
               Icons.analytics_outlined, // Icon requested in prompt
-              color: AppColors.petText,
+              color: AppColors.petIconAction,
               size: 24,
             ),
             const SizedBox(height: 4),
             Text(
               label,
               style: const TextStyle(
-                color: AppColors.petText,
+                color: AppColors.petIconAction,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),

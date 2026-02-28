@@ -25,6 +25,7 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
   final PetEventRepository _repository = PetEventRepository();
   List<PetEvent> _appointments = [];
   bool _isLoading = true;
+  final Set<String> _processingMeds = {};
 
   @override
   void initState() {
@@ -86,6 +87,10 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
   }
 
   Future<void> _markMedicationAsTaken(BuildContext context, PetEvent event) async {
+    if (_processingMeds.contains(event.id)) return; // Prevents double click
+    setState(() {
+      _processingMeds.add(event.id);
+    });
     try {
       final updatedMetrics = Map<String, dynamic>.from(event.metrics ?? {});
       updatedMetrics['status'] = 'taken';
@@ -104,13 +109,19 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
       );
 
       await _repository.saveEvent(updatedEvent);
-      refresh();
+      refresh(showLoader: false);
       if (mounted) {
         final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_med_taken_success), backgroundColor: Colors.green));
       }
     } catch (e) {
       debugPrint("Error marking medication as taken: $e");
+    } finally {
+      if (mounted) {
+         setState(() {
+            _processingMeds.remove(event.id);
+         });
+      }
     }
   }
 
@@ -127,7 +138,7 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             const Icon(Icons.event_busy, size: 64, color: Colors.grey),
+             Icon(Icons.event_busy, size: 64, color: Colors.blue.withValues(alpha: 0.5)),
              const SizedBox(height: 16),
              Text(l10n.pet_scheduled_empty, style: const TextStyle(color: Colors.grey, fontSize: 16)),
           ],
@@ -151,59 +162,81 @@ class _PetScheduledEventsTabState extends State<PetScheduledEventsTab> {
              borderRadius: BorderRadius.circular(12),
              side: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
           ),
-          child: ListTile(
-            leading: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppColors.petPrimary.withValues(alpha: 0.2),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                event.metrics?['is_medication'] == true ? Icons.medication : Icons.calendar_month, 
-                color: AppColors.petPrimary
-              ),
-            ),
-            title: Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "${DateFormat.yMd(l10n.localeName).format(event.startDateTime)} ${DateFormat.Hm(l10n.localeName).format(event.startDateTime)}",
-                  style: const TextStyle(color: Colors.white70),
+                // Ícone Esquerdo
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  margin: const EdgeInsets.right(10),
+                  decoration: BoxDecoration(
+                    color: AppColors.petPrimary.withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    event.metrics?['is_medication'] == true ? Icons.medication : Icons.calendar_month, 
+                    color: event.metrics?['is_medication'] == true ? AppColors.petPrimary : Colors.blue,
+                    size: 18, 
+                  ),
                 ),
-                if (professional.isNotEmpty)
-                  Text(professional, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-                 if (leadTime != null && leadTime != 'none')
-                  Row(
+                
+                // Textos Centrais
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.notifications_active, size: 12, color: AppColors.petSecondary),
-                      const SizedBox(width: 4),
-                      Text(leadTime, style: const TextStyle(color: AppColors.petSecondary, fontSize: 10)),
+                      Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      const SizedBox(height: 2),
+                      Row(
+                        children: [
+                          Text(
+                            "${DateFormat.yMd(l10n.localeName).format(event.startDateTime)} ${DateFormat.Hm(l10n.localeName).format(event.startDateTime)}",
+                            style: const TextStyle(color: Colors.white70, fontSize: 11),
+                          ),
+                          if (leadTime != null && leadTime != 'none') ...[
+                            const SizedBox(width: 8),
+                            const Icon(Icons.notifications_active, size: 10, color: AppColors.petSecondary),
+                            const SizedBox(width: 2),
+                            Text(leadTime, style: const TextStyle(color: AppColors.petSecondary, fontSize: 10)),
+                          ],
+                        ],
+                      ),
+                      if (professional.isNotEmpty) ...[
+                        const SizedBox(height: 2),
+                        Text(professional, style: const TextStyle(color: Colors.grey, fontSize: 10), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      ],
                     ],
                   ),
-              ],
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
+                ),
+                
+                // Botões Direitos
                 if (event.mediaPaths != null && event.mediaPaths!.isNotEmpty)
                   const Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Icon(Icons.attach_file_rounded, color: Colors.white70),
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    child: Icon(Icons.attach_file_rounded, color: Colors.white70, size: 16),
                   ),
                 if (event.metrics?['is_medication'] == true && event.metrics?['status'] == 'pending')
-                  IconButton(
-                    icon: const Icon(Icons.check_circle_outline, color: Color(0xFF10AC84)),
-                    onPressed: () => _markMedicationAsTaken(context, event),
+                  GestureDetector(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: Icon(Icons.check_circle_outline, color: _processingMeds.contains(event.id) ? Colors.grey : AppColors.petIconAction, size: 20),
+                    ),
+                    onTap: () => _markMedicationAsTaken(context, event),
                   ),
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.redAccent),
-                  onPressed: () => _confirmDelete(context, event.id),
+                GestureDetector(
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 4),
+                    child: Icon(Icons.delete, color: Colors.redAccent, size: 20),
+                  ),
+                  onTap: () => _confirmDelete(context, event.id),
                 ),
               ],
             ),
-            onTap: () => _showActionOptions(context, event),
           ),
+          onTap: () => _showActionOptions(context, event),
         );
       },
     );

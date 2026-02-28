@@ -233,7 +233,7 @@ class _PetProfileViewState extends State<PetProfileView> {
               label: Text(l10n.pet_action_save_profile),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.petPrimary,
-                foregroundColor: AppColors.petText,
+                foregroundColor: Colors.black, // AppColors.petText replacement
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
             ),
@@ -288,6 +288,7 @@ class _PetProfileViewState extends State<PetProfileView> {
              DropdownButtonFormField<String>(
                key: ValueKey('sex_$_selectedSex'), // Distinct Key
                initialValue: _selectedSex,
+               icon: const Icon(Icons.arrow_drop_down, color: Colors.blue),
                decoration: InputDecoration(
                  labelText: l10n.pet_label_sex,
                  labelStyle: const TextStyle(color: Colors.grey),
@@ -310,6 +311,7 @@ class _PetProfileViewState extends State<PetProfileView> {
              DropdownButtonFormField<String>(
                key: ValueKey('size_$_selectedSize'), // Distinct Key
                initialValue: _selectedSize,
+               icon: const Icon(Icons.arrow_drop_down, color: Colors.blue),
                decoration: InputDecoration(
                  labelText: l10n.pet_label_size,
                  labelStyle: const TextStyle(color: Colors.grey),

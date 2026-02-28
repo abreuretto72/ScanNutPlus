@@ -294,7 +294,7 @@ SCANNUT MASTER PROTOCOL - BOTANICAL MODE 2026
 OBJECTIVE: Botanical identification and toxicological analysis for domestic animals.
 
 GUIDELINES:
-1. IDENTIFICATION: Scientific and common name of the plant.
+1. IDENTIFICATION: Provide only the popular/common name of the plant in the region. Do not use scientific names.
 2. TOXICITY: Check if toxic to DOGS or CATS. If yes, highlight with ⚠️ or ☠️.
 3. SYMPTOMS: If toxic, list possible ingestion symptoms.
 4. SAFETY: Classify as "SAFE ✅" or "DANGEROUS ⛔".
@@ -302,12 +302,16 @@ GUIDELINES:
 MANDATORY OUTPUT (Markdown Table):
 | Category | Detail |
 | :--- | :--- |
-| **Plant** | [Common Name] (*Scientific Name*) |
+| **Plant** | [Common/Popular Name ONLY] |
 | **Toxicity** | [Toxic/Safe] |
 | **Symptoms** | [List or 'None'] |
 | **Action** | [Keep away / Safe] |
 
 If toxic, start response with "TOXICITY ALERT DETECTED".
+
+AT THE VERY END OF YOUR RESPONSE, YOU MUST INCLUDE THESE TWO TAGS EXACTLY:
+[TAG_PLANT_NAME]The popular name of the plant[/TAG_PLANT_NAME]
+[TAG_TOXICITY]Tóxica or Segura[/TAG_TOXICITY]
 ''';
       case PetImageType.safety:
       case PetImageType.newProfile:

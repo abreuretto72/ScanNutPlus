@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app_colors.dart';
 
 // Domain Colors Extension
 @immutable
@@ -76,7 +77,7 @@ class AppTheme {
         backgroundColor: Colors.transparent, // Or _kScaffoldBackground depending on preference, usually transparent on scaffold
         elevation: 0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: _kTextPrimary),
+        iconTheme: IconThemeData(color: Colors.blue),
         titleTextStyle: TextStyle(
           color: _kTextPrimary,
           fontSize: 20,
@@ -98,7 +99,19 @@ class AppTheme {
       // Floating Action Button Theme (Global Circle)
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         shape: CircleBorder(),
-        elevation: 6,
+        elevation: 0,
+        focusElevation: 0,
+        hoverElevation: 0,
+        highlightElevation: 0,
+        disabledElevation: 0,
+        foregroundColor: AppColors.petIconAction,
+      ),
+
+      // Elevated Button Theme (Domain Rules)
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black, // Ensures text/icons are black on elevated buttons
+        ),
       ),
 
       // Text Theme

@@ -1,0 +1,48 @@
+Running Gradle task 'assembleRelease'...                        
+"pt": 28 untranslated message(s).
+To see a detailed report, use the untranslated-messages-file 
+option in the l10n.yaml file:
+untranslated-messages-file: desiredFileName.txt
+<other option>: <other selection> 
+
+
+This will generate a JSON format file containing all messages that 
+need to be translated.
+lib/features/pet/agenda/presentation/pet_record_form_screen.dart:692:43: Error: The getter '$1' isn't defined for the type 'String'.
+Try correcting the name to the name of an existing getter, or defining a getter or field named '$1'.
+           final cleanJson = resultOutput.$1.replaceAll(RegExp(r'```(?:json)?|```'), '').trim();
+                                          ^^
+lib/features/pet/agenda/presentation/pet_record_form_screen.dart:739:93: Error: The getter '$1' isn't defined for the type 'String'.
+Try correcting the name to the name of an existing getter, or defining a getter or field named '$1'.
+           final amtMatch = RegExp(r'"amount"\s*:\s*"?([\d.,]+)"?').firstMatch(resultOutput.$1);
+                                                                                          ^^
+lib/features/pet/agenda/presentation/pet_record_form_screen.dart:740:91: Error: The getter '$1' isn't defined for the type 'String'.
+Try correcting the name to the name of an existing getter, or defining a getter or field named '$1'.
+           final curMatch = RegExp(r'"currency"\s*:\s*"([^"]+)"').firstMatch(resultOutput.$1);
+                                                                                          ^^
+lib/features/pet/agenda/presentation/pet_record_form_screen.dart:741:95: Error: The getter '$1' isn't defined for the type 'String'.
+Try correcting the name to the name of an existing getter, or defining a getter or field named '$1'.
+           final descMatch = RegExp(r'"description"\s*:\s*"([^"]+)"').firstMatch(resultOutput.$1);
+                                                                                          ^^
+lib/features/pet/agenda/presentation/pet_record_form_screen.dart:742:91: Error: The getter '$1' isn't defined for the type 'String'.
+Try correcting the name to the name of an existing getter, or defining a getter or field named '$1'.
+           final catMatch = RegExp(r'"category"\s*:\s*"([^"]+)"').firstMatch(resultOutput.$1);
+                                                                                          ^^
+Target kernel_snapshot_program failed: Exception
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileFlutterBuildRelease'.
+> Process 'command 'C:\Users\Abreu\flutter\bin\flutter.bat'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 20s
+Running Gradle task 'assembleRelease'...                           21,1s
+Gradle task assembleRelease failed with exit code 1

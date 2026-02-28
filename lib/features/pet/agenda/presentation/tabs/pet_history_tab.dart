@@ -418,10 +418,10 @@ class _PetHistoryTabState extends State<PetHistoryTab> {
                                             width: double.infinity,
                                             child: ElevatedButton.icon(
                                               onPressed: () => _markMedicationAsTaken(context, event),
-                                              icon: const Icon(Icons.check, color: Colors.white, size: 18),
-                                              label: Text(l10n.pet_med_take_dose, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                              icon: const Icon(Icons.check, color: Colors.black, size: 18),
+                                              label: Text(l10n.pet_med_take_dose, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: const Color(0xFF10AC84), // Plant Green
+                                                backgroundColor: const Color(0xFFFFD1DC), // Domain Pink
                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Colors.black, width: 2)),
                                                 elevation: 0,
                                               ),

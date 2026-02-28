@@ -39,6 +39,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
   bool _isListening = false;
   String _previousText = '';
   bool _isLoading = true;
+  final Set<String> _processingMeds = {};
 
   @override
   void initState() {
@@ -54,8 +55,10 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
     }
   }
 
-  Future<void> _loadAppointments() async {
-    setState(() => _isLoading = true);
+  Future<void> _loadAppointments({bool showLoader = true}) async {
+    if (showLoader) {
+      setState(() => _isLoading = true);
+    }
     final result = await _repository.getByPetId(widget.petId);
 
     if (result.isSuccess && result.data != null) {
@@ -72,7 +75,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
         
         bool dateMatches = true;
         if (widget.filterDate != null) {
-          dateMatches = DateUtils.isSameDay(e.startDateTime, widget.filterDate);
+           dateMatches = DateUtils.isSameDay(e.startDateTime, widget.filterDate);
         }
         
         // Se for compromisso normal, aplica dateMatches. Se não tiver filtro de data, deve ser futuro
@@ -105,6 +108,10 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
   }
 
   Future<void> _markMedicationAsTaken(BuildContext context, PetEvent event) async {
+    if (_processingMeds.contains(event.id)) return; // Prevents double click
+    setState(() {
+      _processingMeds.add(event.id);
+    });
     try {
       final updatedMetrics = Map<String, dynamic>.from(event.metrics ?? {});
       updatedMetrics['status'] = 'taken';
@@ -123,13 +130,19 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
       );
 
       await _repository.saveEvent(updatedEvent);
-      _loadAppointments(); // Refresh immediate view
+      _loadAppointments(showLoader: false); // Refresh sem spinner
       if (mounted) {
         final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_med_taken_success), backgroundColor: Colors.green));
       }
     } catch (e) {
       debugPrint("Error marking medication as taken: $e");
+    } finally {
+      if (mounted) {
+         setState(() {
+            _processingMeds.remove(event.id);
+         });
+      }
     }
   }
 
@@ -148,7 +161,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.event_busy_rounded,
-                size: 60, color: Colors.black.withValues(alpha: 0.3)),
+                size: 60, color: Colors.blue.withValues(alpha: 0.3)),
             const SizedBox(height: 16),
             Text(l10n.pet_scheduled_empty,
                 style: const TextStyle(
@@ -241,7 +254,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 8), // Reduzido fundo
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -252,7 +265,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.all(10),
+                                      padding: const EdgeInsets.all(8), // Reduzido de 10
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         shape: BoxShape.circle,
@@ -261,8 +274,8 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                                       ),
                                       child: Icon(
                                           event.metrics?['is_medication'] == true ? Icons.medication_rounded : Icons.calendar_month_rounded,
-                                          color: Colors.black,
-                                          size: 24),
+                                          color: event.metrics?['is_medication'] == true ? Colors.black : Colors.blue,
+                                          size: 20), // Reduzido de 24
                                     ),
                                     const SizedBox(width: 12),
                                     Flexible(
@@ -299,7 +312,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                                     Container(
                                        margin: const EdgeInsets.only(right: 4),
                                        child: IconButton(
-                                         icon: const Icon(Icons.check_circle_rounded, color: Color(0xFF10AC84), size: 28),
+                                         icon: Icon(Icons.check_circle_rounded, color: _processingMeds.contains(event.id) ? Colors.grey : AppColors.petIconAction, size: 28),
                                          onPressed: () => _markMedicationAsTaken(context, event),
                                        ),
                                     ),
@@ -313,13 +326,13 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 8), // Reduzido de 16
                           Text(
                             title,
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w900,
-                                fontSize: 16),
+                                fontSize: 15), // Reduzido de 16
                           ),
                           if (typeDisplay != null) ...[
                             const SizedBox(height: 4),
@@ -348,13 +361,13 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                             )
                           ],
                           if (whatToDo.isNotEmpty) ...[
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 4), // Reduzido de 8
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 8),
+                                  horizontal: 10, vertical: 6), // Reduzido
                               decoration: BoxDecoration(
                                 color: Colors.white.withValues(alpha: 0.5),
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(10), // Reduzido
                                 border:
                                     Border.all(color: Colors.black, width: 1.5),
                               ),
@@ -364,7 +377,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                                     color: Colors.black,
                                     fontWeight: FontWeight.w700,
                                     fontStyle: FontStyle.italic,
-                                    fontSize: 12),
+                                    fontSize: 11), // Reduzido de 12
                               ),
                             ),
                           ],
@@ -390,13 +403,13 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                             ),
                           ],
                           const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 12),
+                            padding: EdgeInsets.symmetric(vertical: 8), // Reduzido de 12
                             child: Divider(color: Colors.black, height: 1, thickness: 2),
                           ),
                           Row(
                             children: [
                               const Icon(Icons.access_time_rounded,
-                                  color: Colors.black, size: 20),
+                                  color: Colors.blue, size: 20),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
@@ -436,9 +449,9 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                                     ],
                                   ),
                                 ),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: 4),
                               IconButton(
-                                icon: const Icon(Icons.assignment_turned_in_rounded, color: Colors.black, size: 28),
+                                icon: const Icon(Icons.assignment_turned_in_rounded, color: AppColors.petIconAction, size: 24), // Reduzido de 28
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(),
                                 tooltip: l10n.pet_agenda_outcome_btn,
@@ -692,7 +705,7 @@ class _PetScheduledEventsScreenState extends State<PetScheduledEventsScreen> {
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isListening ? Icons.mic : Icons.mic_none,
-                              color: _isListening ? Colors.red : Colors.black,
+                              color: _isListening ? Colors.red : Colors.blue,
                             ),
                             onPressed: () => _toggleVoiceInput(
                                 controller, setModalState, l10n),

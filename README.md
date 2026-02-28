@@ -126,6 +126,10 @@ Este projeto segue rigorosamente o "Pilar 0":
 - **Deep Metadata Search**: Extraction of scientific names and details even from generic AI titles.
 - **Audio Support**: Native audio file picking (.mp3, .wav) and visual waveform representation.
 
+### UI & UX Enhancements (v1.1.4)
+- **Visual Identity Standardization**: Maintained strict blue (`Colors.blue`) consistency for app navigation, Floating Action Buttons (FABs) without shadows, microphone listening states, and historical timeline icons across all form/expense tracking screens.
+- **Aesthetic Refinement**: Replaced hardcoded black/grey system icons with vibrant blue accents to unify the dashboard interaction language.
+
 ---
 
 ## 📦 Instalação e Execução

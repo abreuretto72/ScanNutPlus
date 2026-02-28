@@ -490,6 +490,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_med_dosage_help => 'Amount to be given per dose?';
 
   @override
+  String get pet_nutrition_history_title => 'Nutrition History';
+
+  @override
+  String get pet_nutrition_empty_history => 'No plans generated yet.';
+
+  @override
   String get pet_agenda_event_date_help => 'Treatment start date.';
 
   @override
@@ -1980,6 +1986,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_video_too_long => 'Max 60s';
 
   @override
+  String get pet_expense_scan_btn => 'Scan Receipt';
+
+  @override
+  String get pet_expense_gallery_btn => 'Gallery';
+
+  @override
+  String get pet_expense_analyzing => 'Extracting values...';
+
+  @override
+  String get pet_expense_ocr_success => 'Data extracted successfully!';
+
+  @override
+  String get pet_expense_ocr_failed => 'Failed to read receipt.';
+
+  @override
   String get btn_scan_image => 'Scan Image';
 
   @override
@@ -2775,6 +2796,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pet_record_expense => 'Expenses';
 
   @override
+  String get pet_expense_history_title => 'Expense History';
+
+  @override
+  String get pet_expense_history_empty => 'No expenses recorded.';
+
+  @override
+  String get pet_expense_history_item_deleted => 'Expense deleted';
+
+  @override
   String get pet_record_other => 'Others';
 
   @override
@@ -3266,6 +3296,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String pet_metric_evolution_title(String label) {
+    return 'Evolution: $label';
+  }
+
+  @override
   String pet_metric_save_quick(String metric) {
     return 'Save $metric';
   }
@@ -3391,4 +3426,90 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pet_agenda_delete_attachment_confirm => 'Delete';
+
+  @override
+  String get pet_metric_pdf_filter_title => 'Metrics Report';
+
+  @override
+  String get pet_metric_pdf_filter_subtitle =>
+      'Select the period to generate the PDF';
+
+  @override
+  String get pet_metric_pdf_filter_last_7_days => 'Last 7 days';
+
+  @override
+  String get pet_metric_pdf_filter_last_30_days => 'Last 30 days';
+
+  @override
+  String get pet_metric_pdf_filter_last_3_months => 'Last 3 months';
+
+  @override
+  String get pet_metric_pdf_filter_all_time => 'All time';
+
+  @override
+  String get pet_metric_pdf_filter_custom => 'Custom';
+
+  @override
+  String get pet_metric_pdf_filter_start_date => 'Start Date';
+
+  @override
+  String get pet_metric_pdf_filter_end_date => 'End Date';
+
+  @override
+  String get pet_metric_pdf_filter_generate => 'Generate PDF';
+
+  @override
+  String get pet_metric_pdf_filter_cancel => 'Cancel';
+
+  @override
+  String get pet_metric_pdf_table_value => 'Value';
+
+  @override
+  String get pet_metric_pdf_empty_data => 'No records found in this period.';
+
+  @override
+  String get pet_record_date_label => 'Date';
+
+  @override
+  String get pet_expense_dashboard_title => 'Expense Monitoring';
+
+  @override
+  String get pet_expense_dashboard_empty =>
+      'No expenses recorded in this period yet. How about recording your pet\'s first treat?';
+
+  @override
+  String get pet_expense_chart_pie_title => 'Distribution by Category';
+
+  @override
+  String get pet_expense_chart_line_title => 'Monthly Evolution';
+
+  @override
+  String get pet_expense_chart_area_title => 'Total Accumulation';
+
+  @override
+  String get pet_expense_filter_month => 'Month';
+
+  @override
+  String get pet_expense_filter_year => 'Year';
+
+  @override
+  String get pet_expense_filter_all => 'All';
+
+  @override
+  String get pet_expense_cat_food => 'Food';
+
+  @override
+  String get pet_expense_cat_health => 'Health';
+
+  @override
+  String get pet_expense_cat_hygiene => 'Hygiene & Aesthetics';
+
+  @override
+  String get pet_expense_cat_meds => 'Medication';
+
+  @override
+  String get pet_expense_cat_treats => 'Treats & Leisure';
+
+  @override
+  String get pet_expense_cat_services => 'Extra Services';
 }

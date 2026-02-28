@@ -235,6 +235,19 @@ class PetRepository {
     return entry?.rawJson;
   }
 
+  /// 4.2 Get All Nutrition Plans for a Specific Pet
+  Future<List<PetHistoryEntry>> getAllNutritionPlans(String uuid) async {
+    final query = _historyBox.query(
+        PetHistoryEntry_.petUuid.equals(uuid) &
+        PetHistoryEntry_.category.equals(PetConstants.catNutritionPlan)
+    ).order(PetHistoryEntry_.timestamp, flags: Order.descending).build();
+
+    final entries = query.find();
+    query.close();
+
+    return entries;
+  }
+
   /// 5. Get Friend Pets (Module 2026)
   List<PetEntity> getFriendPets() {
     return _petBox.query(PetEntity_.type.equals(PetConstants.typeFriend))

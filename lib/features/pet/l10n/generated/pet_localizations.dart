@@ -19,6 +19,7 @@ import 'pet_localizations_pt.dart';
 ///
 /// ```dart
 /// import 'generated/pet_localizations.dart';
+import 'package:flutter/material.dart';
 ///
 /// return MaterialApp(
 ///   localizationsDelegates: PetLocalizations.localizationsDelegates,

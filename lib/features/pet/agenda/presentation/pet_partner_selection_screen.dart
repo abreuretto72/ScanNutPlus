@@ -150,7 +150,7 @@ class _PetPartnerSelectionScreenState extends State<PetPartnerSelectionScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         leading: _selectedPartner != null 
             ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.petPrimary), 
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.blue), 
                 onPressed: () => setState(() => _selectedPartner = null)
               )
             : const BackButton(),

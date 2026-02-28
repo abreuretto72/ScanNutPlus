@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scannutplus/core/theme/app_colors.dart'; // REQUIRED FOR BLUE THEME
 import 'dart:ui' as ui;
 import 'dart:io';
 import 'dart:async';
@@ -28,6 +29,8 @@ import 'package:scannutplus/features/pet/agenda/presentation/pet_map_styles.dart
 import '../../services/pet_ai_service.dart'; // Real AI Service
 import 'package:scannutplus/features/pet/agenda/services/pet_vocal_ai_service.dart'; // Dedicated Vocal AI Service
 import 'package:scannutplus/features/pet/agenda/services/pet_video_ai_service.dart'; // Dedicated Video AI Service
+import 'package:scannutplus/core/services/universal_ai_service.dart'; // New RAG Flow
+import 'package:scannutplus/features/pet/agenda/domain/pet_weather_service.dart'; // Telemetry Background
 // Env Access
 // Prompts
 // App Keys
@@ -50,15 +53,19 @@ class CreatePetEventScreen extends StatefulWidget {
   final String petId;
   final VoidCallback? onEventSaved;
   final PetEventType? initialEventType;
-  final bool isFriendFlow; // NEW: Auto-toggle friend switch if coming from friend tab
+  final bool isFriendFlow;
+  final Map<String, String>? initialFriendData;
+  final VoidCallback? onSummaryStarted;
 
   const CreatePetEventScreen({
     super.key,
-    required this.petName,
     required this.petId,
-    this.onEventSaved,
-    this.initialEventType,
+    required this.petName,
+    this.initialEventType = PetEventType.food,
     this.isFriendFlow = false, // Default is false for retrocompatibility
+    this.initialFriendData,
+    this.onEventSaved,
+    this.onSummaryStarted,
   });
 
   @override
@@ -202,6 +209,15 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
     // Manually disposing it can cause the SurfaceProducer to corrupt and disappear on subsequent screen pushes.
     _speech.cancel(); // Stop any active listening
     _notesController.dispose();
+    
+    // START BACKGROUND AUTO-WALK SUMMARY
+    if (_walkDurationSeconds > 0) {
+      debugPrint("[SCAN_NUT_TRACE] Delegating Walk Summary to Background Task...");
+      widget.onSummaryStarted?.call();
+      final callback = widget.onEventSaved;
+      _generateWalkSummaryInBackground(callback);
+    }
+    
     super.dispose();
   }
 
@@ -248,8 +264,11 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       Icons.pets,
       Colors.white,
       Colors.deepOrangeAccent, // Mudado para Laranja Intenso para maior contraste
-      130, // Tamanho do ícone da patinha aumentado para melhor legibilidade
+      24, // Tamanho reduzido 50% conforme solicitado (de 48 para 24)
     );
+    if (mounted) {
+       _updatePetMarker(_currentPos); // Garante que o mapa redesenha caso GPS já tenha carregado
+    }
   }
 
   void _updatePetMarker(LatLng pos) {
@@ -347,6 +366,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
   }
 
   void _startWalkTracking() {
+    _walkTimer?.cancel(); // Safety kill
     setState(() {
       _isTracking = true;
     });
@@ -441,7 +461,9 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       _isTracking = false;
     });
     _walkTimer?.cancel();
+    _walkTimer = null;
     _positionStream?.cancel();
+    _positionStream = null;
   }
 
   void _onMicPressed() async {
@@ -477,6 +499,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(AppLocalizations.of(context)!.pet_journal_audio_saved)),
       );
+      Future.delayed(const Duration(milliseconds: 300), _saveEvent);
     }
   }
 
@@ -507,6 +530,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
            ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(AppLocalizations.of(context)!.pet_journal_photo_saved)),
           );
+          Future.delayed(const Duration(milliseconds: 300), _saveEvent);
         }
       }
     } catch (e) {
@@ -548,6 +572,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                  ScaffoldMessenger.of(context).showSnackBar(
                    SnackBar(content: Text(AppLocalizations.of(context)!.pet_journal_video_saved ?? "Video saved!")),
                  );
+                 Future.delayed(const Duration(milliseconds: 300), _saveEvent);
              }
         } else if (extension != null && PetConstants.imageExtensions.contains(extension)) {
              setState(() {
@@ -558,6 +583,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                _isUploading = true; // Activate Gallery Glow
                _isRecordingVideo = false;
              });
+             Future.delayed(const Duration(milliseconds: 300), _saveEvent);
              // ... snackbar ...
         }
       }
@@ -600,6 +626,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                  ScaffoldMessenger.of(context).showSnackBar(
                    SnackBar(content: Text(AppLocalizations.of(context)!.pet_journal_video_saved ?? "Video saved!")),
                  );
+                 Future.delayed(const Duration(milliseconds: 300), _saveEvent);
              }
         } else {
             setState(() {
@@ -612,6 +639,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(l10n.pet_journal_file_selected(result.files.single.name))),
               );
+              Future.delayed(const Duration(milliseconds: 300), _saveEvent);
             }
         }
       } 
@@ -651,7 +679,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
           _isUploading = false;
           _isRecordingVideo = true; // Activate Video Glow
         });
-        // ... snackbar ...
+        Future.delayed(const Duration(milliseconds: 300), _saveEvent);
       }
     } catch (e) {
       debugPrint("Error picking video: $e");
@@ -724,9 +752,27 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
     // Distância formatada
     final String distString = _walkDistanceKm.toStringAsFixed(2);
 
-    final scaffold = Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
+    final scaffold = PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) {
+        if (_walkDurationSeconds > 0) {
+           final l10n = AppLocalizations.of(context);
+           final messenger = ScaffoldMessenger.maybeOf(context);
+           if (l10n != null && messenger != null) {
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text("${l10n.pet_journal_bg_evaluating} (Resumo do Passeio)"), 
+                  backgroundColor: Colors.orange, 
+                  duration: const Duration(seconds: 4),
+                  behavior: SnackBarBehavior.floating, // Descola do rodapé para visibilidade máxima
+                )
+              );
+           }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Stack(
         children: [
           // 1. MAPA (WAZE STYLE)
           // 1. MAPA (WAZE STYLE)
@@ -753,7 +799,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                 ),
                 
                 if (_isGpsLoading)
-                  const Center(child: CircularProgressIndicator(color: Colors.orange)),
+                  const Center(child: CircularProgressIndicator(color: AppColors.petIconAction)),
                 
                   
                 // BARRA DE PESQUISA (TOPO)
@@ -773,7 +819,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                       decoration: InputDecoration(
                         hintText: l10n.pet_journal_searching_address,
                         border: InputBorder.none,
-                        prefixIcon: Icon(Icons.search, color: Colors.orange),
+                        prefixIcon: Icon(Icons.search, color: AppColors.petIconAction),
                         contentPadding: EdgeInsets.symmetric(vertical: 8),
                       ),
                       style: const TextStyle(color: Colors.black),
@@ -805,38 +851,6 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                   ),
                 ),
                   
-                // PINO CENTRAL (FIXO)
-                if (!_isGpsLoading)
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 20), // Reduced bottom padding for alignment
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(4), // Aumentado padding para mais contraste
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(color: Colors.black54, blurRadius: 8, offset: Offset(0, 4)) // Sombra mais forte (54% opacity)
-                              ]
-                            ),
-                            child: const CircleAvatar(
-                              radius: 12, // Um pouco maior (era 7) para destacar no modo satélite
-                              backgroundColor: Colors.deepOrangeAccent, // Laranja mais forte e visível
-                              child: Icon(Icons.pets, color: Colors.white, size: 14), // Ícone maior
-                            ),
-                          ),
-                          Container(
-                            width: 2, // Minute point
-                            height: 2, 
-                            decoration: const BoxDecoration(color: Colors.black, shape: BoxShape.circle)
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
               ],
             ),
           ),
@@ -848,7 +862,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
             child: CircleAvatar(
               backgroundColor: Colors.white,
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.orange),
+                icon: const Icon(Icons.arrow_back, color: Colors.blue),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -861,17 +875,16 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
             right: 16,
             child: FloatingActionButton.small(
               heroTag: PetConstants.heroQuickAlertFab,
-              elevation: 4, // Elevação maior para destacar do mapa
+              elevation: 0,
               backgroundColor: Colors.white, // Fundo sólido branco intenso em vez de translúcido
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-                side: const BorderSide(color: Colors.deepOrangeAccent, width: 2) // Borda colorida
               ),
               onPressed: () {
                 HapticFeedback.heavyImpact();
                 _showDangerDialog(context);
               },
-              child: const Icon(Icons.report_problem, color: Colors.deepOrangeAccent), // Ícone com contraste
+              child: const Icon(Icons.report_problem, color: AppColors.petIconAction), // Ícone com contraste
             ),
           ),
 
@@ -885,35 +898,33 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                    // LAYERS BUTTON
                    FloatingActionButton.small(
                     heroTag: PetConstants.heroLayersFab,
-                    elevation: 4,
+                    elevation: 0,
                     backgroundColor: Colors.white, // Fundo branco sólido
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
-                      side: const BorderSide(color: Colors.deepOrangeAccent, width: 2) // Borda colorida
                     ),
                     onPressed: () {
                        HapticFeedback.mediumImpact();
                        _showMapLayersMenu(context);
                     },
-                    child: const Icon(Icons.layers, color: Colors.deepOrangeAccent),
+                    child: const Icon(Icons.layers, color: AppColors.petIconAction),
                   ),
 
                 ],
               ),
             ),
 
-          // MY LOCATION BUTTON (BOTTOM RIGHT)
+           // MY LOCATION BUTTON (BOTTOM RIGHT)
           if (!_isJournalMinimized)
              Positioned(
                bottom: MediaQuery.of(context).size.height * 0.55 + 20, // Above expanded journal
                right: 16,
                child: FloatingActionButton.small(
                  heroTag: 'gps_fab',
-                 elevation: 4,
+                 elevation: 0,
                  backgroundColor: Colors.white, // Fundo branco sólido para destacar na imagem satélite
                  shape: RoundedRectangleBorder(
                    borderRadius: BorderRadius.circular(12),
-                   side: const BorderSide(color: Colors.blueAccent, width: 2) // Borda azul para o botão GPS
                  ),
                  onPressed: () {
                    HapticFeedback.selectionClick();
@@ -921,7 +932,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                       _mapController!.animateCamera(CameraUpdate.newLatLng(_currentPos));
                    }
                  },
-                 child: const Icon(Icons.my_location, color: Colors.blueAccent), // Ícone azul com alto contraste
+                 child: const Icon(Icons.my_location, color: AppColors.petIconAction), // Ícone azul com alto contraste
                ),
              ),
 
@@ -929,37 +940,39 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
           if (_isBackgroundProcessing)
             Positioned(
               top: MediaQuery.of(context).padding.top + 70, // Below Alert FAB
-              left: 16,
-              right: 80, // Space for Layers FAB
+              left: 0,
+              right: 0,
               child: IgnorePointer(
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 300),
-                  opacity: _isBackgroundProcessing ? 1.0 : 0.0,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.orange.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4))],
-                      border: Border.all(color: Colors.white.withOpacity(0.5)),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            l10n.pet_journal_bg_evaluating,
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-                            overflow: TextOverflow.ellipsis,
+                child: Center(
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 300),
+                    opacity: _isBackgroundProcessing ? 1.0 : 0.0,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: AppColors.petIconAction.withValues(alpha: 0.9),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4))],
+                        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 12),
+                          Flexible(
+                            child: Text(
+                              l10n.pet_journal_bg_evaluating,
+                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -1047,12 +1060,19 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                         HapticFeedback.mediumImpact();
                                         _showHelpDialog(context);
                                       },
-                                      child: Icon(Icons.info_outline, size: 20, color: Colors.grey[400]),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(4),
+                                        decoration: const BoxDecoration(
+                                          color: AppColors.petIconAction,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Icon(Icons.info_outline, size: 16, color: Colors.white),
+                                      ),
                                     ),
                                     Text(
                                       l10n.pet_journal_friend_label,
                                       style: TextStyle(
-                                        color: _isFriendPresent ? Colors.greenAccent : Colors.grey[500],
+                                        color: _isFriendPresent ? AppColors.petIconAction : Colors.grey[500],
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
                                       ),
@@ -1061,8 +1081,24 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                       scale: 0.8,
                                       child: Switch(
                                         value: _isFriendPresent,
-                                        activeThumbColor: Colors.greenAccent,
-                                        inactiveTrackColor: Colors.grey[800],
+                                        trackColor: WidgetStateProperty.resolveWith((states) {
+                                          if (states.contains(WidgetState.selected)) {
+                                            return AppColors.petIconAction;
+                                          }
+                                          return Colors.transparent; // Fundo transparente quando inativo
+                                        }),
+                                        thumbColor: WidgetStateProperty.resolveWith((states) {
+                                          if (states.contains(WidgetState.selected)) {
+                                            return Colors.white;
+                                          }
+                                          return AppColors.petIconAction; // Bolinha azul quando inativo
+                                        }),
+                                        trackOutlineColor: WidgetStateProperty.resolveWith((states) {
+                                           if (states.contains(WidgetState.selected)) {
+                                              return Colors.transparent; // Sem borda quando ativado (fundo sólido)
+                                           }
+                                           return Colors.white; // Borda branca quando desativado
+                                        }),
                                         onChanged: (val) {
                                           HapticFeedback.lightImpact();
                                           setState(() => _isFriendPresent = val);
@@ -1097,6 +1133,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                  child: Column(
                                    children: [
                                      DropdownButtonFormField<Map<String, String>>(
+                                         icon: const Icon(Icons.arrow_drop_down, color: Colors.blue),
                                          decoration: InputDecoration(
                                             border: InputBorder.none,
                                             icon: const Icon(Icons.people, color: Colors.black),
@@ -1176,7 +1213,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                       if (_currentAddress != null)
                                         TextSpan(
                                           text: " • 📍 $_currentAddress",
-                                          style: const TextStyle(color: Colors.orangeAccent, fontSize: 14),
+                                          style: const TextStyle(color: Colors.white, fontSize: 14),
                                         ),
                                     ],
                                   ),
@@ -1195,7 +1232,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                 },
                                 child: CircleAvatar(
                                   radius: 20,
-                                  backgroundColor: _isTracking ? Colors.redAccent : Colors.orange,
+                                  backgroundColor: _isTracking ? Colors.redAccent : AppColors.petIconAction,
                                   child: Icon(
                                     _isTracking ? Icons.stop : Icons.play_arrow,
                                     color: Colors.white,
@@ -1221,7 +1258,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                   controller: _notesController,
                                   maxLines: 2,
                                   style: const TextStyle(color: Colors.white),
-                                  cursorColor: Colors.orange,
+                                  cursorColor: AppColors.petIconAction,
                                   decoration: InputDecoration(
                                     hintText: l10n.pet_journal_hint_text,
                                     hintStyle: TextStyle(color: Colors.grey[600]),
@@ -1230,7 +1267,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                                 ),
                                 FloatingActionButton.small(
                                   elevation: 0,
-                                  backgroundColor: _isListening ? Colors.red : Colors.orange,
+                                  backgroundColor: _isListening ? Colors.red : Colors.blue,
                                   onPressed: _onMicPressed,
                                   child: Icon(_isListening ? Icons.stop : Icons.mic, color: Colors.white),
                                 ),
@@ -1240,42 +1277,39 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                           const SizedBox(height: 24),
 
                           // SENSORES (ATALHOS)
-                          Wrap(
-                            alignment: WrapAlignment.spaceEvenly,
-                            spacing: 8,
-                            runSpacing: 12,
-                              children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
                               _sensorButton(Icons.camera_alt_outlined, l10n.label_photo, () {
-                                  _pickImage(ImageSource.camera);
-                                  HapticFeedback.selectionClick();
-                                }, iconColor: Colors.orange), 
-                                
-                                _sensorButton(Icons.photo_library_outlined, l10n.label_gallery, () {
-                                  _pickGalleryMedia();
-                                  HapticFeedback.selectionClick();
-                                }, iconColor: Colors.orange), 
-
-                                _sensorButton(Icons.videocam_outlined, l10n.label_video ?? "Video", () {
-                                  _pickVideo();
-                                  HapticFeedback.selectionClick();
-                                }, iconColor: Colors.orange), 
-
-                                _sensorButton(
-                                  Icons.campaign, 
-                                  l10n.label_sounds, 
-                                  () {
-                                   _toggleAudioRecording();
-                                   HapticFeedback.selectionClick();
-                                  },
-                                  iconColor: Colors.orange, 
-                                ),
-                                
-                                _sensorButton(Icons.file_upload_outlined, l10n.label_vocal, () {
-                                   _pickAudioFile();
-                                   HapticFeedback.selectionClick();
-                                }, iconColor: Colors.orange), // Orange by default
-                              ],
-                            ),
+                                _pickImage(ImageSource.camera);
+                                HapticFeedback.selectionClick();
+                              }), 
+                              
+                              _sensorButton(Icons.photo_library_outlined, l10n.label_gallery, () {
+                                _pickGalleryMedia();
+                                HapticFeedback.selectionClick();
+                              }), 
+                              
+                              _sensorButton(Icons.videocam_outlined, l10n.label_video ?? "Video", () {
+                                _pickVideo();
+                                HapticFeedback.selectionClick();
+                              }), 
+                              
+                              _sensorButton(
+                                Icons.campaign, 
+                                l10n.label_sounds, 
+                                () {
+                                 _toggleAudioRecording();
+                                 HapticFeedback.selectionClick();
+                                },
+                              ),
+                              
+                              _sensorButton(Icons.file_upload_outlined, l10n.label_vocal, () {
+                                 _pickAudioFile();
+                                 HapticFeedback.selectionClick();
+                              }),
+                            ],
+                          ),
 
                           const SizedBox(height: 32),
 
@@ -1309,7 +1343,8 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
           ),
         ],
       ),
-    );
+    ),
+    ); // <-- Fechando o PopScope adicionado
     
     // UI Trace (Outside of widget tree building strictly, but fine here for this request context)
     // Ideally in initState but user requested log insertion.
@@ -1423,16 +1458,15 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(10), // Reduced slightly to avoid overflow
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withValues(alpha: 0.1),
-                border: Border.all(color: Colors.white),
+                color: AppColors.petIconAction, // Fundo azul sólido (resolve o serrilhado da borda)
               ),
-              child: Icon(icon, color: iconColor ?? Colors.white),
+              child: Icon(icon, color: Colors.white, size: 22), // Ícone branco
             ),
-            const SizedBox(height: 4),
-            Text(label, style: const TextStyle(fontSize: 12, color: Colors.white)),
+            const SizedBox(height: 6),
+            Text(label, style: const TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.bold)),
           ],
         ),
       ),
@@ -1494,7 +1528,10 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
 
       if (mounted) {
         setState(() {
+          // Previne que a carga de alertas asincrona destrua o pino principal do pet
+          final existingPetMarkers = _markers.where((m) => m.markerId.value == 'pet_location').toList();
           _markers = newMarkers;
+          _markers.addAll(existingPetMarkers);
         });
       }
     } catch (e) {
@@ -1689,6 +1726,10 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       
       final isKeywordHealth = allKeywords.any((k) => k.isNotEmpty && textLower.contains(k));
 
+      // Keywords that trigger PLANT category
+      final plantKeywords = ['planta', 'plant', 'flor', 'mato', 'folha', 'árvore', 'arvore', 'grama', 'vegetação', 'vegetal'];
+      final isKeywordPlant = plantKeywords.any((k) => textLower.contains(k));
+
       // Universal AI Trigger: 
       // 1. If Image Exists OR Keywords Match OR Audio Exists OR Video Exists -> Potentially Health
       // 2. BUT we must handle the 'Walk' case (Activity).
@@ -1698,13 +1739,28 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       bool shouldAnalyze = false;
 
       // Universal Mode: Analyze if keywords OR media are present, regardless of Walk/Journal mode
-      shouldAnalyze = isKeywordHealth || _capturedImage != null || _selectedAudioFile != null || _capturedVideo != null;
+      shouldAnalyze = isKeywordHealth || isKeywordPlant || _capturedImage != null || _selectedAudioFile != null || _capturedVideo != null;
       
-      final detectedType = widget.initialEventType ?? (shouldAnalyze ? PetEventType.health : PetEventType.other);
+      PetEventType resolvedType = PetEventType.other;
+      if (shouldAnalyze) {
+          if (isKeywordPlant && _capturedImage != null) {
+              resolvedType = PetEventType.plant;
+          } else {
+              resolvedType = PetEventType.health;
+          }
+      }
+      
+      final detectedType = widget.initialEventType ?? resolvedType;
+      
+      // Force override to plant if media and keyword plant are present during a walk
+      final finalDetectedType = (widget.initialEventType == PetEventType.activity && isKeywordPlant && _capturedImage != null) 
+          ? PetEventType.plant 
+          : detectedType;
+
       final isHealth = shouldAnalyze;
       
       if (kDebugMode && isHealth) {
-        debugPrint('APP_TRACE: 🚑 Classification: AI Triggered (Keyword: $isKeywordHealth, Media: ${_capturedImage != null})');
+        debugPrint('APP_TRACE: 🚑 Classification: AI Triggered (KeywordHealth: $isKeywordHealth, KeywordPlant: $isKeywordPlant, Media: ${_capturedImage != null})');
       }
 
       // HELPER: Copy media from temporary cache to permanent app storage
@@ -1787,7 +1843,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
             // Fire and forget
             _runBackgroundAnalysis(
                eventId: eventId,
-               detectedType: detectedType,
+               detectedType: finalDetectedType,
                finalImagePath: finalImagePath,
                finalAudioPath: finalAudioPath,
                finalVideoPath: finalVideoPath,
@@ -1801,7 +1857,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
              // Fire and forget, then pop
              _runBackgroundAnalysis(
                eventId: eventId,
-               detectedType: detectedType,
+               detectedType: finalDetectedType,
                finalImagePath: finalImagePath,
                finalAudioPath: finalAudioPath,
                finalVideoPath: finalVideoPath,
@@ -1828,7 +1884,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
         id: eventId,
         startDateTime: DateTime.now(), 
         petIds: [widget.petId], 
-        eventTypeIndex: detectedType.index, 
+        eventTypeIndex: finalDetectedType.index, 
         hasAIAnalysis: false, 
         notes: processedNotes, 
         address: _currentAddress, 
@@ -1889,15 +1945,44 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
           
           if (finalImagePath != null) {
               if (kDebugMode) debugPrint('[BACKGROUND_AI_TRACE] 📸 Analyzing Image via PetAiService...');
+              // Mapeamento Inteligente: Se for planta, força o contexto botânico
+              PetImageType mappedType = PetImageType.general;
+              if (detectedType == PetEventType.plant) {
+                 mappedType = PetImageType.plantCheck;
+              } else if (detectedType == PetEventType.health) {
+                 mappedType = PetImageType.general;
+              }
+
               final api = PetAiService();
               final result = await api.analyzePetImage(
                 finalImagePath, 
                 lang, 
-                type: detectedType == PetEventType.health ? PetImageType.general : PetImageType.general,
+                type: mappedType,
                 petName: widget.petName,
                 petUuid: widget.petId
               );
               aiSummary = result.$1;
+
+              // [SMART CLASSIFICATION EXTRATOR] - PetImageType.plantCheck
+              // Se a análise botânica nos devolveu os tags, formatamos como título pro usuário e limpamos do texto
+              if (mappedType == PetImageType.plantCheck && aiSummary != null) {
+                 final plantMatch = RegExp(r'\[TAG_PLANT_NAME\](.*?)\[\/TAG_PLANT_NAME\]', dotAll: true).firstMatch(aiSummary!);
+                 final toxMatch = RegExp(r'\[TAG_TOXICITY\](.*?)\[\/TAG_TOXICITY\]', dotAll: true).firstMatch(aiSummary!);
+                 
+                 if (plantMatch != null && toxMatch != null) {
+                     final plantName = plantMatch.group(1)?.trim() ?? '';
+                     final toxicity = toxMatch.group(1)?.trim() ?? '';
+                     if (plantName.isNotEmpty) {
+                        metrics['custom_title'] = "🌿 $plantName ($toxicity)";
+                        metrics['plant_toxicity'] = toxicity; 
+                     }
+                 }
+                 
+                 // Remove tags para o Renderer não mostrá-las puras na UI
+                 aiSummary = aiSummary!.replaceAll(RegExp(r'\[TAG_PLANT_NAME\].*?\[\/TAG_PLANT_NAME\]\n?', dotAll: true), '');
+                 aiSummary = aiSummary!.replaceAll(RegExp(r'\[TAG_TOXICITY\].*?\[\/TAG_TOXICITY\]\n?', dotAll: true), '');
+                 aiSummary = aiSummary!.trim();
+              }
           } else if (finalAudioPath != null) {
               if (kDebugMode) debugPrint('[BACKGROUND_AI_TRACE] 🎙️ Analyzing Audio via PetVocalAiService...');
               final vocalService = PetVocalAiService();
@@ -2005,6 +2090,35 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
       }
   }
 
+  void _resetFormAndShowSuccessMessage(bool isFriend) {
+      if (!mounted) return;
+      setState(() {
+          _isSaving = false;
+          _isFriendPresent = widget.isFriendFlow;
+          _selectedFriend = null;
+          _friendNameController.clear();
+          _tutorNameController.clear();
+          _notesController.clear();
+          _capturedImage = null;
+          _capturedVideo = null;
+          _selectedAudioFile = null;
+          if (widget.initialEventType == PetEventType.activity) {
+              _isJournalMinimized = true;
+          }
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(children: [
+             Icon(isFriend ? Icons.people : Icons.check, color: Colors.white),
+             const SizedBox(width: 10),
+             Text(isFriend ? AppLocalizations.of(context)!.pet_journal_saved_friend : AppLocalizations.of(context)!.pet_journal_saved_own),
+          ]),
+          backgroundColor: isFriend ? Colors.purple : Colors.green,
+          duration: const Duration(seconds: 3),
+        )
+      );
+  }
+
   Future<void> _finalizeSave(PetEvent event, BuildContext context, {required bool isFriend}) async {
       final result = await _repository.saveEvent(event);
 
@@ -2017,38 +2131,12 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
                widget.onEventSaved!(); 
             }
 
-            // Reset Form Fields
-            setState(() {
-              _isSaving = false;
-              _isFriendPresent = widget.isFriendFlow; // Respect friend mode
-              _selectedFriend = null;
-              _friendNameController.clear();
-              _tutorNameController.clear();
-              _notesController.clear();
-              _capturedImage = null;
-              _capturedVideo = null;
-              _selectedAudioFile = null;
-            });
+            _resetFormAndShowSuccessMessage(isFriend);
 
-            if (widget.initialEventType == PetEventType.activity) {
-                // WALK MODE: Keep tracking alive! Just minimize journal
-                setState(() => _isJournalMinimized = true);
-            } else {
+            if (widget.initialEventType != PetEventType.activity) {
                 // NORMAL MODE: Pop screen
                 Navigator.pop(context); 
             }
-            
-             ScaffoldMessenger.of(context).showSnackBar(
-               SnackBar(
-                 content: Row(children: [
-                    Icon(isFriend ? Icons.people : Icons.check, color: Colors.white),
-                    const SizedBox(width: 10),
-                    Text(isFriend ? AppLocalizations.of(context)!.pet_journal_saved_friend : AppLocalizations.of(context)!.pet_journal_saved_own),
-                 ]),
-                 backgroundColor: isFriend ? Colors.purple : Colors.green,
-                 duration: const Duration(seconds: 3),
-               )
-             );
         }
       } else {
         throw Exception(AppLocalizations.of(context)!.pet_error_repository_failure(result.status.toString()));
@@ -2235,13 +2323,16 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                   onPressed: () => Navigator.pop(ctx),
+                   onPressed: () { 
+                       Navigator.pop(ctx);
+                       _resetFormAndShowSuccessMessage(_isFriendPresent);
+                   },
                    style: TextButton.styleFrom(
-                     backgroundColor: Colors.green,
+                     backgroundColor: const Color(0xFFFFD1DC), // Domain Pink
                      padding: const EdgeInsets.symmetric(vertical: 14),
-                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Colors.black, width: 2)),
                    ),
-                   child: Text(AppLocalizations.of(context)!.pet_btn_ok, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                   child: Text(AppLocalizations.of(context)!.pet_btn_ok, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16)),
                 ),
               )
            ]
@@ -2268,6 +2359,148 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
     );
   }
 
-  // --- AUDIO AI IMPLEMENTATION DELEGATED TO PetVocalAiService ---
-  // Local methods _analyzeAudio and _fetchActiveModel removed to favor the dedicated service.
+  // --- BACKGROUND WALK SUMMARY (AUTO) ---
+  Future<void> _captureRealTelemetryHidden(AppLocalizations l10n) async {
+    try {
+      final position = _lastRecordedPosition ?? await Geolocator.getLastKnownPosition();
+      if (position == null) return;
+      
+      final now = DateTime.now();
+      final String? address = await _getAddressFromLatLng(LatLng(position.latitude, position.longitude));
+      
+      if (address != null) {
+          await _repository.saveEvent(PetEvent(
+            id: const Uuid().v4(),
+            startDateTime: now,
+            petIds: [widget.petId],
+            eventTypeIndex: 5, // Other
+            notes: address,
+            metrics: {
+              'custom_title': '📍 Ponto de Referência',
+              'is_google_event': true, 
+              'google_type': 'location',
+              'source': 'walk',
+              'address': address
+            },
+            hasAIAnalysis: false,
+          ));
+      }
+
+      final weatherService = PetWeatherService();
+      final weatherData = await weatherService.getCurrentWeather(position.latitude, position.longitude);
+      
+      // We only use the current weather to enrich the AI's prompt as the User requested not to produce useless UI cards anymore.
+      // But just in case, we still grab it on memory or we could save a very hidden metric if needed.
+    } catch (e) {
+      debugPrint("[SCAN_NUT_TRACE] [TELEMETRY_ERROR] Erro ao capturar telemetria em bg: $e");
+    }
+  }
+
+  Future<void> _generateWalkSummaryInBackground(VoidCallback? onEventSavedCallback) async {
+     try {
+        if (_walkDurationSeconds == 0) return; // Nenhuma caminhada feita
+
+        // Grab locale for AI and internal formatting
+        final sysLang = Platform.localeName.split('_')[0];
+        final Locale loc = Locale(sysLang);
+        final AppLocalizations? delegateStr = await AppLocalizations.delegate.load(loc);
+        final l10n = delegateStr ?? await AppLocalizations.delegate.load(const Locale('en'));
+
+        final endDateTime = DateTime.now();
+        // Aproxima o inicio subtraindo a duração
+        final startDateTime = endDateTime.subtract(Duration(seconds: _walkDurationSeconds));
+
+        // Busca telemetria final (encerra a jornada com o endereco final da rota)
+        await _captureRealTelemetryHidden(l10n);
+
+        // Busca tudo gravado no banco durante esse intervalo exato de passeio
+        final eventsResult = await _repository.getByPetId(widget.petId);
+        if (!eventsResult.isSuccess || eventsResult.data == null) return;
+
+        final walkEvents = eventsResult.data!.where((e) {
+            return e.startDateTime.isAfter(startDateTime) && e.startDateTime.isBefore(endDateTime.add(const Duration(minutes: 5)));
+        }).toList();
+
+        if (walkEvents.isEmpty) return;
+
+        final double totalDistanceKm = walkEvents.fold(0.0, (sum, e) => sum + ((e.metrics?['walk_distance_km'] as num?)?.toDouble() ?? 0.0));
+        final int totalDurationSeconds = walkEvents.fold(0, (sum, e) => sum + ((e.metrics?['walk_duration_seconds'] as num?)?.toInt() ?? 0));
+        
+        final int hours = totalDurationSeconds ~/ 3600;
+        final int minutes = (totalDurationSeconds % 3600) ~/ 60;
+        final int seconds = totalDurationSeconds % 60;
+        final String timeString = hours > 0 
+            ? '${hours.toString().padLeft(2, '0')}h ${minutes.toString().padLeft(2, '0')}m'
+            : '${minutes.toString().padLeft(2, '0')}m ${seconds.toString().padLeft(2, '0')}s';
+
+        final String metricsText = totalDistanceKm > 0 || totalDurationSeconds > 0 
+            ? " (🗺 ${totalDistanceKm.toStringAsFixed(2)}km • ⏱ $timeString)" 
+            : "";
+
+        final eventsText = walkEvents.map((e) {
+          final time = DateFormat.Hm(l10n.localeName).format(e.startDateTime);
+          final notes = e.notes ?? l10n.walk_no_notes;
+          final typeStr = e.eventTypeIndex == 0 ? "Food" : 
+                          e.eventTypeIndex == 3 ? "Hygiene/Stool/Urine" : 
+                          e.eventTypeIndex == 4 ? "Activity" : "Other"; 
+          
+          final explicitTitle = e.metrics?['custom_title']?.toString() ?? typeStr;
+          return "- $time [$explicitTitle]: $notes";
+        }).join("\n");
+
+        // Fetch Weather string strictly string-based without bloating DB
+        String weatherStr = "";
+        try {
+            final position = _lastRecordedPosition;
+            if (position != null) {
+              final weatherData = await PetWeatherService().getCurrentWeather(position.latitude, position.longitude);
+              if (weatherData != null) {
+                 weatherStr = "WEATHER: Temp: ${weatherData['temp']}°C, Condition: ${weatherData['description']}";
+              }
+            }
+        } catch(_) {}
+
+        final prompt = "${PetPrompts.promptWalkSummary}\n\nCONTEXT: Pet Name: ${widget.petName}\nTotal Distance: ${totalDistanceKm.toStringAsFixed(2)} km\nTotal Time: $timeString\n$weatherStr\n\nEVENTS LOG:\n$eventsText";
+
+        final summary = await UniversalAiService().analyzeText(
+          systemPrompt: prompt,
+          userPrompt: "Generate the Walk Summary now. Take into account the total distance and time when generating the report.",
+          l10n: l10n,
+        );
+
+        final summaryTitle = l10n.pet_walk_summary_title_generated(
+          DateFormat.Hm(l10n.localeName).format(startDateTime),
+          DateFormat.Hm(l10n.localeName).format(endDateTime)
+        ) + metricsText;
+        
+        final newEvent = PetEvent(
+          id: const Uuid().v4(),
+          startDateTime: endDateTime.add(const Duration(seconds: 10)), // Joga por ultimo na lista
+          petIds: [widget.petId],
+          eventTypeIndex: 5, // Other
+          hasAIAnalysis: true,
+          notes: summary,
+          metrics: {
+            'custom_title': summaryTitle, 
+            'is_summary': true,
+            PetConstants.keyAiSummary: summary,
+            'source': 'walk',
+          },
+        );
+
+        await _repository.saveEvent(newEvent);
+        
+        // RECUPERAÇÃO DO PASSEIO: Atualiza a listagem de eventos via callback injetado pela rota mãe
+        onEventSavedCallback?.call();
+        
+        debugPrint("[SCAN_NUT_TRACE] [AUTO_WALK_SUMMARY] Successfully generated and saved Walk BG Summary!");
+
+     } catch (e) {
+        debugPrint("[SCAN_NUT_TRACE] [AUTO_WALK_SUMMARY_ERROR] Failed to gen BG Walk summary: $e");
+     } finally {
+        // GARANTIA: Atualiza a listagem mãe e DESLIGA o spinner visual, independente de sucesso ou falha
+        onEventSavedCallback?.call();
+     }
+   }
+
 }

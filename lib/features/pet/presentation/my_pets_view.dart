@@ -65,7 +65,7 @@ class _MyPetsViewState extends State<MyPetsView> {
         // 2. MENU ICON: Uses Builder to get Scaffod context
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.notes_rounded, color: Colors.white), // Menu Icon
+            icon: const Icon(Icons.notes_rounded, color: Colors.blue), // Menu Icon
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),
         ),
@@ -129,16 +129,11 @@ class _MyPetsViewState extends State<MyPetsView> {
           );
         },
       ),
-      // Botão Flutuante (FAB) - Rosa Pastel com Ícone Preto e Borda
+      // Botão Flutuante (FAB) - Rosa Pastel com Ícone Azul Médio (Sem borda/sombra)
       floatingActionButton: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.black, width: 3),
-          boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
-        ),
         child: FloatingActionButton(
           backgroundColor: AppColors.petPrimary, 
-          foregroundColor: AppColors.petText,
+          foregroundColor: AppColors.petIconAction,
           shape: const CircleBorder(),
           elevation: 0,
           onPressed: () async {
@@ -399,7 +394,7 @@ class _MyPetsViewState extends State<MyPetsView> {
                   ),
                   // BOTÃO DE IA (Sparkles) - Novo Entry Point
                   IconButton(
-                    icon: const Icon(Icons.auto_awesome, color: AppColors.petText),
+                    icon: const Icon(Icons.auto_awesome, color: AppColors.petIconAction),
                     tooltip: appL10n.ai_assistant_title(name),
                     onPressed: () {
                       Navigator.push(

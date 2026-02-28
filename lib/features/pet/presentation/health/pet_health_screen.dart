@@ -4,6 +4,7 @@ import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/features/pet/data/pet_health_service.dart';
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_agenda_screen.dart';
+import 'package:scannutplus/features/pet/agenda/presentation/pet_nutrition_history_screen.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart' as model;
@@ -256,14 +257,14 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
         iconTheme: IconThemeData(color: Colors.white),
         actions: [
           IconButton(
-            icon: Icon(Icons.calendar_month),
-            tooltip: "Agenda do Pet",
+            icon: Icon(Icons.history, color: Colors.blue),
+            tooltip: "Histórico Nutricional",
             onPressed: () {
                Navigator.push(
                  context,
                  MaterialPageRoute(
-                   builder: (_) => PetAgendaScreen(
-                     petId: widget.petUuid,
+                   builder: (_) => PetNutritionHistoryScreen(
+                     petUuid: widget.petUuid,
                      petName: widget.petName,
                    ),
                  ),
@@ -271,7 +272,7 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.picture_as_pdf),
+            icon: Icon(Icons.picture_as_pdf, color: Colors.blue),
             onPressed: _generatePdf,
             tooltip: "Gerar Relatório PDF",
           ),
@@ -302,7 +303,7 @@ class _PetHealthScreenState extends State<PetHealthScreen> {
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: _isPlanCopied ? null : _copyMealsToAgenda,
-              icon: Icon(Icons.calendar_today, color: _isPlanCopied ? Colors.grey : Colors.black),
+              icon: Icon(Icons.calendar_today, color: _isPlanCopied ? Colors.grey : Colors.blue),
               label: Text(
                 _isPlanCopied 
                   ? "Refeições já copiadas" 

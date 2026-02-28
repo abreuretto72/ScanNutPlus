@@ -13,6 +13,7 @@ import 'package:scannutplus/features/pet/presentation/widgets/pet_ai_cards_rende
 
 import 'package:just_audio/just_audio.dart';
 
+import 'package:open_filex/open_filex.dart';
 import 'package:scannutplus/features/pet/presentation/universal_pdf_preview_screen.dart';
 
 class PetEventDetailScreen extends StatelessWidget {
@@ -122,7 +123,7 @@ $noteContent
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
-            icon: const Icon(Icons.picture_as_pdf),
+            icon: const Icon(Icons.picture_as_pdf, color: Colors.blue),
             onPressed: () {
                // Generate PDF PREVIEW using the Standardized Screen
                Navigator.push(context, MaterialPageRoute(builder: (_) => UniversalPdfPreviewScreen(
@@ -275,20 +276,76 @@ $noteContent
                 ),
               ),
 
-            // Image Section (Visual Evidence)
+            // Media Section (Visual Evidence & Documents)
             if (event.mediaPaths != null && event.mediaPaths!.isNotEmpty)
-              Container(
-                margin: const EdgeInsets.only(bottom: 24),
-                height: 250,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(
-                    image: FileImage(File(event.mediaPaths!.first)),
-                    fit: BoxFit.cover,
-                  ),
-                border: Border.all(color: Colors.grey.shade800),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: event.mediaPaths!.map((path) {
+                  final isPdf = path.toLowerCase().endsWith('.pdf');
+                  final fileName = path.split('/').last.split('\\\\').last;
+
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1C1C1E),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: isPdf ? Colors.redAccent.withValues(alpha: 0.3) : Colors.grey.shade800),
+                    ),
+                    child: isPdf 
+                      ? Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: () {
+                               // Open PDF natively using OpenFilex
+                               OpenFilex.open(path);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue.withValues(alpha: 0.1),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(Icons.picture_as_pdf_rounded, color: Colors.blue, size: 24),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(l10n.pet_agenda_file_attached, style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 14)),
+                                        const SizedBox(height: 4),
+                                        Text(fileName, style: const TextStyle(color: Colors.white70, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                      ],
+                                    ),
+                                  ),
+                                  const Icon(Icons.open_in_new_rounded, color: Colors.white54, size: 20),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.file(
+                            File(path),
+                            fit: BoxFit.cover,
+                            height: 250,
+                            width: double.infinity,
+                            errorBuilder: (context, error, stackTrace) => Container(
+                              height: 100,
+                              color: Colors.grey.shade900,
+                              child: const Center(child: Icon(Icons.broken_image, color: Colors.white54, size: 32)),
+                            ),
+                          ),
+                        ),
+                  );
+                }).toList(),
               ),
 
             // Audio Section (Functional with just_audio)

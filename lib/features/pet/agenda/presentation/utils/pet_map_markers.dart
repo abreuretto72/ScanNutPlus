@@ -10,18 +10,22 @@ class PetMapMarkers {
     
     final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
+
+    // 1. Definições de Limites para evitar clipping em altas densidades
     final double radius = size / 2;
+    final double strokeWidth = size * 0.10; // Reduzido ligeiramente a borda
+    final double drawingRadius = radius - (strokeWidth / 2);
 
-    // 1. Desenha o Círculo de Fundo
+    // 2. Desenha o Círculo de Fundo
     final Paint circlePaint = Paint()..color = backgroundColor;
-    canvas.drawCircle(Offset(radius, radius), radius, circlePaint);
+    canvas.drawCircle(Offset(radius, radius), drawingRadius, circlePaint);
 
-    // 2. Desenha um contorno branco mais grosso para extremo contraste (estilo Waze/Pin)
+    // 3. Desenha um contorno branco para contraste
     final Paint borderPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
-      ..strokeWidth = size * 0.12; // Aumentado de 5% para 12% do tamanho
-    canvas.drawCircle(Offset(radius, radius), radius, borderPaint);
+      ..strokeWidth = strokeWidth;
+    canvas.drawCircle(Offset(radius, radius), drawingRadius, borderPaint);
 
     // 3. Configura o Ícone de Texto
     final TextPainter textPainter = TextPainter(

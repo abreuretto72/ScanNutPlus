@@ -44,7 +44,7 @@ class PetHistoryDetailScreen extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.picture_as_pdf, color: Color(0xFFFFD1DC)), // Pink Icon
+          icon: const Icon(Icons.picture_as_pdf, color: Colors.blue), // Blue Icon
           onPressed: () {
             Navigator.push(
               context,

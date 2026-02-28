@@ -10,13 +10,17 @@ import 'package:uuid/uuid.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:gal/gal.dart';
 import 'package:flutter/foundation.dart'; // For kDebugMode
-
+import 'package:scannutplus/features/pet/services/pet_ai_service.dart';
+import 'dart:convert';
+import 'package:scannutplus/features/pet/agenda/presentation/pet_expense_history_screen.dart';
+import 'package:scannutplus/features/pet/agenda/presentation/pet_expense_dashboard_screen.dart';
 enum PetRecordType {
   medication, // 💊 Medicação
   weight,     // ⚖️ Peso
   energy,     // ⚡ Energia
   appetite,   // 🍽️ Apetite
   incident,   // ⚠️ Incidentes
+  expense,    // 💰 Despesas
   other,      // 📝 Outros
 }
 
@@ -61,7 +65,7 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
   String? _severity;
   String? _otherType;
   
-  final DateTime _selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
   File? _selectedImage;
 
@@ -97,16 +101,42 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.check),
-            onPressed: _isLoading ? null : _saveRecord,
-          ),
+          if (widget.recordType == PetRecordType.expense)
+            IconButton(
+              icon: const Icon(Icons.history, color: Colors.blue),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PetExpenseHistoryScreen(
+                      petId: widget.petId,
+                      petName: widget.petName,
+                    ),
+                  ),
+                );
+              },
+            ),
+          if (widget.recordType == PetRecordType.expense)
+            IconButton(
+              icon: const Icon(Icons.bar_chart, color: Colors.blue),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PetExpenseDashboardScreen(
+                      petId: widget.petId,
+                      petName: widget.petName,
+                    ),
+                  ),
+                );
+              },
+            ),
         ],
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator(color: AppColors.petPrimary))
           : SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -137,6 +167,7 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
       case PetRecordType.energy: return l10n.pet_record_energy;
       case PetRecordType.appetite: return l10n.pet_record_appetite;
       case PetRecordType.incident: return l10n.pet_record_incident;
+      case PetRecordType.expense: return l10n.pet_record_expense;
       case PetRecordType.other: return l10n.pet_record_other;
     }
   }
@@ -148,6 +179,7 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
       case PetRecordType.energy: return _buildEnergyFields(l10n);
       case PetRecordType.appetite: return _buildAppetiteFields(l10n);
       case PetRecordType.incident: return _buildIncidentFields(l10n);
+      case PetRecordType.expense: return _buildExpenseFields(l10n);
       case PetRecordType.other: return _buildOtherFields(l10n);
     }
   }
@@ -159,7 +191,7 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
         _buildTextField(l10n.pet_field_drug_name, _nameController, required: true),
         const SizedBox(height: 12),
         _buildDropdown(
-          label: l10n.pet_field_category,
+          hint: l10n.pet_field_category,
           items: [
             l10n.pet_opt_continuous,
             l10n.pet_opt_wormer,
@@ -178,7 +210,7 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
           ],
         ),
         const SizedBox(height: 12),
-        _buildTimePicker(l10n),
+        _buildFieldWithTitle(l10n.pet_field_time, _buildTimePicker(l10n)),
         const SizedBox(height: 12),
         _buildTextField(l10n.pet_field_observation, _observationController, maxLines: 3),
       ],
@@ -208,31 +240,46 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
   Widget _buildEnergyFields(AppLocalizations l10n) {
     return Column(
       children: [
-        _buildDropdown(
-          label: l10n.pet_field_energy_level,
-          items: [
-            l10n.pet_opt_low,
-            l10n.pet_opt_normal,
-            l10n.pet_opt_active,
-            l10n.pet_opt_hyper,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: _buildFieldWithTitle(l10n.pet_record_date_label, _buildDatePicker(l10n))),
+            const SizedBox(width: 12),
+            Expanded(child: _buildFieldWithTitle(l10n.pet_field_time, _buildTimePicker(l10n))),
           ],
-          value: _level,
-          onChanged: (v) => setState(() => _level = v),
         ),
-        const SizedBox(height: 12),
-        _buildDropdown(
-          label: l10n.pet_field_period,
-          items: [
-            l10n.pet_opt_morning,
-            l10n.pet_opt_afternoon,
-            l10n.pet_opt_night,
-            l10n.pet_opt_all_day,
-          ],
-          value: _period,
-          onChanged: (v) => setState(() => _period = v),
+        _buildFieldWithTitle(
+          l10n.pet_field_energy_level,
+          _buildDropdown(
+            hint: l10n.pet_field_energy_level,
+            items: [
+              l10n.pet_opt_low,
+              l10n.pet_opt_normal,
+              l10n.pet_opt_active,
+              l10n.pet_opt_hyper,
+            ],
+            value: _level,
+            onChanged: (v) => setState(() => _level = v),
+          ),
         ),
-        const SizedBox(height: 12),
-        _buildTextField(l10n.pet_field_context, _contextController, maxLines: 2),
+        _buildFieldWithTitle(
+          l10n.pet_field_period,
+          _buildDropdown(
+            hint: l10n.pet_field_period,
+            items: [
+              l10n.pet_opt_morning,
+              l10n.pet_opt_afternoon,
+              l10n.pet_opt_night,
+              l10n.pet_opt_all_day,
+            ],
+            value: _period,
+            onChanged: (v) => setState(() => _period = v),
+          ),
+        ),
+        _buildFieldWithTitle(
+          l10n.pet_field_context,
+          _buildTextField("", _contextController, maxLines: 2, hint: l10n.pet_field_context),
+        ),
       ],
     );
   }
@@ -241,29 +288,44 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
   Widget _buildAppetiteFields(AppLocalizations l10n) {
     return Column(
       children: [
-        _buildDropdown(
-          label: l10n.pet_field_consumption,
-          items: [
-            l10n.pet_opt_none,
-            l10n.pet_opt_half,
-            l10n.pet_opt_all,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: _buildFieldWithTitle(l10n.pet_record_date_label, _buildDatePicker(l10n))),
+            const SizedBox(width: 12),
+            Expanded(child: _buildFieldWithTitle(l10n.pet_field_time, _buildTimePicker(l10n))),
           ],
-          value: _consumption,
-          onChanged: (v) => setState(() => _consumption = v),
         ),
-        const SizedBox(height: 12),
-        _buildDropdown(
-          label: l10n.pet_field_thirst,
-          items: [
-            l10n.pet_opt_normal,
-            l10n.pet_opt_reduced,
-            l10n.pet_opt_excessive,
-          ],
-          value: _thirst,
-          onChanged: (v) => setState(() => _thirst = v),
+        _buildFieldWithTitle(
+          l10n.pet_field_consumption,
+          _buildDropdown(
+            hint: l10n.pet_field_consumption,
+            items: [
+              l10n.pet_opt_none,
+              l10n.pet_opt_half,
+              l10n.pet_opt_all,
+            ],
+            value: _consumption,
+            onChanged: (v) => setState(() => _consumption = v),
+          ),
         ),
-        const SizedBox(height: 12),
-        _buildTextField(l10n.pet_field_diet_variation, _variationController),
+        _buildFieldWithTitle(
+          l10n.pet_field_thirst,
+          _buildDropdown(
+            hint: l10n.pet_field_thirst,
+            items: [
+              l10n.pet_opt_normal,
+              l10n.pet_opt_reduced,
+              l10n.pet_opt_excessive,
+            ],
+            value: _thirst,
+            onChanged: (v) => setState(() => _thirst = v),
+          ),
+        ),
+        _buildFieldWithTitle(
+          l10n.pet_field_diet_variation,
+          _buildTextField("", _variationController, hint: l10n.pet_field_diet_variation),
+        ),
       ],
     );
   }
@@ -272,42 +334,169 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
   Widget _buildIncidentFields(AppLocalizations l10n) {
     return Column(
       children: [
-        _buildDropdown(
-          label: l10n.pet_field_severity,
-          items: [
-            l10n.pet_opt_mild,
-            l10n.pet_opt_moderate,
-            l10n.pet_opt_urgent,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: _buildFieldWithTitle(l10n.pet_record_date_label, _buildDatePicker(l10n))),
+            const SizedBox(width: 12),
+            Expanded(child: _buildFieldWithTitle(l10n.pet_field_time, _buildTimePicker(l10n))),
           ],
-          value: _severity,
-          onChanged: (v) => setState(() => _severity = v),
         ),
-        const SizedBox(height: 12),
-        _buildTextField(l10n.pet_field_description, _contextController, maxLines: 2, required: true),
-        const SizedBox(height: 12),
-        _buildTextField(l10n.pet_field_symptoms, _symptomsController, maxLines: 2),
-        const SizedBox(height: 12),
-        _buildTextField(l10n.pet_field_action_taken, _actionController),
+        _buildFieldWithTitle(
+          l10n.pet_field_severity,
+          _buildDropdown(
+            hint: l10n.pet_field_severity,
+            items: [
+              l10n.pet_opt_mild,
+              l10n.pet_opt_moderate,
+              l10n.pet_opt_urgent,
+            ],
+            value: _severity,
+            onChanged: (v) => setState(() => _severity = v),
+          ),
+        ),
+        _buildFieldWithTitle(
+          l10n.pet_field_description,
+          _buildTextField("", _contextController, maxLines: 2, required: true, hint: l10n.pet_field_description),
+        ),
+        _buildFieldWithTitle(
+          l10n.pet_field_symptoms,
+          _buildTextField("", _symptomsController, maxLines: 2, hint: l10n.pet_field_symptoms),
+        ),
+        _buildFieldWithTitle(
+          l10n.pet_field_action_taken,
+          _buildTextField("", _actionController, hint: l10n.pet_field_action_taken),
+        ),
       ],
     );
   }
 
-  // 6. Other
   Widget _buildOtherFields(AppLocalizations l10n) {
     return Column(
       children: [
-        _buildDropdown(
-          label: l10n.pet_field_type,
-          items: [
-            l10n.pet_opt_hygiene,
-            l10n.pet_opt_estrus,
-            l10n.pet_opt_social,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: _buildFieldWithTitle(l10n.pet_record_date_label, _buildDatePicker(l10n))),
+            const SizedBox(width: 12),
+            Expanded(child: _buildFieldWithTitle(l10n.pet_field_time, _buildTimePicker(l10n))),
           ],
-          value: _otherType,
-          onChanged: (v) => setState(() => _otherType = v),
         ),
-        const SizedBox(height: 12),
-        _buildTextField(l10n.pet_field_details, _contextController, maxLines: 3),
+        _buildFieldWithTitle(
+          l10n.pet_field_type,
+          _buildDropdown(
+            hint: l10n.pet_field_type,
+            items: [
+              l10n.pet_opt_hygiene,
+              l10n.pet_opt_estrus,
+              l10n.pet_opt_social,
+            ],
+            value: _otherType,
+            onChanged: (v) => setState(() => _otherType = v),
+          ),
+        ),
+        _buildFieldWithTitle(
+          l10n.pet_field_details,
+          _buildTextField("", _contextController, maxLines: 3, hint: l10n.pet_field_details),
+        ),
+      ],
+    );
+  }
+
+  // 7. Expenses
+  File? _expenseReceiptImage;
+  bool _isAnalyzingExpense = false;
+
+  Widget _buildFieldWithTitle(String title, Widget field) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+        const SizedBox(height: 8),
+        field,
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  Widget _buildExpenseFields(AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // 1. RECEIPT SCANNER (Replacing camera)
+        if (_expenseReceiptImage != null) ...[
+          Container(
+             decoration: BoxDecoration(
+               color: AppColors.petBackgroundDark,
+               borderRadius: BorderRadius.circular(12),
+               border: Border.all(color: AppColors.petPrimary, width: 2),
+             ),
+             child: ClipRRect(
+               borderRadius: BorderRadius.circular(10),
+               child: Stack(
+                 alignment: Alignment.center,
+                 children: [
+                    Image.file(_expenseReceiptImage!, height: 180, width: double.infinity, fit: BoxFit.cover),
+                    if (_isAnalyzingExpense)
+                       Container(
+                          color: AppColors.petBackgroundDark.withOpacity(0.7),
+                          height: 180,
+                          width: double.infinity,
+                          child: const Center(
+                             child: CircularProgressIndicator(color: AppColors.petPrimary)
+                          )
+                       ),
+                 ]
+               )
+             )
+          ),
+          const SizedBox(height: 12),
+        ] else ...[
+           ElevatedButton.icon(
+              onPressed: _isAnalyzingExpense ? null : () => _captureExpenseReceipt(l10n),
+              icon: _isAnalyzingExpense ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.blue, strokeWidth: 2)) : const Icon(Icons.qr_code_scanner, color: Colors.blue),
+              label: Text(_isAnalyzingExpense ? "Analisando..." : "Escanear Recibo"),
+              style: ElevatedButton.styleFrom(
+                 backgroundColor: AppColors.petPrimary,
+                 foregroundColor: Colors.black, // Enforce black text
+                 padding: const EdgeInsets.symmetric(vertical: 16),
+              )
+           ),
+           const SizedBox(height: 24),
+        ],
+        // 2. DATA
+        _buildFieldWithTitle(
+           l10n.pet_record_date_label, 
+           _buildDatePicker(l10n, required: true)
+        ),
+        Row(
+           children: [
+              Expanded(flex: 3, child: _buildFieldWithTitle(l10n.pet_field_amount_money, _buildTextField("", _amountController, keyboardType: TextInputType.number, required: true, hint: l10n.pet_field_amount_money))), // Used for Amount
+              const SizedBox(width: 12),
+              Expanded(flex: 1, child: _buildFieldWithTitle(l10n.pet_field_currency, _buildTextField("", _unitController, required: true, hint: l10n.pet_field_currency))), // Used for Currency
+           ],
+        ),
+        _buildFieldWithTitle(
+           l10n.pet_field_description, 
+           _buildTextField("", _contextController, maxLines: 2, required: true, hint: l10n.pet_field_description)
+        ),
+        _buildFieldWithTitle(
+           l10n.pet_field_category,
+           _buildDropdown(
+             hint: l10n.pet_field_category, // Using category as hint
+             items: [
+               l10n.pet_expense_cat_food,
+               l10n.pet_expense_cat_health,
+               l10n.pet_expense_cat_hygiene,
+               l10n.pet_expense_cat_meds,
+               l10n.pet_expense_cat_treats,
+               l10n.pet_expense_cat_services,
+             ],
+             value: _category,
+             required: true, // Category is mandatory
+             onChanged: (v) => setState(() => _category = v),
+           )
+        ),
       ],
     );
   }
@@ -322,16 +511,17 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
       keyboardType: keyboardType,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
-        labelText: label,
+        labelText: label.isEmpty ? null : label,
         hintText: hint,
         labelStyle: const TextStyle(color: Colors.grey),
+        hintStyle: const TextStyle(color: Colors.grey),
         filled: true,
         fillColor: AppColors.petCardBackground,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
         suffixIcon: hasMic ? IconButton(
           icon: Icon(
             _activeVoiceController == controller ? Icons.mic : Icons.mic_none,
-            color: _activeVoiceController == controller ? Colors.redAccent : Colors.grey,
+            color: _activeVoiceController == controller ? Colors.redAccent : Colors.blue,
           ),
           onPressed: () => _toggleVoiceInput(controller),
         ) : null,
@@ -377,41 +567,82 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
     }
   }
 
-  Widget _buildDropdown({required String label, required List<String> items, required String? value, required ValueChanged<String?> onChanged}) {
+  Widget _buildDropdown({required String hint, required List<String> items, required String? value, required ValueChanged<String?> onChanged, bool required = false}) {
     return DropdownButtonFormField<String>(
       initialValue: value,
       items: items.map((e) => DropdownMenuItem(value: e, child: Text(e, style: const TextStyle(color: Colors.white)))).toList(),
       onChanged: onChanged,
       dropdownColor: AppColors.petBackgroundDark,
+      icon: const Icon(Icons.arrow_drop_down, color: Colors.blue),
       selectedItemBuilder: (context) {
         return items.map((e) => Text(e, style: const TextStyle(color: Colors.white))).toList();
       },
       decoration: InputDecoration(
-        labelText: label,
-        labelStyle: const TextStyle(color: Colors.grey),
+        hintText: hint,
+        hintStyle: const TextStyle(color: Colors.grey),
         filled: true,
         fillColor: AppColors.petCardBackground,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
       ),
+      validator: required ? (v) => (v == null || v.isEmpty) ? 'Required' : null : null,
     );
   }
 
-  Widget _buildTimePicker(AppLocalizations l10n) {
+  Widget _buildDatePicker(AppLocalizations l10n, {bool required = false}) {
+    return InkWell(
+      onTap: () async {
+        final date = await showDatePicker(
+          context: context, 
+          initialDate: _selectedDate,
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2100)
+        );
+        if (date != null) setState(() => _selectedDate = date);
+      },
+      child: FormField<DateTime>(
+        initialValue: _selectedDate,
+        validator: required ? (v) => v == null ? 'Required' : null : null,
+        builder: (state) {
+          return InputDecorator(
+            decoration: InputDecoration(
+              hintText: l10n.pet_record_date_label,
+              hintStyle: const TextStyle(color: Colors.grey),
+              filled: true,
+              fillColor: AppColors.petCardBackground,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+              suffixIcon: const Icon(Icons.calendar_today, color: Colors.blue),
+              errorText: state.hasError ? state.errorText : null,
+            ),
+            child: Text("${_selectedDate.day.toString().padLeft(2, '0')}/${_selectedDate.month.toString().padLeft(2, '0')}/${_selectedDate.year}", style: const TextStyle(color: Colors.white)),
+          );
+        }
+      ),
+    );
+  }
+
+  Widget _buildTimePicker(AppLocalizations l10n, {bool required = false}) {
     return InkWell(
       onTap: () async {
         final time = await showTimePicker(context: context, initialTime: _selectedTime);
         if (time != null) setState(() => _selectedTime = time);
       },
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: l10n.pet_field_time,
-          labelStyle: const TextStyle(color: Colors.grey),
-          filled: true,
-          fillColor: AppColors.petCardBackground,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-          suffixIcon: const Icon(Icons.access_time, color: Colors.white70),
-        ),
-        child: Text(_selectedTime.format(context), style: const TextStyle(color: Colors.white)),
+      child: FormField<TimeOfDay>(
+        initialValue: _selectedTime,
+        validator: required ? (v) => v == null ? 'Required' : null : null,
+        builder: (state) {
+          return InputDecorator(
+            decoration: InputDecoration(
+              hintText: l10n.pet_field_time,
+              hintStyle: const TextStyle(color: Colors.grey),
+              filled: true,
+              fillColor: AppColors.petCardBackground,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+              suffixIcon: const Icon(Icons.access_time, color: Colors.blue),
+              errorText: state.hasError ? state.errorText : null,
+            ),
+            child: Text(_selectedTime.format(context), style: const TextStyle(color: Colors.white)),
+          );
+        }
       ),
     );
   }
@@ -457,9 +688,8 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
 
     try {
       final l10n = AppLocalizations.of(context)!;
-      final now = DateTime.now();
       final eventDateTime = DateTime(
-        now.year, now.month, now.day, 
+        _selectedDate.year, _selectedDate.month, _selectedDate.day, 
         _selectedTime.hour, _selectedTime.minute
       );
       
@@ -527,6 +757,16 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
           metrics['subtype'] = 'other_${_otherType?.toLowerCase()}';
           notes = _contextController.text;
           break;
+        case PetRecordType.expense:
+          eventType = PetEventType.other; 
+          title = '${l10n.pet_record_expense}: ${_amountController.text} ${_unitController.text}';
+          metrics['subtype'] = 'expense';
+          metrics['amount'] = double.tryParse(_amountController.text) ?? 0.0;
+          metrics['currency'] = _unitController.text;
+          metrics['category'] = _category;
+          metrics['description'] = _contextController.text;
+          notes = '${metrics['currency']} ${metrics['amount']} - $_category\n${_contextController.text}';
+          break;
       }
       
       metrics['custom_title'] = title; // For display in timeline
@@ -560,4 +800,146 @@ class _PetRecordFormScreenState extends State<PetRecordFormScreen> {
       }
     }
   }
+
+  // --- GEMINI OCR LOGIC ---
+  Future<void> _captureExpenseReceipt(AppLocalizations l10n) async {
+     try {
+        final picker = ImagePicker();
+        final xFile = await picker.pickImage(source: ImageSource.camera);
+        if (xFile == null) return;
+        
+        setState(() {
+           _expenseReceiptImage = File(xFile.path);
+           _isAnalyzingExpense = true;
+        });
+
+        // Delegate to AI service for generic document extraction (simulated context)
+        final promptContext = '''
+SCANNUT MASTER PROTOCOL 2026 - FINANCIAL OCR
+OBJECTIVE: Extract expense data from receipt.
+OUTPUT FORMAT: JSON ONLY
+{
+  "amount": 0.00,
+  "currency": "R\$",
+  "description": "Short summary",
+  "category": "Saude"
+}
+Extract the total amount paid, currency symbol, summarize the items or service in description, and guess the category perfectly matching ONE of these (Alimentacao, Saude, Higiene, Medicamentos, Mimos, Servicos).
+        ''';
+
+        final petAiService = PetAiService();
+        final resultOutput = await petAiService.analyzePetImageBase(
+            imagePath: xFile.path, 
+            petName: widget.petName,
+            petUuid: widget.petId,
+            languageCode: l10n.localeName, 
+            context: promptContext, 
+            imageBytes: await File(xFile.path).readAsBytes(),
+            analysisType: "OCR Financeiro"
+        );
+
+        if (kDebugMode) debugPrint('[SCAN_NUT_EXP_OCR] Raw Output: $resultOutput');
+
+        try {
+           final cleanJson = resultOutput.replaceAll(RegExp(r'```(?:json)?|```'), '').trim();
+           final Map<String, dynamic> data = jsonDecode(cleanJson);
+           if (kDebugMode) debugPrint('[SCAN_NUT_EXP_OCR] Parsed JSON: $data');
+           
+           if (data.containsKey('amount') && data['amount'] != null) {
+              _amountController.text = data['amount'].toString().replaceAll(',', '.');
+           }
+           if (data.containsKey('currency') && data['currency'] != null) {
+              _unitController.text = data['currency'].toString();
+           }
+           if (data.containsKey('description') && data['description'] != null) {
+              _contextController.text = data['description'].toString();
+           }
+           if (data.containsKey('category') && data['category'] != null) {
+              final extractedCat = data['category'].toString();
+              final validCategories = [
+                 l10n.pet_expense_cat_food,
+                 l10n.pet_expense_cat_health,
+                 l10n.pet_expense_cat_hygiene,
+                 l10n.pet_expense_cat_meds,
+                 l10n.pet_expense_cat_treats,
+                 l10n.pet_expense_cat_services,
+              ];
+              // Map AI guess to our strict subset
+              if (validCategories.contains(extractedCat)) {
+                 setState(() => _category = extractedCat);
+              } else {
+                 final catLower = extractedCat.toLowerCase();
+                 setState(() {
+                    if (catLower.contains("alimenta") || catLower.contains("food")) { _category = l10n.pet_expense_cat_food; }
+                    else if (catLower.contains("saude") || catLower.contains("saúde") || catLower.contains("health") || catLower.contains("consulta")) { _category = l10n.pet_expense_cat_health; }
+                    else if (catLower.contains("higiene") || catLower.contains("banho") || catLower.contains("estetica")) { _category = l10n.pet_expense_cat_hygiene; }
+                    else if (catLower.contains("medicamento") || catLower.contains("remedio") || catLower.contains("meds")) { _category = l10n.pet_expense_cat_meds; }
+                    else if (catLower.contains("mimo") || catLower.contains("brinquedo") || catLower.contains("treat")) { _category = l10n.pet_expense_cat_treats; }
+                    else { _category = l10n.pet_expense_cat_services; } // Default fallback
+                 });
+              }
+           }
+           
+           if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                 content: Text('Sucesso (JSON): ${_amountController.text} | $_category'), 
+                 backgroundColor: Colors.green
+              ));
+           }
+
+        } catch (e) {
+           if (kDebugMode) debugPrint('[SCAN_NUT_EXP_OCR] JSON Parse Error: $e');
+           
+           // Fallback to tolerant regex if JSON fails
+           final amtMatch = RegExp(r'"amount"\s*:\s*"?([\d.,]+)"?').firstMatch(resultOutput);
+           final curMatch = RegExp(r'"currency"\s*:\s*"([^"]+)"').firstMatch(resultOutput);
+           final descMatch = RegExp(r'"description"\s*:\s*"([^"]+)"').firstMatch(resultOutput);
+           final catMatch = RegExp(r'"category"\s*:\s*"([^"]+)"').firstMatch(resultOutput);
+
+           if (amtMatch != null) _amountController.text = amtMatch.group(1)?.replaceAll(',', '.') ?? '';
+           if (curMatch != null) _unitController.text = curMatch.group(1) ?? '';
+           if (descMatch != null) _contextController.text = descMatch.group(1) ?? '';
+           
+           final extractedCat = catMatch?.group(1) ?? '';
+           final validCategories = [
+              l10n.pet_expense_cat_food,
+              l10n.pet_expense_cat_health,
+              l10n.pet_expense_cat_hygiene,
+              l10n.pet_expense_cat_meds,
+              l10n.pet_expense_cat_treats,
+              l10n.pet_expense_cat_services,
+           ];
+           
+           if (validCategories.contains(extractedCat)) {
+              setState(() => _category = extractedCat);
+           } else {
+              final catLower = extractedCat.toLowerCase();
+              setState(() {
+                 if (catLower.contains("alimenta") || catLower.contains("food")) { _category = l10n.pet_expense_cat_food; }
+                 else if (catLower.contains("saude") || catLower.contains("saúde") || catLower.contains("health") || catLower.contains("consulta")) { _category = l10n.pet_expense_cat_health; }
+                 else if (catLower.contains("higiene") || catLower.contains("banho") || catLower.contains("estetica")) { _category = l10n.pet_expense_cat_hygiene; }
+                 else if (catLower.contains("medicamento") || catLower.contains("remedio") || catLower.contains("meds")) { _category = l10n.pet_expense_cat_meds; }
+                 else if (catLower.contains("mimo") || catLower.contains("brinquedo") || catLower.contains("treat")) { _category = l10n.pet_expense_cat_treats; }
+                 else { _category = l10n.pet_expense_cat_services; } // Default fallback
+              });
+           }
+
+           if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                 content: Text('Aviso (Regex): Falha JSON. Dados: ${_amountController.text}'), 
+                 backgroundColor: Colors.orange
+              ));
+           }
+        }
+
+     } catch (e) {
+         if (kDebugMode) debugPrint('[SCAN_NUT_EXP_OCR] Error: $e');
+         if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Falha ao analisar: $e"), backgroundColor: Colors.red));
+         }
+     } finally {
+         if (mounted) setState(() => _isAnalyzingExpense = false);
+     }
+  }
+
 }

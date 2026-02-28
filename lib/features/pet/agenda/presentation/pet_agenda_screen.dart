@@ -13,11 +13,6 @@ import 'package:scannutplus/features/pet/agenda/presentation/pet_scheduled_event
 import 'package:scannutplus/features/pet/agenda/presentation/pet_appointment_screen.dart'; // New Appointment Action
 import 'package:scannutplus/features/pet/agenda/presentation/tabs/pet_history_tab.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/tabs/pet_records_tab.dart';
-import 'package:scannutplus/features/feature_pet_agenda/models/parsed_agenda_intent.dart';
-import 'package:scannutplus/features/feature_pet_agenda/presentation/agenda_voice_form_screen.dart';
-import 'package:uuid/uuid.dart';
-
-import 'package:scannutplus/features/pet/data/models/pet_event_type.dart';
 
 
 class PetAgendaScreen extends StatefulWidget {
@@ -121,46 +116,6 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
      }
   }
 
-  Future<void> _saveVoiceIntentToEvent(ParsedAgendaIntent intent) async {
-    final startDateTime = intent.date ?? DateTime.now();
-    
-    DateTime finalStart = startDateTime;
-    if (intent.time != null && intent.time!.contains(':')) {
-      final parts = intent.time!.split(':');
-      if (parts.length == 2) {
-        final hours = int.tryParse(parts[0]) ?? startDateTime.hour;
-        final mins = int.tryParse(parts[1]) ?? startDateTime.minute;
-        finalStart = DateTime(startDateTime.year, startDateTime.month, startDateTime.day, hours, mins);
-      }
-    }
-
-    final newEvent = PetEvent(
-      id: const Uuid().v4(),
-      startDateTime: finalStart,
-      endDateTime: finalStart.add(const Duration(hours: 1)),
-      petIds: [widget.petId],
-      eventTypeIndex: PetEventType.appointment.index,
-      hasAIAnalysis: false,
-      notes: '',
-      metrics: {
-        'custom_title': intent.description ?? intent.type ?? 'Compromisso',
-        'appointment_type': intent.type?.toLowerCase() ?? 'consultation_general',
-        'is_appointment': true,
-        'source': 'voice_agenda', 
-      },
-    );
-
-    await _repository.saveEvent(newEvent);
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-         const SnackBar(content: Text('Compromisso agendado!'), backgroundColor: Color(0xFF10AC84)),
-      );
-      setState(() {
-        _scheduledTabKey = UniqueKey();
-        _futureEvents = _loadEvents();
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +156,7 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                   border: Border.all(color: Colors.white24, width: 1.5)
               ),
               child: IconButton(
-                icon: const Icon(Icons.calendar_month_rounded, color: Color(0xFFFFD1DC), size: 22),
+                icon: const Icon(Icons.calendar_month_rounded, color: Colors.blue, size: 22),
                 tooltip: 'Ver Calendário',
                 onPressed: () {
                     showModalBottomSheet(
@@ -272,25 +227,26 @@ class _PetAgendaScreenState extends State<PetAgendaScreen> {
                       color: const Color(0xFFFFD1DC), // Pink Pastel
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.black, width: 3),
-                      boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
                     ),
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
                         customBorder: const CircleBorder(),
-                        onTap: () async {
-                          final intent = await Navigator.push<ParsedAgendaIntent>(
+                        onTap: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => AgendaVoiceFormScreen(
+                              builder: (_) => PetAppointmentScreen(
+                                petId: widget.petId,
                                 petName: widget.petName,
                               ),
                             ),
-                          );
-
-                          if (intent != null && mounted) {
-                             await _saveVoiceIntentToEvent(intent);
-                          }
+                          ).then((_) {
+                             setState(() {
+                               _scheduledTabKey = UniqueKey();
+                               _futureEvents = _loadEvents();
+                             });
+                          });
                         },
                         child: Tooltip(
                           message: l10n.pet_agenda_add_event,

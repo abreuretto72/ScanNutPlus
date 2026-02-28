@@ -1,0 +1,136 @@
+
+lib/features/pet/presentation/pet_dashboard_view.dart:270:81: Error: Not a constant expression.
+lib/features/pet/presentation/pet_dashboard_view.dart:275:91: Error: Not a constant expression.
+lib/features/pet/presentation/pet_dashboard_view.dart:359:97: Error: Not a constant expression.
+lib/features/pet/presentation/pet_dashboard_view.dart:406:107: Error: The getter 'FontStyle' isn't defined for the type '_PetDashboardViewState'.
+lib/features/pet/presentation/pet_profile_view.dart:489:84: Error: Type 'VoidCallback' not found.
+lib/features/pet/presentation/pet_profile_view.dart:282:93: Error: The getter 'FontWeight' isn't defined for the type '_PetProfileViewState'.
+lib/features/pet/presentation/pet_profile_view.dart:377:115: Error: The getter 'FontWeight' isn't defined for the type '_PetProfileViewState'.
+lib/features/pet/presentation/pet_profile_view.dart:443:107: Error: Not a constant expression.
+lib/features/pet/presentation/pet_profile_view.dart:419:118: Error: The getter 'FontWeight' isn't defined for the type '_PetProfileViewState'.
+lib/features/pet/presentation/pet_profile_view.dart:464:98: Error: The getter 'FontWeight' isn't defined for the type '_PetProfileViewState'.
+lib/features/pet/presentation/pet_profile_view.dart:489:84: Error: 'VoidCallback' isn't a type.
+lib/features/pet/presentation/pet_profile_view.dart:509:77: Error: Not a constant expression.
+lib/features/pet/presentation/pet_profile_view.dart:530:97: Error: Not a constant expression.
+lib/features/pet/presentation/pet_profile_view.dart:531:81: Error: Not a constant expression.
+lib/features/pet/presentation/pet_profile_view.dart:530:126: Error: The getter 'TextAlign' isn't defined for the type '_PetProfileViewState'.
+lib/features/pet/presentation/plans/funeral_plan_view.dart:174:45: Error: Not a constant expression.
+lib/features/pet/presentation/plans/funeral_plan_view.dart:177:61: Error: Not a constant expression.
+lib/features/pet/presentation/plans/funeral_plan_view.dart:190:58: Error: Not a constant expression.
+lib/features/pet/presentation/plans/funeral_plan_view.dart:190:103: Error: Not a constant expression.
+lib/features/pet/presentation/plans/funeral_plan_view.dart:259:40: Error: Not a constant expression.
+lib/features/pet/presentation/plans/funeral_plan_view.dart:309:121: Error: The method 'withValues' isn't defined for the type 'MaterialAccentColor'.
+lib/features/pet/presentation/plans/funeral_plan_view.dart:345:45: Error: Not a constant expression.
+lib/features/pet/presentation/plans/health_plan_view.dart:190:45: Error: Not a constant expression.
+lib/features/pet/presentation/plans/health_plan_view.dart:193:61: Error: Not a constant expression.
+lib/features/pet/presentation/plans/health_plan_view.dart:206:58: Error: Not a constant expression.
+lib/features/pet/presentation/plans/health_plan_view.dart:206:103: Error: Not a constant expression.
+lib/features/pet/presentation/plans/health_plan_view.dart:260:40: Error: Not a constant expression.
+lib/features/pet/presentation/plans/health_plan_view.dart:337:49: Error: Not a constant expression.
+lib/features/pet/presentation/plans/health_plan_view.dart:343:43: Error: The method 'Color' isn't defined for the type '_HealthPlanViewState'.
+lib/features/pet/presentation/plans/health_plan_view.dart:371:45: Error: Not a constant expression.
+lib/features/pet/presentation/widgets/pet_ai_cards_renderer.dart:95:82: Error: Not a constant expression.
+lib/features/pet/presentation/widgets/pet_ai_cards_renderer.dart:109:119: Error: Not a constant expression.
+lib/features/pet/presentation/widgets/pet_ai_cards_renderer.dart:195:39: Error: Not a constant expression.
+lib/features/pet/presentation/widgets/pet_ai_cards_renderer.dart:208:28: Error: Not a constant expression.
+lib/features/pet/presentation/widgets/pet_ai_cards_renderer.dart:226:22: Error: Not a constant expression.
+lib/features/pet/presentation/widgets/pet_ai_cards_renderer.dart:219:96: Error: The getter 'FontWeight' isn't defined for the type 'PetAiCardsRenderer'.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_agenda_button.dart:6:9: Error: Type 'VoidCallback' not found.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_agenda_button.dart:6:9: Error: 'VoidCallback' isn't a type.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_agenda_button.dart:35:29: Error: Not a constant expression.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_analysis_button.dart:8:9: Error: Type 'VoidCallback' not found.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_analysis_button.dart:8:9: Error: 'VoidCallback' isn't a type.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_analysis_button.dart:42:29: Error: Not a constant expression.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_nutrition_button.dart:6:9: Error: Type 'VoidCallback' not found.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_nutrition_button.dart:6:9: Error: 'VoidCallback' isn't a type.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_nutrition_button.dart:35:29: Error: Not a constant expression.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_profile_button.dart:6:9: Error: Type 'VoidCallback' not found.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_profile_button.dart:6:9: Error: 'VoidCallback' isn't a type.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_profile_button.dart:35:29: Error: Not a constant expression.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_walk_button.dart:6:9: Error: Type 'VoidCallback' not found.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_walk_button.dart:6:9: Error: 'VoidCallback' isn't a type.
+lib/features/pet/presentation/widgets/pet_card_actions/pet_walk_button.dart:35:29: Error: Not a constant expression.
+lib/features/pet/services/pet_base_ai_service.dart:118:43: Error: The method 'Locale' isn't defined for the type 'PetBaseAiService'.
+lib/features/pet/services/pet_base_ai_service.dart:122:43: Error: The method 'Locale' isn't defined for the type 'PetBaseAiService'.
+lib/features/pet/services/pet_base_ai_service.dart:129:43: Error: The method 'Locale' isn't defined for the type 'PetBaseAiService'.
+lib/features/profile/presentation/profile_view.dart:73:48: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:72:24: Error: The getter 'TextAlign' isn't defined for the type '_ProfileViewState'.
+lib/features/profile/presentation/profile_view.dart:106:29: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:86:21: Error: The getter 'Clip' isn't defined for the type '_ProfileViewState'.
+lib/features/profile/presentation/profile_view.dart:151:76: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:186:37: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:269:32: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:272:76: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:277:122: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:280:47: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:295:122: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:204:34: Error: The getter 'TextAlign' isn't defined for the type '_ProfileViewState'.
+lib/features/profile/presentation/profile_view.dart:235:34: Error: The getter 'TextAlign' isn't defined for the type '_ProfileViewState'.
+lib/features/profile/presentation/profile_view.dart:260:31: Error: The getter 'FontWeight' isn't defined for the type '_ProfileViewState'.
+lib/features/profile/presentation/profile_view.dart:319:28: Error: The getter 'TextAlign' isn't defined for the type '_ProfileViewState'.
+lib/features/profile/presentation/profile_view.dart:349:30: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:351:50: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:351:57: Error: Method invocation is not a constant expression.
+lib/features/profile/presentation/profile_view.dart:414:74: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:431:35: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:394:27: Error: The getter 'FontWeight' isn't defined for the type '_ChangePasswordFormState'.
+lib/features/profile/presentation/profile_view.dart:398:24: Error: The getter 'TextAlign' isn't defined for the type '_ChangePasswordFormState'.
+lib/features/profile/presentation/profile_view.dart:466:53: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:485:29: Error: Not a constant expression.
+lib/features/profile/presentation/profile_view.dart:446:21: Error: The getter 'Clip' isn't defined for the type '_ChangePasswordFormState'.
+lib/features/settings/presentation/about_view.dart:76:31: Error: The getter 'FontWeight' isn't defined for the type '_AboutViewState'.
+lib/features/settings/presentation/about_view.dart:79:28: Error: The getter 'TextAlign' isn't defined for the type '_AboutViewState'.
+lib/features/settings/presentation/about_view.dart:87:28: Error: The getter 'TextAlign' isn't defined for the type '_AboutViewState'.
+lib/features/settings/presentation/about_view.dart:118:28: Error: The getter 'TextAlign' isn't defined for the type '_AboutViewState'.
+lib/features/user/presentation/login_page.dart:165:25: Error: Not a constant expression.
+lib/features/user/presentation/login_page.dart:162:22: Error: The getter 'TextAlign' isn't defined for the type '_LoginPageState'.
+lib/features/user/presentation/login_page.dart:220:37: Error: Not a constant expression.
+lib/features/user/presentation/login_page.dart:262:68: Error: 'Color' isn't a type.
+lib/features/user/presentation/login_page.dart:306:33: Error: Not a constant expression.
+lib/features/user/presentation/login_page.dart:320:33: Error: Not a constant expression.
+lib/features/user/presentation/login_page.dart:348:37: Error: Not a constant expression.
+lib/features/user/presentation/login_page.dart:227:34: Error: The getter 'TextAlign' isn't defined for the type '_LoginPageState'.
+lib/features/user/presentation/login_page.dart:361:30: Error: The getter 'TextAlign' isn't defined for the type '_LoginPageState'.
+lib/features/user/presentation/sign_up_page.dart:241:32: Error: Type 'Color' not found.
+lib/features/user/presentation/sign_up_page.dart:62:30: Error: Not a constant expression.
+lib/features/user/presentation/sign_up_page.dart:64:50: Error: Not a constant expression.
+lib/features/user/presentation/sign_up_page.dart:64:57: Error: Method invocation is not a constant expression.
+lib/features/user/presentation/sign_up_page.dart:81:37: Error: Not a constant expression.
+lib/features/user/presentation/sign_up_page.dart:82:32: Error: Not a constant expression.
+lib/features/user/presentation/sign_up_page.dart:110:58: Error: Not a constant expression.
+lib/features/user/presentation/sign_up_page.dart:134:25: Error: Not a constant expression.
+lib/features/user/presentation/sign_up_page.dart:131:22: Error: The getter 'TextAlign' isn't defined for the type '_SignUpPageState'.
+lib/features/user/presentation/sign_up_page.dart:179:32: Error: Not a constant expression.
+lib/features/user/presentation/sign_up_page.dart:208:35: Error: Not a constant expression.
+lib/features/user/presentation/sign_up_page.dart:225:55: Error: Not a constant expression.
+lib/features/user/presentation/sign_up_page.dart:176:29: Error: The getter 'TextAlign' isn't defined for the type '_SignUpPageState'.
+lib/features/user/presentation/sign_up_page.dart:241:32: Error: 'Color' isn't a type.
+lib/features/user/presentation/splash_screen.dart:324:24: Error: Type 'Color' not found.
+lib/features/user/presentation/splash_screen.dart:343:36: Error: Type 'Color' not found.
+lib/features/user/presentation/splash_screen.dart:140:26: Error: Not a constant expression.
+lib/features/user/presentation/splash_screen.dart:275:60: Error: 'Color' isn't a type.
+lib/features/user/presentation/splash_screen.dart:214:37: Error: The getter 'FontWeight' isn't defined for the type '_SplashScreenState'.
+lib/features/user/presentation/splash_screen.dart:203:33: Error: The method 'Offset' isn't defined for the type '_SplashScreenState'.
+lib/features/user/presentation/splash_screen.dart:228:33: Error: The method 'Offset' isn't defined for the type '_SplashScreenState'.
+lib/features/user/presentation/splash_screen.dart:324:24: Error: 'Color' isn't a type.
+lib/features/user/presentation/splash_screen.dart:343:36: Error: 'Color' isn't a type.
+lib/l10n/app_localizations.dart:97:21: Error: Type 'Locale' not found.
+lib/l10n/app_localizations.dart:6510:33: Error: Type 'Locale' not found.
+lib/l10n/app_localizations.dart:6515:20: Error: Type 'Locale' not found.
+lib/l10n/app_localizations.dart:6522:41: Error: Type 'Locale' not found.
+lib/l10n/app_localizations.dart:97:49: Error: 'Locale' isn't a type.
+lib/l10n/app_localizations.dart:98:5: Error: Method not found: 'Locale'.
+lib/l10n/app_localizations.dart:99:5: Error: Method not found: 'Locale'.
+lib/l10n/app_localizations.dart:97:21: Error: 'Locale' isn't a type.
+lib/l10n/app_localizations.dart:6510:33: Error: 'Locale' isn't a type.
+lib/l10n/app_localizations.dart:6515:20: Error: 'Locale' isn't a type.
+lib/l10n/app_localizations.dart:6522:41: Error: 'Locale' isn't a type.
+lib/main.dart:2:8: Error: Dart library 'dart:ui' is not available on this platform.
+lib/main.dart:37:5: Error: Undefined name 'PlatformDispatcher'.
+lib/main.dart:64:22: Error: Couldn't find constructor 'Color'.
+lib/main.dart:75:89: Error: Undefined name 'FontWeight'.
+lib/main.dart:76:30: Error: Undefined name 'TextAlign'.
+lib/main.dart:82:30: Error: Undefined name 'TextAlign'.
+lib/main.dart:129:57: Error: Undefined name 'FontWeight'.
+Error: AOT compilation failed
+

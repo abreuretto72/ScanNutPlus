@@ -165,6 +165,7 @@ class _PetMetricsScreenState extends State<PetMetricsScreen> {
                             child: _buildPickerContainer(
                               Icons.access_time,
                               "${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}",
+                              overrideIconColor: Colors.blue,
                             ),
                           ),
                         ),
@@ -212,21 +213,26 @@ class _PetMetricsScreenState extends State<PetMetricsScreen> {
     );
   }
 
-  Widget _buildPickerContainer(IconData icon, String text) {
+  Widget _buildPickerContainer(IconData icon, String text, {Color? overrideIconColor}) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-      decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.circular(16)),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.petCardBackground,
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: icon == Icons.calendar_today ? Colors.blue : AppColors.petPrimary, size: 20),
+          Icon(icon, color: overrideIconColor ?? Colors.black54, size: 20),
           const SizedBox(width: 8),
-          Text(text, style: const TextStyle(color: Colors.white, fontSize: 16)),
+          Text(text, style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold)),
         ],
       ),
     );
   }
 
   void _showMetricChart(BuildContext context, String key, String label) {
+    final l10n = AppLocalizations.of(context)!;
     if (_allMetricsEvents.isEmpty) return;
     final eventsWithKey = _allMetricsEvents.where((e) {
       final val = e.metrics?[key];
@@ -256,7 +262,7 @@ class _PetMetricsScreenState extends State<PetMetricsScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("Evolução: $label", style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+              Text(l10n.pet_metric_evolution_title(label), style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 24),
               SizedBox(
                 height: 250,
@@ -334,44 +340,13 @@ class _PetMetricsScreenState extends State<PetMetricsScreen> {
             onPressed: () async {
                if (_allMetricsEvents.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Não há dados suficientes para gerar gráficos.'), backgroundColor: Colors.orange),
+                    SnackBar(content: Text(l10n.pet_metric_pdf_empty_data), backgroundColor: Colors.orange),
                   );
                   return;
                }
 
-               // 1. Mostrar Filtro de Datas
-               final DateTimeRange? selectedRange = await showDateRangePicker(
-                 context: context,
-                 initialDateRange: DateTimeRange(
-                   start: DateTime.now().subtract(const Duration(days: 30)),
-                   end: DateTime.now(),
-                 ),
-                 firstDate: DateTime(2000),
-                 lastDate: DateTime.now().add(const Duration(days: 1)),
-                 helpText: 'Selecione o período do Relatório',
-                 cancelText: 'Cancelar',
-                 confirmText: 'Gerar PDF',
-                 builder: (context, child) {
-                   return Theme(
-                     data: ThemeData.dark().copyWith(
-                       colorScheme: ColorScheme.dark(
-                         primary: const Color(0xFFFC2D7C), // Domain Pink (Circles/Highlights)
-                         onPrimary: Colors.white, // Text inside primary color
-                         surface: AppColors.petBackgroundDark, // Calendar Background
-                         onSurface: Colors.white, // Days text
-                       ),
-                       dialogBackgroundColor: AppColors.petBackgroundDark,
-                       scaffoldBackgroundColor: AppColors.petBackgroundDark,
-                       appBarTheme: AppBarTheme(
-                         backgroundColor: AppColors.petBackgroundDark,
-                         foregroundColor: Colors.white,
-                         iconTheme: const IconThemeData(color: Colors.white),
-                       ),
-                     ),
-                     child: child!,
-                   );
-                 },
-               );
+               // 1. Mostrar Filtro de Datas Customizado
+               final DateTimeRange? selectedRange = await _showPdfFilterBottomSheet(context, l10n);
 
                if (selectedRange == null) return; // Usuário cancelou
 
@@ -387,7 +362,7 @@ class _PetMetricsScreenState extends State<PetMetricsScreen> {
                if (filteredEvents.isEmpty) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Nenhum registro encontrado neste período.'), backgroundColor: Colors.orange),
+                      SnackBar(content: Text(l10n.pet_metric_pdf_empty_data), backgroundColor: Colors.orange),
                     );
                   }
                   return;
@@ -399,11 +374,11 @@ class _PetMetricsScreenState extends State<PetMetricsScreen> {
                    context,
                    MaterialPageRoute(
                      builder: (_) => UniversalPdfPreviewScreen(
-                       title: 'Métricas: ${widget.petName}',
+                       title: '${l10n.pet_metric_title}: ${widget.petName}',
                        customBuilder: (format) async {
                            return await PetMetricsPdfService.generateMetricsPdf(
                              petName: widget.petName,
-                             breed: 'Raça não informada',
+                             breed: l10n.pet_breed_unknown,
                              metricsEvents: filteredEvents,
                              l10n: l10n,
                            );
@@ -499,6 +474,193 @@ class _PetMetricsScreenState extends State<PetMetricsScreen> {
           childCount: items.length,
         ),
       ),
+    );
+  }
+
+  Future<DateTimeRange?> _showPdfFilterBottomSheet(BuildContext context, AppLocalizations l10n) async {
+    DateTime? startDate;
+    DateTime? endDate;
+    int selectedOption = 1; // Default: 30 days => index 1
+
+    return showModalBottomSheet<DateTimeRange>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.petBackgroundDark,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            Widget buildOption(int index, String title, IconData icon) {
+              final isSelected = selectedOption == index;
+              return InkWell(
+                onTap: () {
+                  setModalState(() {
+                    selectedOption = index;
+                    if (index != 4) {
+                      endDate = DateTime.now();
+                      if (index == 0) { startDate = endDate!.subtract(const Duration(days: 7)); }
+                      if (index == 1) { startDate = endDate!.subtract(const Duration(days: 30)); }
+                      if (index == 2) { startDate = endDate!.subtract(const Duration(days: 90)); }
+                      if (index == 3) {
+                        startDate = DateTime(2000);
+                      }
+                    } else {
+                      startDate ??= DateTime.now().subtract(const Duration(days: 30));
+                      endDate ??= DateTime.now();
+                    }
+                  });
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: isSelected ? const Color(0xFFFFD1DC).withValues(alpha: 0.15) : Colors.black26,
+                    border: Border.all(color: isSelected ? const Color(0xFFFFD1DC) : Colors.transparent, width: 2),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(icon, color: isSelected ? const Color(0xFFFFD1DC) : Colors.white70, size: 24),
+                      const SizedBox(width: 16),
+                      Text(title, style: TextStyle(color: isSelected ? Colors.white : Colors.white70, fontSize: 16, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+                      const Spacer(),
+                      if (isSelected) const Icon(Icons.check_circle, color: Color(0xFFFFD1DC)),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            return SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(ctx).viewInsets.bottom,
+                  left: 24, right: 24, top: 24,
+                ),
+                child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                   Row(
+                      children: [
+                        const Icon(Icons.picture_as_pdf, color: Color(0xFFFFD1DC), size: 28),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(l10n.pet_metric_pdf_filter_title, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                              Text(l10n.pet_metric_pdf_filter_subtitle, style: const TextStyle(color: Colors.white70, fontSize: 14)),
+                            ],
+                          )
+                        ),
+                        IconButton(icon: const Icon(Icons.close, color: Colors.white), onPressed: () => Navigator.pop(ctx)),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    buildOption(0, l10n.pet_metric_pdf_filter_last_7_days, Icons.calendar_view_week),
+                    buildOption(1, l10n.pet_metric_pdf_filter_last_30_days, Icons.calendar_month),
+                    buildOption(2, l10n.pet_metric_pdf_filter_last_3_months, Icons.date_range),
+                    buildOption(3, l10n.pet_metric_pdf_filter_all_time, Icons.all_inclusive),
+                    buildOption(4, l10n.pet_metric_pdf_filter_custom, Icons.edit_calendar),
+                    
+                    if (selectedOption == 4) ...[
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () async {
+                                final picked = await showDatePicker(
+                                  context: ctx, initialDate: startDate ?? DateTime.now().subtract(const Duration(days: 30)),
+                                  firstDate: DateTime(2000), lastDate: endDate ?? DateTime.now(),
+                                  builder: _buildCalendarTheme,
+                                );
+                                if (picked != null) setModalState(() => startDate = picked);
+                              },
+                              child: _buildDateButton(l10n.pet_metric_pdf_filter_start_date, startDate),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () async {
+                                final picked = await showDatePicker(
+                                  context: ctx, initialDate: endDate ?? DateTime.now(),
+                                  firstDate: startDate ?? DateTime(2000), lastDate: DateTime.now().add(const Duration(days: 1)),
+                                  builder: _buildCalendarTheme,
+                                );
+                                if (picked != null) setModalState(() => endDate = picked);
+                              },
+                              child: _buildDateButton(l10n.pet_metric_pdf_filter_end_date, endDate),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+
+                    const SizedBox(height: 24),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFFD1DC),
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      ),
+                      onPressed: () {
+                        if (selectedOption != 4) {
+                           endDate = DateTime.now();
+                           if (selectedOption == 0) { startDate = endDate!.subtract(const Duration(days: 7)); }
+                           else if (selectedOption == 1) { startDate = endDate!.subtract(const Duration(days: 30)); }
+                           else if (selectedOption == 2) { startDate = endDate!.subtract(const Duration(days: 90)); }
+                           else if (selectedOption == 3) { startDate = DateTime(2000); }
+                        }
+                        if (startDate != null && endDate != null) {
+                           Navigator.pop(ctx, DateTimeRange(start: startDate!, end: endDate!));
+                        }
+                      },
+                      icon: const Icon(Icons.check),
+                      label: Text(l10n.pet_metric_pdf_filter_generate),
+                    ),
+                    const SizedBox(height: 48), // Adjusted for hardware safety
+                  ],
+                ),
+              ),
+            )); // Closed SafeArea
+          }
+        );
+      },
+    );
+  }
+
+  Widget _buildDateButton(String label, DateTime? date) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white24)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+          const SizedBox(height: 4),
+          Text(date != null ? DateFormat('dd/MM/yyyy').format(date) : '--/--/----', style: const TextStyle(color: Colors.white, fontSize: 16)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCalendarTheme(BuildContext context, Widget? child) {
+    return Theme(
+      data: ThemeData.dark().copyWith(
+        colorScheme: ColorScheme.dark(
+          primary: const Color(0xFFFFD1DC), // Domain Pink (Circles/Highlights)
+          onPrimary: Colors.black, // Text inside primary color
+          surface: AppColors.petBackgroundDark, // Calendar Background
+          onSurface: Colors.white, // Days text
+        ),
+        dialogTheme: const DialogThemeData(backgroundColor: AppColors.petBackgroundDark),
+      ),
+      child: child!,
     );
   }
 }

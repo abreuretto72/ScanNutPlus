@@ -6,6 +6,7 @@ import 'package:printing/printing.dart';
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 
 class UniversalOcrPdfService {
   static const PdfColor _colorBackground = PdfColor.fromInt(0xFFFFFFFF);

@@ -32,6 +32,7 @@ class PetRecordsTab extends StatelessWidget {
         type: PetRecordType.weight,
         label: l10n.pet_metric_title, // "Métricas Clínicas"
         icon: Icons.query_stats,
+        iconColor: AppColors.petIconAction, // Laranja
       ),
       _RecordItem(
         type: PetRecordType.energy,
@@ -47,6 +48,11 @@ class PetRecordsTab extends StatelessWidget {
         type: PetRecordType.incident,
         label: l10n.pet_record_incident, // "Incidentes"
         icon: Icons.warning_amber,
+      ),
+      _RecordItem(
+        type: PetRecordType.expense,
+        label: l10n.pet_record_expense, // "Despesas"
+        icon: Icons.monetization_on_outlined,
       ),
       _RecordItem(
         type: PetRecordType.other,
@@ -137,7 +143,7 @@ class PetRecordsTab extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.black, width: 2),
                 ),
-                child: Icon(item.icon, size: 40, color: Colors.black),
+                child: Icon(item.icon, size: 40, color: item.iconColor),
               ),
               const SizedBox(height: 16),
               Text(
@@ -162,10 +168,12 @@ class _RecordItem {
   final PetRecordType type;
   final String label;
   final IconData icon;
+  final Color iconColor;
 
   _RecordItem({
     required this.type,
     required this.label,
     required this.icon,
+    this.iconColor = Colors.black,
   });
 }

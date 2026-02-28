@@ -2,6 +2,7 @@ import 'package:scannutplus/features/pet/data/pet_repository.dart';
 import 'package:scannutplus/pet/agenda/pet_event_repository.dart'; // Correct Repo
 import 'package:scannutplus/pet/agenda/pet_event.dart'; // Correct Model
 import 'package:scannutplus/features/pet/data/pet_constants.dart';
+import 'package:scannutplus/features/pet/data/models/pet_history_entry.dart';
 import 'package:scannutplus/core/services/universal_ai_service.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
 import 'package:flutter/foundation.dart';
@@ -248,11 +249,10 @@ Language: Portuguese (Brasil).
       );
 
       // [ARCHIVE] Save to History & Agenda
-      // DISABLED: The user explicitly requested that Nutrition Plans
-      // DO NOT generate cards in the analysis history timeline.
-      // if (result.isNotEmpty && !result.startsWith("Error")) {
-      //     await _petRepo.saveNutritionPlan(petUuid, result);
-      // }
+      // Restabelecido para permitir histórico de Planos Nutricionais
+      if (result.isNotEmpty && !result.startsWith("Error")) {
+          await _petRepo.saveNutritionPlan(petUuid, result);
+      }
 
       return result;
     } catch (e) {
@@ -263,6 +263,10 @@ Language: Portuguese (Brasil).
 
   Future<String?> getLatestNutritionPlan(String petUuid) async {
     return await _petRepo.getLatestNutritionPlan(petUuid);
+  }
+
+  Future<List<PetHistoryEntry>> getAllNutritionPlans(String petUuid) async {
+    return await _petRepo.getAllNutritionPlans(petUuid);
   }
 }
 

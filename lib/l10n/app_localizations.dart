@@ -1034,6 +1034,18 @@ abstract class AppLocalizations {
   /// **'Amount to be given per dose?'**
   String get pet_med_dosage_help;
 
+  /// No description provided for @pet_nutrition_history_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition History'**
+  String get pet_nutrition_history_title;
+
+  /// No description provided for @pet_nutrition_empty_history.
+  ///
+  /// In en, this message translates to:
+  /// **'No plans generated yet.'**
+  String get pet_nutrition_empty_history;
+
   /// No description provided for @pet_agenda_event_date_help.
   ///
   /// In en, this message translates to:
@@ -3812,6 +3824,36 @@ abstract class AppLocalizations {
   /// **'Max 60s'**
   String get error_video_too_long;
 
+  /// No description provided for @pet_expense_scan_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Receipt'**
+  String get pet_expense_scan_btn;
+
+  /// No description provided for @pet_expense_gallery_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get pet_expense_gallery_btn;
+
+  /// No description provided for @pet_expense_analyzing.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracting values...'**
+  String get pet_expense_analyzing;
+
+  /// No description provided for @pet_expense_ocr_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Data extracted successfully!'**
+  String get pet_expense_ocr_success;
+
+  /// No description provided for @pet_expense_ocr_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to read receipt.'**
+  String get pet_expense_ocr_failed;
+
   /// No description provided for @btn_scan_image.
   ///
   /// In en, this message translates to:
@@ -5360,6 +5402,24 @@ abstract class AppLocalizations {
   /// **'Expenses'**
   String get pet_record_expense;
 
+  /// No description provided for @pet_expense_history_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense History'**
+  String get pet_expense_history_title;
+
+  /// No description provided for @pet_expense_history_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No expenses recorded.'**
+  String get pet_expense_history_empty;
+
+  /// No description provided for @pet_expense_history_item_deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense deleted'**
+  String get pet_expense_history_item_deleted;
+
   /// No description provided for @pet_record_other.
   ///
   /// In en, this message translates to:
@@ -6272,6 +6332,12 @@ abstract class AppLocalizations {
   /// **'Last: {value}'**
   String pet_metric_last_recorded(String value);
 
+  /// No description provided for @pet_metric_evolution_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Evolution: {label}'**
+  String pet_metric_evolution_title(String label);
+
   /// No description provided for @pet_metric_save_quick.
   ///
   /// In en, this message translates to:
@@ -6505,6 +6571,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete'**
   String get pet_agenda_delete_attachment_confirm;
+
+  /// No description provided for @pet_metric_pdf_filter_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Metrics Report'**
+  String get pet_metric_pdf_filter_title;
+
+  /// No description provided for @pet_metric_pdf_filter_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the period to generate the PDF'**
+  String get pet_metric_pdf_filter_subtitle;
+
+  /// No description provided for @pet_metric_pdf_filter_last_7_days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 days'**
+  String get pet_metric_pdf_filter_last_7_days;
+
+  /// No description provided for @pet_metric_pdf_filter_last_30_days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 30 days'**
+  String get pet_metric_pdf_filter_last_30_days;
+
+  /// No description provided for @pet_metric_pdf_filter_last_3_months.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 3 months'**
+  String get pet_metric_pdf_filter_last_3_months;
+
+  /// No description provided for @pet_metric_pdf_filter_all_time.
+  ///
+  /// In en, this message translates to:
+  /// **'All time'**
+  String get pet_metric_pdf_filter_all_time;
+
+  /// No description provided for @pet_metric_pdf_filter_custom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get pet_metric_pdf_filter_custom;
+
+  /// No description provided for @pet_metric_pdf_filter_start_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get pet_metric_pdf_filter_start_date;
+
+  /// No description provided for @pet_metric_pdf_filter_end_date.
+  ///
+  /// In en, this message translates to:
+  /// **'End Date'**
+  String get pet_metric_pdf_filter_end_date;
+
+  /// No description provided for @pet_metric_pdf_filter_generate.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate PDF'**
+  String get pet_metric_pdf_filter_generate;
+
+  /// No description provided for @pet_metric_pdf_filter_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get pet_metric_pdf_filter_cancel;
+
+  /// No description provided for @pet_metric_pdf_table_value.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get pet_metric_pdf_table_value;
+
+  /// No description provided for @pet_metric_pdf_empty_data.
+  ///
+  /// In en, this message translates to:
+  /// **'No records found in this period.'**
+  String get pet_metric_pdf_empty_data;
+
+  /// No description provided for @pet_record_date_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get pet_record_date_label;
+
+  /// No description provided for @pet_expense_dashboard_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Monitoring'**
+  String get pet_expense_dashboard_title;
+
+  /// No description provided for @pet_expense_dashboard_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No expenses recorded in this period yet. How about recording your pet\'s first treat?'**
+  String get pet_expense_dashboard_empty;
+
+  /// No description provided for @pet_expense_chart_pie_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Distribution by Category'**
+  String get pet_expense_chart_pie_title;
+
+  /// No description provided for @pet_expense_chart_line_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Evolution'**
+  String get pet_expense_chart_line_title;
+
+  /// No description provided for @pet_expense_chart_area_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Accumulation'**
+  String get pet_expense_chart_area_title;
+
+  /// No description provided for @pet_expense_filter_month.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get pet_expense_filter_month;
+
+  /// No description provided for @pet_expense_filter_year.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get pet_expense_filter_year;
+
+  /// No description provided for @pet_expense_filter_all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get pet_expense_filter_all;
+
+  /// No description provided for @pet_expense_cat_food.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get pet_expense_cat_food;
+
+  /// No description provided for @pet_expense_cat_health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get pet_expense_cat_health;
+
+  /// No description provided for @pet_expense_cat_hygiene.
+  ///
+  /// In en, this message translates to:
+  /// **'Hygiene & Aesthetics'**
+  String get pet_expense_cat_hygiene;
+
+  /// No description provided for @pet_expense_cat_meds.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication'**
+  String get pet_expense_cat_meds;
+
+  /// No description provided for @pet_expense_cat_treats.
+  ///
+  /// In en, this message translates to:
+  /// **'Treats & Leisure'**
+  String get pet_expense_cat_treats;
+
+  /// No description provided for @pet_expense_cat_services.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra Services'**
+  String get pet_expense_cat_services;
 }
 
 class _AppLocalizationsDelegate

@@ -100,14 +100,19 @@ class UniversalPdfService {
     }
     // ---------------------
 
+    // Explicit Font Initialization (Ensure loaded before tree building)
+    final fontData = await PdfGoogleFonts.robotoRegular();
+    final boldFontData = await PdfGoogleFonts.robotoBold();
+    final emojiData = await PdfGoogleFonts.notoColorEmoji();
+
     pdf.addPage(
       pw.MultiPage(
         pageTheme: pw.PageTheme(
           pageFormat: PdfPageFormat.a4.applyMargin(left: 1.0 * PdfPageFormat.cm, top: 1.0 * PdfPageFormat.cm, right: 1.0 * PdfPageFormat.cm, bottom: 1.0 * PdfPageFormat.cm),
           theme: pw.ThemeData.withFont(
-            base: await PdfGoogleFonts.robotoRegular(),
-            bold: await PdfGoogleFonts.robotoBold(),
-            fontFallback: [await PdfGoogleFonts.notoColorEmoji()], // Renderize Emojis properly
+            base: fontData,
+            bold: boldFontData,
+            fontFallback: [emojiData], // Essential to prevent Glyph errors from emojis
           ),
           buildBackground: (context) => pw.FullPage(
             ignoreMargins: true,

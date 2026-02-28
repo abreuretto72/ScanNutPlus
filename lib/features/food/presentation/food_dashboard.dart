@@ -101,7 +101,7 @@ class _FoodDashboardState extends State<FoodDashboard> {
                 decoration: BoxDecoration(
                   color: const Color(0xFF1E1E1E),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xFFFF9800).withValues(alpha: 0.3)),
+                  border: Border.all(color: Color(0xFFFF9800).withValues(alpha: 0.3)),
                 ),
                 child: _isAnalyzing 
                   ? Column(
@@ -120,7 +120,7 @@ class _FoodDashboardState extends State<FoodDashboard> {
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.camera_alt, size: 64, color: const Color(0xFFFF9800).withValues(alpha: 0.5)),
+                          Icon(Icons.camera_alt, size: 64, color: Color(0xFFFF9800).withValues(alpha: 0.5)),
                           const SizedBox(height: 16),
                           Text(l10n.food_scan_title, style: const TextStyle(color: AppColors.textGrey)),
                         ],

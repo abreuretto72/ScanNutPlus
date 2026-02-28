@@ -149,7 +149,7 @@ class _PetDashboardViewState extends State<PetDashboardView> {
                       style: const TextStyle(color: Colors.black, fontWeight: FontWeight.normal, shadows: [], fontSize: 14), // Strict Style for Selected Item
                       isExpanded: true,
                       dropdownColor: AppColors.petPrimary, 
-                      icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                      icon: const Icon(Icons.arrow_drop_down, color: Colors.blue),
                       items: [
                         // New Friend Option
                         DropdownMenuItem<String>(
@@ -271,7 +271,7 @@ class _PetDashboardViewState extends State<PetDashboardView> {
                     ),
                     isExpanded: true,
                     dropdownColor: AppColors.petPrimary, // Pink Menu Background
-                    icon: const Icon(Icons.arrow_drop_down, color: Colors.black), // Black Icon
+                    icon: const Icon(Icons.arrow_drop_down, color: Colors.blue), // Blue Icon
                     style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold), // Black Text
                     items: [
                        _buildDropdownItem(context, PetImageType.behavior, l10n.pet_module_behavior, Icons.psychology, subtitle: l10n.pet_module_behavior_programs),
@@ -359,7 +359,7 @@ class _PetDashboardViewState extends State<PetDashboardView> {
               label: Text(l10n.btn_scan_image.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.petPrimary, // #FFD1DC
-                foregroundColor: AppColors.petText,    // Black
+                foregroundColor: Colors.black,    // Black
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

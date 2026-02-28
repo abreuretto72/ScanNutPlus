@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:scannutplus/core/theme/app_colors.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
@@ -29,9 +30,11 @@ class _PetMedicationScreenState extends State<PetMedicationScreen> {
 
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
+  String _selectedLeadTime = 'none'; // Default notification preference
 
   String _selectedRoute = ''; // Defined later via l10n
   String _selectedUnit = 'mg';
+  final List<String> _selectedMedia = [];
   
   bool _isLoading = false;
   final stt.SpeechToText _speech = stt.SpeechToText();
@@ -142,7 +145,10 @@ class _PetMedicationScreenState extends State<PetMedicationScreen> {
   Future<void> _saveMedication() async {
     final l10n = AppLocalizations.of(context)!;
     
-    if (_drugNameController.text.trim().isEmpty) {
+    if (_drugNameController.text.trim().isEmpty ||
+        _dosageController.text.trim().isEmpty ||
+        _durationController.text.trim().isEmpty ||
+        _intervalController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l10n.pet_med_empty_error), backgroundColor: Colors.red),
       );
@@ -172,6 +178,8 @@ class _PetMedicationScreenState extends State<PetMedicationScreen> {
         durationDays: int.tryParse(_durationController.text) ?? 1,
         intervalHours: int.tryParse(_intervalController.text) ?? 24,
         startDate: startDateTime,
+        notificationLeadTime: _selectedLeadTime,
+        mediaPaths: _selectedMedia.isEmpty ? null : _selectedMedia,
       );
 
       if (mounted) {
@@ -192,28 +200,25 @@ class _PetMedicationScreenState extends State<PetMedicationScreen> {
   }
 
   Widget _buildLabeledField(String labelText, Widget child) {
-    return Stack(
-      clipBehavior: Clip.none,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(padding: const EdgeInsets.only(top: 10), child: child),
-        Positioned(
-          left: 24, top: 3,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-            decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(4)),
-            child: Text(labelText.toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 11, letterSpacing: 1.0)),
+        Padding(
+          padding: const EdgeInsets.only(left: 4, bottom: 6),
+          child: Text(
+            labelText,
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
           ),
         ),
+        child,
       ],
     );
   }
 
   InputDecoration _inputDecoration(String labelText, IconData icon) {
     return InputDecoration(
-      hintText: labelText,
-      hintStyle: const TextStyle(color: Colors.black54),
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      prefixIcon: Icon(icon, color: Colors.black),
+      prefixIcon: Icon(icon, color: (icon == Icons.calendar_today || icon == Icons.date_range) ? Colors.blue : Colors.black),
       filled: true,
       fillColor: const Color(0xFFFFD1DC), // Pet domain color (#FFD1DC)
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -248,24 +253,22 @@ class _PetMedicationScreenState extends State<PetMedicationScreen> {
                   _buildLabeledField(l10n.pet_med_drug_name, TextFormField(
                     controller: _drugNameController,
                     style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-                    decoration: _inputDecoration(l10n.pet_med_drug_name, Icons.medication),
+                    decoration: _inputDecoration(l10n.pet_med_drug_name, Icons.medication).copyWith(hintText: l10n.pet_med_drug_name, hintStyle: const TextStyle(color: Colors.black54)),
                   )),
                   const SizedBox(height: 16),
                   
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
                         child: _buildLabeledField(l10n.pet_med_dosage, TextFormField(
                           controller: _dosageController,
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           style: const TextStyle(color: Colors.black, fontSize: 16),
-                          decoration: _inputDecoration(l10n.pet_med_dosage, Icons.science),
+                          decoration: _inputDecoration(l10n.pet_med_dosage, Icons.science).copyWith(hintText: l10n.pet_med_dosage, hintStyle: const TextStyle(color: Colors.black54)),
                         )),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        flex: 1,
                         child: InkWell(
                           onTap: () => _showActionSheet(l10n.pet_med_unit, ['mg', 'ml', 'gotas', 'comp', 'cp', 'UI'], (val) => setState(() => _selectedUnit = val)),
                           child: _buildLabeledField(l10n.pet_med_unit, InputDecorator(
@@ -311,28 +314,52 @@ class _PetMedicationScreenState extends State<PetMedicationScreen> {
                   const SizedBox(height: 16),
 
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        child: InkWell(
+                        child: _buildLabeledField(l10n.pet_med_start_date, TextFormField(
+                          key: ValueKey(_selectedDate),
+                          initialValue: DateFormat('dd/MM/yyyy').format(_selectedDate),
+                          readOnly: true,
+                          showCursor: false,
                           onTap: () => _selectDate(context),
-                          child: _buildLabeledField(l10n.pet_agenda_event_date, InputDecorator(
-                            decoration: _inputDecoration(l10n.pet_agenda_event_date, Icons.calendar_today),
-                            child: Text(DateFormat('dd/MM/yyyy').format(_selectedDate), style: const TextStyle(color: Colors.black, fontSize: 16)),
-                          )),
-                        ),
+                          style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                          decoration: _inputDecoration(l10n.pet_med_start_date, Icons.calendar_today),
+                        )),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: InkWell(
+                        child: _buildLabeledField(l10n.pet_med_start_time, TextFormField(
+                          key: ValueKey(_selectedTime),
+                          initialValue: _selectedTime.format(context),
+                          readOnly: true,
+                          showCursor: false,
                           onTap: () => _selectTime(context),
-                          child: _buildLabeledField(l10n.pet_field_time, InputDecorator(
-                            decoration: _inputDecoration(l10n.pet_field_time, Icons.access_time),
-                            child: Text(_selectedTime.format(context), style: const TextStyle(color: Colors.black, fontSize: 16)),
-                          )),
-                        ),
+                          style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                          decoration: _inputDecoration(l10n.pet_med_start_time, Icons.access_time).copyWith(
+                            prefixIcon: const Icon(Icons.access_time, color: Colors.blue),
+                          ),
+                        )),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 16),
+
+                  _buildLabeledField(l10n.pet_notification_label, DropdownButtonFormField<String>(
+                    initialValue: _selectedLeadTime,
+                    icon: const Icon(Icons.arrow_drop_down, color: Colors.blue, size: 24),
+                    decoration: _inputDecoration(l10n.pet_notification_label, Icons.notifications),
+                    dropdownColor: AppColors.petPrimary,
+                    style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                    items: [
+                       DropdownMenuItem(value: 'none', child: Text(l10n.pet_notification_none, style: const TextStyle(color: Colors.black))),
+                       DropdownMenuItem(value: '1h', child: Text('1h', style: const TextStyle(color: Colors.black))),
+                       DropdownMenuItem(value: '2h', child: Text('2h', style: const TextStyle(color: Colors.black))),
+                       DropdownMenuItem(value: '1d', child: Text('1d', style: const TextStyle(color: Colors.black))),
+                       DropdownMenuItem(value: '1w', child: Text('1w', style: const TextStyle(color: Colors.black))),
+                    ],
+                    onChanged: (val) => setState(() => _selectedLeadTime = val!),
+                  )),
                   const SizedBox(height: 16),
 
                   _buildLabeledField(l10n.pet_field_observation, TextFormField(
@@ -343,12 +370,47 @@ class _PetMedicationScreenState extends State<PetMedicationScreen> {
                       suffixIcon: IconButton(
                         icon: Icon(
                           _isListening ? Icons.mic : Icons.mic_none,
-                          color: _isListening ? Colors.redAccent : Colors.black,
+                          color: _isListening ? Colors.redAccent : Colors.blue,
                         ),
                         onPressed: _toggleVoiceInput,
                       ),
                     ),
                   )),
+                  const SizedBox(height: 16),
+                  
+                  // Media Attachment Section
+                  if (_selectedMedia.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: _selectedMedia.map((path) => Chip(
+                          label: Text(path.split('/').last, style: const TextStyle(fontSize: 12, color: Colors.white)),
+                          backgroundColor: Colors.black54,
+                          deleteIcon: const Icon(Icons.close, size: 16, color: Colors.white),
+                          onDeleted: () => setState(() => _selectedMedia.remove(path)),
+                        )).toList(),
+                      ),
+                    ),
+                  OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      side: const BorderSide(color: Colors.black, width: 2),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      backgroundColor: Colors.white24,
+                    ),
+                    onPressed: () async {
+                      final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+                      if (result != null) {
+                        setState(() {
+                          _selectedMedia.addAll(result.paths.whereType<String>());
+                        });
+                      }
+                    },
+                    icon: const Icon(Icons.attach_file, color: Colors.black),
+                    label: Text(l10n.pet_agenda_attach_document, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16)),
+                  ),
                 ],
               ),
             ),
@@ -366,7 +428,7 @@ class _PetMedicationScreenState extends State<PetMedicationScreen> {
                 width: double.infinity,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF10AC84), // Requested standard green
+                  color: const Color(0xFFFFD1DC), // Domain Pink
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: Colors.black, width: 3),
                   boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
@@ -380,13 +442,13 @@ class _PetMedicationScreenState extends State<PetMedicationScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         if (_isLoading)
-                          const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3))
+                          const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.black, strokeWidth: 3))
                         else
-                          const Icon(Icons.check_circle_outline, color: Colors.white, size: 28),
+                          const Icon(Icons.check_circle_outline, color: Colors.black, size: 28),
                         const SizedBox(width: 12),
                         Text(
                           l10n.pet_med_save.toUpperCase(), 
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Colors.white, letterSpacing: 1),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Colors.black, letterSpacing: 1),
                         ),
                       ],
                     ),

@@ -29,7 +29,7 @@ class PetMetricsPdfService {
     final boldFontData = await PdfGoogleFonts.robotoBold();
     
     // Agrupar eventos por métrica
-    final Map<String, List<pw.Widget>> charts = _buildCharts(metricsEvents, _colorTheme);
+    final Map<String, List<pw.Widget>> charts = _buildCharts(metricsEvents, _colorTheme, l10n);
 
     pdf.addPage(
       pw.MultiPage(
@@ -175,7 +175,7 @@ class PetMetricsPdfService {
     {'key': 'stand_latency', 'label': 'Latência para Levantar (segundos)'},
   ];
 
-  static Map<String, List<pw.Widget>> _buildCharts(List<PetEvent> events, PdfColor accentColor) {
+  static Map<String, List<pw.Widget>> _buildCharts(List<PetEvent> events, PdfColor accentColor, AppLocalizations l10n) {
     final Map<String, List<pw.Widget>> chartsMap = {};
 
     for (final def in _metricDefinitions) {
@@ -360,7 +360,63 @@ class PetMetricsPdfService {
                     );
                   }
                 )
-              )
+              ),
+              pw.SizedBox(height: 16),
+              // Tabela de Dados abaixo do gráfico
+              pw.Table(
+                border: pw.TableBorder.all(color: PdfColors.grey300, width: 0.5),
+                columnWidths: {
+                  0: const pw.FlexColumnWidth(2), // Data
+                  1: const pw.FlexColumnWidth(1), // Hora
+                  2: const pw.FlexColumnWidth(1.5), // Valor
+                },
+                children: [
+                  // Cabeçalho da Tabela
+                  pw.TableRow(
+                    decoration: const pw.BoxDecoration(color: PdfColors.grey100),
+                    children: [
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(6),
+                        child: pw.Text(l10n.agenda_field_date, style: pw.TextStyle(color: _colorTextDim, fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(6),
+                        child: pw.Text(l10n.agenda_field_time, style: pw.TextStyle(color: _colorTextDim, fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(6),
+                        child: pw.Text(l10n.pet_metric_pdf_table_value, style: pw.TextStyle(color: _colorTextDim, fontSize: 10, fontWeight: pw.FontWeight.bold), textAlign: pw.TextAlign.right),
+                      ),
+                    ],
+                  ),
+                  // Linhas da Tabela (inversamente ordenadas, do mais recente para o mais antigo)
+                  ...validEvents.reversed.map((e) {
+                    final eDate = e.startDateTime;
+                    final val = double.parse(e.metrics![key].toString().replaceAll(',', '.'));
+                    
+                    return pw.TableRow(
+                      children: [
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(6),
+                          child: pw.Text(DateFormat('dd/MM/yyyy').format(eDate), style: const pw.TextStyle(color: _colorText, fontSize: 10)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(6),
+                          child: pw.Text(DateFormat('HH:mm').format(eDate), style: const pw.TextStyle(color: _colorText, fontSize: 10)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(6),
+                          child: pw.Text(
+                            val.toStringAsFixed(1).replaceAll('.0', ''),
+                            style: pw.TextStyle(color: accentColor, fontSize: 10, fontWeight: pw.FontWeight.bold),
+                            textAlign: pw.TextAlign.right
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+                ],
+              ),
             ]
           )
         );

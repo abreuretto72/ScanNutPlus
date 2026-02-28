@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:scannutplus/l10n/app_localizations.dart';
-
+import 'package:scannutplus/core/theme/app_colors.dart'; // Add AppColors
 import 'package:uuid/uuid.dart'; 
 import 'package:scannutplus/core/services/universal_ai_service.dart'; 
 
@@ -11,10 +11,10 @@ import 'package:scannutplus/pet/agenda/pet_event.dart';
 import 'package:scannutplus/features/pet/data/models/pet_event_type.dart'; 
 import 'package:scannutplus/features/pet/agenda/domain/pet_event_type_extension.dart';
 import 'package:scannutplus/features/pet/presentation/extensions/pet_ui_extensions.dart';
+import 'package:scannutplus/features/pet/data/pet_constants.dart'; 
 import 'package:scannutplus/features/pet/agenda/presentation/create_pet_event_screen.dart';
 import 'package:scannutplus/features/pet/agenda/presentation/pet_event_detail_screen.dart';
-import 'package:scannutplus/features/pet/agenda/presentation/widgets/pet_activity_calendar.dart'; 
-import 'package:scannutplus/features/pet/data/pet_constants.dart'; 
+import 'package:scannutplus/features/pet/agenda/presentation/widgets/pet_activity_calendar.dart';
 import 'package:scannutplus/features/pet/agenda/domain/pet_weather_service.dart';
 import 'package:scannutplus/features/pet/agenda/domain/pet_context_service.dart';
 import 'package:geolocator/geolocator.dart'; // Ensure we can get current pos 
@@ -37,6 +37,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
   final PetEventRepository _repository = PetEventRepository();
   late Future<List<PetEvent>> _futureEvents;
   DateTime? _selectedDate;
+  bool _isGeneratingSummary = false;
 
   @override
   void initState() {
@@ -55,10 +56,20 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
           initialEventType: PetEventType.activity, // FORCE WALK CONTEXT
           isFriendFlow: DefaultTabController.of(context).index == 1, // Detects current tab
           // Could pre-select 'Activity' type if possible, but strict separation is done via filtering
+          onSummaryStarted: () {
+            if (mounted) {
+              setState(() {
+                _isGeneratingSummary = true;
+              });
+            }
+          },
           onEventSaved: () {
-            setState(() {
-              _futureEvents = _loadEvents();
-            });
+            if (mounted) {
+              setState(() {
+                _isGeneratingSummary = false;
+                _futureEvents = _loadEvents();
+              });
+            }
           },
         ),
       ),
@@ -214,209 +225,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
     }
   }
   
-  // --- FEATURE: Walk Summary ---
-  
-  Future<void> _showSummaryDialog() async {
-    final l10n = AppLocalizations.of(context)!;
-    DateTime selectedDate = DateTime.now();
-    TimeOfDay startTime = TimeOfDay.fromDateTime(DateTime.now().subtract(const Duration(hours: 1)));
-    TimeOfDay endTime = TimeOfDay.now();
-
-    await showDialog(
-      context: context,
-      builder: (ctx) {
-        return StatefulBuilder(
-          builder: (dialogContext, setDialogState) {
-            return AlertDialog(
-              title: Text(l10n.pet_walk_summary_dialog_title, style: const TextStyle(fontWeight: FontWeight.bold)),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                   Text(l10n.pet_walk_summary_dialog_desc),
-                  const SizedBox(height: 16),
-                  ListTile(
-                    leading: const Icon(Icons.calendar_today),
-                    title: Text(DateFormat.yMd(l10n.localeName).format(selectedDate)),
-                    onTap: () async {
-                      final date = await showDatePicker(
-                        context: context,
-                        initialDate: selectedDate,
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime.now(),
-                      );
-                      if (date != null) setDialogState(() => selectedDate = date);
-                    },
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ListTile(
-                          title: Text(l10n.pet_label_start),
-                          subtitle: Text(startTime.format(context)),
-                          onTap: () async {
-                            final time = await showTimePicker(context: context, initialTime: startTime);
-                            if (time != null) setDialogState(() => startTime = time);
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: ListTile(
-                          title: Text(l10n.pet_label_end),
-                          subtitle: Text(endTime.format(context)),
-                          onTap: () async {
-                            final time = await showTimePicker(context: context, initialTime: endTime);
-                            if (time != null) setDialogState(() => endTime = time);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(child: Text(l10n.common_cancel), onPressed: () => Navigator.pop(ctx)),
-                ElevatedButton.icon(
-                  icon: const Icon(Icons.auto_awesome, color: Colors.white),
-                  label: Text(l10n.pet_action_generate_summary, style: const TextStyle(color: Colors.white)),
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF10AC84)),
-                  onPressed: () async {
-                    debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] User clicked to generate summary");
-                    Navigator.pop(ctx);
-                    
-                    // Show global loading indicator using State's context
-                    debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Showing loading dialog");
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (_) => const Center(child: CircularProgressIndicator(color: Color(0xFF10AC84))),
-                    );
-
-                    // 1. Generate Summary (which will trigger Telemetry internally if valid)
-                    debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Starting Summary Generation...");
-                    await _generateWalkSummary(selectedDate, startTime, endTime);
-                    debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Summary Generation Finished.");
-                    
-                    if (mounted) {
-                      debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Closing loading dialog");
-                      Navigator.pop(context); // Close global loading indicator
-                    }
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
-
-  Future<void> _generateWalkSummary(DateTime date, TimeOfDay start, TimeOfDay end) async {
-    final l10n = AppLocalizations.of(context)!;
-
-    try {
-      final startDateTime = DateTime(date.year, date.month, date.day, start.hour, start.minute);
-      final endDateTime = DateTime(date.year, date.month, date.day, end.hour, end.minute);
-      debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Fetching events between $startDateTime and $endDateTime");
-
-      final eventsResult = await _repository.getByPetId(widget.petId);
-      if (!eventsResult.isSuccess || eventsResult.data == null) {
-          debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Erro ao buscar eventos do repositório");
-          throw Exception(l10n.pet_error_fetch_events);
-      }
-
-      final walkEvents = eventsResult.data!.where((e) {
-        return e.startDateTime.isAfter(startDateTime) && e.startDateTime.isBefore(endDateTime);
-      }).toList();
-
-      debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Found ${walkEvents.length} events in the timeframe");
-
-      if (walkEvents.isEmpty) {
-        debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Returning early: no events found in the period");
-        if (mounted) {
-           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-             content: Text(l10n.pet_error_no_events_period, style: const TextStyle(color: Colors.white)),
-             backgroundColor: Colors.redAccent,
-           ));
-        }
-        return;
-      }
-
-      // ONLY CAPTURE TELEMETRY IF WE HAVE EVENTS TO SUMMARIZE
-      debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Events found. Starting Background Telemetry now...");
-      await _captureRealTelemetryHidden(l10n);
-      debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Background Telemetry Finished.");
-
-      // Calculate Total Walk Distance and Duration from all events
-      final double totalDistanceKm = walkEvents.fold(0.0, (sum, e) => sum + ((e.metrics?['walk_distance_km'] as num?)?.toDouble() ?? 0.0));
-      final int totalDurationSeconds = walkEvents.fold(0, (sum, e) => sum + ((e.metrics?['walk_duration_seconds'] as num?)?.toInt() ?? 0));
-      
-      final int hours = totalDurationSeconds ~/ 3600;
-      final int minutes = (totalDurationSeconds % 3600) ~/ 60;
-      final int seconds = totalDurationSeconds % 60;
-      final String timeString = hours > 0 
-          ? '${hours.toString().padLeft(2, '0')}h ${minutes.toString().padLeft(2, '0')}m'
-          : '${minutes.toString().padLeft(2, '0')}m ${seconds.toString().padLeft(2, '0')}s';
-
-      final String metricsText = totalDistanceKm > 0 || totalDurationSeconds > 0 
-          ? " (🗺 ${totalDistanceKm.toStringAsFixed(2)}km • ⏱ $timeString)" 
-          : "";
-
-      final eventsText = walkEvents.map((e) {
-        final time = DateFormat.Hm(l10n.localeName).format(e.startDateTime);
-        final notes = e.notes ?? l10n.walk_no_notes;
-        final typeStr = e.eventTypeIndex == 0 ? "Food" : 
-                        e.eventTypeIndex == 3 ? "Hygiene/Stool/Urine" : 
-                        e.eventTypeIndex == 4 ? "Activity" : "Other"; 
-        return "- $time [$typeStr]: $notes";
-      }).join("\n");
-
-      final prompt = "${PetPrompts.promptWalkSummary}\n\nCONTEXT: Pet Name: ${widget.petName}\nTotal Distance: ${totalDistanceKm.toStringAsFixed(2)} km\nTotal Time: $timeString\n\nEVENTS LOG:\n$eventsText";
-
-      debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] Calling UniversalAiService to analyzeText...");
-      final summary = await UniversalAiService().analyzeText(
-        systemPrompt: prompt,
-        userPrompt: "Generate the Walk Summary now. Take into account the total distance and time when generating the report.",
-        l10n: l10n,
-      );
-      debugPrint("[SCAN_NUT_TRACE] [WALK_SUMMARY] AI Response Received");
-
-      final summaryTitle = l10n.pet_walk_summary_title_generated(
-        DateFormat.Hm(l10n.localeName).format(startDateTime),
-        DateFormat.Hm(l10n.localeName).format(endDateTime)
-      ) + metricsText;
-      
-      final newEvent = PetEvent(
-        id: const Uuid().v4(),
-        startDateTime: endDateTime, 
-        petIds: [widget.petId],
-        eventTypeIndex: 5, // Other (Summary)
-        hasAIAnalysis: true,
-        notes: summary,
-        metrics: {
-          'custom_title': summaryTitle, 
-          'is_summary': true,
-          PetConstants.keyAiSummary: summary,
-          'walk_distance_km': totalDistanceKm,
-          'walk_duration_seconds': totalDurationSeconds,
-          'source': 'walk', // Origin: Walk Summary 
-        },
-      );
-
-      await _repository.saveEvent(newEvent);
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pet_msg_summary_success)));
-        setState(() {
-          _futureEvents = _loadEvents();
-        });
-      }
-
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.walk_error_generating_summary(e.toString()))));
-      }
-    }
-  }
+  // --- END OF BACKGROUND SUMMARY MIGRATION ---
 
 
 
@@ -502,23 +311,11 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
             ),
           ),
           actions: [
-          // WALK SUMMARY ACTION (Only shows if there are events)
-          FutureBuilder<List<PetEvent>>(
-            future: _futureEvents,
-            builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                return IconButton(
-                  icon: const Icon(Icons.auto_awesome, color: Color(0xFF10AC84)), // Green Star
-                  tooltip: l10n.walk_ai_summary,
-                  onPressed: _showSummaryDialog,
-                );
-              }
-              return const SizedBox.shrink(); // Hide if empty or loading
-            },
-          ),
+          // WALK SUMMARY ACTION REMOVED
+          // Replaced by implicit Background generation logic on the Walk Screen.
           
           IconButton(
-            icon: const Icon(Icons.calendar_month),
+            icon: const Icon(Icons.calendar_month, color: Colors.blue),
             onPressed: () {
                 showModalBottomSheet(
                 context: context,
@@ -568,7 +365,6 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                   color: tabController.index == 1 ? const Color(0xFFE0BBE4) : const Color(0xFFFFD1DC), // Define color on the Container itself
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.black, width: 3),
-                  boxShadow: const [BoxShadow(color: Colors.black, offset: Offset(4, 4))],
                 ),
                 child: Material(
                   color: Colors.transparent,
@@ -577,7 +373,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                     onTap: () => _onAddEventPressed(context),
                     child: Tooltip(
                       message: l10n.pet_agenda_add_event,
-                      child: const Icon(Icons.add, color: Colors.black, size: 32),
+                      child: const Icon(Icons.add, color: AppColors.petIconAction, size: 32),
                     ),
                   ),
                 ),
@@ -613,12 +409,40 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                          const SizedBox(width: 8),
                          InkWell(
                            onTap: () => setState(() => _selectedDate = null),
-                           child: const Icon(Icons.close, color: Colors.black, size: 20),
+                           child: const Icon(Icons.close, color: AppColors.petIconAction, size: 20),
                          ),
                        ],
                      ),
                    ),
                  ],
+               ),
+             ),
+             
+           if (_isGeneratingSummary)
+             Padding(
+               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16, right: 16),
+               child: Container(
+                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                 decoration: BoxDecoration(
+                   color: const Color(0xFF1C1C1E).withAlpha(200),
+                   borderRadius: BorderRadius.circular(16),
+                   border: Border.all(color: Colors.amberAccent.withAlpha(150), width: 1.5),
+                 ),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
+                     const SizedBox(
+                        width: 16, 
+                        height: 16, 
+                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.amberAccent)
+                     ),
+                     const SizedBox(width: 12),
+                     Text(
+                       l10n.pet_journal_bg_processing,
+                       style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                     ),
+                   ],
+                 ),
                ),
              ),
              
@@ -676,7 +500,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             const Icon(Icons.directions_walk, size: 64, color: Colors.grey),
+             const Icon(Icons.directions_walk, size: 64, color: AppColors.petIconAction),
              const SizedBox(height: 16),
              Text(l10n.pet_walk_empty_history, style: const TextStyle(color: Colors.grey)), 
           ],
@@ -725,7 +549,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
               
               // Card Color
               final cardColor = isSummary ? const Color(0xFFFFF9C4) // Light Yellow/Gold for Summary
-                              : isGoogleEvent ? const Color(0xFFE3F2FD) // Light Blue for Google
+                              : isGoogleEvent ? const Color(0xFFFFF9C4) // Now matches Summary color 
                               : isFriendEvent ? const Color(0xFFE0BBE4) // Pastel Lilac for Friends
                               : const Color(0xFFFFD1DC); 
 
@@ -775,16 +599,16 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(14),
                               child: isSummary 
-                                  ? Icon(Icons.auto_awesome_rounded, size: 32, color: Colors.amber[800]) // Summary Icon
+                                  ? Icon(Icons.auto_awesome_rounded, size: 32, color: AppColors.petIconAction) // Summary Icon
                                   : isGoogleEvent
-                                      ? const Icon(Icons.map_rounded, size: 32, color: Color(0xFF4285F4)) // Google Maps Icon (Blue)
+                                      ? const Icon(Icons.map_rounded, size: 32, color: AppColors.petIconAction) // Google Maps Icon (Blue)
                                       : (event.mediaPaths != null && event.mediaPaths!.isNotEmpty)
                                           ? Image.file(
                                               File(event.mediaPaths!.first),
                                               fit: BoxFit.cover,
-                                              errorBuilder: (context, error, stackTrace) => Icon(isFriendEvent ? Icons.pets : Icons.directions_walk_rounded, size: 32, color: Colors.black),
+                                              errorBuilder: (context, error, stackTrace) => Icon(isFriendEvent ? Icons.pets : Icons.directions_walk_rounded, size: 32, color: AppColors.petIconAction),
                                             )
-                                          : Icon(isFriendEvent ? Icons.pets : Icons.directions_walk_rounded, size: 32, color: Colors.black),
+                                          : Icon(isFriendEvent ? Icons.pets : Icons.directions_walk_rounded, size: 32, color: AppColors.petIconAction),
                             ),
                           ),
                           const SizedBox(width: 16),
@@ -851,7 +675,7 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                                    Row(
                                      crossAxisAlignment: CrossAxisAlignment.start,
                                      children: [
-                                        const Icon(Icons.location_on_rounded, size: 14, color: Colors.black),
+                                        const Icon(Icons.location_on_rounded, size: 14, color: AppColors.petIconAction),
                                         const SizedBox(width: 4),
                                         Expanded(
                                           child: Text(
@@ -874,10 +698,10 @@ class _PetWalkEventsScreenState extends State<PetWalkEventsScreen> {
                                 width: double.infinity,
                                 child: ElevatedButton.icon(
                                   onPressed: () => _markMedicationAsTaken(context, event),
-                                  icon: const Icon(Icons.check, color: Colors.white, size: 18),
-                                  label: Text(l10n.pet_med_take_dose, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                  icon: const Icon(Icons.check, color: Colors.black, size: 18),
+                                  label: Text(l10n.pet_med_take_dose, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF10AC84), // Plant Green
+                                    backgroundColor: const Color(0xFFFFD1DC), // Domain Pink
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Colors.black, width: 2)),
                                     elevation: 0,
                                   ),

@@ -187,7 +187,7 @@ class _PetHistoryListViewState extends State<PetHistoryListView> {
                         style: const TextStyle(color: Colors.black87, fontSize: 13, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(width: 10),
-                      Icon(Icons.access_time, size: 12, color: Colors.black54),
+                      Icon(Icons.access_time, size: 12, color: Colors.blue),
                       const SizedBox(width: 4),
                       Text(
                         dateStr,

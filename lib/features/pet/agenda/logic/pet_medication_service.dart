@@ -21,6 +21,8 @@ class PetMedicationService {
     required int durationDays,
     required int intervalHours,
     required DateTime startDate,
+    required String notificationLeadTime,
+    List<String>? mediaPaths,
   }) async {
     final int totalDoses = (durationDays * 24) ~/ intervalHours;
     debugPrint("[SCAN_NUT_TRACE] [MEDICATION_SERVICE] Scheduling $totalDoses doses for $drugName");
@@ -35,6 +37,7 @@ class PetMedicationService {
           'dosage': dosage,
           'unit': unit,
           'route': route,
+          'notification_lead_time': notificationLeadTime,
           'status': 'pending', // Marks as not taken yet
         };
 
@@ -48,6 +51,7 @@ class PetMedicationService {
           eventTypeIndex: PetEventType.health.index, 
           hasAIAnalysis: false,
           notes: notes,
+          mediaPaths: mediaPaths,
           metrics: metricsData,
         );
 

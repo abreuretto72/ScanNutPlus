@@ -340,7 +340,7 @@ class _HealthPlanViewState extends State<HealthPlanView> {
                              }),
                              trackColor: WidgetStateProperty.resolveWith((states) {
                                 if (states.contains(WidgetState.selected)) {
-                                   return const Color(0xFFFFD1DC).withValues(alpha: 0.5);
+                                   return Color(0xFFFFD1DC).withValues(alpha: 0.5);
                                 }
                                 return null;
                              }),

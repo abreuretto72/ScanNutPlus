@@ -23,14 +23,14 @@ class PetProfileButton extends StatelessWidget {
           children: [
             const Icon(
               Icons.badge_outlined, // Requested Icon
-              color: AppColors.petText,
+              color: AppColors.petIconAction,
               size: 24,
             ),
             const SizedBox(height: 4),
             Text(
               label,
               style: const TextStyle(
-                color: AppColors.petText,
+                color: AppColors.petIconAction,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),

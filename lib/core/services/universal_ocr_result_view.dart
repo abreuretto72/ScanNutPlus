@@ -44,7 +44,7 @@ class UniversalOcrResultView extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.picture_as_pdf, color: AppColors.petPrimary),
+            icon: const Icon(Icons.picture_as_pdf, color: Colors.blue),
             tooltip: appL10n.action_generate_pdf,
             onPressed: () {
               // Extract Variables Fallback Protocol 2026

@@ -314,7 +314,7 @@ class _PetAiChatViewState extends State<PetAiChatView> {
                         suffixIcon: IconButton(
                           icon: Icon(
                             _isListening ? Icons.mic : Icons.mic_none,
-                            color: _isListening ? Colors.redAccent : Colors.white54,
+                            color: _isListening ? Colors.redAccent : Colors.blue,
                           ),
                           onPressed: _toggleListening,
                         ),
