@@ -3505,4 +3505,117 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pet_expense_cat_services => 'Serviços Extras';
+
+  @override
+  String get menu_backup => 'Backup e Restauração';
+
+  @override
+  String get backup_title => 'Backup de Segurança';
+
+  @override
+  String get backup_desc =>
+      'Proteja seus dados exportando-os com segurança ou restaure um backup existente.';
+
+  @override
+  String get backup_local_btn => 'Salvar Backup Local';
+
+  @override
+  String get backup_cloud_btn => 'Compartilhar Backup Externo';
+
+  @override
+  String get backup_restore_btn => 'Restaurar Banco de Dados';
+
+  @override
+  String get backup_success => 'Backup executado com sucesso!';
+
+  @override
+  String backup_error(String error) {
+    return 'Falha ao realizar backup: $error';
+  }
+
+  @override
+  String backup_file_saved(String path) {
+    return 'Backup salvo em: $path';
+  }
+
+  @override
+  String get backup_confirm_restore_title => '⚠️ Sobrescrever Banco de Dados';
+
+  @override
+  String get backup_confirm_restore_msg =>
+      'Isso vai apagar os dados atuais e substituí-los pelo arquivo de backup. O aplicativo será desconectado se prosseguir. Deseja continuar?';
+
+  @override
+  String get backup_restore_success =>
+      'Restauração concluída! Entre novamente.';
+
+  @override
+  String backup_restore_error(String error) {
+    return 'Erro ao tentar restaurar: $error';
+  }
+
+  @override
+  String get tutorial_pet_info_title => 'Informações do Pet';
+
+  @override
+  String get tutorial_pet_info_desc =>
+      'Aqui estão o Nome, a Raça e a Foto do seu pet. Toque em qualquer parte do cartão para abrir o Painel Completo (Dashboard).';
+
+  @override
+  String get tutorial_pet_ai_title => 'Assistente IA';
+
+  @override
+  String get tutorial_pet_ai_desc =>
+      'É por aqui que você tem acesso à IA exclusiva do seu Pet. A IA responde tudo sobre o pet.';
+
+  @override
+  String get tutorial_pet_actions_title => 'Ações Rápidas';
+
+  @override
+  String get tutorial_pet_actions_desc =>
+      'Acesse Análises antigas, inicie Passeios monitorados, abra a Agenda ou edite o Perfil.';
+
+  @override
+  String get tutorial_pet_action_analyses_title => 'Análises';
+
+  @override
+  String get tutorial_pet_action_analyses_desc =>
+      'Acesso para realizar análises de imagens, rótulos, exames, latidos, miados e videos do seu pet. São várias análises. Confira.';
+
+  @override
+  String get tutorial_pet_action_walk_title => 'Passeios';
+
+  @override
+  String get tutorial_pet_action_walk_desc =>
+      'Registre o passeio do seu pet fazendo análises via fotos durante o trajeto. Um mapa de orientação ajudará no seu passeio.';
+
+  @override
+  String get tutorial_pet_action_agenda_title => 'Agenda Integrada';
+
+  @override
+  String get tutorial_pet_action_agenda_desc =>
+      'Marque compromissos do seu pet. A agenda é o motor do app registrando tudo o que acontece com o seu pet. Registre méticas clinicas, despesas, Energia, Apetite, medicação, incidentes e outros.';
+
+  @override
+  String get tutorial_pet_action_nutrition_title => 'Clínico e Nutrição';
+
+  @override
+  String get tutorial_pet_action_nutrition_desc =>
+      'Gere planos nutricionais para o seu pet com sugestões de refeições para uma semana. Só ração, só alimentos naturais ou híbrida.';
+
+  @override
+  String get tutorial_pet_action_profile_title => 'Perfil';
+
+  @override
+  String get tutorial_pet_action_profile_desc =>
+      'Edite nome, raça, data de nascimento e demais dados.';
+
+  @override
+  String get tutorial_skip => 'PULAR';
+
+  @override
+  String get tutorial_next => 'PRÓXIMO';
+
+  @override
+  String get tutorial_finish => 'ENTENDI';
 }

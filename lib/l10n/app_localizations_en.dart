@@ -3512,4 +3512,116 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pet_expense_cat_services => 'Extra Services';
+
+  @override
+  String get menu_backup => 'Backup & Restore';
+
+  @override
+  String get backup_title => 'Data Backup';
+
+  @override
+  String get backup_desc =>
+      'Protect your data by exporting it safely or restore an existing backup.';
+
+  @override
+  String get backup_local_btn => 'Save Local Backup';
+
+  @override
+  String get backup_cloud_btn => 'Share External Backup';
+
+  @override
+  String get backup_restore_btn => 'Restore Database';
+
+  @override
+  String get backup_success => 'Backup executed successfully!';
+
+  @override
+  String backup_error(String error) {
+    return 'Failed to backup: $error';
+  }
+
+  @override
+  String backup_file_saved(String path) {
+    return 'Backup saved at: $path';
+  }
+
+  @override
+  String get backup_confirm_restore_title => '⚠️ Overwrite Database';
+
+  @override
+  String get backup_confirm_restore_msg =>
+      'This will erase current data and replace it with the backup. The app will log you out. Continue?';
+
+  @override
+  String get backup_restore_success => 'Restore complete! Log in again.';
+
+  @override
+  String backup_restore_error(String error) {
+    return 'Restore failed: $error';
+  }
+
+  @override
+  String get tutorial_pet_info_title => 'Pet Information';
+
+  @override
+  String get tutorial_pet_info_desc =>
+      'Here is your pet\'s Name, Breed, and Photo. Tap anywhere on the card to open the Full Dashboard.';
+
+  @override
+  String get tutorial_pet_ai_title => 'AI Assistant';
+
+  @override
+  String get tutorial_pet_ai_desc =>
+      'This is where you access your Pet\'s exclusive AI. The AI answers everything about your pet.';
+
+  @override
+  String get tutorial_pet_actions_title => 'Quick Actions';
+
+  @override
+  String get tutorial_pet_actions_desc =>
+      'Access past Analyses, start tracked Walks, open the Agenda, or edit the Profile.';
+
+  @override
+  String get tutorial_pet_action_analyses_title => 'Analyses History';
+
+  @override
+  String get tutorial_pet_action_analyses_desc =>
+      'Access to perform analyses on images, labels, exams, barks, meows, and videos of your pet. There are several analyses. Check them out.';
+
+  @override
+  String get tutorial_pet_action_walk_title => 'Walk Tracking';
+
+  @override
+  String get tutorial_pet_action_walk_desc =>
+      'Record your pet\'s walk by doing photo analyses along the route. An orientation map will assist you on your walk.';
+
+  @override
+  String get tutorial_pet_action_agenda_title => 'Integrated Agenda';
+
+  @override
+  String get tutorial_pet_action_agenda_desc =>
+      'Schedule your pet\'s appointments. The agenda is the engine of the app, recording everything that happens with your pet. Log clinical metrics, expenses, Energy, Appetite, medication, incidents, and others.';
+
+  @override
+  String get tutorial_pet_action_nutrition_title => 'Health & Nutrition';
+
+  @override
+  String get tutorial_pet_action_nutrition_desc =>
+      'Generate nutritional plans for your pet with meal suggestions for a week. Kibble only, natural food only, or hybrid.';
+
+  @override
+  String get tutorial_pet_action_profile_title => 'Profile';
+
+  @override
+  String get tutorial_pet_action_profile_desc =>
+      'Edit your pet\'s name, breed, date of birth, and other details.';
+
+  @override
+  String get tutorial_skip => 'SKIP';
+
+  @override
+  String get tutorial_next => 'NEXT';
+
+  @override
+  String get tutorial_finish => 'GOT IT';
 }

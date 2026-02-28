@@ -6739,6 +6739,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Extra Services'**
   String get pet_expense_cat_services;
+
+  /// No description provided for @menu_backup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup & Restore'**
+  String get menu_backup;
+
+  /// No description provided for @backup_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Backup'**
+  String get backup_title;
+
+  /// No description provided for @backup_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Protect your data by exporting it safely or restore an existing backup.'**
+  String get backup_desc;
+
+  /// No description provided for @backup_local_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Local Backup'**
+  String get backup_local_btn;
+
+  /// No description provided for @backup_cloud_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Share External Backup'**
+  String get backup_cloud_btn;
+
+  /// No description provided for @backup_restore_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Database'**
+  String get backup_restore_btn;
+
+  /// No description provided for @backup_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup executed successfully!'**
+  String get backup_success;
+
+  /// No description provided for @backup_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to backup: {error}'**
+  String backup_error(String error);
+
+  /// No description provided for @backup_file_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup saved at: {path}'**
+  String backup_file_saved(String path);
+
+  /// No description provided for @backup_confirm_restore_title.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ Overwrite Database'**
+  String get backup_confirm_restore_title;
+
+  /// No description provided for @backup_confirm_restore_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'This will erase current data and replace it with the backup. The app will log you out. Continue?'**
+  String get backup_confirm_restore_msg;
+
+  /// No description provided for @backup_restore_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore complete! Log in again.'**
+  String get backup_restore_success;
+
+  /// No description provided for @backup_restore_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore failed: {error}'**
+  String backup_restore_error(String error);
+
+  /// No description provided for @tutorial_pet_info_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Information'**
+  String get tutorial_pet_info_title;
+
+  /// No description provided for @tutorial_pet_info_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Here is your pet\'s Name, Breed, and Photo. Tap anywhere on the card to open the Full Dashboard.'**
+  String get tutorial_pet_info_desc;
+
+  /// No description provided for @tutorial_pet_ai_title.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Assistant'**
+  String get tutorial_pet_ai_title;
+
+  /// No description provided for @tutorial_pet_ai_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'This is where you access your Pet\'s exclusive AI. The AI answers everything about your pet.'**
+  String get tutorial_pet_ai_desc;
+
+  /// No description provided for @tutorial_pet_actions_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get tutorial_pet_actions_title;
+
+  /// No description provided for @tutorial_pet_actions_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Access past Analyses, start tracked Walks, open the Agenda, or edit the Profile.'**
+  String get tutorial_pet_actions_desc;
+
+  /// No description provided for @tutorial_pet_action_analyses_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyses History'**
+  String get tutorial_pet_action_analyses_title;
+
+  /// No description provided for @tutorial_pet_action_analyses_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Access to perform analyses on images, labels, exams, barks, meows, and videos of your pet. There are several analyses. Check them out.'**
+  String get tutorial_pet_action_analyses_desc;
+
+  /// No description provided for @tutorial_pet_action_walk_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk Tracking'**
+  String get tutorial_pet_action_walk_title;
+
+  /// No description provided for @tutorial_pet_action_walk_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Record your pet\'s walk by doing photo analyses along the route. An orientation map will assist you on your walk.'**
+  String get tutorial_pet_action_walk_desc;
+
+  /// No description provided for @tutorial_pet_action_agenda_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrated Agenda'**
+  String get tutorial_pet_action_agenda_title;
+
+  /// No description provided for @tutorial_pet_action_agenda_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule your pet\'s appointments. The agenda is the engine of the app, recording everything that happens with your pet. Log clinical metrics, expenses, Energy, Appetite, medication, incidents, and others.'**
+  String get tutorial_pet_action_agenda_desc;
+
+  /// No description provided for @tutorial_pet_action_nutrition_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Health & Nutrition'**
+  String get tutorial_pet_action_nutrition_title;
+
+  /// No description provided for @tutorial_pet_action_nutrition_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate nutritional plans for your pet with meal suggestions for a week. Kibble only, natural food only, or hybrid.'**
+  String get tutorial_pet_action_nutrition_desc;
+
+  /// No description provided for @tutorial_pet_action_profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get tutorial_pet_action_profile_title;
+
+  /// No description provided for @tutorial_pet_action_profile_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit your pet\'s name, breed, date of birth, and other details.'**
+  String get tutorial_pet_action_profile_desc;
+
+  /// No description provided for @tutorial_skip.
+  ///
+  /// In en, this message translates to:
+  /// **'SKIP'**
+  String get tutorial_skip;
+
+  /// No description provided for @tutorial_next.
+  ///
+  /// In en, this message translates to:
+  /// **'NEXT'**
+  String get tutorial_next;
+
+  /// No description provided for @tutorial_finish.
+  ///
+  /// In en, this message translates to:
+  /// **'GOT IT'**
+  String get tutorial_finish;
 }
 
 class _AppLocalizationsDelegate

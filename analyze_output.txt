@@ -1,0 +1,157 @@
+Resolving dependencies...
+Downloading packages...
+  _fe_analyzer_shared 67.0.0 (97.0.0 available)
+  analyzer 6.4.1 (11.0.0 available)
+  app_links 6.4.1 (7.0.0 available)
+  build 2.4.1 (4.0.4 available)
+  build_config 1.1.2 (1.3.0 available)
+  build_resolvers 2.4.2 (3.0.4 available)
+  build_runner 2.4.13 (2.11.1 available)
+  build_runner_core 7.3.2 (9.3.2 available)
+  dart_jsonwebtoken 3.1.1 (3.3.2 available)
+  dart_style 2.3.6 (3.1.6 available)
+  flat_buffers 23.5.26 (25.9.23 available)
+  flutter_markdown 0.7.7+1 (discontinued replaced by flutter_markdown_plus)
+  flutter_riverpod 2.6.1 (3.2.1 available)
+  geocoding_android 4.0.1 (5.0.0 available)
+  geocoding_platform_interface 3.2.0 (5.0.0 available)
+  google_maps_flutter_web 0.5.14+3 (0.6.1 available)
+  image 4.5.4 (4.8.0 available)
+  local_auth 2.3.0 (3.0.1 available)
+  local_auth_android 1.0.56 (2.0.5 available)
+  local_auth_darwin 1.6.1 (2.0.3 available)
+  local_auth_windows 1.0.11 (2.0.1 available)
+  matcher 0.12.18 (0.12.19 available)
+  meta 1.17.0 (1.18.1 available)
+  objectbox 4.1.0 (5.2.0 available)
+  objectbox_flutter_libs 4.1.0 (5.2.0 available)
+  objectbox_generator 4.1.0 (5.2.0 available)
+  permission_handler 11.4.0 (12.0.1 available)
+  permission_handler_android 12.1.0 (13.0.1 available)
+  pointycastle 3.9.1 (4.0.0 available)
+  riverpod 2.6.1 (3.2.1 available)
+  shared_preferences_android 2.4.20 (2.4.21 available)
+  shelf_web_socket 2.0.1 (3.0.0 available)
+  source_gen 1.5.0 (4.2.0 available)
+  source_helper 1.3.5 (1.3.10 available)
+  test_api 0.7.9 (0.7.10 available)
+  win32 5.15.0 (6.0.0 available)
+Got dependencies!
+1 package is discontinued.
+35 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Analyzing ScanNutPlus...                                        
+
+   info - Statements in an if should be enclosed in a block - lib\core\services\universal_ai_service.dart:61:41 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\core\services\universal_ai_service.dart:62:14 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\core\services\universal_ai_service.dart:75:41 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\core\services\universal_ai_service.dart:76:39 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\core\services\universal_ai_service.dart:77:14 - curly_braces_in_flow_control_structures
+warning - Unused import: 'package:flutter/material.dart' - lib\core\services\universal_ocr_pdf_service.dart:9:8 - unused_import
+warning - The value of the field '_colorBackground' isn't used - lib\core\services\universal_ocr_pdf_service.dart:12:25 - unused_field
+warning - The value of the field '_colorText' isn't used - lib\core\services\universal_ocr_pdf_service.dart:13:25 - unused_field
+warning - The value of the field '_colorTableHeader' isn't used - lib\core\services\universal_ocr_pdf_service.dart:16:25 - unused_field
+   info - Statements in an if should be enclosed in a block - lib\core\services\universal_ocr_pdf_service.dart:300:60 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\core\services\universal_ocr_pdf_service.dart:301:58 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\core\services\universal_pdf_service.dart:427:62 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\core\services\universal_pdf_service.dart:428:60 - curly_braces_in_flow_control_structures
+warning - Unused import: 'package:scannutplus/features/pet/presentation/widgets/pet_ai_cards_renderer.dart' - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:42:8 - unused_import
+warning - The value of the field '_readyBackgroundEvent' isn't used - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:93:13 - unused_field
+warning - The value of the field '_mediaSource' isn't used - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:96:18 - unused_field
+warning - The declaration '_isCameraActive' isn't referenced - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:130:12 - unused_element
+warning - The declaration '_isGalleryActive' isn't referenced - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:131:12 - unused_element
+warning - The declaration '_isVideoActive' isn't referenced - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:132:12 - unused_element
+warning - The declaration '_isAudioActive' isn't referenced - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:133:12 - unused_element
+warning - The declaration '_loadMapTypePreference' isn't referenced - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:193:16 - unused_element
+warning - The left operand can't be null, so the right operand is never executed - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:561:93 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:575:100 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:613:93 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:629:100 - dead_null_aware_expression
+   info - 'onPopInvoked' is deprecated and shouldn't be used. Use onPopInvokedWithResult instead. This feature was deprecated after v3.22.0-12.0.pre - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:759:7 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:846:51 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1013:43 - deprecated_member_use
+warning - The left operand can't be null, so the right operand is never executed - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1295:90 - dead_null_aware_expression
+warning - A value for optional parameter 'iconColor' isn't ever given - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1455:81 - unused_element_parameter
+warning - The value of the local variable 'repository' isn't used - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1716:13 - unused_local_variable
+   info - Don't use 'BuildContext's across async gaps - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1872:35 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1897:43 - use_build_context_synchronously
+warning - The operand can't be 'null', so the condition is always 'true' - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1970:70 - unnecessary_null_comparison
+warning - The '!' will have no effect because the receiver can't be null - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1971:126 - unnecessary_non_null_assertion
+warning - The '!' will have no effect because the receiver can't be null - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1972:120 - unnecessary_non_null_assertion
+warning - The '!' will have no effect because the receiver can't be null - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1984:39 - unnecessary_non_null_assertion
+warning - The '!' will have no effect because the receiver can't be null - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1985:39 - unnecessary_non_null_assertion
+warning - The '!' will have no effect because the receiver can't be null - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:1986:39 - unnecessary_non_null_assertion
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:2140:31 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:2144:45 - use_build_context_synchronously
+warning - The value of the local variable 'weatherData' isn't used - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:2392:13 - unused_local_variable
+   info - Type could be non-nullable - lib\features\pet\agenda\presentation\create_pet_event_screen.dart:2408:33 - unnecessary_nullable_for_final_variable_declarations
+warning - The declaration '_onAddEventPressed' isn't referenced - lib\features\pet\agenda\presentation\pet_agenda_screen.dart:46:8 - unused_element
+warning - The value of the field '_categories' isn't used - lib\features\pet\agenda\presentation\pet_appointment_screen.dart:66:22 - unused_field
+   info - 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion - lib\features\pet\agenda\presentation\pet_appointment_screen.dart:571:43 - deprecated_member_use
+   info - 'partialResults' is deprecated and shouldn't be used. Use SpeechListenOptions.partialResults instead - lib\features\pet\agenda\presentation\pet_appointment_screen.dart:625:11 - deprecated_member_use
+   info - 'cancelOnError' is deprecated and shouldn't be used. Use SpeechListenOptions.cancelOnError instead - lib\features\pet\agenda\presentation\pet_appointment_screen.dart:626:11 - deprecated_member_use
+   info - 'listenMode' is deprecated and shouldn't be used. Use SpeechListenOptions.listenMode instead - lib\features\pet\agenda\presentation\pet_appointment_screen.dart:627:11 - deprecated_member_use
+warning - The value of the local variable 'displayTitle' isn't used - lib\features\pet\agenda\presentation\pet_event_detail_screen.dart:61:18 - unused_local_variable
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\pet_expense_history_screen.dart:107:30 - use_build_context_synchronously
+   info - 'partialResults' is deprecated and shouldn't be used. Use SpeechListenOptions.partialResults instead - lib\features\pet\agenda\presentation\pet_medication_screen.dart:129:11 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\pet\agenda\presentation\pet_record_form_screen.dart:442:62 - deprecated_member_use
+   info - 'partialResults' is deprecated and shouldn't be used. Use SpeechListenOptions.partialResults instead - lib\features\pet\agenda\presentation\pet_record_form_screen.dart:556:11 - deprecated_member_use
+   info - 'cancelOnError' is deprecated and shouldn't be used. Use SpeechListenOptions.cancelOnError instead - lib\features\pet\agenda\presentation\pet_record_form_screen.dart:557:11 - deprecated_member_use
+   info - 'listenMode' is deprecated and shouldn't be used. Use SpeechListenOptions.listenMode instead - lib\features\pet\agenda\presentation\pet_record_form_screen.dart:558:11 - deprecated_member_use
+warning - The value of the field '_isPlanCopied' isn't used - lib\features\pet\agenda\presentation\pet_scheduled_events_screen.dart:36:14 - unused_field
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\pet_scheduled_events_screen.dart:135:42 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\pet_scheduled_events_screen.dart:136:30 - use_build_context_synchronously
+warning - The declaration '_showEventActionsModal' isn't referenced - lib\features\pet\agenda\presentation\pet_scheduled_events_screen.dart:503:8 - unused_element
+   info - 'partialResults' is deprecated and shouldn't be used. Use SpeechListenOptions.partialResults instead - lib\features\pet\agenda\presentation\pet_scheduled_events_screen.dart:874:11 - deprecated_member_use
+   info - 'cancelOnError' is deprecated and shouldn't be used. Use SpeechListenOptions.cancelOnError instead - lib\features\pet\agenda\presentation\pet_scheduled_events_screen.dart:875:11 - deprecated_member_use
+   info - 'listenMode' is deprecated and shouldn't be used. Use SpeechListenOptions.listenMode instead - lib\features\pet\agenda\presentation\pet_scheduled_events_screen.dart:876:11 - deprecated_member_use
+warning - Unused import: 'package:scannutplus/core/services/universal_ai_service.dart' - lib\features\pet\agenda\presentation\pet_walk_events_screen.dart:7:8 - unused_import
+warning - Unused import: 'package:scannutplus/features/pet/data/pet_constants.dart' - lib\features\pet\agenda\presentation\pet_walk_events_screen.dart:14:8 - unused_import
+warning - The declaration '_captureRealTelemetryHidden' isn't referenced - lib\features\pet\agenda\presentation\pet_walk_events_screen.dart:123:16 - unused_element
+   info - 'desiredAccuracy' is deprecated and shouldn't be used. use settings parameter with AndroidSettings, AppleSettings, WebSettings, or LocationSettings - lib\features\pet\agenda\presentation\pet_walk_events_screen.dart:131:9 - deprecated_member_use
+   info - 'timeLimit' is deprecated and shouldn't be used. use settings parameter with AndroidSettings, AppleSettings, WebSettings, or LocationSettings - lib\features\pet\agenda\presentation\pet_walk_events_screen.dart:132:9 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\pet_walk_events_screen.dart:220:42 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\pet_walk_events_screen.dart:221:30 - use_build_context_synchronously
+warning - The value of the local variable 'type' isn't used - lib\features\pet\agenda\presentation\pet_walk_events_screen.dart:536:21 - unused_local_variable
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\tabs\pet_history_tab.dart:82:42 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\tabs\pet_history_tab.dart:83:30 - use_build_context_synchronously
+warning - The value of the local variable 'textColor' isn't used - lib\features\pet\agenda\presentation\tabs\pet_history_tab.dart:255:25 - unused_local_variable
+warning - The value of the local variable 'firstDayOfWeek' isn't used - lib\features\pet\agenda\presentation\widgets\pet_activity_calendar.dart:50:11 - unused_local_variable
+  error - The named parameter 'showLoader' isn't defined - lib\features\pet\agenda\presentation\widgets\pet_scheduled_events_tab.dart:112:15 - undefined_named_parameter
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\widgets\pet_scheduled_events_tab.dart:114:42 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\pet\agenda\presentation\widgets\pet_scheduled_events_tab.dart:115:30 - use_build_context_synchronously
+  error - The class 'EdgeInsets' doesn't have a constant constructor 'right' - lib\features\pet\agenda\presentation\widgets\pet_scheduled_events_tab.dart:173:44 - const_with_undefined_constructor
+  error - The named parameter 'onTap' isn't defined - lib\features\pet\agenda\presentation\widgets\pet_scheduled_events_tab.dart:239:11 - undefined_named_parameter
+warning - Unused import: 'package:flutter/material.dart' - lib\features\pet\agenda\services\pet_metrics_pdf_service.dart:2:8 - unused_import
+warning - Unused import: 'models/pet_history_entry.dart' - lib\features\pet\data\pet_hive_setup.dart:2:8 - unused_import
+warning - The value of the local variable 'resultId' isn't used - lib\features\pet\data\pet_repository.dart:546:13 - unused_local_variable
+warning - The value of the field '_currentPosition' isn't used - lib\features\pet\map\presentation\pet_map_screen.dart:19:13 - unused_field
+warning - Unused import: 'package:scannutplus/features/pet/agenda/presentation/pet_agenda_screen.dart' - lib\features\pet\presentation\health\pet_health_screen.dart:6:8 - unused_import
+   info - Don't use 'BuildContext's across async gaps - lib\features\pet\presentation\health\pet_health_screen.dart:370:30 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\features\pet\presentation\health\pet_health_screen.dart:371:55 - use_build_context_synchronously
+warning - Duplicate import - lib\features\pet\presentation\history\pet_history_detail_screen.dart:3:8 - duplicate_import
+warning - Unused import: 'package:scannutplus/core/theme/app_colors.dart' - lib\features\pet\presentation\history\pet_history_screen.dart:17:8 - unused_import
+   info - Statements in an if should be enclosed in a block - lib\features\pet\presentation\history\pet_history_screen.dart:62:9 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\features\pet\presentation\history\pet_history_screen.dart:66:9 - curly_braces_in_flow_control_structures
+warning - The declaration '_formatDate' isn't referenced - lib\features\pet\presentation\my_pets_view.dart:42:10 - unused_element
+  error - Undefined name 'pet' - lib\features\pet\presentation\my_pets_view.dart:129:22 - undefined_identifier
+   info - Unnecessary instance of 'Container' - lib\features\pet\presentation\my_pets_view.dart:139:29 - avoid_unnecessary_containers
+warning - The declaration '_buildActionButton' isn't referenced - lib\features\pet\presentation\pet_analysis_result_view.dart:416:10 - unused_element
+warning - A value for optional parameter 'isPrimary' isn't ever given - lib\features\pet\presentation\pet_analysis_result_view.dart:416:133 - unused_element_parameter
+warning - The value of the field '_isNewFriend' isn't used - lib\features\pet\presentation\pet_capture_view.dart:51:8 - unused_field
+   info - Statements in an if should be enclosed in a block - lib\features\pet\presentation\pet_capture_view.dart:285:51 - curly_braces_in_flow_control_structures
+warning - The value of the local variable 'toxicity' isn't used - lib\features\pet\presentation\pet_capture_view.dart:541:25 - unused_local_variable
+warning - Unused import: 'package:scannutplus/features/pet/presentation/history/pet_history_screen.dart' - lib\features\pet\presentation\pet_dashboard_view.dart:8:8 - unused_import
+   info - Don't use 'BuildContext's across async gaps - lib\features\pet\presentation\pet_dashboard_view.dart:452:32 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\features\pet\presentation\pet_dashboard_view.dart:454:40 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\features\pet\presentation\pet_dashboard_view.dart:479:32 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\features\pet\presentation\pet_dashboard_view.dart:489:40 - use_build_context_synchronously
+warning - This case is covered by the previous cases - lib\features\pet\presentation\widgets\pet_ai_cards_renderer.dart:188:7 - unreachable_switch_case
+   info - Parameter 'key' could be a super parameter - lib\features\pet\presentation\widgets\pet_card_widget.dart:25:9 - use_super_parameters
+warning - The value of the field '_apiEndpoint' isn't used - lib\features\pet\services\pet_base_ai_service.dart:31:16 - unused_field
+warning - Unused import: 'package:flutter/material.dart' - lib\features\pet\services\pet_pdf_service.dart:6:8 - unused_import
+warning - The value of the field '_hasBackupFile' isn't used - lib\features\settings\presentation\backup_screen.dart:21:8 - unused_field
+   info - 'Share' is deprecated and shouldn't be used. Use SharePlus instead - lib\features\settings\presentation\backup_screen.dart:64:15 - deprecated_member_use
+   info - 'shareXFiles' is deprecated and shouldn't be used. Use SharePlus.instance.share() instead - lib\features\settings\presentation\backup_screen.dart:64:21 - deprecated_member_use
+   info - The import of 'package:flutter/foundation.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\main.dart:3:8 - unnecessary_import
+

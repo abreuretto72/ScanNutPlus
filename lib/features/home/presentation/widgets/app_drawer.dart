@@ -11,6 +11,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import 'package:scannutplus/core/data/objectbox_manager.dart';
 import 'package:scannutplus/features/user/data/models/user_entity.dart';
 import 'package:scannutplus/features/help/presentation/help_screen.dart';
+import 'package:scannutplus/features/settings/presentation/backup_screen.dart';
 import 'package:scannutplus/objectbox.g.dart'; // generated
 
 class AppDrawer extends StatelessWidget {
@@ -112,6 +113,11 @@ class AppDrawer extends StatelessWidget {
                 );
               }),
               _buildMenuItem(context, Icons.settings_outlined, l10n.menu_settings, () {}),
+              _buildMenuItem(context, Icons.cloud_sync_outlined, l10n.menu_backup, () {
+                 Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const BackupScreen()),
+                );
+              }),
               _buildMenuItem(context, Icons.help_outline, l10n.menu_help, () {
                  Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const HelpScreen()),

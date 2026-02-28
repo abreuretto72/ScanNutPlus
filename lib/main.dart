@@ -19,6 +19,8 @@ import 'package:scannutplus/features/pet/data/models/pet_event_model.dart';
 import 'package:scannutplus/features/pet/map/data/models/pet_map_alert.dart';
 import 'package:scannutplus/features/pet/agenda/data/models/pending_analysis.dart';
 import 'package:scannutplus/pet/agenda/pet_event.dart' as legacy_event;
+import 'package:scannutplus/pages/home_portal.dart';
+import 'package:scannutplus/pages/scannut_demo_page.dart';
 
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -196,12 +198,16 @@ class _ScanNutAppState extends State<ScanNutApp> with WidgetsBindingObserver {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       theme: AppTheme.theme,
+      initialRoute: '/',
       routes: {
+        '/': (context) => const HomePortal(),
+        '/scannut': (context) => const ScanNutDemoPage(),
+        '/finagevoz': (context) => const Scaffold(body: Center(child: Text('FinAgeVoz - Em Breve', style: TextStyle(color: Colors.white)))),
+        '/togamind': (context) => const Scaffold(body: Center(child: Text('TogaMind+ - Em Breve', style: TextStyle(color: Colors.white)))),
         '/my_pets': (context) => const MyPetsView(),
         '/pet_dashboard': (context) => const PetDashboardView(),
         '/pet_capture': (context) => const PetCaptureView(),
       },
-      home: const SplashScreen(),
     );
   }
 }

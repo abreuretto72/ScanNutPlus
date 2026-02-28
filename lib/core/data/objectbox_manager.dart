@@ -23,4 +23,11 @@ class ObjectBoxManager {
       }
       return _instance!.store;
   }
+
+  static void closeStore() {
+      if (_instance != null) {
+          _instance!.store.close();
+          _instance = null;
+      }
+  }
 }

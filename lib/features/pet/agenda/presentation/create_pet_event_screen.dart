@@ -211,9 +211,11 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
     _notesController.dispose();
     
     // START BACKGROUND AUTO-WALK SUMMARY
-    if (_walkDurationSeconds > 0) {
+    if (_walkDurationSeconds > 300) {
       debugPrint("[SCAN_NUT_TRACE] Delegating Walk Summary to Background Task...");
-      widget.onSummaryStarted?.call();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onSummaryStarted?.call();
+      });
       final callback = widget.onEventSaved;
       _generateWalkSummaryInBackground(callback);
     }
@@ -755,7 +757,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
     final scaffold = PopScope(
       canPop: true,
       onPopInvoked: (didPop) {
-        if (_walkDurationSeconds > 0) {
+        if (_walkDurationSeconds > 300) {
            final l10n = AppLocalizations.of(context);
            final messenger = ScaffoldMessenger.maybeOf(context);
            if (l10n != null && messenger != null) {
@@ -2398,7 +2400,7 @@ class _CreatePetEventScreenState extends State<CreatePetEventScreen> {
 
   Future<void> _generateWalkSummaryInBackground(VoidCallback? onEventSavedCallback) async {
      try {
-        if (_walkDurationSeconds == 0) return; // Nenhuma caminhada feita
+        if (_walkDurationSeconds <= 300) return; // Passeio curto, não gera resumo
 
         // Grab locale for AI and internal formatting
         final sysLang = Platform.localeName.split('_')[0];
