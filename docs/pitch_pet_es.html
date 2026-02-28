@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScanNut+ | Módulo Pet Automotriz y Veterinario</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9fc;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #2c3e50;
+        }
+
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-left: 5px solid #3498db;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .lang-selector {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .lang-selector a {
+            text-decoration: none;
+            padding: 6px 12px;
+            margin-left: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            color: #555;
+            font-size: 14px;
+            background: white;
+            transition: 0.2s;
+        }
+
+        .lang-selector a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .lang-selector a.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lang-selector">
+        <a href="pitch_pet_pt.html">🇧🇷 Português</a>
+        <a href="pitch_pet_en.html">🇺🇸 English</a>
+        <a href="pitch_pet_es.html" class="active">🇪🇸 Español</a>
+    </div>
+
+    <h1>🚀 ScanNut+ | Módulo Pet Automotriz y Veterinario</h1>
+    <p><strong>ScanNut+</strong> evolucionó de una súper aplicación centrada en el reconocimiento botánico y nutricional
+        para englobar una de las arquitecturas más avanzadas de <strong>Telemedicina Veterinaria e Inteligencia
+            Artificial Multimodal (V1.0)</strong>.</p>
+    <p>Este documento es la presentación definitiva y detallada de todo lo que compone el Dominio PET de la aplicación.
+    </p>
+
+    <div class="card">
+        <h2>🧠 1. El Motor de Inteligencia Artificial (RAG & Gemini)</h2>
+        <p>El corazón de la aplicación late a través de Google Gemini Pro vinculado a una arquitectura RAG
+            (Retrieval-Augmented Generation). No solo "responde" como ChatGPT; <strong>evalúa al paciente</strong>.</p>
+        <ul>
+            <li><strong>Identidad Biométrica y Contexto:</strong> La IA sabe exactamente a quién está analizando.
+                Inyecta las variables sistémicas del animal (Raza, Sexo, Edad, Restricciones) a través de la base de
+                datos local (ObjectBox).</li>
+            <li><strong>Cero Alucinaciones (Fuentes Científicas):</strong> El RAG es estricto. Si la IA recibe una foto
+                clínica, se le ordena expresamente anexar <strong>Fuentes Científicas</strong> al final del informe.
+            </li>
+            <li><strong>Manejo de Datos de Urgencia:</strong> La API devuelve datos JSON estructurados que contienen una
+                etiqueta de URGENCIA (Verde, Amarillo, Rojo), pintando la pantalla en tiempo real.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🩺 2. Capacidades de Diagnóstico Multimodal</h2>
+        <p>El <code>UniversalAiService</code> es la "clínica" comprimida en el teléfono. El usuario abre la cámara y
+            selecciona la especialidad:</p>
+        <ul>
+            <li><strong>Dermatología:</strong> Fotografía de pérdida de pelo (alopecia) o enrojecimiento.</li>
+            <li><strong>Odontología:</strong> Análisis de encías para detectar sarro y retracción.</li>
+            <li><strong>Gastroenterología:</strong> Evaluación a través de la Escala de Heces de Bristol.</li>
+            <li><strong>Kinesiología / Ortopedia:</strong> Triage a través de la Puntuación de Condición Corporal.</li>
+            <li><strong>Biología Conductual y Vocal:</strong> Procesamiento activo de videos o archivos de AUDIO para
+                descubrir motivos de toses recurrentes, ladridos o problemas de comportamiento.</li>
+            <li><strong>Laboratorios Analíticos (OCR):</strong> La aplicación escanea papeles de análisis de sangre
+                físicos, los digitaliza, cruza con valores de referencia y crea un resumen para no especialistas.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>📖 3. El Libro de Vida (Motor de Agenda e Historial)</h2>
+        <ul>
+            <li><strong>El Universo Gráfico:</strong> Un calendario infinito que traza el día a día del animal.</li>
+            <li><strong>Módulo Farmacia:</strong> Formularios para registrar ciclos de píldoras continuas (Miligramos,
+                Gotas) vinculados a notificaciones nativas push mensuales.</li>
+            <li><strong>Evolución de Biometría:</strong> Gráficos de línea estadísticos y exportaciones de PDF con el
+                dossier clínico del animal.</li>
+            <li><strong>Telemetría GPS:</strong> Registro de caminatas, Km recorridos con alertas regionales
+                (Peligros/Venenos en la calle).</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🥗 4. Ecosistema Nutricional Integral</h2>
+        <ul>
+            <li><strong>Dietética Guiada:</strong> Formulación de menú para Ración Seca, Mixta o Alimento Natural.</li>
+            <li><strong>Objetivos Rigurosos:</strong> Enfoque terapéutico (Mantenimiento, Pérdida de peso, Alergias,
+                Problemas cardíacos, Post-Cirugía).</li>
+            <li><strong>Escáner de Etiquetas:</strong> Lente para descifrar etiquetas de croquetas comerciales alertando
+                sobre conservantes/colorantes perjudiciales.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>💸 5. Gestión Financiera Incorporada</h2>
+        <p>Los animales generan costos. La aplicación representa gráficos financieros circulares (PieChart),
+            distinguiendo y sumando costos de Salud frente a Juguetes o Nutrición leyendo recibos a través de OCR de la
+            cámara.</p>
+    </div>
+
+    <div class="card">
+        <h2>⚙️ 6. Ingeniería Rigurosa (Pilar 0)</h2>
+        <ul>
+            <li><strong>Hardcode Seguro:</strong> Inmune a errores de visualización, totalmente libre de strings locales
+                perdidos (100% internacionalizado .arb).</li>
+            <li><strong>Componentes Modulares:</strong> Para mantener íntegra la IA, su inyección se basa enteramente en
+                selectores inmutables.</li>
+        </ul>
+    </div>
+
+    <div class="highlight">
+        <p><strong>El Módulo Pet de ScanNut+</strong> supera la barrera amateur llenando el vacío de la telemetría
+            digital médica en el bolsillo del dueño, combinando <strong>RAG Preciso</strong>, un <strong>Motor Visual
+                Híbrido</strong> y <strong>Persistencia Offline</strong> veloz.</p>
+    </div>
+</body>
+
+</html>

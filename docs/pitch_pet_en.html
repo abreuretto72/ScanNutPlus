@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScanNut+ | Pet Tracking & Veterinary Module</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9fc;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #2c3e50;
+        }
+
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-left: 5px solid #3498db;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .lang-selector {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .lang-selector a {
+            text-decoration: none;
+            padding: 6px 12px;
+            margin-left: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            color: #555;
+            font-size: 14px;
+            background: white;
+            transition: 0.2s;
+        }
+
+        .lang-selector a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .lang-selector a.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lang-selector">
+        <a href="pitch_pet_pt.html">🇧🇷 Português</a>
+        <a href="pitch_pet_en.html" class="active">🇺🇸 English</a>
+        <a href="pitch_pet_es.html">🇪🇸 Español</a>
+    </div>
+
+    <h1>🚀 ScanNut+ | Pet Tracking & Veterinary Module</h1>
+    <p><strong>ScanNut+</strong> evolved from a super-app focused on botanical and nutritional recognition to encompass
+        one of the most advanced architectures of <strong>Veterinary Telemedicine and Multimodal Artificial Intelligence
+            (V1.0)</strong>.</p>
+    <p>This document is the definitive and detailed presentation of everything that makes up the application's PET
+        Domain.</p>
+
+    <div class="card">
+        <h2>🧠 1. The Artificial Intelligence Engine (RAG & Gemini)</h2>
+        <p>The core of the application beats through Google Gemini Pro linked to a RAG (Retrieval-Augmented Generation)
+            architecture. It doesn't just "reply" like ChatGPT; it <strong>evaluates the patient</strong>.</p>
+        <ul>
+            <li><strong>Biometric Identity and Context:</strong> The AI knows exactly who it is analyzing. Before
+                issuing any report, it injects the animal's systemic variables (Breed, Sex, Age, Dietary Restrictions)
+                via the local database (ObjectBox).</li>
+            <li><strong>Zero Hallucinations (Scientific Sources):</strong> RAG is strictly grounded. If the AI receives
+                a photo of dermatitis or a food sample, it is expressly prompted to append <strong>Scientific Sources
+                    and References</strong> at the end of the report (e.g., Merck Veterinary Manual).</li>
+            <li><strong>Urgent Data Handling:</strong> The API does not return raw text. It returns JSON data structured
+                by the <strong>Master Protocol 2026</strong> containing an URGENCY tag (Green, Yellow, Red). This
+                <em>tag</em> colors the entire mobile screen in real time.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🩺 2. Multimodal Diagnostic Capabilities</h2>
+        <p>The <code>UniversalAiService</code> is the "clinic" compressed into the hardware. The user opens the camera
+            and selects one of the operational specialties:</p>
+        <ul>
+            <li><strong>Dermatology:</strong> Photographing hair loss (alopecia) or redness.</li>
+            <li><strong>Dentistry:</strong> Analysis of gums to detect tartar plaque and gingival retraction.</li>
+            <li><strong>Gastroenterology (Stool/Urine):</strong> Evaluation through the Bristol Stool Chart.</li>
+            <li><strong>Kinesiology / Orthopedics:</strong> Triage through Body Condition Score via lateral photographs.
+            </li>
+            <li><strong>Behavioral and Vocal Biology:</strong> Active processing of videos to identify pain/aggression
+                or native AUDIO files for the AI to discover reasons for recurrent coughs, barks, or wheezing.</li>
+            <li><strong>Analytical Labs (OCR):</strong> The app scans physical blood test papers, digitizes via Gemini,
+                crosses with reference values, and builds an executive summary for laymen.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>📖 3. The Book of Life (Agenda and History Engine)</h2>
+        <ul>
+            <li><strong>The Graphical Universe:</strong> An infinite calendar plotting daily milestones.</li>
+            <li><strong>Interactive Pharmacy Module:</strong> Precise forms to register continuous pill cycles within
+                the UI (Milligrams, Drops, Oral/Topical Routes) locking into OS Native Push scheduling.</li>
+            <li><strong>Evolution and Biometrics:</strong> Real-time Statistical Line Charts and PDF exports containing
+                the animal's official clinical dossier.</li>
+            <li><strong>GPS and Walk Telemetry:</strong> Background Tracking logging traveled Km and calories burned,
+                with "Alert Pins" regarding street hazards.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🥗 4. Integral Nutritional Ecosystem</h2>
+        <ul>
+            <li><strong>Guided Dietetics:</strong> Menu formulation targeting <strong>Kibble</strong>,
+                <strong>Mix</strong>, or <strong>Natural Food</strong>.</li>
+            <li><strong>Rigorous Goals:</strong> Strict therapeutic focus (Maintenance, Weight Loss, Growth, Allergies,
+                Cardiac, Post-Surgical).</li>
+            <li><strong>Label Scanner:</strong> A focused lens to decipher chemical compositions on pet food bags and
+                alert about toxic ingredients or controversial dyes.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>💸 5. Embedded Financial Management</h2>
+        <p>Animals generate costs, and the application actively categorizes it rendering PieChart financial graphs,
+            distinguishing "Hygiene", "Health/Meds", versus "Treats/Toys" using OCR processing on fiscal coupons.</p>
+    </div>
+
+    <div class="card">
+        <h2>⚙️ 6. Rigorous Engineering (Pilar 0)</h2>
+        <p>Developed focusing on a Dynamic Design tailored for target hardware like the <em>Samsung SM A256E</em>.</p>
+        <ul>
+            <li><strong>Secure Hardcode:</strong> Immune to loose-typing crashes. Zero loose visual strings across the
+                application (all mapped into .arb for EN/PT l10n).</li>
+            <li><strong>Modular Components:</strong> Isolated Dropdowns and hard enumerators (Female, Growth, Oral)
+                mitigate RAG prompt corruption.</li>
+        </ul>
+    </div>
+
+    <div class="highlight">
+        <p><strong>The ScanNut+ Pet Module</strong> breaks the amateur barrier filling the void of digital medical
+            telemetry in the tutor's pocket, combining <strong>Precise RAG</strong>, a <strong>Hybrid Visual
+                Engine</strong>, and fast <strong>Offline Persistence</strong> via ObjectBox as the premier
+            technological showcase for animal care.</p>
+    </div>
+</body>
+
+</html>
